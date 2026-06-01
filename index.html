@@ -1,0 +1,3212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIORAIZ · La feria sustentable de la Patagonia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    /* Paleta (basada en tweaks del usuario + manual) */
+    --bz-verde-profundo:   #2A3D24;
+    --bz-verde-bosque:     #3D5A3F;
+    --bz-verde-musgo:      #6E9050;
+    --bz-verde-claro:      #9DC99F;
+    --bz-verde-pasto:      #EAF3DE;
+
+    --bz-ocre-calido:      #E6CB7A;
+    --bz-ocre-tostado:     #C8A647;
+    --bz-tierra-rojo:      #A33A1E;
+    --bz-tierra-claro:     #D87A55;
+
+    --bz-beige-base:       #F2EBDC;
+    --bz-beige-hueso:      #FAF6ED;
+    --bz-crema-fondo:      #F8F2E2;
+    --bz-crema-texto:      #F2EFE6;
+
+    --bz-texto-primario:   #1A2012;
+    --bz-texto-secundario: #4A5C3A;
+    --bz-texto-terciario:  #7A8A6A;
+    --bz-borde-suave:      #DDD3BD;
+    --bz-borde-ligero:     #EDE4CF;
+
+    --bz-fondo-base:       #FAF6ED;
+    --bz-fondo-alt:        #F2EBDC;
+    --bz-fondo-dark:       #1E3320;
+
+    /* Tipografía */
+    --bz-font-display: 'Playfair Display', Georgia, serif;
+    --bz-font-body:    'DM Sans', system-ui, sans-serif;
+    --bz-font-mono:    'DM Mono', 'Courier New', monospace;
+
+    /* Espacios */
+    --bz-radius-sm:   4px;
+    --bz-radius-md:   8px;
+    --bz-radius-lg:   14px;
+    --bz-radius-xl:   24px;
+    --bz-radius-pill: 9999px;
+
+    --bz-shadow-sm:  0 1px 3px rgba(30,51,32,0.06);
+    --bz-shadow-md:  0 6px 18px rgba(30,51,32,0.08);
+    --bz-shadow-lg:  0 18px 42px rgba(30,51,32,0.12);
+    --bz-shadow-xl:  0 32px 72px rgba(30,51,32,0.18);
+
+    --bz-ease:        cubic-bezier(0.4, 0, 0.2, 1);
+    --bz-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bz-fondo-base);
+    color: var(--bz-texto-primario);
+    font-family: var(--bz-font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body { min-height: 100vh; }
+
+  ::selection { background: var(--bz-ocre-calido); color: var(--bz-verde-profundo); }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  /* ───────── Animations / reveals ───────── */
+  @keyframes bz-fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bz-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes bz-slide-down { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bz-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes bz-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  @keyframes bz-drift { 0% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(2%, -1%) rotate(0.5deg); } 100% { transform: translate(0,0) rotate(0deg); } }
+  @keyframes bz-scroll-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 800ms var(--bz-ease), transform 800ms var(--bz-ease); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 80ms; }
+  .reveal-delay-2 { transition-delay: 160ms; }
+  .reveal-delay-3 { transition-delay: 240ms; }
+  .reveal-delay-4 { transition-delay: 320ms; }
+  .reveal-delay-5 { transition-delay: 400ms; }
+
+  /* ───────── Page transitions ───────── */
+  .page-enter { animation: bz-fade-up 600ms var(--bz-ease) both; }
+
+  /* ───────── Scrollbar (subtle) ───────── */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(42, 61, 36, 0.18); border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(42, 61, 36, 0.32); }
+
+  /* ───────── Container ───────── */
+  .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .container-narrow { width: 100%; max-width: 920px; margin: 0 auto; padding: 0 32px; }
+
+  /* ───────── Buttons ───────── */
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: var(--bz-radius-pill); font-size: 14px; font-weight: 500; letter-spacing: 0.02em; transition: transform 250ms var(--bz-spring), background 250ms var(--bz-ease), color 250ms var(--bz-ease), box-shadow 250ms var(--bz-ease); white-space: nowrap; }
+  .btn-primary { background: var(--bz-verde-profundo); color: var(--bz-beige-hueso); }
+  .btn-primary:hover { background: var(--bz-fondo-dark); transform: translateY(-2px); box-shadow: var(--bz-shadow-md); }
+  .btn-secondary { background: transparent; color: var(--bz-verde-profundo); border: 1.5px solid var(--bz-verde-profundo); }
+  .btn-secondary:hover { background: var(--bz-verde-pasto); transform: translateY(-2px); }
+  .btn-ocre { background: var(--bz-ocre-calido); color: var(--bz-verde-profundo); font-weight: 600; }
+  .btn-ocre:hover { background: var(--bz-ocre-tostado); transform: translateY(-2px); box-shadow: var(--bz-shadow-md); }
+  .btn-ghost { background: transparent; color: var(--bz-verde-profundo); padding: 8px 0; }
+  .btn-ghost:hover { color: var(--bz-tierra-rojo); }
+  .btn-ghost::after { content: '→'; display: inline-block; margin-left: 6px; transition: transform 250ms var(--bz-ease); }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+  .btn-on-dark { background: var(--bz-ocre-calido); color: var(--bz-verde-profundo); }
+  .btn-on-dark:hover { background: var(--bz-beige-hueso); transform: translateY(-2px); }
+  .btn-sm { padding: 8px 16px; font-size: 12px; }
+
+  /* ───────── Tag pill ───────── */
+  .tag { display: inline-block; padding: 5px 12px; border-radius: var(--bz-radius-pill); font-size: 11px; font-weight: 500; letter-spacing: 0.04em; background: var(--bz-verde-pasto); color: var(--bz-verde-bosque); }
+  .tag-ocre { background: rgba(230, 203, 122, 0.32); color: var(--bz-verde-profundo); }
+  .tag-tierra { background: rgba(163, 58, 30, 0.12); color: var(--bz-tierra-rojo); }
+  .tag-outline { background: transparent; border: 1px solid var(--bz-borde-suave); color: var(--bz-texto-secundario); }
+  .tag-on-dark { background: rgba(157, 201, 159, 0.18); color: var(--bz-verde-claro); }
+
+  /* ───────── Display type ───────── */
+  .display { font-family: var(--bz-font-display); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; }
+  .display em { font-style: italic; color: var(--bz-tierra-rojo); }
+  .eyebrow { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--bz-verde-musgo); font-family: var(--bz-font-mono); }
+  .eyebrow-tierra { color: var(--bz-tierra-rojo); }
+
+  /* ───────── Placeholder (striped SVG) ───────── */
+  .ph { position: relative; background-color: var(--bz-beige-base); background-image: repeating-linear-gradient(135deg, rgba(42, 61, 36, 0.07) 0 1px, transparent 1px 14px); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .ph-label { font-family: var(--bz-font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--bz-verde-profundo); padding: 6px 10px; background: rgba(250, 246, 237, 0.85); backdrop-filter: blur(4px); border-radius: var(--bz-radius-sm); }
+  .ph-dark { background-color: var(--bz-fondo-dark); background-image: repeating-linear-gradient(135deg, rgba(230, 203, 122, 0.08) 0 1px, transparent 1px 14px); }
+  .ph-dark .ph-label { background: rgba(30, 51, 32, 0.6); color: var(--bz-verde-claro); }
+
+  /* Trama Raíz: subtle organic background pattern */
+  .trama {
+    background-image:
+      radial-gradient(circle at 25% 30%, rgba(110, 144, 80, 0.06) 0, transparent 35%),
+      radial-gradient(circle at 75% 70%, rgba(230, 203, 122, 0.08) 0, transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(163, 58, 30, 0.04) 0, transparent 50%);
+  }
+
+  /* ───────── Responsive sizing helpers ───────── */
+  @media (max-width: 768px) {
+    .container, .container-narrow { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- EmailJS SDK (envío de formularios desde el frontend, sin backend) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<!-- ===== Código de la app (inlineado) ===== -->
+  <!-- ===== src/data.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Data ───────────────────────────────────────────────
+// Expositores, agenda, speakers, FAQ, prensa. Todo ficticio coherente.
+
+const BZ_DATE = "13 · 14 · 15 nov 2026";
+const BZ_DATE_FULL = "13, 14 y 15 de noviembre, 2026";
+const BZ_LOCATION = "Parque Centenario · Neuquén";
+
+// ── Expositores ─────────────────────────────────────────────────────
+const CATEGORIES = [
+  { id: "all",        label: "Todos",         color: "var(--bz-verde-profundo)" },
+  { id: "alimentos",  label: "Alimentación",  color: "var(--bz-verde-bosque)" },
+  { id: "cosmetica",  label: "Cosmética",     color: "var(--bz-tierra-rojo)" },
+  { id: "diseno",     label: "Diseño",        color: "var(--bz-ocre-tostado)" },
+  { id: "bienestar",  label: "Bienestar",     color: "var(--bz-verde-musgo)" },
+  { id: "infantil",   label: "Infantil",      color: "var(--bz-tierra-claro)" },
+  { id: "gastro",     label: "Gastronomía",   color: "var(--bz-verde-profundo)" },
+];
+
+const EXPOSITORES = [
+  { id: 1,  name: "Miel del Sur",            cat: "alimentos", origen: "Villa La Angostura", desc: "Apicultores patagónicos de tercera generación. Mieles puras y fermentos." },
+  { id: 2,  name: "Telas Vivas Patagonia",   cat: "diseno",    origen: "Bariloche",          desc: "Textiles teñidos con plantas nativas. Cada pieza, una temporada." },
+  { id: 3,  name: "Raíz Fermentados",        cat: "alimentos", origen: "Neuquén",             desc: "Kimchi, kombuchas y pickles vivos. Ciencia y paciencia." },
+  { id: 4,  name: "Tintas Naturales",        cat: "diseno",    origen: "El Bolsón",          origen2: "Pinturas de cáscaras, raíces y minerales del valle." , desc: "Pinturas de cáscaras, raíces y minerales del valle." },
+  { id: 5,  name: "Brote de Lana",           cat: "infantil",  origen: "Junín de los Andes", desc: "Juguetes blandos de lana orgánica y madera local." },
+  { id: 6,  name: "Cosmética Aroma",         cat: "cosmetica", origen: "San Martín de los Andes", desc: "Jabones, aceites y bálsamos con botánicos del bosque andino." },
+  { id: 7,  name: "Casa Tierra",             cat: "diseno",    origen: "Neuquén",             desc: "Cerámica utilitaria cocida a leña, esmaltes minerales." },
+  { id: 8,  name: "Verde Quieto",            cat: "bienestar", origen: "Bariloche",          desc: "Tisanas, aceites esenciales y prácticas para frenar." },
+  { id: 9,  name: "Cocina del Valle",        cat: "gastro",    origen: "Plottier",            desc: "Conservas de la huerta, mermeladas raras, salsas con historia." },
+  { id: 10, name: "Pequeños Granos",         cat: "infantil",  origen: "Centenario",          desc: "Cuentos, semilleros y juegos para sembrar curiosidad temprana." },
+  { id: 11, name: "Lúpulo Hermano",          cat: "gastro",    origen: "El Bolsón",          desc: "Cerveza artesanal con lúpulo cultivado a 60 km de acá." },
+  { id: 12, name: "Madera Hablante",         cat: "diseno",    origen: "Aluminé",             desc: "Mobiliario en madera caída. Cada mueble lleva el nombre de su árbol." },
+  { id: 13, name: "Algarroba Norteña",       cat: "alimentos", origen: "Neuquén",             desc: "Harinas, panes y dulces a base de algarroba y frutos nativos." },
+  { id: 14, name: "Quinoa Andina",           cat: "alimentos", origen: "Chos Malal",          desc: "Quinoa, kiwicha y semillas ancestrales del norte neuquino." },
+  { id: 15, name: "Lana Tejedora",           cat: "diseno",    origen: "Junín de los Andes", desc: "Tejidos en telar con lana de oveja mapuche, técnicas heredadas." },
+  { id: 16, name: "Aceites de Estepa",       cat: "cosmetica", origen: "Cipolletti",          desc: "Aceites prensados en frío: rosa mosqueta, almendra, lino." },
+  { id: 17, name: "Yerba Patagónica",        cat: "gastro",    origen: "Neuquén",             desc: "Blends de hierbas patagónicas, yerba mate orgánica de proyectos justos." },
+  { id: 18, name: "Hueco Cerámica",          cat: "diseno",    origen: "Bariloche",          desc: "Vajilla en gres y porcelana. Formas que se adaptan a las manos." },
+  { id: 19, name: "Pan de Piedra",           cat: "gastro",    origen: "Villa La Angostura", desc: "Panadería de masa madre, harinas de molino propio." },
+  { id: 20, name: "Sentidos Yoga",           cat: "bienestar", origen: "Neuquén",             desc: "Clases abiertas, meditación al amanecer y trabajo corporal." },
+  { id: 21, name: "Brotes y Hojas",          cat: "alimentos", origen: "Plottier",            desc: "Microverdes, brotes y plantas comestibles cultivadas hidropónicamente." },
+  { id: 22, name: "Pequeño Bosque",          cat: "infantil",  origen: "El Chocón",           desc: "Talleres de bioconstrucción y juegos al aire libre para chicos." },
+];
+
+// ── Programa ─────────────────────────────────────────────────────
+const DIAS = [
+  { id: "viernes", label: "Viernes", num: "13", subtitulo: "Apertura", fecha: "13 nov" },
+  { id: "sabado",  label: "Sábado",  num: "14", subtitulo: "Día completo", fecha: "14 nov" },
+  { id: "domingo", label: "Domingo", num: "15", subtitulo: "Cierre y cosecha", fecha: "15 nov" },
+];
+
+const ACTIVIDADES = {
+  viernes: [
+    { hora: "15:00", title: "Apertura oficial",                lugar: "Escenario Principal",    speaker: "Equipo BIORAIZ",          tipo: "Ceremonia" },
+    { hora: "16:00", title: "Inauguración del mercado",         lugar: "Pasillo Central",        speaker: "Todos los expositores",   tipo: "Mercado" },
+    { hora: "17:00", title: "Charla: Agroecología y futuro",    lugar: "Carpa Sur",              speaker: "Valeria Soto",            tipo: "Charla", destacado: true },
+    { hora: "18:00", title: "Taller: Pan de masa madre",        lugar: "Cocina Abierta",         speaker: "Pan de Piedra",           tipo: "Taller" },
+    { hora: "19:00", title: "Música en vivo: Pampa Trío",       lugar: "Escenario Principal",    speaker: "Pampa Trío",              tipo: "Música" },
+    { hora: "20:00", title: "Cierre del día — degustaciones",   lugar: "Patio de Comidas",       speaker: "Productores invitados",   tipo: "Encuentro" },
+  ],
+  sabado: [
+    { hora: "10:00", title: "Apertura · Café y comunidad",      lugar: "Patio de Entrada",       speaker: "BIORAIZ",                 tipo: "Encuentro" },
+    { hora: "10:30", title: "Yoga al sol",                      lugar: "Pradera Norte",          speaker: "Sentidos Yoga",           tipo: "Bienestar" },
+    { hora: "11:30", title: "Charla: Cocina sin desperdicio",   lugar: "Cocina Abierta",         speaker: "Marina Ré",               tipo: "Charla", destacado: true },
+    { hora: "12:30", title: "Taller infantil: Pinturas de la tierra", lugar: "Zona Brotes",     speaker: "Pequeños Granos",         tipo: "Infantil" },
+    { hora: "13:00", title: "Almuerzo · Mercado abierto",       lugar: "Patio de Comidas",       speaker: "Expositores",             tipo: "Mercado" },
+    { hora: "15:00", title: "Conversatorio: Ser productor hoy", lugar: "Carpa Sur",              speaker: "5 expositores",           tipo: "Charla" },
+    { hora: "16:00", title: "Cata de cervezas patagónicas",     lugar: "Patio Lúpulo",           speaker: "Lúpulo Hermano",          tipo: "Cata" },
+    { hora: "17:00", title: "Taller: Fermentos vivos",          lugar: "Cocina Abierta",         speaker: "Raíz Fermentados",        tipo: "Taller", destacado: true },
+    { hora: "18:00", title: "Charla: Diseño y materia prima",   lugar: "Carpa Norte",            speaker: "Casa Tierra · Hueco",     tipo: "Charla" },
+    { hora: "19:00", title: "Música en vivo: Las Hermanas",     lugar: "Escenario Principal",    speaker: "Las Hermanas",            tipo: "Música" },
+    { hora: "20:30", title: "Fogón de cierre",                  lugar: "Pradera Norte",          speaker: "Comunidad BIORAIZ",       tipo: "Encuentro" },
+  ],
+  domingo: [
+    { hora: "10:00", title: "Meditación + caminata",            lugar: "Pradera Norte",          speaker: "Verde Quieto",            tipo: "Bienestar" },
+    { hora: "11:00", title: "Cuentos para sembrar",             lugar: "Zona Brotes",            speaker: "Pequeños Granos",         tipo: "Infantil" },
+    { hora: "12:00", title: "Taller: Tinción natural de telas", lugar: "Carpa Oeste",            speaker: "Telas Vivas",             tipo: "Taller" },
+    { hora: "13:00", title: "Almuerzo de cosecha",              lugar: "Patio de Comidas",       speaker: "Cocina del Valle",        tipo: "Mercado", destacado: true },
+    { hora: "15:00", title: "Charla: Comunidad y propósito",    lugar: "Carpa Sur",              speaker: "Diego Marín",             tipo: "Charla" },
+    { hora: "16:30", title: "Mesa redonda: ¿Qué viene?",        lugar: "Escenario Principal",    speaker: "Productores + público",   tipo: "Charla" },
+    { hora: "18:00", title: "Música en vivo: Coro del Limay",   lugar: "Escenario Principal",    speaker: "Coro del Limay",          tipo: "Música" },
+    { hora: "19:30", title: "Cierre: agradecimiento + brindis", lugar: "Pradera Norte",          speaker: "Equipo BIORAIZ",          tipo: "Ceremonia", destacado: true },
+  ],
+};
+
+const SPEAKERS = [
+  { id: 1, name: "Valeria Soto",  rol: "Ingeniera agrónoma · INTA Patagonia", topic: "Agroecología y futuro" },
+  { id: 2, name: "Marina Ré",     rol: "Cocinera · autora de 'Provincia'",     topic: "Cocina sin desperdicio" },
+  { id: 3, name: "Diego Marín",   rol: "Antropólogo · UNCo",                    topic: "Comunidad y propósito" },
+  { id: 4, name: "Lara Pichún",   rol: "Tejedora · maestra mapuche",            topic: "Telares y memoria" },
+  { id: 5, name: "Tomás Vega",    rol: "Chef · Cocina Abierta",                 topic: "Fuego, fermento, paciencia" },
+  { id: 6, name: "Ana Lemos",     rol: "Periodista de impacto · La Tinta",      topic: "Comunicar lo esencial" },
+];
+
+// ── Entradas ─────────────────────────────────────────────────────
+const TICKETS = [
+  {
+    id: "early",
+    name: "Early Bird",
+    precio: "$ 4.800",
+    precioOrig: "$ 7.200",
+    badge: "Hasta el 30 de septiembre",
+    color: "ocre",
+    incluye: [
+      "Entrada general los 3 días",
+      "Bolsa de tela BIORAIZ",
+      "Descuento en talleres",
+      "Newsletter exclusiva con avances",
+    ],
+  },
+  {
+    id: "general",
+    name: "General",
+    precio: "$ 7.200",
+    badge: "Acceso completo",
+    color: "verde",
+    incluye: [
+      "Entrada general los 3 días",
+      "Acceso libre a todas las charlas",
+      "Mapa físico y programa impreso",
+    ],
+    destacado: true,
+  },
+  {
+    id: "familia",
+    name: "Familia",
+    precio: "$ 14.400",
+    badge: "2 adultos + 2 menores",
+    color: "tierra",
+    incluye: [
+      "Entrada para 2 adultos los 3 días",
+      "Entrada para 2 niños (hasta 12 años)",
+      "Workshop infantil garantizado",
+      "Snack ecológico de bienvenida",
+    ],
+  },
+];
+
+const FAQ = [
+  { q: "¿Es apto para mascotas?", a: "Sí. Las mascotas son bienvenidas con correa y agua. El evento es al aire libre, hay sombra y bebederos. Pedimos cuidar el espacio común." },
+  { q: "¿Hay accesibilidad para sillas de ruedas?", a: "Sí. Los caminos centrales están adaptados, hay baños accesibles y un punto de información con personal para acompañar. Si necesitás apoyo específico, escribinos antes." },
+  { q: "¿Puedo llevar mi propio termo o vajilla?", a: "Por favor. Es parte de los compromisos de la edición: minimizar descartables. En el ingreso hay bebederos para recargar." },
+  { q: "¿Hay estacionamiento?", a: "Limitado. Recomendamos transporte público, bicicleta o llegar caminando. Hay bicicletero señalizado en el ingreso y combis desde el centro de Neuquén." },
+  { q: "¿Se devuelve el dinero si llueve?", a: "El evento se hace con lluvia. Solo se suspende por alerta meteorológica oficial — en ese caso, las entradas son válidas para una fecha de reposición o se reintegran." },
+  { q: "¿Puedo pagar en cuotas?", a: "Sí, hasta 3 cuotas sin interés con tarjetas seleccionadas. También aceptamos transferencia y efectivo en puntos de venta físicos." },
+];
+
+// ── Prensa ─────────────────────────────────────────────────────
+const PRENSA_NOTAS = [
+  { medio: "La Tinta",       fecha: "Octubre 2025", title: "BIORAIZ: la feria que cambió el sur",                 url: "#" },
+  { medio: "Río Negro",      fecha: "Octubre 2025", title: "Más de 20.000 personas en la cuarta edición",           url: "#" },
+  { medio: "Revista Anfibia", fecha: "Sept 2025",   title: "Qué se cocina en BIORAIZ — y por qué importa",          url: "#" },
+  { medio: "Página/12",      fecha: "Agosto 2025",  title: "Productores patagónicos arman comunidad en Neuquén",    url: "#" },
+  { medio: "La Nación",      fecha: "Mayo 2025",    title: "Una feria sustentable que no es solo mercado",          url: "#" },
+  { medio: "Clarín Rural",   fecha: "Marzo 2025",   title: "BIORAIZ planifica su edición más ambiciosa",            url: "#" },
+];
+
+// ── Valores ─────────────────────────────────────────────────────
+const VALORES = [
+  { icon: "raíz",     title: "Origen",      desc: "Cada expositor explica de dónde viene su materia prima y cómo se produce. Sin esto, no hay feria." },
+  { icon: "círculo",  title: "Circularidad", desc: "Lo que entra al evento, sale o se transforma. Compost, vajilla reusable, materiales que vuelven a la tierra." },
+  { icon: "ola",      title: "Pausa",       desc: "La feria no apura. Programa que respira, espacios para sentarse y aire entre cada actividad." },
+  { icon: "trama",    title: "Comunidad",   desc: "BIORAIZ no es un evento que se 'consume', es un espacio que se construye. Los expositores, el público y el equipo son parte." },
+  { icon: "brote",    title: "Crecimiento", desc: "Cada edición intentamos algo nuevo, medimos qué funcionó y publicamos los datos. La transparencia es parte de la sustentabilidad." },
+];
+
+const NUMEROS = [
+  { value: 80,   suffix: "+", label: "expositores seleccionados" },
+  { value: 24,   suffix: "k", label: "personas en la última edición" },
+  { value: 4,    suffix: "",  label: "ediciones recorridas" },
+  { value: 92,   suffix: "%", label: "residuos clasificados y procesados" },
+];
+
+const COMPROMISOS = [
+  { title: "0 plásticos descartables",   desc: "Vajilla reutilizable o compostable. Reembolso por traer la tuya." },
+  { title: "100% energía limpia",         desc: "Generación solar para el escenario principal y la cocina abierta." },
+  { title: "Compost in situ",             desc: "Toda materia orgánica se procesa en el predio y vuelve a huertas escolares." },
+  { title: "Transporte compartido",       desc: "Combis subsidiadas desde el centro de Neuquén durante los 3 días." },
+  { title: "Materiales locales",          desc: "Toda señalética y mobiliario armado con maderas y telas regionales." },
+];
+
+const EQUIPO = [
+  { name: "Carla Reinoso",   rol: "Dirección general" },
+  { name: "Mauro Pereyra",   rol: "Producción y operaciones" },
+  { name: "Lucía Antún",     rol: "Curaduría de expositores" },
+  { name: "Tomás Aguirre",   rol: "Programa y contenidos" },
+  { name: "Inés Bermúdez",   rol: "Sustentabilidad" },
+  { name: "Joaquín Páez",    rol: "Comunicación y prensa" },
+];
+
+// Expose to window so other scripts can use it
+Object.assign(window, {
+  BZ_DATE, BZ_DATE_FULL, BZ_LOCATION,
+  CATEGORIES, EXPOSITORES, DIAS, ACTIVIDADES, SPEAKERS,
+  TICKETS, FAQ, PRENSA_NOTAS, VALORES, NUMEROS, COMPROMISOS, EQUIPO,
+});
+
+  </script>
+
+  <!-- ===== src/components.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Shared Components & Hooks ──────────────────────────
+const { useState, useEffect, useRef, useCallback } = React;
+
+// ── Logo (wordmark + sprout symbol) ──────────────────────────────
+function BzLogo({ size = 28, mono = false, color }) {
+  const c = color || (mono ? "currentColor" : "var(--bz-verde-profundo)");
+  const acc = mono ? "currentColor" : "var(--bz-ocre-tostado)";
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <svg width={size} height={size} viewBox="0 0 32 32" fill="none" style={{ flexShrink: 0 }}>
+        {/* sprout */}
+        <path d="M16 28 L16 14" stroke={c} strokeWidth="2" strokeLinecap="round" />
+        <path d="M16 18 C 9 18, 7 12, 7 8 C 12 9, 16 12, 16 18 Z" fill={c} />
+        <path d="M16 14 C 23 14, 25 9, 25 5 C 20 6, 16 8, 16 14 Z" fill={acc} />
+        <circle cx="16" cy="28" r="1.6" fill={c} />
+      </svg>
+      <span style={{
+        fontFamily: "var(--bz-font-display)",
+        fontWeight: 600,
+        fontSize: size * 0.62,
+        letterSpacing: "0.16em",
+        color: c,
+        lineHeight: 1,
+      }}>BIORAIZ</span>
+    </div>
+  );
+}
+
+// ── Scroll Reveal Hook ──────────────────────────────────────────
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal:not(.in)");
+    if (!els.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  });
+}
+
+// ── Animated Counter ────────────────────────────────────────────
+function Counter({ to, suffix = "", duration = 1400 }) {
+  const [val, setVal] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !started.current) {
+        started.current = true;
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          setVal(Math.round(to * eased));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        io.disconnect();
+      }
+    }, { threshold: 0.5 });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [to, duration]);
+  return <span ref={ref}>{val}{suffix}</span>;
+}
+
+// ── Header / Nav ────────────────────────────────────────────────
+const NAV_LINKS = [
+  { id: "home",        label: "Inicio" },
+  { id: "feria",       label: "La Feria" },
+  { id: "expositores", label: "Expositores" },
+  { id: "programa",    label: "Programa" },
+  { id: "entradas",    label: "Entradas" },
+  { id: "participa",   label: "Participá" },
+  { id: "prensa",      label: "Prensa" },
+];
+
+function Header({ page, setPage, transparent = false }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => { setMobileOpen(false); }, [page]);
+
+  const isLight = !transparent || scrolled;
+
+  const headerStyle = {
+    position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+    transition: "background 300ms var(--bz-ease), border-color 300ms var(--bz-ease), padding 300ms var(--bz-ease)",
+    background: isLight ? "rgba(250, 246, 237, 0.86)" : "transparent",
+    backdropFilter: isLight ? "blur(10px) saturate(140%)" : "none",
+    WebkitBackdropFilter: isLight ? "blur(10px) saturate(140%)" : "none",
+    borderBottom: isLight ? "0.5px solid var(--bz-borde-ligero)" : "0.5px solid transparent",
+    padding: scrolled ? "12px 0" : "20px 0",
+  };
+
+  return (
+    <header style={headerStyle}>
+      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
+        <button onClick={() => setPage("home")} style={{ display: "flex", alignItems: "center" }}>
+          <BzLogo size={26} color={!isLight ? "var(--bz-beige-hueso)" : undefined} />
+        </button>
+
+        <nav className="bz-nav-desktop" style={{ display: "flex", gap: 4 }}>
+          {NAV_LINKS.map(link => (
+            <button
+              key={link.id}
+              onClick={() => setPage(link.id)}
+              style={{
+                padding: "8px 14px",
+                fontSize: 13,
+                fontWeight: 500,
+                letterSpacing: "0.02em",
+                color: !isLight ? "var(--bz-beige-hueso)" : (page === link.id ? "var(--bz-verde-profundo)" : "var(--bz-texto-secundario)"),
+                borderRadius: "var(--bz-radius-pill)",
+                position: "relative",
+                transition: "color 200ms var(--bz-ease)",
+              }}
+            >
+              {link.label}
+              {page === link.id && (
+                <span style={{
+                  position: "absolute", bottom: 2, left: "50%", transform: "translateX(-50%)",
+                  width: 4, height: 4, borderRadius: "50%",
+                  background: !isLight ? "var(--bz-ocre-calido)" : "var(--bz-tierra-rojo)",
+                }} />
+              )}
+            </button>
+          ))}
+        </nav>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <button
+            onClick={() => setPage("entradas")}
+            className="btn btn-ocre btn-sm bz-cta-desktop"
+            style={{ padding: "9px 18px", fontSize: 12 }}
+          >
+            Entradas
+          </button>
+          <button
+            className="bz-burger"
+            onClick={() => setMobileOpen(v => !v)}
+            aria-label="Menú"
+            style={{
+              display: "none", width: 36, height: 36, alignItems: "center", justifyContent: "center",
+              borderRadius: "50%", color: !isLight ? "var(--bz-beige-hueso)" : "var(--bz-verde-profundo)",
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {mobileOpen ? <><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></> : <><path d="M3 7h18"/><path d="M3 17h18"/></>}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile drawer */}
+      {mobileOpen && (
+        <div style={{
+          background: "var(--bz-beige-hueso)",
+          borderTop: "0.5px solid var(--bz-borde-ligero)",
+          padding: "16px 0",
+          animation: "bz-slide-down 240ms var(--bz-ease)",
+        }}>
+          <div className="container" style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {NAV_LINKS.map(link => (
+              <button
+                key={link.id}
+                onClick={() => setPage(link.id)}
+                style={{
+                  padding: "12px 8px",
+                  fontSize: 16,
+                  textAlign: "left",
+                  color: page === link.id ? "var(--bz-verde-profundo)" : "var(--bz-texto-secundario)",
+                  fontWeight: page === link.id ? 600 : 400,
+                  borderBottom: "0.5px solid var(--bz-borde-ligero)",
+                }}
+              >
+                {link.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @media (max-width: 880px) {
+          .bz-nav-desktop { display: none !important; }
+          .bz-cta-desktop { display: none !important; }
+          .bz-burger { display: flex !important; }
+        }
+      `}</style>
+    </header>
+  );
+}
+
+// ── Footer ─────────────────────────────────────────────────────
+const ECO_PHRASES = [
+  "Esta página se carga con menos de 200 kb. La sustentabilidad también es digital.",
+  "Cada link visitado consume menos que un mate. Pero igual, andá despacio.",
+  "Tipografía cargada una sola vez. El resto, te lo regala el navegador.",
+  "Sin trackers, sin pop-ups, sin oscuridad. Solo BIORAIZ.",
+];
+
+function Footer({ setPage }) {
+  const [eco] = useState(() => ECO_PHRASES[Math.floor(Math.random() * ECO_PHRASES.length)]);
+
+  const colTitle = { fontSize: 11, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.18em", color: "var(--bz-ocre-calido)", marginBottom: 16, fontFamily: "var(--bz-font-mono)" };
+  const colLink = { display: "block", padding: "5px 0", fontSize: 14, color: "rgba(242, 239, 230, 0.78)", transition: "color 200ms var(--bz-ease)" };
+
+  return (
+    <footer style={{ background: "var(--bz-fondo-dark)", color: "var(--bz-crema-texto)", marginTop: 80 }}>
+      <div className="container" style={{ padding: "72px 32px 36px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: 48, marginBottom: 56 }} className="bz-footer-grid">
+          <div>
+            <BzLogo size={28} color="var(--bz-beige-hueso)" />
+            <p style={{ marginTop: 20, fontFamily: "var(--bz-font-display)", fontStyle: "italic", fontSize: 18, lineHeight: 1.45, color: "var(--bz-verde-claro)" }}>
+              Donde la tierra<br />florece y la comunidad crece.
+            </p>
+            <p style={{ marginTop: 24, fontSize: 13, color: "rgba(242, 239, 230, 0.65)", lineHeight: 1.7 }}>
+              {BZ_DATE_FULL}<br />{BZ_LOCATION}
+            </p>
+          </div>
+
+          <div>
+            <div style={colTitle}>Navegar</div>
+            {NAV_LINKS.slice(1).map(l => (
+              <a key={l.id} style={colLink} onClick={() => setPage(l.id)} href="#"
+                 onMouseEnter={e => e.target.style.color = "var(--bz-ocre-calido)"}
+                 onMouseLeave={e => e.target.style.color = "rgba(242, 239, 230, 0.78)"}>{l.label}</a>
+            ))}
+          </div>
+
+          <div>
+            <div style={colTitle}>Comunidad</div>
+            <a href="#" style={colLink}>Postulate como expositor</a>
+            <a href="#" style={colLink}>Voluntariado</a>
+            <a href="#" style={colLink}>Newsletter</a>
+            <a href="#" style={colLink}>Sustentabilidad</a>
+          </div>
+
+          <div>
+            <div style={colTitle}>Contacto</div>
+            <a href="mailto:hola@bioraiz.ar" style={colLink}>hola@bioraiz.ar</a>
+            <a href="mailto:prensa@bioraiz.ar" style={colLink}>prensa@bioraiz.ar</a>
+            <div style={{ marginTop: 20, display: "flex", gap: 12 }}>
+              {["IG", "FB", "YT", "TW"].map(s => (
+                <a key={s} href="#" style={{
+                  width: 36, height: 36, borderRadius: "50%", border: "1px solid rgba(242, 239, 230, 0.2)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 11, fontFamily: "var(--bz-font-mono)", color: "var(--bz-crema-texto)",
+                  transition: "all 200ms var(--bz-ease)",
+                }}
+                onMouseEnter={e => { e.target.style.background = "var(--bz-ocre-calido)"; e.target.style.color = "var(--bz-verde-profundo)"; }}
+                onMouseLeave={e => { e.target.style.background = "transparent"; e.target.style.color = "var(--bz-crema-texto)"; }}>{s}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div style={{
+          borderTop: "0.5px solid rgba(242, 239, 230, 0.15)",
+          paddingTop: 24,
+          display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap",
+          fontSize: 12, color: "rgba(242, 239, 230, 0.5)", fontFamily: "var(--bz-font-mono)",
+        }}>
+          <div>🌱 {eco}</div>
+          <div>© 2026 BIORAIZ · Neuquén, Argentina</div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 880px) {
+          .bz-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 36px !important; }
+        }
+        @media (max-width: 520px) {
+          .bz-footer-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </footer>
+  );
+}
+
+// ── Section heading (eyebrow + display) ──────────────────────────
+function SectionHead({ eyebrow, title, sub, align = "left", color, accent }) {
+  return (
+    <div className="reveal" style={{ textAlign: align, maxWidth: align === "center" ? 680 : "none", margin: align === "center" ? "0 auto" : 0 }}>
+      {eyebrow && <div className={"eyebrow" + (accent === "tierra" ? " eyebrow-tierra" : "")} style={{ marginBottom: 14 }}>{eyebrow}</div>}
+      <h2 className="display" style={{ fontSize: "clamp(32px, 5vw, 56px)", color: color || "var(--bz-texto-primario)", marginBottom: sub ? 18 : 0 }}>{title}</h2>
+      {sub && <p style={{ fontSize: 17, color: "var(--bz-texto-secundario)", lineHeight: 1.65, maxWidth: 580, marginLeft: align === "center" ? "auto" : 0, marginRight: align === "center" ? "auto" : 0 }}>{sub}</p>}
+    </div>
+  );
+}
+
+// ── Generic placeholder card ─────────────────────────────────────
+function Placeholder({ label, ratio = "4/3", dark = false, style = {}, children, decoration }) {
+  return (
+    <div className={"ph" + (dark ? " ph-dark" : "")} style={{ aspectRatio: ratio, borderRadius: "var(--bz-radius-lg)", ...style }}>
+      {decoration}
+      {children || <span className="ph-label">{label}</span>}
+    </div>
+  );
+}
+
+// ── Decorative organic shapes (inline SVG) ───────────────────────
+function LeafShape({ size = 80, color = "var(--bz-verde-musgo)", rotate = 0, style = {} }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" style={{ transform: `rotate(${rotate}deg)`, ...style }}>
+      <path d="M40 8 C 18 18, 8 38, 12 64 C 38 60, 60 42, 68 14 C 56 12, 48 10, 40 8 Z" fill={color} opacity="0.85" />
+      <path d="M40 8 C 38 22, 30 40, 14 62" stroke="rgba(0,0,0,0.15)" strokeWidth="1" fill="none" />
+    </svg>
+  );
+}
+
+function CircleShape({ size = 80, color = "var(--bz-ocre-calido)", style = {} }) {
+  return <div style={{ width: size, height: size, borderRadius: "50%", background: color, ...style }} />;
+}
+
+// ── Expositor card ──────────────────────────────────────────────
+function ExpositorCard({ exp, compact = false }) {
+  const cat = CATEGORIES.find(c => c.id === exp.cat);
+  return (
+    <article style={{
+      background: "var(--bz-beige-hueso)",
+      borderRadius: "var(--bz-radius-lg)",
+      overflow: "hidden",
+      border: "0.5px solid var(--bz-borde-ligero)",
+      transition: "transform 300ms var(--bz-ease), box-shadow 300ms var(--bz-ease)",
+      cursor: "pointer",
+      display: "flex", flexDirection: "column",
+    }}
+    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "var(--bz-shadow-md)"; }}
+    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+    >
+      <Placeholder label={`retrato · ${exp.name}`} ratio={compact ? "5/4" : "4/3"} style={{ borderRadius: 0 }} />
+      <div style={{ padding: compact ? "16px 18px" : "20px 22px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+          <span className="tag" style={{ background: "transparent", color: cat?.color, padding: 0, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)" }}>{cat?.label}</span>
+          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "var(--bz-borde-suave)" }} />
+          <span style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>{exp.origen}</span>
+        </div>
+        <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: compact ? 20 : 22, color: "var(--bz-texto-primario)", marginBottom: 8, lineHeight: 1.15 }}>{exp.name}</h3>
+        {!compact && <p style={{ fontSize: 13, color: "var(--bz-texto-secundario)", lineHeight: 1.6 }}>{exp.desc}</p>}
+      </div>
+    </article>
+  );
+}
+
+// ── Expose ──
+Object.assign(window, {
+  BzLogo, useReveal, Counter,
+  Header, Footer, SectionHead,
+  Placeholder, LeafShape, CircleShape,
+  ExpositorCard, NAV_LINKS,
+});
+
+  </script>
+
+  <!-- ===== src/page-home.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Home Page ──────────────────────────────────────────
+
+function PageHome({ setPage }) {
+  useReveal();
+
+  return (
+    <div className="page-enter">
+      {/* HERO — layered, warm, organic */}
+      <Hero setPage={setPage} />
+
+      {/* PURPOSE — short, breathing */}
+      <Purpose />
+
+      {/* NUMBERS — animated counters */}
+      <NumbersSection />
+
+      {/* EXPOSITORES — horizontal scroll */}
+      <ExpositoresScroll setPage={setPage} />
+
+      {/* AGENDA preview */}
+      <AgendaPreview setPage={setPage} />
+
+      {/* GALLERY — asymmetric mosaic */}
+      <Gallery />
+
+      {/* NEWSLETTER */}
+      <NewsletterBlock />
+    </div>
+  );
+}
+
+// ── HERO ───────────────────────────────────────────────────────
+function Hero({ setPage }) {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      setMouse({ x, y });
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, []);
+
+  return (
+    <section style={{
+      position: "relative",
+      minHeight: "100vh",
+      background: "var(--bz-fondo-dark)",
+      color: "var(--bz-beige-hueso)",
+      overflow: "hidden",
+      paddingTop: 120,
+    }}>
+      {/* Hero placeholder image (full-bleed video stand-in) */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 0,
+        background: "linear-gradient(135deg, #1A2812 0%, #2A3D24 35%, #3D5A3F 70%, #4A6E4A 100%)",
+      }}>
+        <div className="ph ph-dark" style={{ position: "absolute", inset: 0, opacity: 0.4 }}>
+          <span className="ph-label" style={{ position: "absolute", top: 24, right: 24 }}>video loop · mercado al aire libre</span>
+        </div>
+        {/* Decorative leaves */}
+        <div style={{ position: "absolute", top: "12%", left: "-4%", opacity: 0.55, transform: `translate(${mouse.x * 10}px, ${mouse.y * 8}px) rotate(-12deg)`, transition: "transform 600ms var(--bz-ease)" }}>
+          <LeafShape size={280} color="var(--bz-verde-musgo)" />
+        </div>
+        <div style={{ position: "absolute", bottom: "-5%", right: "-2%", opacity: 0.5, transform: `translate(${mouse.x * -12}px, ${mouse.y * -10}px) rotate(160deg)`, transition: "transform 600ms var(--bz-ease)" }}>
+          <LeafShape size={340} color="var(--bz-ocre-tostado)" />
+        </div>
+        <div style={{ position: "absolute", top: "40%", right: "18%", opacity: 0.7, transform: `translate(${mouse.x * 6}px, ${mouse.y * 6}px)`, transition: "transform 600ms var(--bz-ease)" }}>
+          <CircleShape size={120} color="var(--bz-tierra-rojo)" style={{ opacity: 0.32 }} />
+        </div>
+        {/* dark vignette */}
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 60%, transparent 0%, rgba(26, 32, 18, 0.45) 80%)" }} />
+      </div>
+
+      <div className="container" style={{ position: "relative", zIndex: 1, paddingTop: 80, paddingBottom: 100 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "end", gap: 40 }} className="bz-hero-grid">
+          <div>
+            <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 24, animation: "bz-fade-up 800ms var(--bz-ease) both" }}>
+              4ª edición · feria sustentable
+            </div>
+            <h1 className="display" style={{
+              fontSize: "clamp(56px, 11vw, 168px)",
+              color: "var(--bz-beige-hueso)",
+              lineHeight: 0.92,
+              letterSpacing: "-0.02em",
+              marginBottom: 32,
+              animation: "bz-fade-up 1000ms var(--bz-ease) 100ms both",
+            }}>
+              BIO<em style={{ color: "var(--bz-ocre-calido)" }}>RAIZ</em>
+            </h1>
+            <p style={{
+              fontFamily: "var(--bz-font-display)",
+              fontStyle: "italic",
+              fontSize: "clamp(22px, 2.8vw, 32px)",
+              color: "var(--bz-verde-claro)",
+              maxWidth: 580,
+              lineHeight: 1.35,
+              marginBottom: 44,
+              animation: "bz-fade-up 1000ms var(--bz-ease) 300ms both",
+            }}>
+              Donde la tierra florece <br /> y la comunidad crece.
+            </p>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap", animation: "bz-fade-up 1000ms var(--bz-ease) 500ms both" }}>
+              <button onClick={() => setPage("entradas")} className="btn btn-ocre">Quiero ir</button>
+              <button onClick={() => setPage("programa")} className="btn" style={{ background: "rgba(250, 246, 237, 0.1)", color: "var(--bz-beige-hueso)", border: "1.5px solid rgba(250, 246, 237, 0.3)" }}>Ver programa</button>
+            </div>
+          </div>
+
+          {/* Right column: date stamp */}
+          <div style={{ animation: "bz-fade-up 1000ms var(--bz-ease) 400ms both" }} className="bz-hero-date">
+            <div style={{
+              border: "1px solid rgba(230, 203, 122, 0.4)",
+              borderRadius: "var(--bz-radius-lg)",
+              padding: "20px 24px",
+              background: "rgba(42, 61, 36, 0.4)",
+              backdropFilter: "blur(8px)",
+              minWidth: 240,
+            }}>
+              <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 12 }}>fecha · lugar</div>
+              <div style={{ fontFamily: "var(--bz-font-display)", fontSize: 32, color: "var(--bz-beige-hueso)", lineHeight: 1.1, marginBottom: 8 }}>
+                13 · 14 · 15<br />nov 2026
+              </div>
+              <div style={{ fontSize: 13, color: "var(--bz-verde-claro)", lineHeight: 1.5, marginTop: 12, paddingTop: 12, borderTop: "0.5px solid rgba(230, 203, 122, 0.2)" }}>
+                Parque Centenario<br />Neuquén · Patagonia
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll cue */}
+        <div style={{ position: "absolute", bottom: 36, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: "bz-fade-in 1500ms var(--bz-ease) 1500ms both" }}>
+          <span style={{ fontSize: 10, letterSpacing: "0.3em", color: "var(--bz-verde-claro)", fontFamily: "var(--bz-font-mono)", textTransform: "uppercase" }}>Bajá</span>
+          <div style={{ width: 1, height: 32, background: "rgba(230, 203, 122, 0.4)", animation: "bz-pulse 2s ease infinite" }} />
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 880px) {
+          .bz-hero-grid { grid-template-columns: 1fr !important; }
+          .bz-hero-date { order: -1; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// ── PURPOSE ────────────────────────────────────────────────────
+function Purpose() {
+  return (
+    <section style={{ padding: "120px 0 80px", background: "var(--bz-fondo-base)" }} className="trama">
+      <div className="container-narrow" style={{ textAlign: "center" }}>
+        <div className="eyebrow reveal" style={{ marginBottom: 32 }}>¿Qué es BIORAIZ?</div>
+        <p className="display reveal reveal-delay-1" style={{ fontSize: "clamp(28px, 4vw, 44px)", color: "var(--bz-texto-primario)", lineHeight: 1.25, marginBottom: 32 }}>
+          Una feria de productores patagónicos donde la materia prima tiene origen, la cocina tiene tiempo y la comunidad tiene espacio para <em>encontrarse</em>.
+        </p>
+        <p className="reveal reveal-delay-2" style={{ fontSize: 17, color: "var(--bz-texto-secundario)", lineHeight: 1.7, maxWidth: 640, margin: "0 auto" }}>
+          No es un mercado, no es un evento corporativo, no es un festival. Es un lugar para detenerse, probar, conversar y volver a casa con algo más que una bolsa.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ── NUMBERS ────────────────────────────────────────────────────
+function NumbersSection() {
+  return (
+    <section style={{ padding: "60px 0 100px", background: "var(--bz-fondo-base)" }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }} className="bz-numbers-grid">
+          {NUMEROS.map((n, i) => (
+            <div key={i} className="reveal" style={{ background: "var(--bz-beige-hueso)", padding: "44px 32px", textAlign: "center", transitionDelay: `${i * 80}ms` }}>
+              <div className="display" style={{ fontSize: "clamp(48px, 7vw, 84px)", color: "var(--bz-verde-profundo)", lineHeight: 1, marginBottom: 12 }}>
+                <Counter to={n.value} suffix={n.suffix} />
+              </div>
+              <div style={{ fontSize: 13, color: "var(--bz-texto-secundario)", lineHeight: 1.5, maxWidth: 180, margin: "0 auto" }}>
+                {n.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 880px) { .bz-numbers-grid { grid-template-columns: 1fr 1fr !important; } }
+      `}</style>
+    </section>
+  );
+}
+
+// ── EXPOSITORES HORIZONTAL ─────────────────────────────────────
+function ExpositoresScroll({ setPage }) {
+  const scrollRef = useRef(null);
+  const featured = EXPOSITORES.slice(0, 10);
+
+  const scroll = (dir) => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollBy({ left: dir * 360, behavior: "smooth" });
+  };
+
+  return (
+    <section style={{ padding: "100px 0 120px", background: "var(--bz-fondo-alt)", position: "relative", overflow: "hidden" }}>
+      <div className="container" style={{ marginBottom: 48 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 24, flexWrap: "wrap" }}>
+          <SectionHead
+            eyebrow="80+ expositores"
+            title={<>Cosas hechas <em>con manos</em> de la Patagonia.</>}
+            sub="Cada expositor pasa por una curaduría que pregunta por el origen, el proceso y la coherencia. Conocé a algunos de los que vienen este año."
+          />
+          <div style={{ display: "flex", gap: 8 }} className="reveal">
+            <button onClick={() => scroll(-1)} aria-label="Anterior" style={arrowBtn}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <button onClick={() => scroll(1)} aria-label="Siguiente" style={arrowBtn}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div ref={scrollRef} style={{
+        display: "flex",
+        gap: 20,
+        overflowX: "auto",
+        padding: "8px 0 24px",
+        paddingLeft: "max(32px, calc((100vw - 1280px) / 2 + 32px))",
+        paddingRight: 32,
+        scrollSnapType: "x mandatory",
+        scrollbarWidth: "thin",
+      }}>
+        {featured.map((exp, i) => (
+          <div key={exp.id} className="reveal" style={{ minWidth: 320, maxWidth: 320, scrollSnapAlign: "start", transitionDelay: `${(i % 4) * 80}ms` }}>
+            <ExpositorCard exp={exp} />
+          </div>
+        ))}
+        <div style={{ minWidth: 320, maxWidth: 320, scrollSnapAlign: "start", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <button onClick={() => setPage("expositores")} className="btn btn-secondary" style={{ flexDirection: "column", padding: "40px 30px", height: "100%", width: "100%", borderRadius: "var(--bz-radius-lg)", borderStyle: "dashed" }}>
+            <span style={{ fontFamily: "var(--bz-font-display)", fontSize: 28, marginBottom: 8 }}>Ver todos</span>
+            <span style={{ fontSize: 13, color: "var(--bz-texto-secundario)" }}>80 expositores en total →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const arrowBtn = {
+  width: 44, height: 44, borderRadius: "50%",
+  border: "1px solid var(--bz-borde-suave)",
+  background: "var(--bz-beige-hueso)",
+  color: "var(--bz-verde-profundo)",
+  display: "flex", alignItems: "center", justifyContent: "center",
+  transition: "all 200ms var(--bz-ease)",
+};
+
+// ── AGENDA PREVIEW ─────────────────────────────────────────────
+function AgendaPreview({ setPage }) {
+  const preview = ACTIVIDADES.sabado.filter(a => a.destacado).slice(0, 3);
+
+  return (
+    <section style={{ padding: "120px 0", background: "var(--bz-fondo-base)" }}>
+      <div className="container" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 80, alignItems: "start" }} className="bz-agenda-grid">
+        <div className="reveal">
+          <div className="eyebrow eyebrow-tierra" style={{ marginBottom: 18 }}>Programa</div>
+          <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "var(--bz-texto-primario)", marginBottom: 24, lineHeight: 1.1 }}>
+            3 días, <br />sin apuro.
+          </h2>
+          <p style={{ fontSize: 16, color: "var(--bz-texto-secundario)", lineHeight: 1.7, marginBottom: 32 }}>
+            Charlas, talleres, música en vivo, espacios para chicos y una cocina abierta que no para. El programa es denso pero con respiros — porque la pausa también es parte.
+          </p>
+          <button onClick={() => setPage("programa")} className="btn btn-primary">Ver programa completo</button>
+        </div>
+
+        <div>
+          {preview.map((act, i) => (
+            <div key={i} className="reveal" style={{
+              display: "grid",
+              gridTemplateColumns: "80px 1fr auto",
+              gap: 24,
+              padding: "28px 0",
+              borderBottom: "0.5px solid var(--bz-borde-suave)",
+              alignItems: "center",
+              transitionDelay: `${i * 100}ms`,
+            }}>
+              <div className="display" style={{ fontSize: 28, color: "var(--bz-tierra-rojo)", letterSpacing: "-0.02em" }}>{act.hora}</div>
+              <div>
+                <div style={{ fontFamily: "var(--bz-font-display)", fontSize: 22, color: "var(--bz-texto-primario)", marginBottom: 6, lineHeight: 1.2 }}>{act.title}</div>
+                <div style={{ fontSize: 13, color: "var(--bz-texto-secundario)" }}>
+                  {act.lugar} · {act.speaker}
+                </div>
+              </div>
+              <span className="tag tag-outline" style={{ alignSelf: "start" }}>{act.tipo}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 880px) {
+          .bz-agenda-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// ── GALLERY ────────────────────────────────────────────────────
+function Gallery() {
+  return (
+    <section style={{ padding: "120px 0", background: "var(--bz-fondo-alt)" }}>
+      <div className="container">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 56, gap: 24, flexWrap: "wrap" }}>
+          <SectionHead eyebrow="Edición anterior" title={<>Lo que pasó <em>vuelve.</em></>} />
+          <button className="btn-ghost reveal" style={{ color: "var(--bz-verde-profundo)", fontSize: 14 }}>Ver galería completa</button>
+        </div>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(12, 1fr)",
+          gridAutoRows: "120px",
+          gap: 14,
+        }} className="bz-gallery-grid">
+          <div className="reveal" style={{ gridColumn: "span 7", gridRow: "span 3" }}>
+            <Placeholder label="hero · mercado al amanecer" style={{ width: "100%", height: "100%" }} ratio="auto" />
+          </div>
+          <div className="reveal reveal-delay-1" style={{ gridColumn: "span 5", gridRow: "span 2" }}>
+            <Placeholder label="detalle · manos & producto" style={{ width: "100%", height: "100%" }} ratio="auto" />
+          </div>
+          <div className="reveal reveal-delay-2" style={{ gridColumn: "span 5", gridRow: "span 1" }}>
+            <Placeholder label="público · charla central" style={{ width: "100%", height: "100%" }} ratio="auto" />
+          </div>
+          <div className="reveal reveal-delay-1" style={{ gridColumn: "span 4", gridRow: "span 2" }}>
+            <Placeholder label="cocina abierta" style={{ width: "100%", height: "100%" }} ratio="auto" />
+          </div>
+          <div className="reveal reveal-delay-2" style={{ gridColumn: "span 4", gridRow: "span 2" }}>
+            <Placeholder label="zona brotes · niños" style={{ width: "100%", height: "100%" }} ratio="auto" />
+          </div>
+          <div className="reveal reveal-delay-3" style={{ gridColumn: "span 4", gridRow: "span 2" }}>
+            <Placeholder label="atardecer · escenario" style={{ width: "100%", height: "100%" }} ratio="auto" />
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 880px) {
+          .bz-gallery-grid { grid-template-columns: repeat(6, 1fr) !important; }
+          .bz-gallery-grid > div { grid-column: span 6 !important; grid-row: span 2 !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// ── NEWSLETTER ─────────────────────────────────────────────────
+function NewsletterBlock() {
+  const [email, setEmail] = useState("");
+  const [sent, setSent] = useState(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (email.includes("@")) setSent(true);
+  };
+
+  return (
+    <section style={{ padding: "100px 0", background: "var(--bz-crema-fondo)" }}>
+      <div className="container-narrow">
+        <div className="reveal" style={{
+          background: "var(--bz-beige-hueso)",
+          borderRadius: "var(--bz-radius-xl)",
+          padding: "60px 56px",
+          border: "0.5px solid var(--bz-borde-ligero)",
+          textAlign: "center",
+          position: "relative",
+          overflow: "hidden",
+        }}>
+          <div style={{ position: "absolute", top: -40, right: -40, opacity: 0.18 }}>
+            <LeafShape size={200} color="var(--bz-verde-musgo)" rotate={30} />
+          </div>
+          <div style={{ position: "absolute", bottom: -50, left: -30, opacity: 0.12 }}>
+            <LeafShape size={180} color="var(--bz-ocre-tostado)" rotate={-160} />
+          </div>
+
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div className="eyebrow eyebrow-tierra" style={{ marginBottom: 18 }}>Carta de Raíz</div>
+            <h3 className="display" style={{ fontSize: "clamp(28px, 4vw, 40px)", color: "var(--bz-texto-primario)", marginBottom: 18, lineHeight: 1.2 }}>
+              Una vez al mes, algo bueno en tu bandeja.
+            </h3>
+            <p style={{ fontSize: 16, color: "var(--bz-texto-secundario)", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
+              Novedades del evento, historias de productores y notas eco. Sin spam, sin urgencia, sin métricas oscuras.
+            </p>
+
+            {sent ? (
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 12, padding: "14px 24px", background: "var(--bz-verde-pasto)", color: "var(--bz-verde-bosque)", borderRadius: "var(--bz-radius-pill)", fontSize: 14 }}>
+                <span style={{ fontSize: 16 }}>✓</span>
+                ¡Listo! Te llegará un mail de confirmación.
+              </div>
+            ) : (
+              <form onSubmit={onSubmit} style={{ display: "flex", gap: 8, maxWidth: 440, margin: "0 auto", flexWrap: "wrap" }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="tu@correo.com"
+                  required
+                  style={{
+                    flex: 1, minWidth: 200,
+                    padding: "14px 20px",
+                    fontSize: 14,
+                    fontFamily: "var(--bz-font-body)",
+                    border: "1px solid var(--bz-ocre-calido)",
+                    borderRadius: "var(--bz-radius-pill)",
+                    background: "var(--bz-beige-base)",
+                    color: "var(--bz-texto-primario)",
+                    outline: "none",
+                  }}
+                />
+                <button type="submit" className="btn btn-primary">Suscribirme</button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+window.PageHome = PageHome;
+
+  </script>
+
+  <!-- ===== src/page-feria.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — La Feria ──────────────────────────────────────────
+
+function PageFeria({ setPage }) {
+  useReveal();
+
+  return (
+    <div className="page-enter">
+      {/* HEADER */}
+      <SubPageHeader
+        eyebrow="Sobre BIORAIZ"
+        title={<>La Feria.</>}
+        sub="Una historia que empezó con cuatro productores en una plaza y hoy convoca a 24.000 personas. Esto es lo que somos y por qué seguimos."
+      />
+
+      {/* HISTORY */}
+      <section style={{ padding: "60px 0 100px", background: "var(--bz-fondo-base)" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start" }} className="bz-feria-history">
+            <div className="reveal" style={{ position: "sticky", top: 120 }}>
+              <Placeholder label="archivo · primera edición · 2021" ratio="3/4" />
+            </div>
+            <div>
+              <div className="reveal eyebrow" style={{ marginBottom: 14 }}>Origen</div>
+              <h2 className="reveal display" style={{ fontSize: "clamp(32px, 5vw, 52px)", marginBottom: 32, color: "var(--bz-texto-primario)" }}>
+                Cuatro productores, una plaza, una idea simple.
+              </h2>
+              <div className="reveal reveal-delay-1" style={{ fontSize: 17, color: "var(--bz-texto-secundario)", lineHeight: 1.85, marginBottom: 24 }}>
+                <p style={{ marginBottom: 20 }}>En 2021, cuatro productores patagónicos armaron una mesa larga en la plaza central de Neuquén y se sentaron a ver qué pasaba. Lo que pasó fue que la gente se quedó. Se quedó a probar, a preguntar, a contar.</p>
+                <p style={{ marginBottom: 20 }}>De ahí salió la idea de hacer una feria. No un evento. No un mercado. <strong style={{ color: "var(--bz-texto-primario)" }}>Una feria, en el sentido más original de la palabra:</strong> un lugar donde la gente se junta a intercambiar — productos, sí, pero también tiempo, conocimiento y modos de hacer.</p>
+                <p style={{ marginBottom: 20 }}>Cuatro años después, BIORAIZ junta a más de 80 expositores curados, una agenda de charlas y talleres, y miles de personas que vienen de toda la Patagonia. Pero seguimos guardando ese gesto inicial: una mesa larga, y tiempo.</p>
+              </div>
+
+              <div className="reveal reveal-delay-2" style={{ marginTop: 48, padding: "24px 28px", background: "var(--bz-verde-pasto)", borderLeft: "3px solid var(--bz-verde-musgo)", borderRadius: "0 var(--bz-radius-md) var(--bz-radius-md) 0" }}>
+                <p style={{ fontFamily: "var(--bz-font-display)", fontStyle: "italic", fontSize: 19, color: "var(--bz-verde-profundo)", lineHeight: 1.5 }}>
+                  "No queremos crecer más rápido. Queremos crecer mejor."
+                </p>
+                <p style={{ fontSize: 12, color: "var(--bz-verde-bosque)", marginTop: 12, fontFamily: "var(--bz-font-mono)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  Carla Reinoso · Dirección
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 880px) {
+            .bz-feria-history { grid-template-columns: 1fr !important; gap: 32px !important; }
+            .bz-feria-history > div:first-child { position: relative !important; top: 0 !important; }
+          }
+        `}</style>
+      </section>
+
+      {/* VALORES */}
+      <section style={{ padding: "100px 0", background: "var(--bz-fondo-alt)" }}>
+        <div className="container">
+          <SectionHead
+            eyebrow="Nuestros valores"
+            title={<>No los pegamos a la pared.<br /><em>Los usamos para decidir.</em></>}
+            sub="Cada decisión de la feria — desde qué expositor entra hasta qué tipo de vasos usamos — pasa por estos 5 filtros."
+          />
+
+          <div style={{ marginTop: 64, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
+            {VALORES.map((v, i) => (
+              <ValorBlock key={i} valor={v} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SUSTENTABILIDAD */}
+      <section style={{ padding: "120px 0", background: "var(--bz-fondo-base)" }} className="trama">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 80, alignItems: "start" }} className="bz-feria-sust">
+            <div>
+              <SectionHead
+                eyebrow="Sustentabilidad"
+                title={<>5 compromisos <em>medibles.</em></>}
+                sub="Sin esto, no hay BIORAIZ. Cada edición publicamos los resultados — los buenos y los que aún no funcionan."
+              />
+              <div className="reveal reveal-delay-3" style={{ marginTop: 32, display: "inline-flex", alignItems: "center", gap: 12, padding: "14px 24px", border: "1px solid var(--bz-verde-musgo)", borderRadius: "var(--bz-radius-pill)", fontSize: 13, color: "var(--bz-verde-bosque)" }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--bz-verde-musgo)", animation: "bz-pulse 2s infinite" }} />
+                Reporte de impacto 2025 publicado
+              </div>
+            </div>
+
+            <div>
+              {COMPROMISOS.map((c, i) => (
+                <div key={i} className="reveal" style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr",
+                  gap: 24,
+                  padding: "24px 0",
+                  borderBottom: i < COMPROMISOS.length - 1 ? "0.5px solid var(--bz-borde-suave)" : "none",
+                  transitionDelay: `${i * 80}ms`,
+                  alignItems: "start",
+                }}>
+                  <div className="display" style={{ fontSize: 32, color: "var(--bz-tierra-rojo)", lineHeight: 1, fontFeatureSettings: '"tnum"' }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <div>
+                    <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 22, color: "var(--bz-texto-primario)", marginBottom: 6 }}>{c.title}</h4>
+                    <p style={{ fontSize: 14, color: "var(--bz-texto-secundario)", lineHeight: 1.65 }}>{c.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <style>{`@media (max-width: 880px) { .bz-feria-sust { grid-template-columns: 1fr !important; gap: 40px !important; } }`}</style>
+      </section>
+
+      {/* EQUIPO */}
+      <section style={{ padding: "120px 0", background: "var(--bz-fondo-alt)" }}>
+        <div className="container">
+          <SectionHead
+            eyebrow="Quién hace BIORAIZ"
+            title={<>Un equipo chico, <em>de carne y hueso.</em></>}
+            sub="No tercerizamos lo importante. Estas seis personas, más una red rotativa de 30 voluntarios, son quienes arman BIORAIZ cada año."
+          />
+
+          <div style={{ marginTop: 64, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 24 }}>
+            {EQUIPO.map((m, i) => (
+              <div key={i} className="reveal" style={{ transitionDelay: `${(i % 3) * 80}ms` }}>
+                <Placeholder label={`retrato · ${m.name.split(" ")[0]}`} ratio="1/1" style={{ marginBottom: 14, borderRadius: "var(--bz-radius-md)" }} />
+                <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 19, color: "var(--bz-texto-primario)", marginBottom: 4 }}>{m.name}</h4>
+                <p style={{ fontSize: 12, color: "var(--bz-texto-secundario)", letterSpacing: "0.04em" }}>{m.rol}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <CTABanner setPage={setPage} />
+    </div>
+  );
+}
+
+// ── Sub page header ──
+function SubPageHeader({ eyebrow, title, sub }) {
+  return (
+    <section style={{ background: "var(--bz-fondo-dark)", color: "var(--bz-beige-hueso)", padding: "180px 0 80px", position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", top: "10%", right: "-3%", opacity: 0.18 }}>
+        <LeafShape size={260} color="var(--bz-verde-musgo)" rotate={-25} />
+      </div>
+      <div style={{ position: "absolute", bottom: "-10%", left: "-5%", opacity: 0.12 }}>
+        <LeafShape size={300} color="var(--bz-ocre-calido)" rotate={140} />
+      </div>
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18, animation: "bz-fade-up 700ms var(--bz-ease) both" }}>{eyebrow}</div>
+        <h1 className="display" style={{ fontSize: "clamp(56px, 9vw, 132px)", color: "var(--bz-beige-hueso)", lineHeight: 0.95, letterSpacing: "-0.02em", marginBottom: 24, animation: "bz-fade-up 800ms var(--bz-ease) 100ms both" }}>
+          {title}
+        </h1>
+        {sub && (
+          <p style={{
+            fontFamily: "var(--bz-font-display)",
+            fontStyle: "italic",
+            fontSize: "clamp(18px, 2.2vw, 24px)",
+            color: "var(--bz-verde-claro)",
+            maxWidth: 720,
+            lineHeight: 1.45,
+            animation: "bz-fade-up 800ms var(--bz-ease) 200ms both",
+          }}>{sub}</p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+// ── Valor block ──
+function ValorBlock({ valor, index }) {
+  return (
+    <div className="reveal" style={{
+      background: "var(--bz-beige-hueso)",
+      padding: "40px 32px",
+      transitionDelay: `${index * 80}ms`,
+      transition: "background 250ms var(--bz-ease)",
+    }}>
+      <ValorIcon kind={valor.icon} />
+      <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 24, color: "var(--bz-texto-primario)", marginTop: 24, marginBottom: 10 }}>
+        {valor.title}
+      </h4>
+      <p style={{ fontSize: 14, color: "var(--bz-texto-secundario)", lineHeight: 1.65 }}>{valor.desc}</p>
+    </div>
+  );
+}
+
+function ValorIcon({ kind }) {
+  const c = "var(--bz-verde-profundo)";
+  const a = "var(--bz-tierra-rojo)";
+  const size = 44;
+  switch (kind) {
+    case "raíz":
+      return (
+        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="14" r="4" fill={c} />
+          <path d="M22 18 L22 36" stroke={c} strokeWidth="2" strokeLinecap="round" />
+          <path d="M22 26 L12 36 M22 28 L32 38 M22 32 L18 40 M22 32 L26 40" stroke={c} strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="22" cy="14" r="4" stroke={a} strokeWidth="1.5" fill="none" />
+        </svg>
+      );
+    case "círculo":
+      return (
+        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+          <path d="M36 22 A 14 14 0 1 1 22 8" stroke={c} strokeWidth="2" strokeLinecap="round" fill="none" />
+          <path d="M22 8 L30 8 L30 16" stroke={a} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    case "ola":
+      return (
+        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+          <path d="M4 18 Q 11 12, 18 18 T 32 18 T 40 18" stroke={c} strokeWidth="2" strokeLinecap="round" fill="none" />
+          <path d="M4 28 Q 11 22, 18 28 T 32 28 T 40 28" stroke={a} strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7" />
+        </svg>
+      );
+    case "trama":
+      return (
+        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+          <circle cx="14" cy="14" r="3" fill={c} />
+          <circle cx="30" cy="14" r="3" fill={c} />
+          <circle cx="22" cy="30" r="3" fill={a} />
+          <path d="M14 14 L30 14 L22 30 Z" stroke={c} strokeWidth="1.5" fill="none" />
+        </svg>
+      );
+    case "brote":
+      return (
+        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+          <path d="M22 38 L22 18" stroke={c} strokeWidth="2" strokeLinecap="round" />
+          <path d="M22 22 C 14 22, 12 16, 12 12 C 18 13, 22 16, 22 22 Z" fill={c} />
+          <path d="M22 18 C 30 18, 32 14, 32 10 C 26 11, 22 12, 22 18 Z" fill={a} />
+        </svg>
+      );
+    default: return null;
+  }
+}
+
+// ── CTA Banner (reused on many pages) ──
+function CTABanner({ setPage }) {
+  return (
+    <section style={{ padding: "100px 0", background: "var(--bz-fondo-base)" }}>
+      <div className="container">
+        <div className="reveal" style={{
+          background: "var(--bz-verde-profundo)",
+          borderRadius: "var(--bz-radius-xl)",
+          padding: "72px 64px",
+          color: "var(--bz-beige-hueso)",
+          display: "grid",
+          gridTemplateColumns: "1.5fr 1fr",
+          gap: 48,
+          alignItems: "center",
+          position: "relative",
+          overflow: "hidden",
+        }} className="bz-cta-banner">
+          <div style={{ position: "absolute", top: -40, right: -40, opacity: 0.25 }}>
+            <LeafShape size={240} color="var(--bz-ocre-calido)" rotate={45} />
+          </div>
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>13 · 14 · 15 nov 2026</div>
+            <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05, marginBottom: 18 }}>
+              Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>el Parque.</em>
+            </h2>
+            <p style={{ fontSize: 17, color: "var(--bz-verde-claro)", maxWidth: 460, lineHeight: 1.55 }}>
+              Tu entrada ya está disponible en precio Early Bird hasta fin de septiembre.
+            </p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, position: "relative", zIndex: 1 }} className="bz-cta-actions">
+            <button onClick={() => setPage("entradas")} className="btn btn-ocre" style={{ width: "100%", justifyContent: "center" }}>Comprar entrada</button>
+            <button onClick={() => setPage("programa")} className="btn" style={{ width: "100%", justifyContent: "center", background: "transparent", color: "var(--bz-beige-hueso)", border: "1.5px solid rgba(250, 246, 237, 0.3)" }}>Ver programa</button>
+          </div>
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 880px) {
+          .bz-cta-banner { grid-template-columns: 1fr !important; padding: 48px 32px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+Object.assign(window, { PageFeria, SubPageHeader, CTABanner });
+
+  </script>
+
+  <!-- ===== src/page-expositores.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Expositores ─────────────────────────────────────
+
+function PageExpositores({ setPage }) {
+  useReveal();
+  const [activeCat, setActiveCat] = useState("all");
+  const [query, setQuery] = useState("");
+
+  const filtered = EXPOSITORES.filter(e => {
+    if (activeCat !== "all" && e.cat !== activeCat) return false;
+    if (query && !e.name.toLowerCase().includes(query.toLowerCase()) && !e.origen.toLowerCase().includes(query.toLowerCase())) return false;
+    return true;
+  });
+
+  // Count by category
+  const counts = CATEGORIES.reduce((acc, c) => {
+    acc[c.id] = c.id === "all" ? EXPOSITORES.length : EXPOSITORES.filter(e => e.cat === c.id).length;
+    return acc;
+  }, {});
+
+  return (
+    <div className="page-enter">
+      <SubPageHeader
+        eyebrow={`${EXPOSITORES.length} expositores · curaduría 2026`}
+        title={<>Expositores.</>}
+        sub="Cada uno pasa por una curaduría que pregunta por el origen, el proceso y la coherencia. Estos son los confirmados para esta edición."
+      />
+
+      {/* FILTERS */}
+      <section style={{ position: "sticky", top: 72, zIndex: 30, background: "var(--bz-fondo-base)", borderBottom: "0.5px solid var(--bz-borde-suave)", padding: "20px 0" }}>
+        <div className="container" style={{ display: "flex", gap: 24, alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCat(cat.id)}
+                style={{
+                  padding: "9px 16px",
+                  borderRadius: "var(--bz-radius-pill)",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  background: activeCat === cat.id ? "var(--bz-verde-profundo)" : "transparent",
+                  color: activeCat === cat.id ? "var(--bz-beige-hueso)" : "var(--bz-texto-secundario)",
+                  border: activeCat === cat.id ? "1.5px solid var(--bz-verde-profundo)" : "1.5px solid var(--bz-borde-suave)",
+                  transition: "all 200ms var(--bz-ease)",
+                  display: "flex", alignItems: "center", gap: 6,
+                }}
+              >
+                {cat.label}
+                <span style={{ fontSize: 10, opacity: 0.6, fontFamily: "var(--bz-font-mono)" }}>{counts[cat.id]}</span>
+              </button>
+            ))}
+          </div>
+
+          <div style={{ position: "relative" }}>
+            <input
+              type="search"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder="Buscar por nombre o localidad…"
+              style={{
+                padding: "10px 16px 10px 38px",
+                width: 280,
+                fontSize: 13,
+                fontFamily: "var(--bz-font-body)",
+                border: "1px solid var(--bz-borde-suave)",
+                borderRadius: "var(--bz-radius-pill)",
+                background: "var(--bz-beige-hueso)",
+                color: "var(--bz-texto-primario)",
+                outline: "none",
+              }}
+              onFocus={e => e.target.style.borderColor = "var(--bz-verde-profundo)"}
+              onBlur={e => e.target.style.borderColor = "var(--bz-borde-suave)"}
+            />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--bz-texto-terciario)" }}>
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      {/* GRID */}
+      <section style={{ padding: "56px 0 100px", background: "var(--bz-fondo-base)" }}>
+        <div className="container">
+          <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 32 }}>
+            <div className="display" style={{ fontSize: 22, color: "var(--bz-texto-secundario)", fontStyle: "italic" }}>
+              {filtered.length === 0 ? "Ninguno coincide aún" : filtered.length === EXPOSITORES.length ? "Todos los expositores" : `${filtered.length} resultado${filtered.length === 1 ? "" : "s"}`}
+            </div>
+            {(activeCat !== "all" || query) && (
+              <button
+                onClick={() => { setActiveCat("all"); setQuery(""); }}
+                style={{ fontSize: 12, color: "var(--bz-tierra-rojo)", textDecoration: "underline", fontFamily: "var(--bz-font-mono)" }}
+              >
+                Limpiar filtros
+              </button>
+            )}
+          </div>
+
+          {filtered.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "80px 32px", background: "var(--bz-beige-hueso)", borderRadius: "var(--bz-radius-lg)" }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>🌾</div>
+              <h3 className="display" style={{ fontSize: 26, marginBottom: 10 }}>Todavía no hay nada acá.</h3>
+              <p style={{ color: "var(--bz-texto-secundario)" }}>Probá con otra búsqueda o explorá por categoría.</p>
+            </div>
+          ) : (
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              gap: 24,
+            }}>
+              {filtered.map((exp, i) => (
+                <div key={exp.id} className="reveal" style={{ transitionDelay: `${(i % 6) * 60}ms` }}>
+                  <ExpositorCard exp={exp} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* CTA — postular */}
+      <section style={{ padding: "80px 0 120px", background: "var(--bz-fondo-alt)" }}>
+        <div className="container-narrow">
+          <div className="reveal" style={{
+            background: "var(--bz-ocre-calido)",
+            borderRadius: "var(--bz-radius-xl)",
+            padding: "60px 56px",
+            position: "relative",
+            overflow: "hidden",
+            display: "grid",
+            gridTemplateColumns: "1.4fr 1fr",
+            gap: 32,
+            alignItems: "center",
+          }} className="bz-postular">
+            <div style={{ position: "absolute", bottom: -40, right: -40, opacity: 0.3 }}>
+              <LeafShape size={200} color="var(--bz-verde-profundo)" rotate={120} />
+            </div>
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div className="eyebrow" style={{ color: "var(--bz-verde-profundo)", marginBottom: 16 }}>Postulaciones abiertas</div>
+              <h3 className="display" style={{ fontSize: "clamp(28px, 4vw, 40px)", color: "var(--bz-verde-profundo)", marginBottom: 16, lineHeight: 1.15 }}>
+                ¿Querés exponer en BIORAIZ?
+              </h3>
+              <p style={{ color: "var(--bz-verde-profundo)", lineHeight: 1.65, opacity: 0.85 }}>
+                Cerramos postulaciones 60 días antes del evento. Buscamos productos con origen, proceso transparente y coherencia con los valores de la feria.
+              </p>
+            </div>
+            <button className="btn btn-primary" style={{ position: "relative", zIndex: 1 }}>Quiero postularme</button>
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        @media (max-width: 720px) {
+          .bz-postular { grid-template-columns: 1fr !important; padding: 40px 28px !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+window.PageExpositores = PageExpositores;
+
+  </script>
+
+  <!-- ===== src/page-programa.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Programa ────────────────────────────────────────
+
+function PagePrograma({ setPage }) {
+  useReveal();
+  const [activeDia, setActiveDia] = useState("sabado");
+  const [favorites, setFavorites] = useState(() => new Set());
+  const [typeFilter, setTypeFilter] = useState("Todos");
+
+  const acts = ACTIVIDADES[activeDia];
+
+  // Get unique types for current day
+  const types = ["Todos", ...new Set(acts.map(a => a.tipo))];
+
+  const filteredActs = typeFilter === "Todos" ? acts : acts.filter(a => a.tipo === typeFilter);
+
+  const toggleFav = (id) => {
+    setFavorites(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  return (
+    <div className="page-enter">
+      <SubPageHeader
+        eyebrow="Programa · 3 días"
+        title={<>Programa.</>}
+        sub="Charlas, talleres, música, espacios para chicos y una cocina abierta. Marcá tus favoritos con la estrellita — los guardamos en tu navegador."
+      />
+
+      {/* Day tabs */}
+      <section style={{ padding: "48px 0 0", background: "var(--bz-fondo-base)" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, background: "var(--bz-beige-base)", padding: 6, borderRadius: "var(--bz-radius-lg)", maxWidth: 720, margin: "0 auto 56px" }}>
+            {DIAS.map(d => (
+              <button
+                key={d.id}
+                onClick={() => setActiveDia(d.id)}
+                style={{
+                  padding: "16px 20px",
+                  borderRadius: "var(--bz-radius-md)",
+                  background: activeDia === d.id ? "var(--bz-verde-profundo)" : "transparent",
+                  color: activeDia === d.id ? "var(--bz-beige-hueso)" : "var(--bz-texto-secundario)",
+                  transition: "all 300ms var(--bz-ease)",
+                  textAlign: "center",
+                }}
+              >
+                <div className="display" style={{ fontSize: 32, lineHeight: 1, marginBottom: 4 }}>{d.num}</div>
+                <div style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)", opacity: activeDia === d.id ? 0.8 : 1 }}>{d.label}</div>
+                <div style={{ fontSize: 11, opacity: activeDia === d.id ? 0.6 : 0.5, marginTop: 4, fontStyle: "italic", fontFamily: "var(--bz-font-display)" }}>{d.subtitulo}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Type filter pills */}
+      <section style={{ padding: "0 0 24px", background: "var(--bz-fondo-base)" }}>
+        <div className="container">
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+            {types.map(t => (
+              <button
+                key={t}
+                onClick={() => setTypeFilter(t)}
+                style={{
+                  padding: "7px 14px",
+                  borderRadius: "var(--bz-radius-pill)",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  background: typeFilter === t ? "var(--bz-tierra-rojo)" : "var(--bz-beige-base)",
+                  color: typeFilter === t ? "var(--bz-beige-hueso)" : "var(--bz-texto-secundario)",
+                  transition: "all 200ms var(--bz-ease)",
+                }}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline */}
+      <section key={activeDia + typeFilter} style={{ padding: "32px 0 80px", background: "var(--bz-fondo-base)", animation: "bz-fade-in 400ms var(--bz-ease) both" }}>
+        <div className="container" style={{ maxWidth: 920 }}>
+          {filteredActs.length === 0 ? (
+            <div style={{ textAlign: "center", padding: 80, color: "var(--bz-texto-secundario)" }}>
+              <div style={{ fontSize: 40, marginBottom: 12 }}>🍃</div>
+              <p>Nada de este tipo en este día. Probá otro.</p>
+            </div>
+          ) : (
+            <div style={{ position: "relative" }}>
+              {/* Vertical timeline line */}
+              <div style={{ position: "absolute", left: 80, top: 12, bottom: 12, width: 1, background: "var(--bz-borde-suave)" }} className="bz-timeline-line" />
+
+              {filteredActs.map((act, i) => {
+                const id = `${activeDia}-${act.hora}-${act.title}`;
+                const isFav = favorites.has(id);
+                return (
+                  <article key={id} className="reveal" style={{
+                    display: "grid",
+                    gridTemplateColumns: "80px 1fr auto",
+                    gap: 32,
+                    padding: "20px 0",
+                    alignItems: "start",
+                    position: "relative",
+                    transitionDelay: `${i * 50}ms`,
+                  }} className="bz-act-row">
+                    {/* Hora */}
+                    <div style={{ paddingTop: 4 }}>
+                      <div className="display" style={{ fontSize: 24, color: "var(--bz-tierra-rojo)", lineHeight: 1, letterSpacing: "-0.02em" }}>{act.hora}</div>
+                    </div>
+
+                    {/* Dot on timeline */}
+                    <div style={{ position: "absolute", left: 76, top: 24, width: 9, height: 9, borderRadius: "50%", background: act.destacado ? "var(--bz-ocre-calido)" : "var(--bz-verde-musgo)", border: "2px solid var(--bz-fondo-base)" }} className="bz-timeline-dot" />
+
+                    {/* Content card */}
+                    <div style={{
+                      background: act.destacado ? "var(--bz-beige-hueso)" : "transparent",
+                      border: act.destacado ? "0.5px solid var(--bz-ocre-calido)" : "0.5px solid var(--bz-borde-ligero)",
+                      borderRadius: "var(--bz-radius-md)",
+                      padding: "18px 22px",
+                      transition: "transform 250ms var(--bz-ease)",
+                      cursor: "default",
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.transform = "translateX(4px)"}
+                    onMouseLeave={e => e.currentTarget.style.transform = "translateX(0)"}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, flexWrap: "wrap" }}>
+                        <span className={`tag ${act.tipo === "Charla" ? "" : act.tipo === "Música" ? "tag-tierra" : "tag-ocre"}`}>{act.tipo}</span>
+                        {act.destacado && <span style={{ fontSize: 10, color: "var(--bz-ocre-tostado)", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)" }}>★ Destacada</span>}
+                      </div>
+                      <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: 22, color: "var(--bz-texto-primario)", marginBottom: 8, lineHeight: 1.25 }}>{act.title}</h3>
+                      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 13, color: "var(--bz-texto-secundario)" }}>
+                        <span>📍 {act.lugar}</span>
+                        <span>· {act.speaker}</span>
+                      </div>
+                    </div>
+
+                    {/* Favorite */}
+                    <button
+                      onClick={() => toggleFav(id)}
+                      aria-label="Marcar como favorito"
+                      style={{
+                        width: 40, height: 40, borderRadius: "50%",
+                        border: "1px solid var(--bz-borde-suave)",
+                        background: isFav ? "var(--bz-ocre-calido)" : "var(--bz-beige-hueso)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        color: isFav ? "var(--bz-verde-profundo)" : "var(--bz-texto-terciario)",
+                        transition: "all 200ms var(--bz-spring)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill={isFav ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.6">
+                        <path d="M12 2l3 6.3 7 1-5 4.9 1.2 7-6.2-3.4-6.2 3.4 1.2-7-5-4.9 7-1z"/>
+                      </svg>
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+
+          {favorites.size > 0 && (
+            <div style={{ marginTop: 48, padding: "20px 24px", background: "var(--bz-verde-pasto)", borderRadius: "var(--bz-radius-md)", textAlign: "center", fontSize: 14, color: "var(--bz-verde-bosque)" }}>
+              ⭐ Tenés <strong>{favorites.size}</strong> actividad{favorites.size === 1 ? "" : "es"} en favoritos. Se guardan en tu navegador.
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* SPEAKERS */}
+      <section style={{ padding: "100px 0", background: "var(--bz-fondo-alt)" }}>
+        <div className="container">
+          <SectionHead
+            eyebrow="Speakers"
+            title={<>Quienes vienen <em>a contar.</em></>}
+            sub="Productores, cocineros, antropólogos y periodistas que llevan años pensando lo que la feria hace en la práctica."
+          />
+          <div style={{ marginTop: 64, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
+            {SPEAKERS.map((s, i) => (
+              <article key={s.id} className="reveal" style={{
+                background: "var(--bz-beige-hueso)",
+                borderRadius: "var(--bz-radius-lg)",
+                padding: "24px",
+                border: "0.5px solid var(--bz-borde-ligero)",
+                transitionDelay: `${(i % 3) * 80}ms`,
+                display: "flex",
+                gap: 16,
+              }}>
+                <Placeholder label={s.name.split(" ")[0]} ratio="1/1" style={{ width: 80, height: 80, borderRadius: "50%", flexShrink: 0 }} />
+                <div>
+                  <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 20, color: "var(--bz-texto-primario)", marginBottom: 4, lineHeight: 1.15 }}>{s.name}</h4>
+                  <p style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)", letterSpacing: "0.04em", marginBottom: 10 }}>{s.rol}</p>
+                  <p style={{ fontSize: 13, color: "var(--bz-texto-secundario)", lineHeight: 1.5, fontStyle: "italic" }}>"{s.topic}"</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CTABanner setPage={setPage} />
+
+      <style>{`
+        @media (max-width: 720px) {
+          .bz-act-row { grid-template-columns: 60px 1fr 40px !important; gap: 16px !important; }
+          .bz-timeline-line { left: 60px !important; }
+          .bz-timeline-dot { left: 56px !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+window.PagePrograma = PagePrograma;
+
+  </script>
+
+  <!-- ===== src/page-entradas.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Entradas ──────────────────────────────────────────
+
+function PageEntradas({ setPage }) {
+  useReveal();
+  const [openFaq, setOpenFaq] = useState(0);
+
+  return (
+    <div className="page-enter">
+      <SubPageHeader
+        eyebrow="Entradas · BIORAIZ 2026"
+        title={<>Tu lugar.</>}
+        sub="3 tipos de entrada. Todos los tipos incluyen los 3 días del evento. Recargos hasta 3 cuotas sin interés."
+      />
+
+      {/* TICKETS */}
+      <section style={{ padding: "60px 0 80px", background: "var(--bz-fondo-base)" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, alignItems: "stretch" }} className="bz-tickets-grid">
+            {TICKETS.map((t, i) => (
+              <TicketCard key={t.id} ticket={t} index={i} />
+            ))}
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 880px) {
+            .bz-tickets-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
+      </section>
+
+      {/* PAYMENT METHODS */}
+      <section style={{ padding: "32px 0 100px", background: "var(--bz-fondo-base)" }}>
+        <div className="container-narrow">
+          <div className="reveal" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 24, padding: "28px 40px", background: "var(--bz-beige-hueso)", border: "0.5px solid var(--bz-borde-ligero)", borderRadius: "var(--bz-radius-lg)", flexWrap: "wrap" }}>
+            <div style={{ fontSize: 11, color: "var(--bz-texto-terciario)", letterSpacing: "0.16em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)" }}>Pagás con</div>
+            <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+              {["Visa", "Mastercard", "Amex", "Mercado Pago", "Modo", "Transferencia"].map(m => (
+                <span key={m} style={{ padding: "6px 14px", background: "var(--bz-fondo-base)", borderRadius: "var(--bz-radius-pill)", fontSize: 12, color: "var(--bz-texto-secundario)", fontWeight: 500 }}>{m}</span>
+              ))}
+            </div>
+            <div style={{ fontSize: 11, color: "var(--bz-verde-musgo)", fontFamily: "var(--bz-font-mono)", letterSpacing: "0.04em" }}>· hasta 3 cuotas s/interés</div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{ padding: "60px 0 120px", background: "var(--bz-fondo-alt)" }}>
+        <div className="container-narrow">
+          <SectionHead
+            eyebrow="Preguntas frecuentes"
+            title={<>Lo que <em>siempre</em> nos preguntan.</>}
+            sub="Si tu duda no está acá, escribinos a hola@bioraiz.ar. Respondemos en menos de 48 hs."
+          />
+
+          <div style={{ marginTop: 56 }}>
+            {FAQ.map((item, i) => (
+              <FaqItem key={i} item={item} open={openFaq === i} onClick={() => setOpenFaq(openFaq === i ? -1 : i)} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section style={{ padding: "100px 0", background: "var(--bz-fondo-base)" }}>
+        <div className="container-narrow">
+          <div className="reveal" style={{ textAlign: "center" }}>
+            <div className="eyebrow eyebrow-tierra" style={{ marginBottom: 18 }}>¿Te quedaste con dudas?</div>
+            <h3 className="display" style={{ fontSize: "clamp(28px, 4vw, 42px)", marginBottom: 18, color: "var(--bz-texto-primario)", lineHeight: 1.15 }}>
+              Escribinos directamente.
+            </h3>
+            <p style={{ fontSize: 15, color: "var(--bz-texto-secundario)", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
+              Atendemos personas, no formularios. Te responde alguien del equipo en menos de 48 hs.
+            </p>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="mailto:hola@bioraiz.ar" className="btn btn-primary">hola@bioraiz.ar</a>
+              <a href="https://wa.me/" className="btn btn-secondary">WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ── Ticket card ──
+function TicketCard({ ticket, index }) {
+  const colors = {
+    ocre:    { bg: "var(--bz-ocre-calido)",    fg: "var(--bz-verde-profundo)", accent: "var(--bz-verde-profundo)", border: "var(--bz-ocre-tostado)" },
+    verde:   { bg: "var(--bz-verde-profundo)", fg: "var(--bz-beige-hueso)",    accent: "var(--bz-ocre-calido)",    border: "var(--bz-verde-profundo)" },
+    tierra:  { bg: "var(--bz-beige-hueso)",    fg: "var(--bz-texto-primario)", accent: "var(--bz-tierra-rojo)",    border: "var(--bz-borde-suave)" },
+  };
+  const c = colors[ticket.color];
+  const featured = ticket.destacado;
+
+  return (
+    <article className="reveal" style={{
+      background: c.bg,
+      color: c.fg,
+      borderRadius: "var(--bz-radius-xl)",
+      padding: "40px 36px",
+      border: `1px solid ${c.border}`,
+      boxShadow: featured ? "var(--bz-shadow-lg)" : "none",
+      transform: featured ? "translateY(-12px)" : "none",
+      transition: "transform 300ms var(--bz-ease), box-shadow 300ms var(--bz-ease)",
+      transitionDelay: `${index * 100}ms`,
+      position: "relative",
+      display: "flex", flexDirection: "column",
+    }}
+    onMouseEnter={e => { e.currentTarget.style.transform = featured ? "translateY(-16px)" : "translateY(-4px)"; }}
+    onMouseLeave={e => { e.currentTarget.style.transform = featured ? "translateY(-12px)" : "translateY(0)"; }}
+    >
+      {featured && (
+        <div style={{
+          position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)",
+          background: "var(--bz-ocre-calido)", color: "var(--bz-verde-profundo)",
+          padding: "5px 14px", borderRadius: "var(--bz-radius-pill)",
+          fontSize: 10, fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)",
+        }}>★ Más elegida</div>
+      )}
+
+      <div style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)", opacity: 0.7, marginBottom: 14 }}>{ticket.badge}</div>
+      <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: 36, marginBottom: 16, lineHeight: 1 }}>{ticket.name}</h3>
+
+      <div style={{ marginBottom: 28 }}>
+        <div className="display" style={{ fontSize: 48, color: c.accent, lineHeight: 1 }}>{ticket.precio}</div>
+        {ticket.precioOrig && (
+          <div style={{ fontSize: 13, opacity: 0.6, textDecoration: "line-through", marginTop: 6 }}>{ticket.precioOrig}</div>
+        )}
+      </div>
+
+      <ul style={{ listStyle: "none", marginBottom: 32, flex: 1 }}>
+        {ticket.incluye.map((item, j) => (
+          <li key={j} style={{ display: "flex", gap: 10, padding: "8px 0", fontSize: 14, lineHeight: 1.5, opacity: 0.9, borderTop: j > 0 ? `0.5px solid ${ticket.color === "verde" ? "rgba(250,246,237,0.15)" : "var(--bz-borde-ligero)"}` : "none" }}>
+            <span style={{ color: c.accent, flexShrink: 0 }}>✓</span>
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      <button style={{
+        padding: "14px 24px",
+        borderRadius: "var(--bz-radius-pill)",
+        background: ticket.color === "verde" ? "var(--bz-ocre-calido)" : "var(--bz-verde-profundo)",
+        color: ticket.color === "verde" ? "var(--bz-verde-profundo)" : "var(--bz-beige-hueso)",
+        fontSize: 14, fontWeight: 500,
+        transition: "transform 200ms var(--bz-spring)",
+      }}
+      onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
+      onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
+        Comprar {ticket.name}
+      </button>
+    </article>
+  );
+}
+
+// ── FAQ Item ──
+function FaqItem({ item, open, onClick, index }) {
+  return (
+    <div className="reveal" style={{ borderBottom: "0.5px solid var(--bz-borde-suave)", transitionDelay: `${index * 50}ms` }}>
+      <button
+        onClick={onClick}
+        style={{
+          width: "100%",
+          padding: "24px 0",
+          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24,
+          textAlign: "left",
+        }}
+      >
+        <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 20, color: "var(--bz-texto-primario)", lineHeight: 1.3, fontWeight: 500 }}>{item.q}</h4>
+        <span style={{
+          width: 32, height: 32, borderRadius: "50%",
+          border: "1px solid var(--bz-borde-suave)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: open ? "var(--bz-verde-profundo)" : "transparent",
+          color: open ? "var(--bz-beige-hueso)" : "var(--bz-verde-profundo)",
+          transition: "all 250ms var(--bz-ease)",
+          flexShrink: 0,
+          transform: open ? "rotate(45deg)" : "rotate(0deg)",
+        }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </button>
+      <div style={{
+        maxHeight: open ? 200 : 0,
+        overflow: "hidden",
+        transition: "max-height 350ms var(--bz-ease), opacity 250ms var(--bz-ease)",
+        opacity: open ? 1 : 0,
+      }}>
+        <p style={{ paddingBottom: 28, paddingRight: 56, fontSize: 15, color: "var(--bz-texto-secundario)", lineHeight: 1.7 }}>{item.a}</p>
+      </div>
+    </div>
+  );
+}
+
+window.PageEntradas = PageEntradas;
+
+  </script>
+
+  <!-- ===== src/participa-forms.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Participá · Schemas de formularios ─────────────────
+// Transcripción fiel de los 5 formularios reales (Gastronómicos,
+// Artistas, Speakers, Facilitadores, Prensa) + 2 placeholder
+// (Feriantes y Sponsors, sin form real provisto todavía).
+//
+// Schema de un formulario:
+//   { pills:[...], note:"… **negrita** …", submitNote:"…",
+//     sections:[ { num, label, title, desc, items:[ item, … ] } ] }
+// Un `item` es un campo, o { row:[campo, campo] } para fila de 2 cols.
+// Campo: { name, label, type, required?, placeholder?, hint?, rows?, options? }
+//   type: text | email | tel | url | textarea | select | radio | checkbox
+//   options: ["texto", …]  ó  [{ t:"texto", s:"subtexto" }, …] (radio/checkbox)
+
+const FORM_SCHEMAS = {
+
+  // ── FERIANTES (placeholder — sin form real provisto) ───────────
+  feriantes: {
+    pills: ["~90 stands", "50.000 asistentes", "8 categorías", "Cierre 31 ago", "Early bird −15% hasta 31/07"],
+    note: "**Antes de completar:** El cupo es limitado a 90 stands seleccionados por curaduría. Se prioriza origen patagónico o regional. Las postulaciones cierran el **31 de agosto de 2026** y los seleccionados son notificados el **15 de septiembre**. El pago confirma el lugar solo tras la notificación oficial.",
+    submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones con una matriz de puntuación y notificamos a los seleccionados antes del 15 de septiembre de 2026. Las postulaciones cierran el 31 de agosto. El pago confirma el lugar solo tras la notificación oficial — no antes.",
+    sections: [
+      {
+        num: "01", label: "Datos del emprendimiento", title: "¿Quiénes son?",
+        desc: "Información básica del emprendimiento que postula.",
+        items: [
+          { row: [
+            { name: "emprendimiento", label: "Nombre del emprendimiento", type: "text", required: true, placeholder: "Ej: Brotes del Sur" },
+            { name: "responsable", label: "Nombre del responsable", type: "text", required: true, placeholder: "Nombre y apellido" },
+          ]},
+          { row: [
+            { name: "email", label: "Email", type: "email", required: true, placeholder: "nombre@correo.com" },
+            { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", required: true, placeholder: "+54 9 299 000-0000" },
+          ]},
+          { row: [
+            { name: "localidad", label: "Localidad / ciudad", type: "text", required: true, placeholder: "Ej: Neuquén capital" },
+            { name: "instagram", label: "Instagram o web", type: "text", placeholder: "@nombre o https://..." },
+          ]},
+        ],
+      },
+      {
+        num: "02", label: "La propuesta", title: "¿Qué ofrecés?",
+        desc: "La propuesta y la coherencia con el espíritu del festival son el criterio central de selección.",
+        items: [
+          { name: "categoria", label: "Categoría principal", type: "select", required: true, options: ["Bienestar y salud holística", "Cosmética natural y skincare eco", "Moda, indumentaria y accesorios sustentables", "Arte y artesanías de autor", "Hogar y jardín sustentable", "Tecnología verde y economía circular", "Editorial, libros y formación consciente", "Otra (describila en la siguiente pregunta)"] },
+          { name: "descripcion", label: "Descripción del emprendimiento", type: "textarea", required: true, rows: 4, placeholder: "¿Qué ofrecés? ¿Cómo lo producís? ¿Qué lo hace diferente? En no más de 150 palabras, contanos la historia detrás de lo que hacés.", hint: "Máximo 150 palabras. Sé específico/a: esto es lo que lee el jurado para decidir si tu propuesta encaja." },
+          { name: "antiguedad", label: "¿Hace cuánto tiempo existe el emprendimiento?", type: "text", required: true, placeholder: "Ej: Desde marzo 2022 — 4 años de actividad", hint: "Incluí un link a tu tienda online, Instagram o web como respaldo de trayectoria." },
+          { name: "referencia", label: "Link de referencia (tienda, Instagram, web)", type: "text", placeholder: "https://... o @usuario" },
+        ],
+      },
+      {
+        num: "03", label: "Tamaño de stand", title: "¿Cuánto espacio necesitás?",
+        desc: "Elegí el tamaño que mejor se adapta a tu propuesta. Early bird con 15% de descuento hasta el 31 de julio de 2026.",
+        items: [
+          { name: "stand", label: "Tamaño solicitado", type: "radio", required: true, options: [
+            { t: "Micro · 6 m² — USD 380 (early bird USD 323)", s: "3×2 m · Ideal para cosmética, libros, accesorios o propuestas compactas." },
+            { t: "Estándar · 9 m² — USD 560 (early bird USD 476) · + elegido", s: "3×3 m · El más elegido. Espacio para exhibir con comodidad y atender bien." },
+            { t: "Grande · 12 m² — USD 780 (early bird USD 663)", s: "3×4 m · Para propuestas con mucho producto o que ofrecen experiencia en el stand." },
+            { t: "Premium · 20 m² — USD 1.300 (early bird USD 1.105)", s: "4×5 m · Ubicación destacada en acceso o zona central. Cupo: 5 stands." },
+          ], hint: "El stand incluye: espacio señalizado, acceso a electricidad (800W estándar), 2 acreditaciones de feriante por día, mención en redes y catálogo digital oficial." },
+          { name: "electricos", label: "Requerimientos eléctricos especiales", type: "textarea", rows: 2, placeholder: "¿Qué equipos necesitás conectar? Indicá el consumo en watts si lo sabés. Ej: 1 iluminación LED (100W), 1 tablet para pagos (25W). El límite estándar es 800W.", hint: "Quienes necesiten más de 800W deben solicitarlo antes del 15 de octubre. Se abona por separado." },
+        ],
+      },
+      {
+        num: "04", label: "Experiencia y logística", title: "¿Podés operar a escala de festival masivo?",
+        desc: "BIORAIZ espera 15.000–17.000 personas por día. Necesitamos saber que podés abastecer ese flujo.",
+        items: [
+          { name: "exp_feria", label: "¿Participaste de otros festivales o ferias de gran escala?", type: "radio", required: true, options: [
+            { t: "Sí, en eventos masivos (más de 10.000 personas)", s: "Nombralos en el siguiente campo" },
+            { t: "Sí, en ferias o mercados medianos (hasta 10.000 personas)" },
+            { t: "Solo en mercados locales o eventos pequeños" },
+            { t: "Es mi primera participación en un evento externo" },
+          ] },
+          { name: "eventos", label: "¿En qué eventos participaste? ¿Cómo fue la experiencia?", type: "textarea", rows: 3, placeholder: "Nombrá los eventos, contanos cómo fue en términos de logística, volumen de ventas y organización del stand." },
+          { name: "experiencia_stand", label: "Propuesta de experiencia en el stand", type: "textarea", required: true, rows: 3, placeholder: "¿Cómo vas a presentar tu espacio? ¿Ofrecés degustaciones, demos, actividades o algo que genere experiencia más allá de la venta? Describí cómo imaginás tu stand.", hint: "Los stands que proponen experiencias (no solo venta) tienen mayor puntaje en el proceso de selección." },
+        ],
+      },
+      {
+        num: "05", label: "Sustentabilidad", title: "Requisitos del festival",
+        desc: "BIORAIZ tiene estándares de sustentabilidad no negociables. Queremos saber qué prácticas reales tiene tu emprendimiento.",
+        items: [
+          { name: "practicas", label: "Prácticas sustentables concretas de tu emprendimiento", type: "textarea", required: true, rows: 3, placeholder: "Contanos al menos 2 prácticas reales: packaging reciclable o compostable, producción sin residuos, ingredientes agroecológicos, comercio justo, materiales recuperados, cero plástico, etc.", hint: "No basta con declararlo — describí acciones concretas que puedas demostrar." },
+          { name: "plastico", label: "¿Confirmás que operarás sin plástico descartable de un solo uso?", type: "radio", required: true, options: ["Sí, ya trabajo sin plástico descartable", "Sí, puedo adecuarme para el festival", "Necesito más información sobre los requisitos"] },
+          { name: "habilitaciones", label: "Habilitaciones vigentes", type: "checkbox", options: ["CUIT / CUIL activo en AFIP", "Habilitación municipal de emprendimiento o local", "SENASA (si vendés productos alimenticios elaborados)", "Certificación orgánica o agroecológica", "Registro de marca", "Seguro de responsabilidad civil"], hint: "Las habilitaciones se verifican en el check-in del día de armado. Sin documentación en regla, el stand no puede abrir." },
+        ],
+      },
+      {
+        num: "06", label: "Motivación", title: "¿Por qué BIORAIZ?",
+        desc: "La última pregunta, y una de las más importantes para el jurado.",
+        items: [
+          { name: "motivacion", label: "¿Por qué querés estar en BIORAIZ?", type: "textarea", required: true, rows: 3, placeholder: "En no más de 100 palabras: ¿qué significa este festival para tu proyecto? ¿Qué esperás lograr participando?" },
+          { name: "adicional", label: "Información adicional o preguntas", type: "textarea", rows: 2, placeholder: "Cualquier cosa que quieras contarnos o preguntarnos." },
+        ],
+      },
+    ],
+  },
+
+  // ── GASTRONÓMICOS (real) ───────────────────────────────────────
+  gastronomicos: {
+    pills: ["38–45 puestos", "0% comisión", "50.000 asistentes", "Cierre 31 ago"],
+    note: "**Antes de completar:** El cupo es limitado a 38–45 puestos seleccionados por curaduría. Se acepta máximo 1 puesto por sub-rubro. Las postulaciones cierran el **31 de agosto de 2026** y los seleccionados son notificados el 10 de septiembre.",
+    submitNote: "**¿Qué pasa después?** Revisamos tu postulación y te avisamos antes del 10 de septiembre de 2026. Las postulaciones cierran el 31 de agosto.",
+    sections: [
+      {
+        num: "01", label: "Datos del emprendimiento", title: "¿Quiénes son?",
+        desc: "Información básica del emprendimiento o restaurante que postula.",
+        items: [
+          { row: [
+            { name: "emprendimiento", label: "Nombre del emprendimiento / local", type: "text", required: true, placeholder: "Ej: La Raíz Cocina Natural" },
+            { name: "responsable", label: "Nombre del responsable", type: "text", required: true, placeholder: "Nombre y apellido" },
+          ]},
+          { row: [
+            { name: "email", label: "Email", type: "email", required: true, placeholder: "nombre@correo.com" },
+            { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", required: true, placeholder: "+54 9 299 000-0000" },
+          ]},
+          { row: [
+            { name: "redes", label: "Instagram o web", type: "text", placeholder: "@nombre o https://..." },
+            { name: "localidad", label: "Localidad / ciudad", type: "text", placeholder: "Ej: Neuquén capital" },
+          ]},
+        ],
+      },
+      {
+        num: "02", label: "La propuesta gastronómica", title: "¿Qué ofrecés?",
+        desc: "Contanos en detalle qué vas a ofrecer en el festival. La propuesta culinaria es el criterio central de selección.",
+        items: [
+          { name: "descripcion", label: "Descripción de tu propuesta gastronómica", type: "textarea", required: true, rows: 4, placeholder: "¿Qué cocinás? ¿Con qué ingredientes? ¿Cuál es tu diferencial? Contanos la historia detrás de lo que hacés." },
+          { name: "categoria", label: "Categoría principal", type: "select", required: true, options: ["Comida saludable rápida (bowls, wraps, sándwiches)", "Gastronomía bio / plato elaborado", "100% vegano / vegetariano", "Bebidas saludables (jugos, smoothies, kombucha)", "Snacks y barras naturales", "Repostería sin TACC / raw food", "Panadería artesanal", "Cocina regional patagónica consciente"] },
+          { name: "menu", label: "Menú tentativo con precios aproximados", type: "textarea", required: true, rows: 4, placeholder: "Listá los 4 a 8 ítems principales que ofrecerías con su precio orientativo en pesos (valores noviembre 2026).", hint: "No tiene que ser definitivo. Necesitamos entender el rango de precios y la diversidad del menú." },
+          { name: "local_ing", label: "¿Qué porcentaje de tus ingredientes son de origen local o patagónico?", type: "radio", required: true, options: ["Más del 80% — casi todo es local o patagónico", "Entre 50% y 80% — la mayoría es local", "Entre 20% y 50% — algunos ingredientes locales", "Menos del 20% — principalmente ingredientes de otra procedencia"] },
+          { name: "dietas", label: "Opciones para dietas especiales que ofrecés", type: "checkbox", options: ["Sin TACC (sin gluten)", "Sin lactosa", "100% vegano", "Sin azúcar añadida / apto diabéticos", "Keto / bajo en carbohidratos", "No ofrezco opciones especiales"] },
+        ],
+      },
+      {
+        num: "03", label: "Tamaño y logística", title: "Stand y operación",
+        desc: "Necesitamos saber qué espacio necesitás y si podés operar a escala de festival masivo.",
+        items: [
+          { name: "tamano", label: "Tamaño de puesto solicitado", type: "radio", required: true, options: ["Snackería / bebidas — 2×3 m (6 m²) · $450.000", "Estándar — 3×5 m (15 m²) · $750.000", "Premium — 4×6 m (24 m²) · $1.200.000"] },
+          { name: "exp", label: "¿Tenés experiencia operando en festivales o ferias de alta demanda?", type: "radio", options: ["Sí, operé en eventos masivos (más de 5.000 personas/día)", "Sí, en ferias o eventos medianos (hasta 5.000 personas)", "Solo en eventos pequeños o mercados locales", "Es mi primera participación en un evento externo"] },
+          { name: "electricos", label: "Requerimientos eléctricos (equipos que necesitás conectar)", type: "textarea", rows: 2, placeholder: "Ej: 1 heladera comercial (300W), 1 plancha eléctrica (2kW), 1 licuadora (500W), iluminación (200W). Total estimado: 3kW", hint: "Incluí el consumo estimado en watts si lo sabés. El límite del puesto estándar es 15kW trifásico." },
+        ],
+      },
+      {
+        num: "04", label: "Sustentabilidad y documentación", title: "Requisitos del festival",
+        desc: "BIORAIZ tiene estándares de sustentabilidad no negociables. Confirmá que podés cumplirlos.",
+        items: [
+          { name: "plastico", label: "¿Confirmás que operarás con packaging 100% libre de plástico de un solo uso?", type: "radio", required: true, options: ["Sí, ya trabajo con packaging compostable o reutilizable", "Sí, puedo adecuarme para el festival", "No estoy seguro/a — necesito más información"] },
+          { name: "habilitaciones", label: "Habilitaciones que tenés vigentes", type: "checkbox", options: ["Habilitación municipal de local o emprendimiento gastronómico", "SENASA (para productos elaborados)", "Carnet sanitario de manipulación de alimentos (propio y equipo)", "CUIT / CUIL activo en AFIP", "Seguro de responsabilidad civil"], hint: "Las habilitaciones se verifican durante el check-in del día de armado. Sin documentación en regla, el puesto no abre." },
+          { name: "adicional", label: "Información adicional o preguntas", type: "textarea", rows: 2, placeholder: "Cualquier cosa que quieras contarnos o preguntarnos antes de la llamada." },
+        ],
+      },
+    ],
+  },
+
+  // ── ARTISTAS (real) ────────────────────────────────────────────
+  artistas: {
+    pills: ["3 escenarios", "Slots reservados", "Prioritario regional", "Cierre 31 ago"],
+    note: "**Esta convocatoria es para artistas locales y emergentes patagónicos.** Los headliners y mid-level nacionales son contactados directamente por el equipo de booking. Si tu proyecto es de otra región de Argentina y creés que encajás, podés postularte igual — se evalúa caso a caso. Notificamos antes del **15 de septiembre**.",
+    submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones y avisamos antes del 15 de septiembre de 2026. La convocatoria cierra el 31 de agosto. Los slots son limitados y la selección es por coherencia artística con el festival.",
+    sections: [
+      {
+        num: "01", label: "Datos del proyecto artístico", title: "¿Quiénes son?",
+        desc: "Información del proyecto o artista que postula. Si es una banda o proyecto grupal, completá con los datos del representante.",
+        items: [
+          { row: [
+            { name: "proyecto", label: "Nombre del proyecto / artista", type: "text", required: true, placeholder: "Nombre tal como aparecerá en la grilla" },
+            { name: "representante", label: "Nombre del representante o contacto", type: "text", required: true, placeholder: "Nombre y apellido" },
+          ]},
+          { row: [
+            { name: "email", label: "Email", type: "email", required: true, placeholder: "nombre@correo.com" },
+            { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", required: true, placeholder: "+54 9 000 000-0000" },
+          ]},
+          { row: [
+            { name: "ciudad", label: "Ciudad / localidad", type: "text", required: true, placeholder: "Ej: Neuquén capital, Bariloche, Junín de los Andes" },
+            { name: "redes", label: "Instagram o Spotify / Bandcamp", type: "text", placeholder: "@nombre o link a plataforma" },
+          ]},
+          { name: "integrantes", label: "¿Cuántos integrantes tiene el proyecto?", type: "select", options: ["Solista", "Dúo", "Trío", "4 a 6 integrantes", "Más de 6 integrantes", "DJ / proyecto electrónico"] },
+        ],
+      },
+      {
+        num: "02", label: "La propuesta artística", title: "¿Qué hacen?",
+        desc: "La propuesta musical y su coherencia con el universo de BIORAIZ son el criterio central de selección.",
+        items: [
+          { name: "descripcion", label: "Descripción del proyecto en no más de 150 palabras", type: "textarea", required: true, rows: 4, placeholder: "¿Cómo suena? ¿Qué historia hay detrás? ¿De dónde viene la influencia musical? Contanos en tus palabras, sin texto de prensa." },
+          { name: "genero", label: "Género / estilo principal", type: "select", required: true, options: ["Folk / cantautor/a", "Indie / rock alternativo", "Folk andino / world music patagónica", "Electrónica orgánica / downtempo", "Ambient / música experimental", "Pop consciente / pop alternativo", "Jazz / bossa nova / música de cámara", "Música de raíz latinoamericana", "Fusión / inclasificable", "DJ set (electrónica de baja-media intensidad)", "Música ceremonial / sagrada"] },
+          { name: "material", label: "Link a material para escuchar — Spotify, YouTube, SoundCloud o similar", type: "url", required: true, placeholder: "https://open.spotify.com/... o https://youtu.be/...", hint: "Es el criterio más importante del proceso de selección. Si no tenés grabaciones, dejá un link a un video en vivo." },
+          { name: "encaje", label: "¿Por qué tu propuesta encaja en BIORAIZ?", type: "textarea", rows: 3, placeholder: "¿Qué tienen en común tu música y el espíritu del festival? ¿Por qué este público es el que querés frente a vos?" },
+        ],
+      },
+      {
+        num: "03", label: "Escenario y rider", title: "Aspectos técnicos",
+        desc: "Información técnica para evaluar la viabilidad del slot.",
+        items: [
+          { name: "escenario", label: "Escenario de preferencia", type: "radio", required: true, options: [
+            { t: 'Escenario Principal "El Claro" — 8.000 personas, producción full', s: "Para propuestas con mayor convocatoria regional" },
+            { t: 'Escenario "El Monte" — 1.500 personas, formato íntimo/folk', s: "Ideal para propuestas acústicas, folk, ambient o experimentales" },
+            { t: "Domo Sonoro — 150 personas, experiencia inmersiva", s: "Para DJs ambient, downtempo, soundbath o propuestas sensoriales" },
+            { t: "Sin preferencia — que el equipo asigne según la grilla" },
+          ] },
+          { row: [
+            { name: "duracion", label: "Duración de set propuesta", type: "select", options: ["30 minutos", "45 minutos", "60 minutos", "75 minutos", "90 minutos o más"] },
+            { name: "rider", label: "¿Tenés rider técnico propio?", type: "select", options: ["Sí, tengo rider formal escrito", "Sí, puedo armarlo para el festival", "No, adapto a lo que haya disponible"] },
+          ]},
+          { name: "tecnica", label: "Requerimientos técnicos básicos", type: "textarea", rows: 2, placeholder: "Ej: Batería completa, 2 amplificadores de guitarra, DI box para bajo, 4 monitores de piso, backline para teclado." },
+        ],
+      },
+      {
+        num: "04", label: "Trayectoria y región", title: "Tu contexto",
+        desc: "Esta convocatoria prioriza artistas locales y regionales. La identidad patagónica del festival es irrenunciable.",
+        items: [
+          { name: "antiguedad", label: "¿Hace cuánto existe el proyecto?", type: "radio", required: true, options: ["Menos de 1 año", "1 a 3 años", "3 a 7 años", "Más de 7 años"] },
+          { name: "shows", label: "¿Tocaron en vivo recientemente? ¿Dónde?", type: "textarea", rows: 2, placeholder: "Últimos 2 o 3 shows — venue, ciudad y año. Si tienen video de presentación en vivo, incluyan el link." },
+          { name: "observaciones", label: "Observaciones o información adicional", type: "textarea", rows: 2, placeholder: "Condiciones de honorario, necesidades especiales de producción, o cualquier cosa que quieran contarnos." },
+        ],
+      },
+    ],
+  },
+
+  // ── SPEAKERS (real) ────────────────────────────────────────────
+  speakers: {
+    pills: ["6–8 charlas/día", "400 personas/charla", "45–60 min/slot", "Cierre 31 ago"],
+    note: "**Antes de completar:** BIORAIZ no convoca speakers con posiciones pseudocientíficas verificadas. El proceso de selección valora formación real, propuesta con base sólida y coherencia con el espíritu del festival. Notificamos antes del **15 de septiembre**.",
+    submitNote: "**¿Qué pasa después?** Evaluamos la propuesta y te contactamos antes del 15 de septiembre. Las postulaciones cierran el 31 de agosto de 2026.",
+    sections: [
+      {
+        num: "01", label: "Datos del speaker", title: "¿Quién sos?",
+        desc: "Información básica de la persona que postula. Si tenés manager o representante, dejá sus datos en observaciones.",
+        items: [
+          { row: [
+            { name: "nombre", label: "Nombre completo", type: "text", required: true, placeholder: "Tu nombre tal como aparecerá en la grilla" },
+            { name: "disciplina", label: "Disciplina / área", type: "text", required: true, placeholder: "Ej: Nutricionista funcional, coach de mindfulness" },
+          ]},
+          { row: [
+            { name: "email", label: "Email", type: "email", required: true, placeholder: "nombre@correo.com" },
+            { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", required: true, placeholder: "+54 9 000 000-0000" },
+          ]},
+          { row: [
+            { name: "instagram", label: "Instagram principal", type: "text", placeholder: "@tu_perfil" },
+            { name: "web", label: "Web o link a charlas previas", type: "url", placeholder: "https://..." },
+          ]},
+          { name: "seguidores", label: "¿Cuántos seguidores tenés en tu red principal?", type: "select", required: true, options: ["Menos de 5.000", "5.000 – 20.000", "20.000 – 50.000", "50.000 – 200.000", "Más de 200.000", "No tengo redes activas"] },
+        ],
+      },
+      {
+        num: "02", label: "La propuesta de charla", title: "¿Qué vas a contar?",
+        desc: "La propuesta de contenido es el criterio central. Buscamos perspectivas con base real, lenguaje accesible y relevancia para el público de BIORAIZ.",
+        items: [
+          { name: "titulo", label: "Título de la charla propuesta", type: "text", required: true, placeholder: "Ej: Microbiota y bienestar mental: lo que tu intestino le dice a tu cerebro" },
+          { name: "descripcion", label: "Descripción de la charla (máximo 200 palabras)", type: "textarea", required: true, rows: 5, placeholder: "¿De qué trata? ¿Qué aprende o se lleva el asistente? ¿Por qué este tema es relevante para el público de BIORAIZ?" },
+          { name: "tematica", label: "Temática principal", type: "select", required: true, options: ["Nutrición funcional y alimentación consciente", "Mindfulness, meditación y salud mental", "Sustentabilidad y bioeconomía", "Movimiento y cuerpo consciente", "Emprendimiento con propósito", "Crianza consciente y educación activa", "Identidad patagónica y cultura local", "Bienestar holístico e integralidad", "Otra"] },
+          { row: [
+            { name: "duracion", label: "Duración propuesta", type: "select", options: ["45 minutos", "60 minutos", "90 minutos (taller + charla)"] },
+            { name: "practico", label: "¿Tiene componente práctico o participativo?", type: "select", options: ["No, es una charla expositiva", "Sí, tiene dinámicas o ejercicios cortos", "Sí, es principalmente un taller práctico"] },
+          ]},
+          { name: "equipamiento", label: "¿Necesitás proyector, micrófono u otro equipamiento especial?", type: "textarea", rows: 2, placeholder: "Ej: Presentación en PowerPoint (HDMI), micrófono de solapa, mesa para materiales.", hint: "El escenario tiene sistema de proyección HD y micrófono incluidos. Indicá cualquier requerimiento adicional." },
+        ],
+      },
+      {
+        num: "03", label: "Trayectoria y credenciales", title: "Tu respaldo profesional",
+        desc: "BIORAIZ no convoca speakers sin formación verificable. La credibilidad del festival depende de la seriedad de su programación.",
+        items: [
+          { name: "formacion", label: "Formación y credenciales relevantes", type: "textarea", required: true, rows: 3, placeholder: "Títulos, certificaciones, institución de formación y año. Ej: Licenciada en Nutrición (UBA, 2014), Posgrado en Psiconeuroinmunología (UNLaM, 2019)." },
+          { name: "exp", label: "¿Diste charlas en eventos públicos anteriormente?", type: "radio", required: true, options: ["Sí, en festivales o eventos de más de 1.000 personas", "Sí, en eventos medianos (hasta 1.000 personas)", "Sí, en workshops, capacitaciones o eventos pequeños", "No, sería mi primera charla en un evento público"] },
+          { name: "charla_previa", label: "Link a una charla previa (video, podcast o nota) — opcional", type: "url", placeholder: "https://youtube.com/... o https://spotify.com/...", hint: "Si tenés material de referencia, suma mucho al proceso de selección." },
+        ],
+      },
+      {
+        num: "04", label: "Disponibilidad y cierre", title: "Últimos detalles",
+        items: [
+          { name: "dias", label: "Días de disponibilidad", type: "checkbox", options: ["Jueves 13 de noviembre", "Viernes 14 de noviembre", "Sábado 15 de noviembre", "Cualquier día — sin preferencia"] },
+          { name: "honorario", label: "¿Tenés alguna expectativa de honorario o condición particular?", type: "textarea", rows: 2, placeholder: "Opcional. Si tenés un rango en mente, contanos. Si preferís discutirlo en la llamada, dejalo en blanco." },
+          { name: "observaciones", label: "Observaciones o información adicional", type: "textarea", rows: 2, placeholder: "Cualquier cosa que quieras agregar, preguntar o aclarar." },
+        ],
+      },
+    ],
+  },
+
+  // ── FACILITADORES (real) ───────────────────────────────────────
+  facilitadores: {
+    pills: ["4–6 sesiones/día", "3 espacios", "150 personas/sesión", "Cierre 31 ago"],
+    note: "**Antes de completar:** BIORAIZ exige formación acreditada y verificable en la disciplina propuesta. La credibilidad de la programación depende de la seriedad de sus facilitadores. Notificamos antes del **15 de septiembre**.",
+    submitNote: "**¿Qué pasa después?** Revisamos tu postulación y te contactamos antes del 15 de septiembre. Las postulaciones cierran el 31 de agosto de 2026.",
+    sections: [
+      {
+        num: "01", label: "Datos del facilitador/a", title: "¿Quién sos?",
+        desc: "Información básica de la persona que postula.",
+        items: [
+          { row: [
+            { name: "nombre", label: "Nombre completo", type: "text", required: true, placeholder: "Tu nombre tal como aparecerá en la grilla" },
+            { name: "disciplina", label: "Disciplina", type: "text", required: true, placeholder: "Ej: Profesora de Yoga Vinyasa, Terapeuta de sonido" },
+          ]},
+          { row: [
+            { name: "email", label: "Email", type: "email", required: true, placeholder: "nombre@correo.com" },
+            { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", required: true, placeholder: "+54 9 000 000-0000" },
+          ]},
+          { row: [
+            { name: "instagram", label: "Instagram principal", type: "text", placeholder: "@tu_perfil" },
+            { name: "web", label: "Web o link de referencia", type: "url", placeholder: "https://..." },
+          ]},
+        ],
+      },
+      {
+        num: "02", label: "La práctica propuesta", title: "¿Qué vas a facilitar?",
+        desc: "Contanos en detalle qué sesión proponés. La propuesta y el espacio tienen que encajar: hay 3 espacios diferenciados.",
+        items: [
+          { name: "disciplina_sesion", label: "Disciplina y tipo de sesión propuesta", type: "select", required: true, options: ["Yoga Hatha", "Yoga Vinyasa / Flow", "Yoga Yin / Restaurativo", "Yoga Nidra", "Yoga Kundalini", "Yoga para niños y familias", "Meditación guiada", "Mindfulness", "Pranayama / técnicas de respiración", "Respiración Wim Hof / Holotropic", "Soundbath / cuencos tibetanos / gong", "Movimiento consciente / somática", "Danza consciente / Biodanza / Contact", "Tai Chi / Qi Gong", "Reiki / terapia energética", "Activación y movimiento funcional", "Otra disciplina"] },
+          { name: "descripcion", label: "Descripción de la sesión propuesta (máximo 150 palabras)", type: "textarea", required: true, rows: 4, placeholder: "¿Cómo es la sesión? ¿Qué nivel requiere? ¿Qué se lleva el participante? ¿Necesita traer algo?" },
+          { name: "espacio", label: "Espacio que necesitás", type: "radio", required: true, options: ["Domo de Meditación — cubierto, 150 personas, ideal para prácticas contemplativas e inmersivas", "La Pradera — al aire libre, pasto natural, 80–100 personas, ideal para yoga y movimiento activo", "Sala de Terapias — privado, grupos de hasta 20 personas, ideal para terapias y sesiones individuales", "Cualquiera — sin preferencia, que el equipo asigne"] },
+          { row: [
+            { name: "duracion", label: "Duración de la sesión", type: "select", options: ["45 minutos", "60 minutos", "75 minutos", "90 minutos"] },
+            { name: "nivel", label: "Nivel de la práctica", type: "select", options: ["Apto para todos — sin experiencia previa necesaria", "Principiantes y práctica regular", "Intermedio / practica regular", "Avanzado"] },
+          ]},
+          { name: "materiales", label: "¿Traés materiales o instrumentos propios?", type: "textarea", rows: 2, placeholder: "Ej: Cuencos tibetanos, gong, mat de yoga propio, aceites esenciales, etc. Si necesitás que el festival provea colchonetas, indicalo." },
+        ],
+      },
+      {
+        num: "03", label: "Formación y trayectoria", title: "Tu respaldo profesional",
+        desc: "BIORAIZ exige formación verificable. Es la base de la credibilidad de la programación.",
+        items: [
+          { name: "formacion", label: "Formación acreditada en la disciplina que proponés", type: "textarea", required: true, rows: 3, placeholder: "Ej: Profesora de Yoga certificada 200hs (Yoga Alliance, 2019), formación en Yoga Terapéutico 100hs (Instituto Namaste, 2021)." },
+          { name: "exp", label: "Años de experiencia facilitando grupos", type: "radio", required: true, options: ["Menos de 1 año", "1 a 3 años", "3 a 7 años", "Más de 7 años"] },
+          { name: "exp_masivo", label: "¿Tenés experiencia facilitando en eventos o festivales con más de 50 personas?", type: "radio", options: ["Sí, en festivales o eventos masivos", "Sí, en retiros o eventos de mediana escala", "Solo clases o grupos pequeños (hasta 20 personas)", "No tengo experiencia en eventos externos aún"] },
+          { name: "protocolo", label: "¿Tenés protocolo de seguridad propio para tu práctica?", type: "radio", options: ["Sí, tengo formulario de contraindicaciones y protocolo escrito", "Sí, verbal — lo comunico al inicio de cada sesión", "Mi disciplina no requiere protocolo especial de seguridad"], hint: "Obligatorio para respiración intensa, contacto físico o estados alterados. En esos casos debe presentarse por escrito." },
+        ],
+      },
+      {
+        num: "04", label: "Disponibilidad y cierre", title: "Últimos detalles",
+        items: [
+          { name: "dias", label: "Días de disponibilidad", type: "checkbox", options: ["Jueves 13 de noviembre", "Viernes 14 de noviembre", "Sábado 15 de noviembre", "Cualquier día — sin preferencia"] },
+          { name: "observaciones", label: "Observaciones o información adicional", type: "textarea", rows: 2, placeholder: "Requerimientos especiales, condiciones de honorario, preguntas, o cualquier cosa relevante." },
+        ],
+      },
+    ],
+  },
+
+  // ── SPONSORS (placeholder — sin form real provisto) ────────────
+  sponsors: {
+    pills: ["Sponsors", "Canjes", "Institucionales"],
+    note: "**Sin formulario real todavía.** Esta es una versión base; cuando nos pases el formulario definitivo de Sponsors / Alianzas lo integramos igual que los demás.",
+    submitNote: "**¿Qué pasa después?** Te contacta el equipo comercial para conversar la alianza.",
+    sections: [
+      {
+        num: "01", label: "Tu organización", title: "Contanos quiénes son",
+        desc: "Datos de la empresa u organización que quiere sumarse como aliada.",
+        items: [
+          { row: [
+            { name: "organizacion", label: "Empresa / organización", type: "text", required: true, placeholder: "Nombre de la organización" },
+            { name: "contacto", label: "Persona de contacto", type: "text", required: true, placeholder: "Nombre y apellido" },
+          ]},
+          { row: [
+            { name: "cargo", label: "Cargo", type: "text", placeholder: "Ej: Marketing, Dirección" },
+            { name: "email", label: "Email", type: "email", required: true, placeholder: "nombre@empresa.com" },
+          ]},
+          { row: [
+            { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", placeholder: "+54 9 000 000-0000" },
+            { name: "tipo", label: "Tipo de alianza", type: "select", required: true, options: ["Sponsor principal", "Sponsor", "Canje", "Institucional / ONG"] },
+          ]},
+          { name: "web", label: "Sitio web", type: "url", placeholder: "https://..." },
+          { name: "propuesta", label: "Propuesta de colaboración", type: "textarea", rows: 3, placeholder: "Cómo te imaginás la alianza con BIORAIZ…" },
+        ],
+      },
+    ],
+  },
+
+  // ── PRENSA (real) ──────────────────────────────────────────────
+  prensa: {
+    pills: ["Acceso completo", "Zona de prensa", "Backstage coordinado", "Cierre 25 oct"],
+    note: "**Antes de completar:** Las acreditaciones son nominales con foto. Se confirman por email antes del **31 de octubre de 2026**. El plazo máximo de solicitud es el 25 de octubre. El acceso a backstage es limitado y se coordina caso a caso con la dirección artística.",
+    submitNote: "**¿Qué pasa después?** Confirmamos la acreditación por email antes del 31 de octubre de 2026. Las solicitudes cierran el 25 de octubre.",
+    sections: [
+      {
+        num: "01", label: "Datos del medio", title: "¿Qué medio representás?",
+        desc: "Información del medio o plataforma para la que vas a cubrir el festival.",
+        items: [
+          { row: [
+            { name: "medio", label: "Nombre del medio / plataforma", type: "text", required: true, placeholder: "Ej: La Mañana de Neuquén, @miblog, Podcast XYZ" },
+            { name: "tipo_medio", label: "Tipo de medio", type: "select", required: true, options: ["Diario o revista digital nacional", "Diario o revista digital regional / patagónica", "Medio impreso", "Portal de bienestar / lifestyle", "Podcast", "Canal de YouTube", "Cuenta de Instagram / TikTok (creador de contenido)", "Agencia de noticias", "Radio o TV", "Freelance (sin medio fijo)"] },
+          ]},
+          { row: [
+            { name: "link_medio", label: "Link al medio o perfil principal", type: "url", placeholder: "https://... o @cuenta" },
+            { name: "alcance", label: "Alcance / audiencia estimada", type: "select", options: ["Menos de 5.000 lectores/seguidores", "5.000 – 20.000", "20.000 – 100.000", "100.000 – 500.000", "Más de 500.000"] },
+          ]},
+        ],
+      },
+      {
+        num: "02", label: "Datos personales del/la periodista", title: "¿Quién viene al festival?",
+        desc: "Las acreditaciones son nominales. Completá los datos de cada persona que va a cubrir el evento.",
+        items: [
+          { row: [
+            { name: "nombre", label: "Nombre y apellido", type: "text", required: true, placeholder: "Periodista / creador de contenido principal" },
+            { name: "rol", label: "Rol en la cobertura", type: "text", required: true, placeholder: "Ej: Periodista, fotógrafa, videomaker" },
+          ]},
+          { row: [
+            { name: "email", label: "Email de contacto", type: "email", required: true, placeholder: "nombre@medio.com" },
+            { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", required: true, placeholder: "+54 9 000 000-0000" },
+          ]},
+          { name: "equipo", label: "¿Venís con equipo de producción? (fotógrafo, camarógrafo, asistente)", type: "radio", options: ["No, vengo solo/a", "Sí, con 1 persona más", "Sí, con 2 personas más", "Sí, con más de 2 personas (aclarar en observaciones)"], hint: "Cada acreditación adicional debe justificarse. Se coordinan caso a caso." },
+        ],
+      },
+      {
+        num: "03", label: "La cobertura planificada", title: "¿Qué vas a publicar?",
+        desc: "Necesitamos entender el tipo de cobertura para coordinar accesos y entrevistas con anticipación.",
+        items: [
+          { name: "tipo_cobertura", label: "Tipo de cobertura planificada", type: "checkbox", required: true, options: ["Nota de prensa escrita (digital o impresa)", "Fotografía editorial", "Video / reels para redes o YouTube", "Transmisión en vivo (streaming)", "Podcast o audio", "Stories / contenido efímero en Instagram o TikTok"] },
+          { name: "angulo", label: "Ángulo editorial o enfoque de la cobertura", type: "textarea", rows: 3, placeholder: "Ej: 'Vamos a hacer una nota sobre el impacto económico del festival en la región' o 'Queremos contar la historia de los emprendedores patagónicos que participan'.", hint: "Cuanto más específico, mejor podemos preparar los accesos y facilitarte entrevistas relevantes." },
+          { name: "entrevistas", label: "¿Necesitás coordinar entrevistas previas al evento?", type: "radio", options: ["Sí, con el equipo organizador (ZENZZO)", "Sí, con artistas del lineup", "Sí, con speakers o facilitadores", "No, cubro todo durante el evento"] },
+        ],
+      },
+      {
+        num: "04", label: "Días y accesos", title: "¿Cuándo venís?",
+        items: [
+          { name: "dias", label: "Días que vas a cubrir", type: "checkbox", required: true, options: ["Jueves 13 de noviembre", "Viernes 14 de noviembre", "Sábado 15 de noviembre"] },
+          { name: "backstage", label: "¿Necesitás acceso a backstage o zona de artistas?", type: "radio", options: ["Sí, es fundamental para la cobertura planificada", "Sería ideal pero no imprescindible", "No, con acceso general de prensa es suficiente"], hint: "El acceso a backstage es limitado y se coordina con la dirección artística. No se garantiza en todos los casos." },
+          { name: "observaciones", label: "Observaciones o requerimientos especiales", type: "textarea", rows: 2, placeholder: "Equipamiento especial, accesibilidad, condiciones particulares o cualquier pregunta." },
+        ],
+      },
+    ],
+  },
+
+};
+
+// ── Tabs (orden + metadata). El schema vive en FORM_SCHEMAS[id]. ──
+const PARTICIPA_TABS = [
+  { id: "feriantes",     emoji: "🌿", label: "Feriantes / Emprendedores", short: "Feriantes",     intro: "Contanos sobre tu emprendimiento y postulate para tener tu stand en la feria.", templateId: "REEMPLAZAR_TEMPLATE_feriantes",     subject: "Nueva solicitud Feriante — BIORAIZ" },
+  { id: "gastronomicos", emoji: "🍽️", label: "Gastronómicos",             short: "Gastronómicos", intro: "Sumá tu propuesta gastronómica al patio de comidas del festival.",            templateId: "REEMPLAZAR_TEMPLATE_gastronomicos", subject: "Nueva solicitud Gastronómico — BIORAIZ" },
+  { id: "artistas",      emoji: "🎤", label: "Artistas / Músicos",         short: "Artistas",      intro: "Convocatoria para artistas locales y emergentes de la Patagonia.",             templateId: "REEMPLAZAR_TEMPLATE_artistas",      subject: "Nueva solicitud Artista — BIORAIZ" },
+  { id: "speakers",      emoji: "🎙️", label: "Speakers",                   short: "Speakers",      intro: "Proponé una charla para el ciclo de contenidos del festival.",                 templateId: "REEMPLAZAR_TEMPLATE_speakers",      subject: "Nueva solicitud Speaker — BIORAIZ" },
+  { id: "facilitadores", emoji: "🧘", label: "Facilitadores",              short: "Facilitadores", intro: "Yoga, meditación, respiración, movimiento, sonido y terapias.",                templateId: "REEMPLAZAR_TEMPLATE_facilitadores", subject: "Nueva solicitud Facilitador/a — BIORAIZ" },
+  { id: "sponsors",      emoji: "📢", label: "Sponsors / Alianzas",        short: "Sponsors",      intro: "Sumá tu marca u organización como aliada del festival.",                       templateId: "REEMPLAZAR_TEMPLATE_sponsors",      subject: "Nueva solicitud Sponsor — BIORAIZ" },
+  { id: "prensa",        emoji: "📰", label: "Prensa / Media",             short: "Prensa",        intro: "Acreditate como prensa para cubrir el festival.",                              templateId: "REEMPLAZAR_TEMPLATE_prensa",        subject: "Nueva solicitud Prensa — BIORAIZ" },
+];
+
+window.FORM_SCHEMAS = FORM_SCHEMAS;
+window.PARTICIPA_TABS = PARTICIPA_TABS;
+
+  </script>
+
+  <!-- ===== src/page-participa.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Participá del Festival ─────────────────────────────
+// Renderer de los formularios. Los SCHEMAS y los TABS viven en
+// participa-forms.jsx (window.FORM_SCHEMAS / window.PARTICIPA_TABS).
+//
+// ── EMAILJS (envío desde el frontend, sin backend) ───────────────
+// 1. Creá cuenta en https://emailjs.com y conectá el Gmail del evento
+//    (Email Services → te da un SERVICE_ID).
+// 2. Creá una template por cada tipo de formulario (Email Templates →
+//    cada una te da un TEMPLATE_ID). En el cuerpo usá las variables
+//    {{nombre_del_campo}} que coinciden con los `name` de los inputs.
+// 3. Copiá tu Public Key (Account → API Keys) y pegá todo en EMAILJS_CONFIG.
+// 4. Pegá el templateId de cada tab en PARTICIPA_TABS (participa-forms.jsx).
+// El SDK de EmailJS se carga en BIORAIZ.html (cdn.jsdelivr → @emailjs/browser).
+
+// ── Credenciales de EmailJS (REEMPLAZAR por las tuyas) ───────────
+const EMAILJS_CONFIG = {
+  publicKey: "REEMPLAZAR_PUBLIC_KEY",   // Account → API Keys → Public Key
+  serviceId: "REEMPLAZAR_SERVICE_ID",   // Email Services → Service ID (Gmail)
+};
+
+if (typeof window !== "undefined" && window.emailjs && !window.__bzEmailjsInit) {
+  window.emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+  window.__bzEmailjsInit = true;
+}
+
+// ── Paleta exacta de la sección (specs del usuario) ──────────────
+const PZ = {
+  fondo:   "#1E3320", // fondo de la sección
+  campo:   "#2C2418", // fondo de los campos
+  borde:   "#7A9E5A", // borde de campos + tab activo + botón (color hoja)
+  texto:   "#F5F0E8", // texto de los campos
+  label:   "#C8B87A", // labels (DM Mono)
+};
+
+// ── Helper: **negrita** dentro de un texto plano ─────────────────
+function richText(text) {
+  if (!text) return null;
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i} style={{ color: PZ.label, fontWeight: 600 }}>{part.slice(2, -2)}</strong>;
+    }
+    return <React.Fragment key={i}>{part}</React.Fragment>;
+  });
+}
+
+// ── Estilos base reutilizables ───────────────────────────────────
+const pzLabel = {
+  display: "block",
+  fontFamily: "var(--bz-font-mono)",
+  fontSize: 12,
+  fontWeight: 500,
+  letterSpacing: "0.06em",
+  textTransform: "uppercase",
+  color: PZ.label,
+  marginBottom: 9,
+  lineHeight: 1.45,
+};
+
+const pzHint = {
+  fontSize: 12.5,
+  color: "rgba(245,240,232,0.5)",
+  lineHeight: 1.5,
+  marginTop: 8,
+};
+
+// ── Grupo de opciones (radio / checkbox) como tarjetas ───────────
+function OptionGroup({ field }) {
+  const multi = field.type === "checkbox";
+  const opts = field.options.map(o => (typeof o === "string" ? { t: o } : o));
+  const [val, setVal] = useState(multi ? [] : "");
+
+  const isOn = (t) => (multi ? val.includes(t) : val === t);
+  const toggle = (t) => {
+    if (multi) setVal(v => (v.includes(t) ? v.filter(x => x !== t) : [...v, t]));
+    else setVal(t);
+  };
+
+  return (
+    <div style={{ display: "grid", gap: 9 }}>
+      {opts.map(o => {
+        const on = isOn(o.t);
+        return (
+          <label key={o.t} style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 13,
+            padding: "13px 16px",
+            borderRadius: "var(--bz-radius-md)",
+            background: on ? "rgba(122,158,90,0.12)" : PZ.campo,
+            border: `1px solid ${on ? PZ.borde : "rgba(122,158,90,0.28)"}`,
+            cursor: "pointer",
+            transition: "background 160ms var(--bz-ease), border-color 160ms var(--bz-ease)",
+          }}>
+            <input
+              type={multi ? "checkbox" : "radio"}
+              name={field.name}
+              value={o.t}
+              checked={on}
+              onChange={() => toggle(o.t)}
+              required={field.required && !multi}
+              style={{ position: "absolute", opacity: 0, width: 0, height: 0 }}
+            />
+            <span aria-hidden="true" style={{
+              flexShrink: 0,
+              width: 19, height: 19,
+              marginTop: 1,
+              borderRadius: multi ? 5 : "50%",
+              border: `2px solid ${on ? PZ.borde : "rgba(122,158,90,0.5)"}`,
+              background: on ? PZ.borde : "transparent",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              transition: "all 160ms var(--bz-ease)",
+            }}>
+              {on && (multi
+                ? <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={PZ.fondo} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                : <span style={{ width: 7, height: 7, borderRadius: "50%", background: PZ.fondo }} />)}
+            </span>
+            <span style={{ flex: 1 }}>
+              <span style={{ display: "block", fontSize: 14.5, color: PZ.texto, lineHeight: 1.45 }}>{o.t}</span>
+              {o.s && <span style={{ display: "block", fontSize: 12.5, color: "rgba(245,240,232,0.52)", lineHeight: 1.45, marginTop: 3 }}>{o.s}</span>}
+            </span>
+          </label>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Campo de formulario ──────────────────────────────────────────
+function ParticipaField({ field }) {
+  const [focus, setFocus] = useState(false);
+
+  const baseStyle = {
+    width: "100%",
+    background: PZ.campo,
+    border: `1px solid ${focus ? PZ.borde : "rgba(122,158,90,0.45)"}`,
+    borderRadius: "var(--bz-radius-md)",
+    padding: "13px 16px",
+    fontSize: 15,
+    fontFamily: "var(--bz-font-body)",
+    color: PZ.texto,
+    outline: "none",
+    transition: "border-color 200ms var(--bz-ease), box-shadow 200ms var(--bz-ease)",
+    boxShadow: focus ? "0 0 0 3px rgba(122,158,90,0.16)" : "none",
+  };
+
+  const common = {
+    id: `pz-${field.name}`,
+    name: field.name,
+    required: field.required,
+    onFocus: () => setFocus(true),
+    onBlur: () => setFocus(false),
+    placeholder: field.placeholder || "",
+  };
+
+  let control;
+  if (field.type === "radio" || field.type === "checkbox") {
+    control = <OptionGroup field={field} />;
+  } else if (field.type === "textarea") {
+    control = <textarea {...common} rows={field.rows || 4} style={{ ...baseStyle, resize: "vertical", minHeight: (field.rows || 4) * 26, lineHeight: 1.55 }} />;
+  } else if (field.type === "select") {
+    control = (
+      <div style={{ position: "relative" }}>
+        <select {...common} defaultValue="" style={{ ...baseStyle, appearance: "none", WebkitAppearance: "none", paddingRight: 40, cursor: "pointer" }}>
+          <option value="" disabled hidden>Seleccioná…</option>
+          {field.options.map(o => <option key={o} value={o} style={{ background: PZ.campo, color: PZ.texto }}>{o}</option>)}
+        </select>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={PZ.borde} strokeWidth="2" style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}>
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+    );
+  } else {
+    control = <input {...common} type={field.type} style={baseStyle} />;
+  }
+
+  return (
+    <div>
+      <label style={pzLabel} htmlFor={`pz-${field.name}`}>
+        {field.label}{field.required && <span style={{ color: PZ.borde, marginLeft: 4 }}>*</span>}
+      </label>
+      {control}
+      {field.hint && <p style={pzHint}>{field.hint}</p>}
+    </div>
+  );
+}
+
+// ── Una sección del formulario ───────────────────────────────────
+function ParticipaSection({ section, last }) {
+  return (
+    <div style={{ paddingBottom: last ? 0 : 44, marginBottom: last ? 0 : 44, borderBottom: last ? "none" : "1px solid rgba(122,158,90,0.16)" }}>
+      <div style={{ marginBottom: 26 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 8 }}>
+          <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 13, fontWeight: 600, color: PZ.borde, letterSpacing: "0.05em" }}>{section.num}</span>
+          <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11.5, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,232,0.42)" }}>{section.label}</span>
+        </div>
+        {section.title && <h3 className="display" style={{ fontSize: "clamp(22px, 2.6vw, 28px)", color: PZ.texto, lineHeight: 1.15, marginBottom: section.desc ? 8 : 0 }}>{section.title}</h3>}
+        {section.desc && <p style={{ fontSize: 14.5, color: "rgba(245,240,232,0.6)", lineHeight: 1.55, maxWidth: 620 }}>{section.desc}</p>}
+      </div>
+
+      <div style={{ display: "grid", gap: 22 }}>
+        {section.items.map((item, i) => {
+          if (item.row) {
+            return (
+              <div key={i} className="pz-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "22px 24px" }}>
+                {item.row.map(f => <ParticipaField key={f.name} field={f} />)}
+              </div>
+            );
+          }
+          return <ParticipaField key={item.name} field={item} />;
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── Formulario completo de un tab ────────────────────────────────
+function ParticipaForm({ tab }) {
+  const schema = FORM_SCHEMAS[tab.id];
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (!window.emailjs) { setStatus("error"); return; }
+
+    setStatus("sending");
+    try {
+      await window.emailjs.sendForm(
+        EMAILJS_CONFIG.serviceId,
+        tab.templateId,
+        form,
+        { publicKey: EMAILJS_CONFIG.publicKey }
+      );
+      setStatus("sent");
+      form.reset();
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setStatus("error");
+    }
+  };
+
+  // ── Confirmación (fondo #1E3320 · hoja · Playfair Display) ──
+  if (status === "sent") {
+    return (
+      <div style={{ textAlign: "center", padding: "80px 24px", animation: "bz-fade-up 500ms var(--bz-ease) both" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+          <LeafShape size={80} color={PZ.borde} rotate={-8} />
+        </div>
+        <h3 className="display" style={{ fontSize: "clamp(28px, 4vw, 40px)", color: PZ.texto, lineHeight: 1.25, maxWidth: 560, margin: "0 auto" }}>
+          ¡Recibimos tu solicitud! Te contactaremos en los próximos días.
+        </h3>
+        <button onClick={() => setStatus("idle")} style={{
+          marginTop: 34,
+          padding: "11px 22px", borderRadius: "var(--bz-radius-pill)",
+          border: "1px solid rgba(122,158,90,0.5)", background: "transparent",
+          color: PZ.texto, fontSize: 13, fontWeight: 500, cursor: "pointer",
+        }}>Enviar otra solicitud</button>
+      </div>
+    );
+  }
+
+  const sending = status === "sending";
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Meta para la template de EmailJS */}
+      <input type="hidden" name="_subject" value={tab.subject} />
+      <input type="hidden" name="tipo_participacion" value={tab.label} />
+
+      {/* Nota de la convocatoria */}
+      {schema.note && (
+        <div style={{
+          display: "flex", alignItems: "flex-start", gap: 14,
+          padding: "18px 22px", marginBottom: 44,
+          background: "rgba(122,158,90,0.08)",
+          borderRadius: "var(--bz-radius-md)",
+          border: "1px solid rgba(122,158,90,0.22)",
+        }}>
+          <div style={{ flexShrink: 0, marginTop: 1 }}><LeafShape size={26} color={PZ.borde} rotate={-6} /></div>
+          <p style={{ fontSize: 14, color: "rgba(245,240,232,0.78)", lineHeight: 1.6 }}>{richText(schema.note)}</p>
+        </div>
+      )}
+
+      <fieldset disabled={sending} style={{ border: "none", margin: 0, padding: 0, minInlineSize: "auto" }}>
+        {schema.sections.map((s, i) => (
+          <ParticipaSection key={i} section={s} last={i === schema.sections.length - 1} />
+        ))}
+      </fieldset>
+
+      {/* Nota de cierre */}
+      {schema.submitNote && (
+        <p style={{ marginTop: 44, padding: "16px 20px", background: "rgba(245,240,232,0.04)", borderRadius: "var(--bz-radius-md)", fontSize: 13.5, color: "rgba(245,240,232,0.62)", lineHeight: 1.6 }}>
+          {richText(schema.submitNote)}
+        </p>
+      )}
+
+      <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
+        <button type="submit" className="pz-submit" disabled={sending} style={{
+          display: "inline-flex", alignItems: "center", gap: 11,
+          padding: "15px 32px",
+          borderRadius: "var(--bz-radius-pill)",
+          background: PZ.borde,
+          color: PZ.fondo,
+          fontSize: 14, fontWeight: 600,
+          letterSpacing: "0.08em",
+          fontFamily: "var(--bz-font-mono)",
+          textTransform: "uppercase",
+          opacity: sending ? 0.85 : 1,
+          cursor: sending ? "wait" : "pointer",
+          transition: "transform 200ms var(--bz-spring), filter 200ms var(--bz-ease)",
+        }}
+        onMouseEnter={e => { if (!sending) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.filter = "brightness(1.08)"; } }}
+        onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.filter = "brightness(1)"; }}>
+          {sending && <span className="pz-spinner" aria-hidden="true" />}
+          {sending ? "Enviando…" : "Enviar solicitud"}
+        </button>
+        <span style={{ fontSize: 12, color: "rgba(245,240,232,0.5)", fontFamily: "var(--bz-font-mono)" }}>
+          * Campos obligatorios
+        </span>
+      </div>
+
+      {status === "error" && (
+        <div role="alert" style={{
+          marginTop: 22, display: "flex", alignItems: "flex-start", gap: 12,
+          padding: "14px 18px",
+          borderRadius: "var(--bz-radius-md)",
+          background: "rgba(168,58,46,0.14)",
+          border: "1px solid #C0392B",
+          animation: "bz-fade-up 350ms var(--bz-ease) both",
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E5736A" strokeWidth="2.2" strokeLinecap="round" style={{ flexShrink: 0, marginTop: 1 }}>
+            <circle cx="12" cy="12" r="10" /><path d="M12 8v5M12 16.5v.5" />
+          </svg>
+          <div style={{ flex: 1 }}>
+            <p style={{ fontSize: 13.5, color: "#E5736A", fontFamily: "var(--bz-font-mono)", lineHeight: 1.5 }}>
+              No pudimos enviar tu solicitud. Revisá tu conexión e intentá de nuevo, o escribinos a hola@bioraiz.ar.
+            </p>
+            <button type="submit" style={{
+              marginTop: 10, padding: "8px 18px",
+              borderRadius: "var(--bz-radius-pill)",
+              border: "1px solid #C0392B", background: "transparent",
+              color: "#E5736A", fontSize: 12, fontWeight: 600,
+              letterSpacing: "0.06em", textTransform: "uppercase",
+              fontFamily: "var(--bz-font-mono)", cursor: "pointer",
+            }}>Reintentar</button>
+          </div>
+        </div>
+      )}
+    </form>
+  );
+}
+
+// ── Página / Sección ─────────────────────────────────────────────
+function PageParticipa({ setPage }) {
+  useReveal();
+  const [active, setActive] = useState(PARTICIPA_TABS[0].id);
+  const tab = PARTICIPA_TABS.find(t => t.id === active);
+  const schema = FORM_SCHEMAS[tab.id];
+
+  return (
+    <div className="page-enter">
+      <SubPageHeader
+        eyebrow="Sumate · BIORAIZ 2026"
+        title={<>Participá del<br />Festival.</>}
+        sub="Feriantes, cocineros, artistas, oradores, facilitadores, marcas y prensa: hay un lugar para vos. Elegí cómo querés sumarte y dejanos tus datos."
+      />
+
+      <section style={{ background: PZ.fondo, padding: "0 0 120px" }}>
+        <div className="container-narrow">
+          {/* Selector — todos los botones visibles (grilla que envuelve) */}
+          <div style={{ marginBottom: 8 }}>
+            <p style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11.5, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: PZ.label, marginBottom: 16 }}>
+              ¿A qué querés postular?
+            </p>
+            <div className="pz-tabs" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
+              {PARTICIPA_TABS.map(t => {
+                const on = t.id === active;
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => setActive(t.id)}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 11,
+                      padding: "16px 18px",
+                      textAlign: "left",
+                      fontSize: 14.5,
+                      fontWeight: on ? 600 : 500,
+                      fontFamily: "var(--bz-font-body)",
+                      color: on ? PZ.texto : "rgba(245,240,232,0.6)",
+                      background: on ? "rgba(122,158,90,0.14)" : PZ.campo,
+                      border: `1.5px solid ${on ? PZ.borde : "rgba(122,158,90,0.26)"}`,
+                      borderRadius: "var(--bz-radius-md)",
+                      cursor: "pointer",
+                      transition: "color 180ms var(--bz-ease), background 180ms var(--bz-ease), border-color 180ms var(--bz-ease)",
+                    }}
+                    onMouseEnter={e => { if (!on) { e.currentTarget.style.color = PZ.texto; e.currentTarget.style.borderColor = "rgba(122,158,90,0.5)"; } }}
+                    onMouseLeave={e => { if (!on) { e.currentTarget.style.color = "rgba(245,240,232,0.6)"; e.currentTarget.style.borderColor = "rgba(122,158,90,0.26)"; } }}
+                  >
+                    <span style={{ fontSize: 20, flexShrink: 0 }}>{t.emoji}</span>
+                    <span style={{ lineHeight: 1.25 }}>{t.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Panel */}
+          <div key={active} style={{ paddingTop: 48, animation: "bz-fade-up 450ms var(--bz-ease) both" }}>
+            <div style={{ marginBottom: 40, maxWidth: 640 }}>
+              <h2 className="display" style={{ fontSize: "clamp(28px, 4vw, 40px)", color: PZ.texto, marginBottom: 14, lineHeight: 1.1 }}>
+                <span style={{ marginRight: 12 }}>{tab.emoji}</span>{tab.label}
+              </h2>
+              <p style={{ fontSize: 16, color: "rgba(245,240,232,0.68)", lineHeight: 1.6, marginBottom: schema.pills ? 20 : 0 }}>{tab.intro}</p>
+              {schema.pills && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {schema.pills.map(p => (
+                    <span key={p} style={{
+                      padding: "6px 14px",
+                      borderRadius: "var(--bz-radius-pill)",
+                      border: "1px solid rgba(122,158,90,0.35)",
+                      background: "rgba(122,158,90,0.08)",
+                      fontSize: 12, fontWeight: 500,
+                      fontFamily: "var(--bz-font-mono)",
+                      letterSpacing: "0.03em",
+                      color: PZ.label,
+                    }}>{p}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <ParticipaForm tab={tab} />
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        .pz-spinner {
+          width: 15px; height: 15px;
+          border: 2px solid rgba(30,51,32,0.35);
+          border-top-color: ${PZ.fondo};
+          border-radius: 50%;
+          display: inline-block;
+          animation: pz-spin 0.7s linear infinite;
+        }
+        @keyframes pz-spin { to { transform: rotate(360deg); } }
+        select[id^="pz-"]:invalid { color: rgba(245,240,232,0.45); }
+        textarea::placeholder, input::placeholder { color: rgba(245,240,232,0.38); }
+        @media (max-width: 640px) {
+          .pz-row { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+window.PageParticipa = PageParticipa;
+
+  </script>
+
+  <!-- ===== src/page-press.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — Prensa ──────────────────────────────────────────
+
+function PagePrensa({ setPage }) {
+  useReveal();
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard?.writeText("prensa@bioraiz.ar");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="page-enter">
+      <SubPageHeader
+        eyebrow="Prensa & medios"
+        title={<>Prensa.</>}
+        sub="Recursos, datos y contacto directo para periodistas, podcasters y creadores que quieran contar BIORAIZ."
+      />
+
+      {/* PRESS KIT downloads */}
+      <section style={{ padding: "60px 0 100px", background: "var(--bz-fondo-base)" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 56, alignItems: "start" }} className="bz-prensa-top">
+            <div className="reveal">
+              <div className="eyebrow eyebrow-tierra" style={{ marginBottom: 14 }}>Kit de prensa 2026</div>
+              <h2 className="display" style={{ fontSize: "clamp(32px, 5vw, 52px)", color: "var(--bz-texto-primario)", marginBottom: 24, lineHeight: 1.1 }}>
+                Descargá lo que necesites para tu nota.
+              </h2>
+              <p style={{ fontSize: 16, color: "var(--bz-texto-secundario)", lineHeight: 1.7, marginBottom: 36 }}>
+                Logos, fotografías en alta, gacetillas listas para publicar y datos comprobables. Si necesitás algo que no está acá, escribinos.
+              </p>
+
+              <div style={{ display: "grid", gap: 12 }}>
+                {[
+                  { name: "Kit completo (PDF + fotos + logos)",     size: "48 MB", ext: "ZIP" },
+                  { name: "Logos (RGB, CMYK, monocromo, SVG)",        size: "3.2 MB", ext: "ZIP" },
+                  { name: "Fotografías ediciones anteriores",         size: "32 MB", ext: "ZIP" },
+                  { name: "Gacetilla — Anuncio fecha",                size: "180 KB", ext: "PDF" },
+                  { name: "Reporte de impacto 2025",                 size: "4.1 MB", ext: "PDF" },
+                ].map((f, i) => (
+                  <a key={i} href="#" className="reveal" style={{
+                    display: "flex", alignItems: "center", gap: 16,
+                    padding: "18px 22px",
+                    background: "var(--bz-beige-hueso)",
+                    border: "0.5px solid var(--bz-borde-ligero)",
+                    borderRadius: "var(--bz-radius-md)",
+                    transition: "all 250ms var(--bz-ease)",
+                    transitionDelay: `${i * 50}ms`,
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--bz-verde-musgo)"; e.currentTarget.style.transform = "translateX(4px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--bz-borde-ligero)"; e.currentTarget.style.transform = "translateX(0)"; }}
+                  >
+                    <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, color: "var(--bz-verde-bosque)", background: "var(--bz-verde-pasto)", padding: "4px 10px", borderRadius: "var(--bz-radius-sm)", flexShrink: 0, letterSpacing: "0.06em" }}>{f.ext}</span>
+                    <span style={{ flex: 1, fontSize: 14, color: "var(--bz-texto-primario)" }}>{f.name}</span>
+                    <span style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>{f.size}</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ color: "var(--bz-verde-bosque)" }}>
+                      <path d="M12 4v12M5 12l7 7 7-7"/>
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Sidebar — contact */}
+            <div className="reveal" style={{ position: "sticky", top: 120 }}>
+              <div style={{
+                background: "var(--bz-verde-profundo)",
+                color: "var(--bz-beige-hueso)",
+                borderRadius: "var(--bz-radius-xl)",
+                padding: "36px 32px",
+                position: "relative",
+                overflow: "hidden",
+              }}>
+                <div style={{ position: "absolute", top: -30, right: -30, opacity: 0.2 }}>
+                  <LeafShape size={140} color="var(--bz-ocre-calido)" rotate={45} />
+                </div>
+                <div style={{ position: "relative", zIndex: 1 }}>
+                  <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>Contacto prensa</div>
+                  <h3 className="display" style={{ fontSize: 28, marginBottom: 24, lineHeight: 1.1, color: "var(--bz-beige-hueso)" }}>
+                    Joaquín Páez
+                  </h3>
+                  <p style={{ fontSize: 13, color: "var(--bz-verde-claro)", marginBottom: 24, lineHeight: 1.5 }}>
+                    Comunicación y prensa<br />Equipo BIORAIZ
+                  </p>
+
+                  <button onClick={copyEmail} style={{
+                    width: "100%",
+                    padding: "14px 18px",
+                    background: "rgba(250, 246, 237, 0.08)",
+                    border: "0.5px solid rgba(230, 203, 122, 0.4)",
+                    borderRadius: "var(--bz-radius-md)",
+                    fontSize: 13,
+                    color: "var(--bz-beige-hueso)",
+                    textAlign: "left",
+                    display: "flex", justifyContent: "space-between", alignItems: "center",
+                    fontFamily: "var(--bz-font-mono)",
+                    marginBottom: 8,
+                    transition: "all 200ms var(--bz-ease)",
+                  }}>
+                    prensa@bioraiz.ar
+                    <span style={{ fontSize: 10, color: copied ? "var(--bz-ocre-calido)" : "var(--bz-verde-claro)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                      {copied ? "✓ copiado" : "copiar"}
+                    </span>
+                  </button>
+                  <a href="https://wa.me/" style={{
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    padding: "14px 18px",
+                    background: "rgba(250, 246, 237, 0.08)",
+                    border: "0.5px solid rgba(230, 203, 122, 0.4)",
+                    borderRadius: "var(--bz-radius-md)",
+                    fontSize: 13,
+                    color: "var(--bz-beige-hueso)",
+                    fontFamily: "var(--bz-font-mono)",
+                  }}>
+                    +54 9 299 412 8800
+                    <span style={{ fontSize: 10, color: "var(--bz-verde-claro)", letterSpacing: "0.1em", textTransform: "uppercase" }}>WhatsApp</span>
+                  </a>
+
+                  <p style={{ fontSize: 12, color: "rgba(157, 201, 159, 0.7)", marginTop: 24, lineHeight: 1.6 }}>
+                    Respondemos solicitudes de prensa en menos de 48 hs hábiles.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 880px) {
+            .bz-prensa-top { grid-template-columns: 1fr !important; gap: 32px !important; }
+            .bz-prensa-top > div:last-child { position: relative !important; top: 0 !important; }
+          }
+        `}</style>
+      </section>
+
+      {/* MEDIOS — what's been said */}
+      <section style={{ padding: "100px 0", background: "var(--bz-fondo-alt)" }}>
+        <div className="container">
+          <SectionHead
+            eyebrow="En los medios"
+            title={<>Algunas de las notas <em>publicadas</em>.</>}
+            sub="Una muestra de cómo otros medios contaron BIORAIZ. Si querés sumar tu nota, mandanos el link."
+          />
+
+          <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 16 }}>
+            {PRENSA_NOTAS.map((nota, i) => (
+              <a key={i} href={nota.url} className="reveal" style={{
+                background: "var(--bz-beige-hueso)",
+                padding: "28px 28px",
+                borderRadius: "var(--bz-radius-lg)",
+                border: "0.5px solid var(--bz-borde-ligero)",
+                display: "flex", flexDirection: "column", gap: 14,
+                transition: "all 250ms var(--bz-ease)",
+                transitionDelay: `${(i % 3) * 60}ms`,
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "var(--bz-shadow-md)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                  <div className="eyebrow" style={{ color: "var(--bz-tierra-rojo)", margin: 0 }}>{nota.medio}</div>
+                  <div style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>{nota.fecha}</div>
+                </div>
+                <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 22, color: "var(--bz-texto-primario)", lineHeight: 1.25, marginTop: 4 }}>
+                  "{nota.title}"
+                </h4>
+                <div style={{ marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--bz-verde-bosque)", fontFamily: "var(--bz-font-mono)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                  Leer nota
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quick facts */}
+      <section style={{ padding: "100px 0", background: "var(--bz-fondo-base)" }} className="trama">
+        <div className="container">
+          <SectionHead
+            eyebrow="Datos rápidos"
+            title={<>Para citar <em>en tu nota.</em></>}
+          />
+          <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
+            {[
+              { label: "Edición",          value: "4ª" },
+              { label: "Fecha 2026",        value: "13–15 nov" },
+              { label: "Lugar",             value: "Parque Centenario" },
+              { label: "Expositores",       value: "80+" },
+              { label: "Asistencia 2025",   value: "24.000" },
+              { label: "Provincias",        value: "5" },
+              { label: "Equipo permanente", value: "6 personas" },
+              { label: "Reciclaje 2025",    value: "92%" },
+            ].map((d, i) => (
+              <div key={i} className="reveal" style={{ background: "var(--bz-beige-hueso)", padding: "28px 24px", transitionDelay: `${i * 40}ms` }}>
+                <div className="display" style={{ fontSize: 36, color: "var(--bz-verde-profundo)", lineHeight: 1, marginBottom: 8, letterSpacing: "-0.02em" }}>{d.value}</div>
+                <div style={{ fontSize: 11, color: "var(--bz-texto-terciario)", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)" }}>{d.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+window.PagePrensa = PagePrensa;
+
+  </script>
+
+  <!-- ===== src/main.jsx ===== -->
+  <script type="text/babel">
+// ─── BIORAIZ — App entry / Router ───────────────────────────────
+
+function App() {
+  const [page, setPage] = useState(() => {
+    const hash = window.location.hash.replace("#", "");
+    return hash && ["home", "feria", "expositores", "programa", "entradas", "participa", "prensa"].includes(hash) ? hash : "home";
+  });
+
+  // Sync to hash
+  useEffect(() => {
+    window.location.hash = page;
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [page]);
+
+  // Handle back/forward
+  useEffect(() => {
+    const onHash = () => {
+      const h = window.location.hash.replace("#", "");
+      if (h && h !== page) setPage(h);
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, [page]);
+
+  const transparentHeader = page === "home";
+
+  let Page;
+  switch (page) {
+    case "feria":        Page = PageFeria;       break;
+    case "expositores":  Page = PageExpositores; break;
+    case "programa":     Page = PagePrograma;    break;
+    case "entradas":     Page = PageEntradas;    break;
+    case "participa":    Page = PageParticipa;   break;
+    case "prensa":       Page = PagePrensa;      break;
+    default:             Page = PageHome;
+  }
+
+  return (
+    <React.Fragment>
+      <Header page={page} setPage={setPage} transparent={transparentHeader} />
+      <main key={page}>
+        <Page setPage={setPage} />
+      </main>
+      <Footer setPage={setPage} />
+    </React.Fragment>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+  </script>
+
+
+  <style id="__om-edit-overrides"></style>
+</body>
+</html>
