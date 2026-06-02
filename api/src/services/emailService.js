@@ -5,7 +5,7 @@ dotenv.config();
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
 const ADMIN_EMAIL   = process.env.ADMIN_EMAIL || 'hola@bioraiz.net';
-const FROM          = { name: 'BIORAIZ', email: 'hola@bioraiz.net' };
+const FROM          = { name: 'BIORAIZ', email: 'noreply@bioraiz.net' };
 
 const brevo = axios.create({
   baseURL: 'https://api.brevo.com/v3',
