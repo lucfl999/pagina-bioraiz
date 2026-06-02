@@ -1,0 +1,13 @@
+name = "bioraiz-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-19"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[[triggers.crons]]
+cron = "0 */6 * * *"
+
+[build]
+command = "npm run build"
+cwd = "./"

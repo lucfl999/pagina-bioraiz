@@ -1,0 +1,23 @@
+{
+  "name": "bioraiz-website",
+  "version": "1.0.0",
+  "description": "BIORAIZ - Feria sustentable de la Patagonia. Production-ready deployment.",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "api",
+    "workers"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w frontend\" \"npm run dev -w api\"",
+    "build": "npm run build -w frontend && npm run build -w api && npm run build -w workers",
+    "start": "npm run start -w api",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0"
+  }
+}
