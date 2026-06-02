@@ -1,12 +1,13 @@
-// ─── BIORAIZ — Data ───────────────────────────────────────────────
-// Expositores, agenda, speakers, FAQ, prensa. Todo ficticio coherente.
+export const BZ_DATE = "13 · 14 · 15 nov 2026";
+export const BZ_DATE_FULL = "13, 14 y 15 de noviembre, 2026";
+export const BZ_LOCATION = "Las Cortaderas · Neuquén";
+export const BZ_EMAIL = "hola@bioraiz.net";
+export const BZ_WHATSAPP_LABEL = "+54 9 2995781006";
+export const BZ_WHATSAPP_LINK = "https://wa.me/5492995781006";
+export const BZ_INSTAGRAM = "https://www.instagram.com/bioraiz.nqn/";
+export const BZ_FACEBOOK = "https://www.facebook.com/people/Bioraiz/61590140866075/";
 
-const BZ_DATE = "13 · 14 · 15 nov 2026";
-const BZ_DATE_FULL = "13, 14 y 15 de noviembre, 2026";
-const BZ_LOCATION = "Parque Centenario · Neuquén";
-
-// ── Expositores ─────────────────────────────────────────────────────
-const CATEGORIES = [
+export const CATEGORIES = [
   { id: "all",        label: "Todos",         color: "var(--bz-verde-profundo)" },
   { id: "alimentos",  label: "Alimentación",  color: "var(--bz-verde-bosque)" },
   { id: "cosmetica",  label: "Cosmética",     color: "var(--bz-tierra-rojo)" },
@@ -16,39 +17,38 @@ const CATEGORIES = [
   { id: "gastro",     label: "Gastronomía",   color: "var(--bz-verde-profundo)" },
 ];
 
-const EXPOSITORES = [
+export const EXPOSITORES = [
   { id: 1,  name: "Miel del Sur",            cat: "alimentos", origen: "Villa La Angostura", desc: "Apicultores patagónicos de tercera generación. Mieles puras y fermentos." },
   { id: 2,  name: "Telas Vivas Patagonia",   cat: "diseno",    origen: "Bariloche",          desc: "Textiles teñidos con plantas nativas. Cada pieza, una temporada." },
   { id: 3,  name: "Raíz Fermentados",        cat: "alimentos", origen: "Neuquén",             desc: "Kimchi, kombuchas y pickles vivos. Ciencia y paciencia." },
-  { id: 4,  name: "Tintas Naturales",        cat: "diseno",    origen: "El Bolsón",          origen2: "Pinturas de cáscaras, raíces y minerales del valle." , desc: "Pinturas de cáscaras, raíces y minerales del valle." },
-  { id: 5,  name: "Brote de Lana",           cat: "infantil",  origen: "Junín de los Andes", desc: "Juguetes blandos de lana orgánica y madera local." },
+  { id: 4,  name: "Tintas Naturales",        cat: "diseno",    origen: "El Bolsón",           desc: "Pinturas de cáscaras, raíces y minerales del valle." },
+  { id: 5,  name: "Brote de Lana",           cat: "infantil",  origen: "Junín de los Andes",  desc: "Juguetes blandos de lana orgánica y madera local." },
   { id: 6,  name: "Cosmética Aroma",         cat: "cosmetica", origen: "San Martín de los Andes", desc: "Jabones, aceites y bálsamos con botánicos del bosque andino." },
   { id: 7,  name: "Casa Tierra",             cat: "diseno",    origen: "Neuquén",             desc: "Cerámica utilitaria cocida a leña, esmaltes minerales." },
-  { id: 8,  name: "Verde Quieto",            cat: "bienestar", origen: "Bariloche",          desc: "Tisanas, aceites esenciales y prácticas para frenar." },
+  { id: 8,  name: "Verde Quieto",            cat: "bienestar", origen: "Bariloche",           desc: "Tisanas, aceites esenciales y prácticas para frenar." },
   { id: 9,  name: "Cocina del Valle",        cat: "gastro",    origen: "Plottier",            desc: "Conservas de la huerta, mermeladas raras, salsas con historia." },
   { id: 10, name: "Pequeños Granos",         cat: "infantil",  origen: "Centenario",          desc: "Cuentos, semilleros y juegos para sembrar curiosidad temprana." },
-  { id: 11, name: "Lúpulo Hermano",          cat: "gastro",    origen: "El Bolsón",          desc: "Cerveza artesanal con lúpulo cultivado a 60 km de acá." },
+  { id: 11, name: "Lúpulo Hermano",          cat: "gastro",    origen: "El Bolsón",           desc: "Cerveza artesanal con lúpulo cultivado a 60 km de acá." },
   { id: 12, name: "Madera Hablante",         cat: "diseno",    origen: "Aluminé",             desc: "Mobiliario en madera caída. Cada mueble lleva el nombre de su árbol." },
   { id: 13, name: "Algarroba Norteña",       cat: "alimentos", origen: "Neuquén",             desc: "Harinas, panes y dulces a base de algarroba y frutos nativos." },
   { id: 14, name: "Quinoa Andina",           cat: "alimentos", origen: "Chos Malal",          desc: "Quinoa, kiwicha y semillas ancestrales del norte neuquino." },
-  { id: 15, name: "Lana Tejedora",           cat: "diseno",    origen: "Junín de los Andes", desc: "Tejidos en telar con lana de oveja mapuche, técnicas heredadas." },
+  { id: 15, name: "Lana Tejedora",           cat: "diseno",    origen: "Junín de los Andes",  desc: "Tejidos en telar con lana de oveja mapuche, técnicas heredadas." },
   { id: 16, name: "Aceites de Estepa",       cat: "cosmetica", origen: "Cipolletti",          desc: "Aceites prensados en frío: rosa mosqueta, almendra, lino." },
   { id: 17, name: "Yerba Patagónica",        cat: "gastro",    origen: "Neuquén",             desc: "Blends de hierbas patagónicas, yerba mate orgánica de proyectos justos." },
-  { id: 18, name: "Hueco Cerámica",          cat: "diseno",    origen: "Bariloche",          desc: "Vajilla en gres y porcelana. Formas que se adaptan a las manos." },
-  { id: 19, name: "Pan de Piedra",           cat: "gastro",    origen: "Villa La Angostura", desc: "Panadería de masa madre, harinas de molino propio." },
+  { id: 18, name: "Hueco Cerámica",          cat: "diseno",    origen: "Bariloche",           desc: "Vajilla en gres y porcelana. Formas que se adaptan a las manos." },
+  { id: 19, name: "Pan de Piedra",           cat: "gastro",    origen: "Villa La Angostura",  desc: "Panadería de masa madre, harinas de molino propio." },
   { id: 20, name: "Sentidos Yoga",           cat: "bienestar", origen: "Neuquén",             desc: "Clases abiertas, meditación al amanecer y trabajo corporal." },
   { id: 21, name: "Brotes y Hojas",          cat: "alimentos", origen: "Plottier",            desc: "Microverdes, brotes y plantas comestibles cultivadas hidropónicamente." },
   { id: 22, name: "Pequeño Bosque",          cat: "infantil",  origen: "El Chocón",           desc: "Talleres de bioconstrucción y juegos al aire libre para chicos." },
 ];
 
-// ── Programa ─────────────────────────────────────────────────────
-const DIAS = [
+export const DIAS = [
   { id: "viernes", label: "Viernes", num: "13", subtitulo: "Apertura", fecha: "13 nov" },
   { id: "sabado",  label: "Sábado",  num: "14", subtitulo: "Día completo", fecha: "14 nov" },
   { id: "domingo", label: "Domingo", num: "15", subtitulo: "Cierre y cosecha", fecha: "15 nov" },
 ];
 
-const ACTIVIDADES = {
+export const ACTIVIDADES = {
   viernes: [
     { hora: "15:00", title: "Apertura oficial",                lugar: "Escenario Principal",    speaker: "Equipo BIORAIZ",          tipo: "Ceremonia" },
     { hora: "16:00", title: "Inauguración del mercado",         lugar: "Pasillo Central",        speaker: "Todos los expositores",   tipo: "Mercado" },
@@ -82,7 +82,7 @@ const ACTIVIDADES = {
   ],
 };
 
-const SPEAKERS = [
+export const SPEAKERS = [
   { id: 1, name: "Valeria Soto",  rol: "Ingeniera agrónoma · INTA Patagonia", topic: "Agroecología y futuro" },
   { id: 2, name: "Marina Ré",     rol: "Cocinera · autora de 'Provincia'",     topic: "Cocina sin desperdicio" },
   { id: 3, name: "Diego Marín",   rol: "Antropólogo · UNCo",                    topic: "Comunidad y propósito" },
@@ -91,51 +91,54 @@ const SPEAKERS = [
   { id: 6, name: "Ana Lemos",     rol: "Periodista de impacto · La Tinta",      topic: "Comunicar lo esencial" },
 ];
 
-// ── Entradas ─────────────────────────────────────────────────────
-const TICKETS = [
+export const TICKETS = [
   {
-    id: "early",
-    name: "Early Bird",
-    precio: "$ 4.800",
-    precioOrig: "$ 7.200",
-    badge: "Hasta el 30 de septiembre",
+    id: "raices-early",
+    name: "Raíces",
+    precio: "$ 22.000",
+    precioOrig: "$ 30.000",
+    unidad: "por día",
+    badge: "Raíces · Early Bird",
     color: "ocre",
     incluye: [
-      "Entrada general los 3 días",
-      "Bolsa de tela BIORAIZ",
-      "Descuento en talleres",
-      "Newsletter exclusiva con avances",
+      "Acceso general 1 día a elección (viernes, sábado o domingo)",
+      "Ingreso desde apertura de puertas (12:00 hs)",
+      "Acceso a todos los escenarios principales y feria de emprendimientos",
+      "Zona wellness: acceso libre (sin sesiones reservadas)",
     ],
   },
   {
-    id: "general",
-    name: "General",
-    precio: "$ 7.200",
-    badge: "Acceso completo",
+    id: "raices",
+    name: "Raíces",
+    precio: "$ 30.000",
+    unidad: "por día",
+    badge: "Raíces · General",
     color: "verde",
     incluye: [
-      "Entrada general los 3 días",
-      "Acceso libre a todas las charlas",
-      "Mapa físico y programa impreso",
+      "Acceso general 1 día a elección (viernes, sábado o domingo)",
+      "Ingreso desde apertura de puertas (12:00 hs)",
+      "Acceso a todos los escenarios principales y feria de emprendimientos",
+      "Zona wellness: acceso libre (sin sesiones reservadas)",
     ],
     destacado: true,
   },
   {
-    id: "familia",
-    name: "Familia",
-    precio: "$ 14.400",
-    badge: "2 adultos + 2 menores",
+    id: "bosque",
+    name: "Bosque",
+    precio: "$ 80.000",
+    unidad: "por día",
+    badge: "Bosque · VIP",
     color: "tierra",
     incluye: [
-      "Entrada para 2 adultos los 3 días",
-      "Entrada para 2 niños (hasta 12 años)",
-      "Workshop infantil garantizado",
-      "Snack ecológico de bienvenida",
+      "Acceso VIP · 1 día",
+      "Kit de bienvenida: botella de acero inoxidable + snack orgánico + bandana",
+      "Baños VIP exclusivos (menor espera, mejor mantenimiento)",
+      "Ingreso a Zona VIP con barra exclusiva",
     ],
   },
 ];
 
-const FAQ = [
+export const FAQ = [
   { q: "¿Es apto para mascotas?", a: "Sí. Las mascotas son bienvenidas con correa y agua. El evento es al aire libre, hay sombra y bebederos. Pedimos cuidar el espacio común." },
   { q: "¿Hay accesibilidad para sillas de ruedas?", a: "Sí. Los caminos centrales están adaptados, hay baños accesibles y un punto de información con personal para acompañar. Si necesitás apoyo específico, escribinos antes." },
   { q: "¿Puedo llevar mi propio termo o vajilla?", a: "Por favor. Es parte de los compromisos de la edición: minimizar descartables. En el ingreso hay bebederos para recargar." },
@@ -144,8 +147,7 @@ const FAQ = [
   { q: "¿Puedo pagar en cuotas?", a: "Sí, hasta 3 cuotas sin interés con tarjetas seleccionadas. También aceptamos transferencia y efectivo en puntos de venta físicos." },
 ];
 
-// ── Prensa ─────────────────────────────────────────────────────
-const PRENSA_NOTAS = [
+export const PRENSA_NOTAS = [
   { medio: "La Tinta",       fecha: "Octubre 2025", title: "BIORAIZ: la feria que cambió el sur",                 url: "#" },
   { medio: "Río Negro",      fecha: "Octubre 2025", title: "Más de 20.000 personas en la cuarta edición",           url: "#" },
   { medio: "Revista Anfibia", fecha: "Sept 2025",   title: "Qué se cocina en BIORAIZ — y por qué importa",          url: "#" },
@@ -154,8 +156,7 @@ const PRENSA_NOTAS = [
   { medio: "Clarín Rural",   fecha: "Marzo 2025",   title: "BIORAIZ planifica su edición más ambiciosa",            url: "#" },
 ];
 
-// ── Valores ─────────────────────────────────────────────────────
-const VALORES = [
+export const VALORES = [
   { icon: "raíz",     title: "Origen",      desc: "Cada expositor explica de dónde viene su materia prima y cómo se produce. Sin esto, no hay feria." },
   { icon: "círculo",  title: "Circularidad", desc: "Lo que entra al evento, sale o se transforma. Compost, vajilla reusable, materiales que vuelven a la tierra." },
   { icon: "ola",      title: "Pausa",       desc: "La feria no apura. Programa que respira, espacios para sentarse y aire entre cada actividad." },
@@ -163,14 +164,14 @@ const VALORES = [
   { icon: "brote",    title: "Crecimiento", desc: "Cada edición intentamos algo nuevo, medimos qué funcionó y publicamos los datos. La transparencia es parte de la sustentabilidad." },
 ];
 
-const NUMEROS = [
+export const NUMEROS = [
   { value: 80,   suffix: "+", label: "expositores seleccionados" },
   { value: 24,   suffix: "k", label: "personas en la última edición" },
   { value: 4,    suffix: "",  label: "ediciones recorridas" },
   { value: 92,   suffix: "%", label: "residuos clasificados y procesados" },
 ];
 
-const COMPROMISOS = [
+export const COMPROMISOS = [
   { title: "0 plásticos descartables",   desc: "Vajilla reutilizable o compostable. Reembolso por traer la tuya." },
   { title: "100% energía limpia",         desc: "Generación solar para el escenario principal y la cocina abierta." },
   { title: "Compost in situ",             desc: "Toda materia orgánica se procesa en el predio y vuelve a huertas escolares." },
@@ -178,7 +179,7 @@ const COMPROMISOS = [
   { title: "Materiales locales",          desc: "Toda señalética y mobiliario armado con maderas y telas regionales." },
 ];
 
-const EQUIPO = [
+export const EQUIPO = [
   { name: "Carla Reinoso",   rol: "Dirección general" },
   { name: "Mauro Pereyra",   rol: "Producción y operaciones" },
   { name: "Lucía Antún",     rol: "Curaduría de expositores" },
@@ -187,9 +188,19 @@ const EQUIPO = [
   { name: "Joaquín Páez",    rol: "Comunicación y prensa" },
 ];
 
-// Expose to window so other scripts can use it
-Object.assign(window, {
-  BZ_DATE, BZ_DATE_FULL, BZ_LOCATION,
-  CATEGORIES, EXPOSITORES, DIAS, ACTIVIDADES, SPEAKERS,
-  TICKETS, FAQ, PRENSA_NOTAS, VALORES, NUMEROS, COMPROMISOS, EQUIPO,
-});
+export const NAV_LINKS = [
+  { id: "home",        label: "Inicio" },
+  { id: "feria",       label: "La Feria" },
+  { id: "expositores", label: "Expositores" },
+  { id: "programa",    label: "Programa" },
+  { id: "entradas",    label: "Entradas" },
+  { id: "participa",   label: "Participá" },
+  { id: "prensa",      label: "Prensa" },
+];
+
+export const ECO_PHRASES = [
+  "Esta página se carga con menos de 200 kb. La sustentabilidad también es digital.",
+  "Cada link visitado consume menos que un mate. Pero igual, andá despacio.",
+  "Tipografía cargada una sola vez. El resto, te lo regala el navegador.",
+  "Sin trackers, sin pop-ups, sin oscuridad. Solo BIORAIZ.",
+];
