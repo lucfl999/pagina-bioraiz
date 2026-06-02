@@ -17,10 +17,18 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-// Middleware
+// CORS: soporta múltiples orígenes separados por coma en CORS_ORIGIN
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+  .split(',').map(o => o.trim());
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-  credentials: true
+  origin: (origin, cb) => {
+    // Permitir requests sin origin (curl, Postman, server-to-server)
+    if (!origin) return cb(null, true);
+    if (allowedOrigins.includes(origin)) return cb(null, origin);
+    cb(new Error(`CORS: origin ${origin} not allowed`));
+  },
+  credentials: true,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
