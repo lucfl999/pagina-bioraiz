@@ -1,66 +1,63 @@
 import express from 'express';
-import { sendFormSubmission } from '../services/emailService.js';
+import { sendEmail } from '../services/emailService.js';
 
 const router = express.Router();
+
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hola@bioraiz.net';
+
+function buildAdminHtml(type, fields) {
+  const rows = Object.entries(fields)
+    .filter(([, v]) => v)
+    .map(([k, v]) => `<tr><td style="padding:8px 12px;font-weight:600;color:#2A3D24;background:#FAF6ED;">${k}</td><td style="padding:8px 12px;color:#4A5C3A;">${v}</td></tr>`)
+    .join('');
+  return `
+    <div style="font-family:monospace;max-width:600px;">
+      <h2 style="color:#2A3D24;border-bottom:2px solid #EDE4CF;padding-bottom:12px;">[BIORAIZ] ${type}</h2>
+      <table style="width:100%;border-collapse:collapse;border:1px solid #EDE4CF;border-radius:8px;overflow:hidden;">${rows}</table>
+    </div>`;
+}
 
 // POST /api/forms/contact
 router.post('/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
+    if (!name || !email || !message)
+      return res.status(400).json({ error: 'Faltan campos obligatorios' });
 
-    if (!name || !email || !message) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+    await sendEmail(
+      ADMIN_EMAIL,
+      `[BIORAIZ] Contacto de ${name}`,
+      buildAdminHtml('Contacto general', { Nombre: name, Email: email, Mensaje: message })
+    );
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
-    }
-
-    await sendFormSubmission({
-      name,
-      email,
-      message,
-      type: 'Contacto General'
-    });
-
-    res.json({
-      success: true,
-      message: 'Formulario enviado correctamente'
-    });
+    res.json({ success: true });
   } catch (error) {
-    console.error('Form submission error:', error);
+    console.error('Contact form error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
 
-// POST /api/forms/participa
+// POST /api/forms/participa  — recibe cualquier objeto de formulario del frontend
 router.post('/participa', async (req, res) => {
   try {
-    const { name, email, productName, description, category } = req.body;
+    const data = req.body;
+    if (!data || typeof data !== 'object')
+      return res.status(400).json({ error: 'Datos inválidos' });
 
-    if (!name || !email || !productName || !description) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+    const tipo = data.tipo_participacion || data.type || 'Participación';
+    const fields = Object.fromEntries(
+      Object.entries(data).filter(([k]) => k !== 'tipo_participacion' && k !== '_subject')
+    );
 
-    await sendFormSubmission({
-      name,
-      email,
-      message: `
-        Nombre del productor: ${name}
-        Producto/Categoría: ${productName} (${category})
-        Descripción: ${description}
-      `,
-      type: 'Solicitud de Participación'
-    });
+    await sendEmail(
+      ADMIN_EMAIL,
+      `[BIORAIZ] Nueva solicitud — ${tipo}`,
+      buildAdminHtml(`Solicitud: ${tipo}`, fields)
+    );
 
-    res.json({
-      success: true,
-      message: 'Solicitud de participación enviada'
-    });
+    res.json({ success: true });
   } catch (error) {
-    console.error('Participation form error:', error);
+    console.error('Participa form error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -69,29 +66,18 @@ router.post('/participa', async (req, res) => {
 router.post('/press-kit', async (req, res) => {
   try {
     const { name, email, media, purpose } = req.body;
+    if (!name || !email || !media)
+      return res.status(400).json({ error: 'Faltan campos obligatorios' });
 
-    if (!name || !email || !media) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+    await sendEmail(
+      ADMIN_EMAIL,
+      `[BIORAIZ] Solicitud press kit — ${name}`,
+      buildAdminHtml('Press kit', { Nombre: name, Email: email, Medio: media, Propósito: purpose })
+    );
 
-    await sendFormSubmission({
-      name,
-      email,
-      message: `
-        Medio/Programa: ${media}
-        Propósito: ${purpose || 'No especificado'}
-      `,
-      type: 'Solicitud de Press Kit'
-    });
-
-    // TODO: Generar y enviar PDF con press kit
-
-    res.json({
-      success: true,
-      message: 'Press kit enviado a tu email'
-    });
+    res.json({ success: true });
   } catch (error) {
-    console.error('Press kit request error:', error);
+    console.error('Press kit error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
