@@ -25,6 +25,8 @@ app.use(cors({
     'http://localhost:5173',
     'https://lucfl999.github.io',
     'https://lucfl999.github.io/pagina-bioraiz',
+    'https://bioraiz.net',
+    'https://www.bioraiz.net',
     process.env.FRONTEND_URL
   ].filter(Boolean)
 }));
