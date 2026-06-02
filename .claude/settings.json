@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Copy-Item \"c:\\\\Users\\\\Usuario\\\\Downloads\\\\PaginaBioraiz\\\\Untitled-1.html\" \"c:\\\\Users\\\\Usuario\\\\Downloads\\\\PaginaBioraiz\\\\index.html\")",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import sys; content=sys.stdin.read\\(\\); print\\(f'Size: {len\\(content\\)} chars'\\); print\\('First 200:', content[:200]\\); print\\('Last 200:', content[-200:]\\)\")",
+      "Bash(python -c \"import sys; content=sys.stdin.read\\(\\); import re; matches=re.findall\\(r'\\(fetch|api|railway|sendinblue|email|backend|RAILWAY|API_URL|endpoint\\)', content, re.I\\); print\\('API references found:', set\\(matches\\)\\)\")",
+      "Bash(git add *)"
+    ]
+  }
+}
