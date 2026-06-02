@@ -20,7 +20,13 @@ if (!SENDINBLUE_API_KEY) {
 }
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173', 'https://lucfl999.github.io', process.env.FRONTEND_URL].filter(Boolean)
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://lucfl999.github.io',
+    'https://lucfl999.github.io/pagina-bioraiz',
+    process.env.FRONTEND_URL
+  ].filter(Boolean)
 }));
 app.use(express.json());
 
