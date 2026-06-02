@@ -23,8 +23,9 @@ export const submitPressKitForm = async (data) => {
 };
 
 // Subscribers
-export const subscribeNewsletter = async (email) => {
-  return api.post('/subscribers', { email });
+// source: 'newsletter' | 'entradas' | 'grilla'
+export const subscribeNewsletter = async (email, source = 'newsletter') => {
+  return api.post('/subscribers', { email, source });
 };
 
 export const notifySubscribers = async (subject, content) => {

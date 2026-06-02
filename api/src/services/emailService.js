@@ -35,17 +35,34 @@ export const sendEmail = async (to, subject, html, text) => {
   return { success: true, messageId: data.messageId };
 };
 
-export const sendSubscriberWelcome = async (email) => {
+const WELCOME_CONTENT = {
+  entradas: {
+    subject: 'Te avisamos cuando salgan las entradas — BIORAIZ 2026',
+    title:   '¡Anotado!',
+    body:    'En cuanto salgan a la venta las entradas para BIORAIZ 2026 te mandamos un mail. Vas a ser de los primeros en saberlo.',
+  },
+  grilla: {
+    subject: 'Te mandamos la grilla completa — BIORAIZ 2026',
+    title:   '¡Anotado!',
+    body:    'Cuando tengamos la grilla completa de actividades del festival te la mandamos directamente. Tres días cargados — mejor tenerla guardada.',
+  },
+  newsletter: {
+    subject: 'Bienvenido a la Carta de Raíz — BIORAIZ',
+    title:   'Bienvenido a la Carta de Raíz',
+    body:    'Una vez al mes te mandamos novedades del evento, historias de productores y notas eco. Sin spam, sin urgencia.',
+  },
+};
+
+export const sendSubscriberWelcome = async (email, source = 'newsletter') => {
+  const content = WELCOME_CONTENT[source] || WELCOME_CONTENT.newsletter;
   const html = `
     <div style="font-family:'Georgia',serif;max-width:520px;margin:0 auto;color:#1A2012;">
       <div style="padding:32px 0 16px;border-bottom:1px solid #EDE4CF;">
-        <p style="margin:0;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · Carta de Raíz</p>
+        <p style="margin:0;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · 13 · 14 · 15 NOV 2026</p>
       </div>
       <div style="padding:32px 0;">
-        <h1 style="font-size:28px;font-weight:400;line-height:1.2;color:#2A3D24;margin:0 0 20px;">¡Gracias por suscribirte!</h1>
-        <p style="font-size:16px;line-height:1.7;color:#4A5C3A;margin:0 0 16px;">
-          Te vamos a avisar cuando salgan las entradas para BIORAIZ 2026 y te mantenemos al tanto de novedades de la feria.
-        </p>
+        <h1 style="font-size:28px;font-weight:400;line-height:1.2;color:#2A3D24;margin:0 0 20px;">${content.title}</h1>
+        <p style="font-size:16px;line-height:1.7;color:#4A5C3A;margin:0 0 20px;">${content.body}</p>
         <p style="font-size:15px;line-height:1.7;color:#4A5C3A;margin:0;">
           <strong>13 · 14 · 15 de noviembre, 2026</strong><br/>
           Las Cortaderas · Neuquén, Patagonia
@@ -58,7 +75,7 @@ export const sendSubscriberWelcome = async (email) => {
         </p>
       </div>
     </div>`;
-  await sendEmail(email, 'Te avisamos cuando salgan las entradas — BIORAIZ 2026', html);
+  await sendEmail(email, content.subject, html);
 };
 
 export const sendSubscriberNotification = async (email, subject, content) => {

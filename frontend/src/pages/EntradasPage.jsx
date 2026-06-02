@@ -19,7 +19,7 @@ function TicketCard({ ticket, index }) {
   const onNotify = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try { await subscribeNewsletter(email); } catch (_) {}
+    try { await subscribeNewsletter(email, 'entradas'); } catch (_) {}
     setSent(true);
     setLoading(false);
   };

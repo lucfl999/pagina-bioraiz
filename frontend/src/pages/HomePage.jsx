@@ -275,7 +275,7 @@ function NewsletterBlock() {
     e.preventDefault();
     setLoading(true);
     try {
-      await subscribeNewsletter(email);
+      await subscribeNewsletter(email, 'newsletter');
       setSent(true);
     } catch (err) {
       // Si ya está suscripto o error, igual mostramos éxito (no queremos enumerar emails)

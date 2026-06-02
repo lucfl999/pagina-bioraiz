@@ -8,7 +8,7 @@ function GrillaSubscribe() {
   const [sent, setSent] = useState(false);
   const onSubmit = async (e) => {
     e.preventDefault();
-    try { await subscribeNewsletter(email); } catch (_) {}
+    try { await subscribeNewsletter(email, 'grilla'); } catch (_) {}
     setSent(true);
   };
   return (
