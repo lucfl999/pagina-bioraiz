@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useReveal, SubPageHeader, LeafShape } from '../components/shared.jsx';
 import { FORM_SCHEMAS, PARTICIPA_TABS } from '../participa-forms.js';
+import api from '../services/api.js';
 
 const PZ = {
   fondo:   "#1E3320",
@@ -165,8 +166,17 @@ function ParticipaForm({ tab }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-    await new Promise(r => setTimeout(r, 800));
-    setStatus("sent");
+    try {
+      const form = e.currentTarget;
+      const data = { tipo_participacion: tab.label };
+      new FormData(form).forEach((v, k) => { if (v) data[k] = v; });
+      await api.post('/forms/participa', data);
+      setStatus("sent");
+      form.reset();
+    } catch (err) {
+      console.error('Form error:', err);
+      setStatus("error");
+    }
   };
 
   if (status === "sent") {
@@ -216,6 +226,12 @@ function ParticipaForm({ tab }) {
         </button>
         <span style={{ fontSize: 12, color: "rgba(245,240,232,0.5)", fontFamily: "var(--bz-font-mono)" }}>* Campos obligatorios</span>
       </div>
+
+      {status === "error" && (
+        <div style={{ marginTop: 20, padding: "14px 18px", borderRadius: "var(--bz-radius-md)", background: "rgba(168,58,46,0.14)", border: "1px solid #C0392B", fontSize: 13.5, color: "#E5736A", fontFamily: "var(--bz-font-mono)" }}>
+          No pudimos enviar tu solicitud. Revisá tu conexión e intentá de nuevo, o escribinos a hola@bioraiz.net
+        </div>
+      )}
     </form>
   );
 }
