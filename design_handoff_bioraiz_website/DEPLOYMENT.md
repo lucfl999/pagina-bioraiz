@@ -216,21 +216,29 @@ zone_id = "tu_zone_id"
 
 ### 6. Configurar Email
 
-#### 6.1 Con Resend (Recomendado)
+#### 6.1 Con Brevo (Recomendado - 300 emails/día GRATIS)
 
-1. Ir a https://resend.com
-2. Sign up (gratis para primeros 100 emails)
-3. Dashboard → API Keys
-4. Crear key y copiar a `RESEND_API_KEY`
-5. Verificar dominio: https://resend.com/emails (agregar bioraiz.net)
+1. Ir a https://www.brevo.com
+2. Sign up (gratis)
+3. Dashboard → SMTP & API → API keys
+4. Copiar API key y agregar a `.env`:
+```
+EMAIL_PROVIDER=brevo
+BREVO_API_KEY=xkeysib-xxxxx...
+```
+5. Verificar dominio en Email senders (para más legitimidad)
 
 #### 6.2 Con SendGrid (Alternativa)
 
 1. Ir a https://sendgrid.com
-2. Sign up (gratis)
+2. Sign up (gratis 100 emails/día)
 3. Settings → API Keys
 4. Crear nueva key
-5. Copiar a `SENDGRID_API_KEY`
+5. Copiar a `.env`:
+```
+EMAIL_PROVIDER=sendgrid
+SENDGRID_API_KEY=SG.xxxxx...
+```
 
 ---
 

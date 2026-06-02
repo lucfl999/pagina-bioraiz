@@ -4,20 +4,20 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const provider = process.env.EMAIL_PROVIDER || 'resend';
+const provider = process.env.EMAIL_PROVIDER || 'brevo';
 
 // Email transporter setup
 let transporter;
 
-if (provider === 'resend') {
-  // Using Resend API via nodemailer SMTP
+if (provider === 'brevo') {
+  // Using Brevo (Sendinblue) SMTP
   transporter = nodemailer.createTransport({
-    host: 'smtp.resend.com',
+    host: 'smtp-relay.brevo.com',
     port: 587,
     secure: false,
     auth: {
-      user: 'resend',
-      pass: process.env.RESEND_API_KEY
+      user: 'apikey',
+      pass: process.env.BREVO_API_KEY
     }
   });
 } else if (provider === 'sendgrid') {
