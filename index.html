@@ -437,40 +437,9 @@
         <div class="container">
             <h2 style="text-align: center; margin-bottom: 3rem;">Entradas</h2>
             <div class="grid-3">
-                <div class="card" style="padding: 2.5rem 1.5rem;">
-                    <h3 style="margin-bottom: 0.5rem;">Acceso 1 Día</h3>
-                    <p style="color: var(--bz-texto-terciario); font-size: 0.875rem; margin-bottom: 1.5rem;">Entrada a la feria por 1 día</p>
-                    <div style="font-size: 2rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 1.5rem;">$5.000</div>
-                    <ul style="list-style: none; margin-bottom: 1.5rem;">
-                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Acceso a todos los stands</li>
-                        <li style="font-size: 0.875rem;">✓ Actividades incluidas</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;">Comprar Entrada</button>
-                </div>
-                <div class="card" style="padding: 2.5rem 1.5rem; border: 2px solid var(--bz-verde-musgo); position: relative;">
-                    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bz-verde-musgo); color: white; padding: 0.25rem 0.75rem; border-radius: var(--bz-radius-pill); font-size: 0.75rem; font-weight: 600;">MÁS POPULAR</div>
-                    <h3 style="margin-bottom: 0.5rem;">Acceso 3 Días</h3>
-                    <p style="color: var(--bz-texto-terciario); font-size: 0.875rem; margin-bottom: 1.5rem;">Acceso a toda la feria</p>
-                    <div style="font-size: 2rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 1.5rem;">$12.000</div>
-                    <ul style="list-style: none; margin-bottom: 1.5rem;">
-                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Viernes + Sábado + Domingo</li>
-                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Todas las actividades</li>
-                        <li style="font-size: 0.875rem;">✓ 10% desc. en compras</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;">Comprar Entrada</button>
-                </div>
-                <div class="card" style="padding: 2.5rem 1.5rem;">
-                    <h3 style="margin-bottom: 0.5rem;">VIP Premium</h3>
-                    <p style="color: var(--bz-texto-terciario); font-size: 0.875rem; margin-bottom: 1.5rem;">Experiencia Premium</p>
-                    <div style="font-size: 2rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 1.5rem;">$18.000</div>
-                    <ul style="list-style: none; margin-bottom: 1.5rem;">
-                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Zona VIP</li>
-                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Parking reservado</li>
-                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Almuerzo incluido</li>
-                        <li style="font-size: 0.875rem;">✓ Meet & Greet speakers</li>
-                    </ul>
-                    <button class="btn btn-primary" style="width: 100%;">Comprar Entrada</button>
-                </div>
+                    <button class="btn btn-primary" onclick="handleComprarEntrada('1-dia')" style="width: 100%;">Comprar Entrada</button>
+                    <button class="btn btn-primary" onclick="handleComprarEntrada('3-dias')" style="width: 100%;">Comprar Entrada</button>
+                    <button class="btn btn-primary" onclick="handleComprarEntrada('vip')" style="width: 100%;">Comprar Entrada</button>
             </div>
         </div>
     </section>
@@ -505,10 +474,11 @@
         <div class="container" style="max-width: 500px;">
             <h2 style="text-align: center; margin-bottom: 1rem; color: var(--bz-beige-hueso);">Mantente Conectado</h2>
             <p style="text-align: center; margin-bottom: 2rem; color: var(--bz-crema-fondo);">Recibe actualizaciones sobre BIORAIZ 2026</p>
-            <form style="display: flex; gap: 0.5rem;">
-                <input type="email" placeholder="tu@email.com" required style="flex: 1; padding: 0.875rem 1rem; border: none; border-radius: var(--bz-radius-pill); font-size: 0.875rem;">
-                <button type="submit" class="btn btn-primary">Suscribirse</button>
+            <form id="newsletter-form" style="display: flex; gap: 0.5rem;">
+                <input id="newsletter-email" type="email" placeholder="tu@email.com" required style="flex: 1; padding: 0.875rem 1rem; border: none; border-radius: var(--bz-radius-pill); font-size: 0.875rem;">
+                <button type="submit" class="btn btn-primary" id="newsletter-btn">Suscribirse</button>
             </form>
+            <p id="newsletter-message" style="text-align: center; margin-top: 1rem; padding: 0.75rem; border-radius: var(--bz-radius-md); font-size: 0.875rem; display: none;"></p>
         </div>
     </section>
 
@@ -536,5 +506,70 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const API_BASE = 'https://pagina-bioraiz-production.up.railway.app/api';
+
+        // Manejar suscripción a newsletter
+        document.getElementById('newsletter-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('newsletter-email').value;
+            const btn = document.getElementById('newsletter-btn');
+            const msg = document.getElementById('newsletter-message');
+            
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            msg.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE}/subscribe`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    msg.style.display = 'block';
+                    msg.style.backgroundColor = '#6E9050';
+                    msg.textContent = '¡Te has suscrito correctamente! 🎉';
+                    document.getElementById('newsletter-email').value = '';
+                } else {
+                    throw new Error(data.message || 'Error al suscribirse');
+                }
+            } catch (error) {
+                msg.style.display = 'block';
+                msg.style.backgroundColor = '#C8524A';
+                msg.textContent = 'Error: ' + error.message;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Suscribirse';
+            }
+        });
+
+        // Manejar compra de entradas
+        function handleComprarEntrada(tipo) {
+            const precios = {
+                '1-dia': 5000,
+                '3-dias': 12000,
+                'vip': 18000
+            };
+            
+            const nombres = {
+                '1-dia': 'Acceso 1 Día',
+                '3-dias': 'Acceso 3 Días',
+                'vip': 'VIP Premium'
+            };
+
+            // Por ahora, mostrar un mensaje. 
+            // Aquí irían integración con Mercado Pago, Stripe, etc.
+            alert(`Compra de ${nombres[tipo]} - $${precios[tipo]}\n\nRedirigiendo a pasarela de pago...`);
+            
+            // Placeholder: redirigir a contacto
+            // En producción, aquí iría el link a Mercado Pago o Stripe
+            // window.location.href = 'https://link-de-pago.com/checkout?product=' + tipo;
+        }
+    </script>
 </body>
 </html>
