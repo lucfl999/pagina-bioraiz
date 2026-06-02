@@ -1,8 +1,8 @@
 export const FORM_SCHEMAS = {
 
   feriantes: {
-    pills: ["~90 stands", "50.000 asistentes", "8 categorías", "Cierre 31 ago", "Early bird −15% hasta 31/07"],
-    note: "**Antes de completar:** El cupo es limitado a 90 stands seleccionados por curaduría. Se prioriza origen patagónico o regional. Las postulaciones cierran el **31 de agosto de 2026** y los seleccionados son notificados el **15 de septiembre**. El pago confirma el lugar solo tras la notificación oficial.",
+    pills: ["200–220 stands disponibles", "50.000 asistentes", "8 categorías", "Cierre 31 ago", "Early bird −15% hasta 31/07"],
+    note: "**Antes de completar:** Hay entre 200 y 220 stands disponibles, seleccionados por curaduría. Se prioriza origen patagónico o regional. Las postulaciones cierran el **31 de agosto de 2026** y los seleccionados son notificados el **15 de septiembre**. El pago confirma el lugar solo tras la notificación oficial.",
     submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones con una matriz de puntuación y notificamos a los seleccionados antes del 15 de septiembre de 2026. Las postulaciones cierran el 31 de agosto. El pago confirma el lugar solo tras la notificación oficial — no antes.",
     sections: [
       {
@@ -101,7 +101,7 @@ export const FORM_SCHEMAS = {
 
   artistas: {
     pills: ["3 escenarios", "Slots reservados", "Prioritario regional", "Cierre 31 ago"],
-    note: "**Esta convocatoria es para artistas locales y emergentes patagónicos.** Los headliners y mid-level nacionales son contactados directamente por el equipo de booking. Notificamos antes del **15 de septiembre**.",
+    note: "**Esta convocatoria prioriza artistas locales y emergentes patagónicos.** Si tu proyecto es de otra región de Argentina y creés que encajás, podés postularte igual — se evalúa caso a caso. Notificamos antes del **15 de septiembre**.",
     submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones y avisamos antes del 15 de septiembre de 2026.",
     sections: [
       {
