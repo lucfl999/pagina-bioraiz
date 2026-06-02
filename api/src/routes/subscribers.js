@@ -1,6 +1,6 @@
 import express from 'express';
 import { pool } from '../index.js';
-import { sendSubscriberNotification } from '../services/emailService.js';
+import { sendSubscriberWelcome } from '../services/emailService.js';
 
 const router = express.Router();
 
@@ -35,11 +35,9 @@ router.post('/', async (req, res) => {
       [email]
     );
 
-    // Send welcome email
-    await sendSubscriberNotification(
-      email,
-      '¡Bienvenido a BIORAIZ!',
-      '<p>Te avisaremos cuando se abra la venta de entradas y novedades de la feria.</p>'
+    // Send welcome email (fire-and-forget — no bloquea la respuesta)
+    sendSubscriberWelcome(email).catch(err =>
+      console.error('Welcome email failed:', err.message)
     );
 
     res.status(201).json({
