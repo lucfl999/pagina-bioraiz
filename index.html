@@ -10,20 +10,531 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- Estilos -->
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ═════════════════════════════════════════════════════════════ */
+        /* BIORAIZ — Estilos Globales */
+        /* ═════════════════════════════════════════════════════════════ */
+
+        :root {
+            /* Paleta de Colores Patagónica */
+            --bz-verde-profundo:   #2A3D24;
+            --bz-verde-bosque:     #3D5A3F;
+            --bz-verde-musgo:      #6E9050;
+            --bz-verde-claro:      #9DC99F;
+            --bz-verde-pasto:      #EAF3DE;
+
+            --bz-ocre-calido:      #E6CB7A;
+            --bz-ocre-tostado:     #C8A647;
+            --bz-tierra-rojo:      #A33A1E;
+            --bz-tierra-claro:     #D87A55;
+
+            --bz-beige-base:       #F2EBDC;
+            --bz-beige-hueso:      #FAF6ED;
+            --bz-crema-fondo:      #F8F2E2;
+            --bz-crema-texto:      #F2EFE6;
+
+            --bz-texto-primario:   #1A2012;
+            --bz-texto-secundario: #4A5C3A;
+            --bz-texto-terciario:  #7A8A6A;
+            --bz-borde-suave:      #DDD3BD;
+            --bz-borde-ligero:     #EDE4CF;
+
+            --bz-fondo-base:       #FAF6ED;
+            --bz-fondo-alt:        #F2EBDC;
+            --bz-fondo-dark:       #1E3320;
+
+            /* Tipografía */
+            --bz-font-display: 'Playfair Display', Georgia, serif;
+            --bz-font-body:    'DM Sans', system-ui, sans-serif;
+            --bz-font-mono:    'DM Mono', 'Courier New', monospace;
+
+            /* Espacios */
+            --bz-radius-sm:   4px;
+            --bz-radius-md:   8px;
+            --bz-radius-lg:   14px;
+            --bz-radius-xl:   24px;
+            --bz-radius-pill: 999px;
+
+            /* Sombras */
+            --bz-shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.05);
+            --bz-shadow-md:   0 4px 6px rgba(0, 0, 0, 0.08);
+            --bz-shadow-lg:   0 10px 25px rgba(0, 0, 0, 0.12);
+            --bz-shadow-xl:   0 20px 50px rgba(0, 0, 0, 0.15);
+
+            /* Animaciones */
+            --bz-ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --bz-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bz-fondo-base);
+            color: var(--bz-texto-primario);
+            font-family: var(--bz-font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Tipografía */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--bz-font-display);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 3.5rem; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.375rem; }
+        h5 { font-size: 1.125rem; }
+        h6 { font-size: 1rem; }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--bz-texto-secundario);
+        }
+
+        a {
+            color: var(--bz-verde-profundo);
+            text-decoration: none;
+            transition: color 200ms var(--bz-ease);
+        }
+
+        a:hover {
+            color: var(--bz-verde-musgo);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--bz-borde-ligero);
+            border-radius: var(--bz-radius-lg);
+            padding: 1.5rem;
+            transition: box-shadow 200ms var(--bz-ease);
+        }
+
+        .card:hover {
+            box-shadow: var(--bz-shadow-lg);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--bz-radius-pill);
+            font-family: var(--bz-font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 200ms var(--bz-ease);
+        }
+
+        .btn-primary {
+            background: var(--bz-verde-musgo);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--bz-verde-profundo);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--bz-texto-primario);
+            border: 1px solid var(--bz-borde-ligero);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bz-verde-pasto);
+        }
+
+        header {
+            background: var(--bz-fondo-base);
+            border-bottom: 1px solid var(--bz-borde-ligero);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--bz-texto-primario);
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--bz-verde-musgo);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--bz-verde-pasto) 0%, var(--bz-beige-hueso) 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            margin-bottom: 1rem;
+            color: var(--bz-verde-profundo);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            background: var(--bz-texto-primario);
+            color: var(--bz-beige-hueso);
+            padding: 3rem 0 1.5rem;
+        }
+
+        footer h4 {
+            margin-bottom: 1rem;
+            color: var(--bz-beige-hueso);
+        }
+
+        footer a {
+            color: var(--bz-crema-fondo);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a:hover {
+            color: var(--bz-beige-hueso);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--bz-crema-fondo);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.75rem; }
+            nav { gap: 1rem; font-size: 0.9rem; }
+            .section { padding: 2rem 0; }
+        }
+    </style>
 </head>
 <body>
-    <div id="root"></div>
-    
-    <!-- React y bibliotecas -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Main App -->
-    <script src="js/data.js"></script>
-    <script src="js/api.js"></script>
-    <script type="text/babel" src="js/main.js"></script>
+    <!-- HEADER -->
+    <header>
+        <div class="container header-inner">
+            <h1>🌿 BIORAIZ</h1>
+            <nav>
+                <a href="#inicio">Inicio</a>
+                <a href="#expositores">Expositores</a>
+                <a href="#programa">Programa</a>
+                <a href="#entradas">Entradas</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h1>BIORAIZ</h1>
+            <p>La feria sustentable de la Patagonia</p>
+            <p style="font-size: 1.125rem; margin-bottom: 2rem;">13 · 14 · 15 de noviembre, 2026</p>
+            <button class="btn btn-primary">Obtener Entradas →</button>
+        </div>
+    </section>
+
+    <!-- NÚMEROS -->
+    <section class="section" style="background: var(--bz-verde-pasto);">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Los Números de BIORAIZ</h2>
+            <div class="grid-4">
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 0.5rem;">50+</div>
+                    <p>Expositores</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 0.5rem;">5</div>
+                    <p>Zonas Experienciales</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 0.5rem;">20+</div>
+                    <p>Actividades</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 0.5rem;">3</div>
+                    <p>Días de Feria</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section class="section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Categorías</h2>
+            <div class="grid-3">
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🌾</div>
+                    <h3>Alimentación</h3>
+                    <p style="color: var(--bz-texto-terciario);">8 stands</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                    <h3>Cosmética</h3>
+                    <p style="color: var(--bz-texto-terciario);">6 stands</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎨</div>
+                    <h3>Diseño</h3>
+                    <p style="color: var(--bz-texto-terciario);">5 stands</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🧘</div>
+                    <h3>Bienestar</h3>
+                    <p style="color: var(--bz-texto-terciario);">7 stands</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎪</div>
+                    <h3>Infantil</h3>
+                    <p style="color: var(--bz-texto-terciario);">4 stands</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍🍳</div>
+                    <h3>Gastronomía</h3>
+                    <p style="color: var(--bz-texto-terciario);">9 stands</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPOSITORES -->
+    <section class="section" id="expositores">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Nuestros Expositores</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Miel del Sur</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Alimentación</p>
+                    <p>Miel orgánica de la Patagonia</p>
+                </div>
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Telas Vivas</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Diseño</p>
+                    <p>Textiles sostenibles</p>
+                </div>
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Fermentados Nativo</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Alimentación</p>
+                    <p>Productos fermentados tradicionales</p>
+                </div>
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Cosméticos Orgánicos</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Cosmética</p>
+                    <p>Skincare natural 100%</p>
+                </div>
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Cerámica Nativa</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Diseño</p>
+                    <p>Piezas hechas a mano</p>
+                </div>
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Yoga & Meditación</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Bienestar</p>
+                    <p>Talleres de mindfulness</p>
+                </div>
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Repostería Artesanal</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Gastronomía</p>
+                    <p>Pasteles sin gluten</p>
+                </div>
+                <div class="card">
+                    <h4 style="margin-bottom: 0.5rem;">Té Patagónico</h4>
+                    <p style="color: var(--bz-texto-terciario); margin-bottom: 1rem; font-size: 0.875rem;">Alimentación</p>
+                    <p>Infusiones naturales</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAMA -->
+    <section class="section" id="programa">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Programa</h2>
+            <div style="max-width: 600px; margin: 0 auto;">
+                <h3 style="margin-bottom: 2rem;">Viernes 13</h3>
+                <div style="padding: 1.5rem; border-left: 3px solid var(--bz-verde-musgo); margin-bottom: 1rem; background: var(--bz-crema-fondo); border-radius: var(--bz-radius-md); display: flex; gap: 1.5rem;">
+                    <div style="font-weight: bold; color: var(--bz-verde-profundo); min-width: 70px;">10:00</div>
+                    <div><h4 style="margin-bottom: 0.25rem;">Inauguración</h4><p style="font-size: 0.875rem; color: var(--bz-texto-terciario);">Evento</p></div>
+                </div>
+                <div style="padding: 1.5rem; border-left: 3px solid var(--bz-verde-musgo); margin-bottom: 1rem; background: var(--bz-crema-fondo); border-radius: var(--bz-radius-md); display: flex; gap: 1.5rem;">
+                    <div style="font-weight: bold; color: var(--bz-verde-profundo); min-width: 70px;">11:00</div>
+                    <div><h4 style="margin-bottom: 0.25rem;">Taller de Cosmética Natural</h4><p style="font-size: 0.875rem; color: var(--bz-texto-terciario);">Taller</p></div>
+                </div>
+                <div style="padding: 1.5rem; border-left: 3px solid var(--bz-verde-musgo); margin-bottom: 1rem; background: var(--bz-crema-fondo); border-radius: var(--bz-radius-md); display: flex; gap: 1.5rem;">
+                    <div style="font-weight: bold; color: var(--bz-verde-profundo); min-width: 70px;">14:00</div>
+                    <div><h4 style="margin-bottom: 0.25rem;">Charla: Sostenibilidad</h4><p style="font-size: 0.875rem; color: var(--bz-texto-terciario);">Charla</p></div>
+                </div>
+                <div style="padding: 1.5rem; border-left: 3px solid var(--bz-verde-musgo); background: var(--bz-crema-fondo); border-radius: var(--bz-radius-md); display: flex; gap: 1.5rem;">
+                    <div style="font-weight: bold; color: var(--bz-verde-profundo); min-width: 70px;">16:00</div>
+                    <div><h4 style="margin-bottom: 0.25rem;">Música en Vivo</h4><p style="font-size: 0.875rem; color: var(--bz-texto-terciario);">Actividad</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENTRADAS -->
+    <section class="section" id="entradas" style="background: var(--bz-fondo-alt);">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Entradas</h2>
+            <div class="grid-3">
+                <div class="card" style="padding: 2.5rem 1.5rem;">
+                    <h3 style="margin-bottom: 0.5rem;">Acceso 1 Día</h3>
+                    <p style="color: var(--bz-texto-terciario); font-size: 0.875rem; margin-bottom: 1.5rem;">Entrada a la feria por 1 día</p>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 1.5rem;">$5.000</div>
+                    <ul style="list-style: none; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Acceso a todos los stands</li>
+                        <li style="font-size: 0.875rem;">✓ Actividades incluidas</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;">Comprar Entrada</button>
+                </div>
+                <div class="card" style="padding: 2.5rem 1.5rem; border: 2px solid var(--bz-verde-musgo); position: relative;">
+                    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bz-verde-musgo); color: white; padding: 0.25rem 0.75rem; border-radius: var(--bz-radius-pill); font-size: 0.75rem; font-weight: 600;">MÁS POPULAR</div>
+                    <h3 style="margin-bottom: 0.5rem;">Acceso 3 Días</h3>
+                    <p style="color: var(--bz-texto-terciario); font-size: 0.875rem; margin-bottom: 1.5rem;">Acceso a toda la feria</p>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 1.5rem;">$12.000</div>
+                    <ul style="list-style: none; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Viernes + Sábado + Domingo</li>
+                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Todas las actividades</li>
+                        <li style="font-size: 0.875rem;">✓ 10% desc. en compras</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;">Comprar Entrada</button>
+                </div>
+                <div class="card" style="padding: 2.5rem 1.5rem;">
+                    <h3 style="margin-bottom: 0.5rem;">VIP Premium</h3>
+                    <p style="color: var(--bz-texto-terciario); font-size: 0.875rem; margin-bottom: 1.5rem;">Experiencia Premium</p>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--bz-verde-profundo); margin-bottom: 1.5rem;">$18.000</div>
+                    <ul style="list-style: none; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Zona VIP</li>
+                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Parking reservado</li>
+                        <li style="margin-bottom: 0.5rem; font-size: 0.875rem;">✓ Almuerzo incluido</li>
+                        <li style="font-size: 0.875rem;">✓ Meet & Greet speakers</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;">Comprar Entrada</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">Preguntas Frecuentes</h2>
+            <div style="max-width: 600px; margin: 0 auto;">
+                <details style="margin-bottom: 1rem; border: 1px solid var(--bz-borde-ligero); border-radius: var(--bz-radius-md); overflow: hidden;">
+                    <summary style="padding: 1.5rem; cursor: pointer; font-weight: 500; background: var(--bz-verde-pasto);">¿Cuándo es BIORAIZ?</summary>
+                    <p style="padding: 1.5rem; background: var(--bz-crema-fondo); border-top: 1px solid var(--bz-borde-ligero);">13, 14 y 15 de noviembre de 2026 en Las Cortaderas, Neuquén.</p>
+                </details>
+                <details style="margin-bottom: 1rem; border: 1px solid var(--bz-borde-ligero); border-radius: var(--bz-radius-md); overflow: hidden;">
+                    <summary style="padding: 1.5rem; cursor: pointer; font-weight: 500;">¿Puedo comprar entradas en la puerta?</summary>
+                    <p style="padding: 1.5rem; background: var(--bz-crema-fondo); border-top: 1px solid var(--bz-borde-ligero);">Sí, pero recomendamos comprar anticipadas para garantizar disponibilidad.</p>
+                </details>
+                <details style="margin-bottom: 1rem; border: 1px solid var(--bz-borde-ligero); border-radius: var(--bz-radius-md); overflow: hidden;">
+                    <summary style="padding: 1.5rem; cursor: pointer; font-weight: 500;">¿Hay estacionamiento?</summary>
+                    <p style="padding: 1.5rem; background: var(--bz-crema-fondo); border-top: 1px solid var(--bz-borde-ligero);">Sí, hay estacionamiento gratuito para todos los visitantes.</p>
+                </details>
+                <details style="border: 1px solid var(--bz-borde-ligero); border-radius: var(--bz-radius-md); overflow: hidden;">
+                    <summary style="padding: 1.5rem; cursor: pointer; font-weight: 500;">¿Puedo traer mascotas?</summary>
+                    <p style="padding: 1.5rem; background: var(--bz-crema-fondo); border-top: 1px solid var(--bz-borde-ligero);">Sí, se permiten mascotas con sus respectivos dueños.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="section" style="background: var(--bz-verde-profundo); color: var(--bz-beige-hueso);">
+        <div class="container" style="max-width: 500px;">
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--bz-beige-hueso);">Mantente Conectado</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--bz-crema-fondo);">Recibe actualizaciones sobre BIORAIZ 2026</p>
+            <form style="display: flex; gap: 0.5rem;">
+                <input type="email" placeholder="tu@email.com" required style="flex: 1; padding: 0.875rem 1rem; border: none; border-radius: var(--bz-radius-pill); font-size: 0.875rem;">
+                <button type="submit" class="btn btn-primary">Suscribirse</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="grid-3" style="margin-bottom: 2rem;">
+                <div>
+                    <h4>BIORAIZ</h4>
+                    <p style="font-size: 0.875rem; color: var(--bz-crema-fondo);">La feria sustentable de la Patagonia</p>
+                </div>
+                <div>
+                    <h4>Contacto</h4>
+                    <a href="mailto:hola@bioraiz.net">hola@bioraiz.net</a>
+                    <a href="https://wa.me/5492995781006">+54 9 2995781006</a>
+                </div>
+                <div>
+                    <h4>Redes</h4>
+                    <a href="https://www.instagram.com/bioraiz.nqn/">Instagram</a>
+                    <a href="https://www.facebook.com/people/Bioraiz/61590140866075/">Facebook</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 BIORAIZ. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
