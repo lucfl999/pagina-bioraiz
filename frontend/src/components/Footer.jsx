@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { BzLogo } from './shared.jsx';
-import { NAV_LINKS, ECO_PHRASES, BZ_DATE_FULL, BZ_LOCATION } from '../data.js';
+import { BzLogo, IconInstagram, IconFacebook } from './shared.jsx';
+import { NAV_LINKS, ECO_PHRASES, BZ_DATE_FULL, BZ_LOCATION, BZ_EMAIL, BZ_WHATSAPP_LABEL, BZ_WHATSAPP_LINK, BZ_INSTAGRAM, BZ_FACEBOOK } from '../data.js';
 
 export default function Footer({ setPage }) {
   const [eco] = useState(() => ECO_PHRASES[Math.floor(Math.random() * ECO_PHRASES.length)]);
@@ -25,7 +25,7 @@ export default function Footer({ setPage }) {
           <div>
             <div style={colTitle}>Navegar</div>
             {NAV_LINKS.slice(1).map(l => (
-              <a key={l.id} style={colLink} onClick={() => setPage(l.id)} href="#"
+              <a key={l.id} style={colLink} onClick={e => { e.preventDefault(); setPage(l.id); }} href="#"
                  onMouseEnter={e => e.target.style.color = "var(--bz-ocre-calido)"}
                  onMouseLeave={e => e.target.style.color = "rgba(242, 239, 230, 0.78)"}>{l.label}</a>
             ))}
@@ -33,26 +33,40 @@ export default function Footer({ setPage }) {
 
           <div>
             <div style={colTitle}>Comunidad</div>
-            <a href="#" style={colLink} onClick={e => { e.preventDefault(); setPage("participa"); }}>Postulate como expositor</a>
-            <a href="#" style={colLink} onClick={e => { e.preventDefault(); setPage("participa"); }}>Voluntariado</a>
-            <a href="#" style={colLink} onClick={e => { e.preventDefault(); setPage("participa"); }}>Newsletter</a>
-            <a href="#" style={colLink}>Sustentabilidad</a>
+            <a href="#" style={colLink} onClick={e => { e.preventDefault(); setPage("participa"); }}
+               onMouseEnter={e => e.target.style.color = "var(--bz-ocre-calido)"}
+               onMouseLeave={e => e.target.style.color = "rgba(242, 239, 230, 0.78)"}>Postulate como expositor</a>
+            <a href="#" style={colLink} onClick={e => { e.preventDefault(); setPage("participa"); }}
+               onMouseEnter={e => e.target.style.color = "var(--bz-ocre-calido)"}
+               onMouseLeave={e => e.target.style.color = "rgba(242, 239, 230, 0.78)"}>Voluntariado</a>
+            <a href="#" style={colLink} onClick={e => { e.preventDefault(); setPage("feria"); }}
+               onMouseEnter={e => e.target.style.color = "var(--bz-ocre-calido)"}
+               onMouseLeave={e => e.target.style.color = "rgba(242, 239, 230, 0.78)"}>Sustentabilidad</a>
           </div>
 
           <div>
             <div style={colTitle}>Contacto</div>
-            <a href="mailto:hola@bioraiz.net" style={colLink}>hola@bioraiz.net</a>
-            <a href="mailto:prensa@bioraiz.net" style={colLink}>prensa@bioraiz.net</a>
+            <a href={`mailto:${BZ_EMAIL}`} style={colLink}
+               onMouseEnter={e => e.target.style.color = "var(--bz-ocre-calido)"}
+               onMouseLeave={e => e.target.style.color = "rgba(242, 239, 230, 0.78)"}>{BZ_EMAIL}</a>
+            <a href={BZ_WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={colLink}
+               onMouseEnter={e => e.target.style.color = "var(--bz-ocre-calido)"}
+               onMouseLeave={e => e.target.style.color = "rgba(242, 239, 230, 0.78)"}>WhatsApp {BZ_WHATSAPP_LABEL}</a>
             <div style={{ marginTop: 20, display: "flex", gap: 12 }}>
-              {["IG", "FB", "YT", "TW"].map(s => (
-                <a key={s} href="#" style={{
+              {[
+                { label: "Instagram", href: BZ_INSTAGRAM, Icon: IconInstagram },
+                { label: "Facebook",  href: BZ_FACEBOOK,  Icon: IconFacebook },
+              ].map(({ label, href, Icon }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} style={{
                   width: 36, height: 36, borderRadius: "50%", border: "1px solid rgba(242, 239, 230, 0.2)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 11, fontFamily: "var(--bz-font-mono)", color: "var(--bz-crema-texto)",
+                  color: "var(--bz-crema-texto)",
                   transition: "all 200ms var(--bz-ease)",
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "var(--bz-ocre-calido)"; e.currentTarget.style.color = "var(--bz-verde-profundo)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--bz-crema-texto)"; }}>{s}</a>
+                onMouseEnter={e => { e.currentTarget.style.background = "var(--bz-ocre-calido)"; e.currentTarget.style.color = "var(--bz-verde-profundo)"; e.currentTarget.style.borderColor = "var(--bz-ocre-calido)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--bz-crema-texto)"; e.currentTarget.style.borderColor = "rgba(242, 239, 230, 0.2)"; }}>
+                  <Icon size={18} />
+                </a>
               ))}
             </div>
           </div>

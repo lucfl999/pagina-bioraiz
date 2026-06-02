@@ -1,24 +1,40 @@
 import { useState } from 'react';
-import { useReveal, SectionHead, Placeholder, SubPageHeader, CTABanner } from '../components/shared.jsx';
-import { DIAS, ACTIVIDADES, SPEAKERS } from '../data.js';
+import { useReveal, SubPageHeader, CTABanner } from '../components/shared.jsx';
+import { DIAS, TIPOS_ACTIVIDAD } from '../data.js';
+
+function GrillaSubscribe() {
+  const [email, setEmail] = useState("");
+  const [sent, setSent] = useState(false);
+  const onSubmit = (e) => { e.preventDefault(); if (email.includes("@")) setSent(true); };
+  return (
+    <div style={{ marginTop: 44, padding: "24px 26px", background: "var(--bz-verde-pasto)", borderRadius: "var(--bz-radius-md)" }}>
+      <p style={{ fontSize: 13, color: "var(--bz-verde-bosque)", fontFamily: "var(--bz-font-mono)", lineHeight: 1.6, letterSpacing: "0.02em", marginBottom: 16 }}>
+        Grilla completa disponible a partir de septiembre 2026. Suscribite para recibirla primero.
+      </p>
+      {sent ? (
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, fontSize: 14, color: "var(--bz-verde-bosque)" }}>
+          <span>✓</span> <span>Listo, te enviamos la grilla a <strong style={{ wordBreak: "break-all" }}>{email}</strong> apenas salga.</span>
+        </div>
+      ) : (
+        <form onSubmit={onSubmit} style={{ display: "flex", gap: 8, maxWidth: 460, flexWrap: "wrap" }}>
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@correo.com" required style={{ flex: 1, minWidth: 200, padding: "13px 18px", fontSize: 14, fontFamily: "var(--bz-font-body)", border: "1px solid var(--bz-verde-musgo)", borderRadius: "var(--bz-radius-pill)", background: "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", outline: "none" }} />
+          <button type="submit" className="btn btn-primary">Suscribirme</button>
+        </form>
+      )}
+    </div>
+  );
+}
 
 export default function ProgramaPage({ setPage }) {
   useReveal();
-  const [activeDia, setActiveDia] = useState("sabado");
-  const [favorites, setFavorites] = useState(() => new Set());
-  const [typeFilter, setTypeFilter] = useState("Todos");
+  const [activeDia, setActiveDia] = useState("viernes");
 
-  const acts = ACTIVIDADES[activeDia];
-  const types = ["Todos", ...new Set(acts.map(a => a.tipo))];
-  const filteredActs = typeFilter === "Todos" ? acts : acts.filter(a => a.tipo === typeFilter);
+  const dia = DIAS.find(d => d.id === activeDia);
 
-  const toggleFav = (id) => {
-    setFavorites(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const enfasis = {
+    viernes: "El día de apertura: se inaugura el mercado, suena la primera charla y la música estrena el escenario.",
+    sabado:  "El día más completo: todo abierto a la vez, de la cocina a los talleres, de la mañana a la noche.",
+    domingo: "El cierre y la cosecha: bienestar, espacio para los más chicos y el último fogón antes de despedirnos.",
   };
 
   return (
@@ -26,16 +42,16 @@ export default function ProgramaPage({ setPage }) {
       <SubPageHeader
         eyebrow="Programa · 3 días"
         title={<>Programa.</>}
-        sub="Charlas, talleres, música, espacios para chicos y una cocina abierta. Marcá tus favoritos con la estrellita — los guardamos en tu navegador."
+        sub="Tres días con las mismas familias de actividades. Lo que cambia es el énfasis de cada jornada."
       />
 
       <section style={{ padding: "48px 0 0", background: "var(--bz-fondo-base)" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, background: "var(--bz-beige-base)", padding: 6, borderRadius: "var(--bz-radius-lg)", maxWidth: 720, margin: "0 auto 56px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, background: "var(--bz-beige-base)", padding: 6, borderRadius: "var(--bz-radius-lg)", maxWidth: 720, margin: "0 auto 48px" }}>
             {DIAS.map(d => (
               <button
                 key={d.id}
-                onClick={() => { setActiveDia(d.id); setTypeFilter("Todos"); }}
+                onClick={() => setActiveDia(d.id)}
                 style={{
                   padding: "16px 20px",
                   borderRadius: "var(--bz-radius-md)",
@@ -54,145 +70,39 @@ export default function ProgramaPage({ setPage }) {
         </div>
       </section>
 
-      <section style={{ padding: "0 0 24px", background: "var(--bz-fondo-base)" }}>
-        <div className="container">
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-            {types.map(t => (
-              <button
-                key={t}
-                onClick={() => setTypeFilter(t)}
-                style={{
-                  padding: "7px 14px",
-                  borderRadius: "var(--bz-radius-pill)",
-                  fontSize: 12,
-                  fontWeight: 500,
-                  background: typeFilter === t ? "var(--bz-tierra-rojo)" : "var(--bz-beige-base)",
-                  color: typeFilter === t ? "var(--bz-beige-hueso)" : "var(--bz-texto-secundario)",
-                  transition: "all 200ms var(--bz-ease)",
-                }}
-              >
-                {t}
-              </button>
-            ))}
+      <section key={activeDia} style={{ padding: "8px 0 90px", background: "var(--bz-fondo-base)", animation: "bz-fade-in 400ms var(--bz-ease) both" }}>
+        <div className="container" style={{ maxWidth: 980 }}>
+          <div className="reveal" style={{ display: "flex", gap: 20, alignItems: "baseline", marginBottom: 40, paddingBottom: 28, borderBottom: "0.5px solid var(--bz-borde-suave)", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+              <span className="display" style={{ fontSize: 30, color: "var(--bz-texto-primario)" }}>{dia.label}</span>
+              <span style={{ fontFamily: "var(--bz-font-display)", fontStyle: "italic", fontSize: 20, color: "var(--bz-verde-musgo)" }}>· {dia.subtitulo}</span>
+            </div>
+            <p style={{ flex: 1, minWidth: 280, fontSize: 15, color: "var(--bz-texto-secundario)", lineHeight: 1.6 }}>{enfasis[activeDia]}</p>
           </div>
-        </div>
-      </section>
 
-      <section key={activeDia + typeFilter} style={{ padding: "32px 0 80px", background: "var(--bz-fondo-base)", animation: "bz-fade-in 400ms var(--bz-ease) both" }}>
-        <div className="container" style={{ maxWidth: 920 }}>
-          {filteredActs.length === 0 ? (
-            <div style={{ textAlign: "center", padding: 80, color: "var(--bz-texto-secundario)" }}>
-              <div style={{ fontSize: 40, marginBottom: 12 }}>🍃</div>
-              <p>Nada de este tipo en este día. Probá otro.</p>
-            </div>
-          ) : (
-            <div style={{ position: "relative" }}>
-              <div style={{ position: "absolute", left: 80, top: 12, bottom: 12, width: 1, background: "var(--bz-borde-suave)" }} className="bz-timeline-line" />
-              {filteredActs.map((act, i) => {
-                const id = `${activeDia}-${act.hora}-${act.title}`;
-                const isFav = favorites.has(id);
-                return (
-                  <article key={id} className="reveal bz-act-row" style={{
-                    display: "grid",
-                    gridTemplateColumns: "80px 1fr auto",
-                    gap: 32,
-                    padding: "20px 0",
-                    alignItems: "start",
-                    position: "relative",
-                    transitionDelay: `${i * 50}ms`,
-                  }}>
-                    <div style={{ paddingTop: 4 }}>
-                      <div className="display" style={{ fontSize: 24, color: "var(--bz-tierra-rojo)", lineHeight: 1, letterSpacing: "-0.02em" }}>{act.hora}</div>
-                    </div>
-                    <div style={{ position: "absolute", left: 76, top: 24, width: 9, height: 9, borderRadius: "50%", background: act.destacado ? "var(--bz-ocre-calido)" : "var(--bz-verde-musgo)", border: "2px solid var(--bz-fondo-base)" }} className="bz-timeline-dot" />
-                    <div style={{
-                      background: act.destacado ? "var(--bz-beige-hueso)" : "transparent",
-                      border: act.destacado ? "0.5px solid var(--bz-ocre-calido)" : "0.5px solid var(--bz-borde-ligero)",
-                      borderRadius: "var(--bz-radius-md)",
-                      padding: "18px 22px",
-                      transition: "transform 250ms var(--bz-ease)",
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.transform = "translateX(4px)"}
-                    onMouseLeave={e => e.currentTarget.style.transform = "translateX(0)"}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, flexWrap: "wrap" }}>
-                        <span className={`tag ${act.tipo === "Música" ? "tag-tierra" : act.tipo === "Charla" ? "" : "tag-ocre"}`}>{act.tipo}</span>
-                        {act.destacado && <span style={{ fontSize: 10, color: "var(--bz-ocre-tostado)", letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)" }}>★ Destacada</span>}
-                      </div>
-                      <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: 22, color: "var(--bz-texto-primario)", marginBottom: 8, lineHeight: 1.25 }}>{act.title}</h3>
-                      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 13, color: "var(--bz-texto-secundario)" }}>
-                        <span>📍 {act.lugar}</span>
-                        <span>· {act.speaker}</span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => toggleFav(id)}
-                      aria-label="Marcar como favorito"
-                      style={{
-                        width: 40, height: 40, borderRadius: "50%",
-                        border: "1px solid var(--bz-borde-suave)",
-                        background: isFav ? "var(--bz-ocre-calido)" : "var(--bz-beige-hueso)",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        color: isFav ? "var(--bz-verde-profundo)" : "var(--bz-texto-terciario)",
-                        transition: "all 200ms var(--bz-spring)",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill={isFav ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.6">
-                        <path d="M12 2l3 6.3 7 1-5 4.9 1.2 7-6.2-3.4-6.2 3.4 1.2-7-5-4.9 7-1z"/>
-                      </svg>
-                    </button>
-                  </article>
-                );
-              })}
-            </div>
-          )}
-          {favorites.size > 0 && (
-            <div style={{ marginTop: 48, padding: "20px 24px", background: "var(--bz-verde-pasto)", borderRadius: "var(--bz-radius-md)", textAlign: "center", fontSize: 14, color: "var(--bz-verde-bosque)" }}>
-              ⭐ Tenés <strong>{favorites.size}</strong> actividad{favorites.size === 1 ? "" : "es"} en favoritos.
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section style={{ padding: "100px 0", background: "var(--bz-fondo-alt)" }}>
-        <div className="container">
-          <SectionHead
-            eyebrow="Speakers"
-            title={<>Quienes vienen <em>a contar.</em></>}
-            sub="Productores, cocineros, antropólogos y periodistas que llevan años pensando lo que la feria hace en la práctica."
-          />
-          <div style={{ marginTop: 64, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24 }}>
-            {SPEAKERS.map((s, i) => (
-              <article key={s.id} className="reveal" style={{
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 20 }}>
+            {TIPOS_ACTIVIDAD.map((t, i) => (
+              <article key={t.tipo} className="reveal" style={{
                 background: "var(--bz-beige-hueso)",
-                borderRadius: "var(--bz-radius-lg)",
-                padding: "24px",
                 border: "0.5px solid var(--bz-borde-ligero)",
-                transitionDelay: `${(i % 3) * 80}ms`,
-                display: "flex",
-                gap: 16,
-              }}>
-                <Placeholder label={s.name.split(" ")[0]} ratio="1/1" style={{ width: 80, height: 80, borderRadius: "50%", flexShrink: 0 }} />
-                <div>
-                  <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 20, color: "var(--bz-texto-primario)", marginBottom: 4, lineHeight: 1.15 }}>{s.name}</h4>
-                  <p style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)", letterSpacing: "0.04em", marginBottom: 10 }}>{s.rol}</p>
-                  <p style={{ fontSize: 13, color: "var(--bz-texto-secundario)", lineHeight: 1.5, fontStyle: "italic" }}>"{s.topic}"</p>
-                </div>
+                borderRadius: "var(--bz-radius-lg)",
+                padding: "26px 26px",
+                transition: "transform 250ms var(--bz-ease), box-shadow 250ms var(--bz-ease)",
+                transitionDelay: `${(i % 3) * 60}ms`,
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "var(--bz-shadow-md)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
+                <span className="tag tag-ocre" style={{ marginBottom: 14 }}>{t.tipo}</span>
+                <p style={{ fontFamily: "var(--bz-font-display)", fontSize: 19, color: "var(--bz-texto-primario)", lineHeight: 1.4, marginTop: 4 }}>{t.desc}</p>
               </article>
             ))}
           </div>
+
+          <GrillaSubscribe />
         </div>
       </section>
 
       <CTABanner setPage={setPage} />
-
-      <style>{`
-        @media (max-width: 720px) {
-          .bz-act-row { grid-template-columns: 60px 1fr 40px !important; gap: 16px !important; }
-          .bz-timeline-line { left: 60px !important; }
-          .bz-timeline-dot { left: 56px !important; }
-        }
-      `}</style>
     </div>
   );
 }

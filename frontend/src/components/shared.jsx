@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { CATEGORIES } from '../data.js';
 
-export function BzLogo({ size = 28, mono = false, color }) {
-  const c = color || (mono ? "currentColor" : "var(--bz-verde-profundo)");
-  const acc = mono ? "currentColor" : "var(--bz-ocre-tostado)";
+export function BzLogo({ size = 28, color }) {
+  const c = color || "var(--bz-verde-profundo)";
+  const acc = "var(--bz-ocre-tostado)";
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      <svg width={size} height={size} viewBox="0 0 32 32" fill="none" style={{ flexShrink: 0 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+      <svg width={size * 1.42} height={size * 1.42} viewBox="0 0 32 32" fill="none" style={{ flexShrink: 0 }}>
         <path d="M16 28 L16 14" stroke={c} strokeWidth="2" strokeLinecap="round" />
         <path d="M16 18 C 9 18, 7 12, 7 8 C 12 9, 16 12, 16 18 Z" fill={c} />
-        <path d="M16 14 C 23 14, 25 9, 25 5 C 20 6, 16 8, 16 14 Z" fill={acc} />
+        <path d="M16 14 C 23 14, 25 9, 25 5 C 20 6, 16 8, 16 14 Z" fill={color ? c : acc} />
         <circle cx="16" cy="28" r="1.6" fill={c} />
       </svg>
       <span style={{
@@ -24,10 +24,33 @@ export function BzLogo({ size = 28, mono = false, color }) {
   );
 }
 
+export function IconInstagram({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none"/>
+    </svg>
+  );
+}
+
+export function IconFacebook({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 8.5h-2a1.5 1.5 0 0 0-1.5 1.5V21M9 13h5"/>
+      <path d="M11.5 21v-9"/>
+      <rect x="3" y="3" width="18" height="18" rx="5"/>
+    </svg>
+  );
+}
+
 export function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal:not(.in)");
     if (!els.length) return;
+    let safety;
+    const revealAll = () => els.forEach(el => el.classList.add("in"));
+    if (typeof IntersectionObserver === "undefined") { revealAll(); return; }
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -37,7 +60,14 @@ export function useReveal() {
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
     els.forEach(el => io.observe(el));
-    return () => io.disconnect();
+    requestAnimationFrame(() => {
+      els.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < (window.innerHeight || 800) && r.bottom > 0) el.classList.add("in");
+      });
+    });
+    safety = setTimeout(revealAll, 1200);
+    return () => { io.disconnect(); clearTimeout(safety); };
   });
 }
 
@@ -47,22 +77,25 @@ export function Counter({ to, suffix = "", duration = 1400 }) {
   const started = useRef(false);
   useEffect(() => {
     if (!ref.current) return;
+    const run = () => {
+      if (started.current) return;
+      started.current = true;
+      const start = performance.now();
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        setVal(Math.round(to * eased));
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if (typeof IntersectionObserver === "undefined") { run(); return; }
     const io = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !started.current) {
-        started.current = true;
-        const start = performance.now();
-        const tick = (now) => {
-          const t = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - t, 3);
-          setVal(Math.round(to * eased));
-          if (t < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-        io.disconnect();
-      }
+      if (entries[0].isIntersecting && !started.current) { run(); io.disconnect(); }
     }, { threshold: 0.5 });
     io.observe(ref.current);
-    return () => io.disconnect();
+    const safety = setTimeout(() => { if (!started.current) { started.current = true; setVal(to); } }, 1400);
+    return () => { io.disconnect(); clearTimeout(safety); };
   }, [to, duration]);
   return <span ref={ref}>{val}{suffix}</span>;
 }
@@ -77,10 +110,9 @@ export function SectionHead({ eyebrow, title, sub, align = "left", color, accent
   );
 }
 
-export function Placeholder({ label, ratio = "4/3", dark = false, style = {}, children, decoration }) {
+export function Placeholder({ label, ratio = "4/3", dark = false, style = {}, children }) {
   return (
     <div className={"ph" + (dark ? " ph-dark" : "")} style={{ aspectRatio: ratio, borderRadius: "var(--bz-radius-lg)", ...style }}>
-      {decoration}
       {children || <span className="ph-label">{label}</span>}
     </div>
   );
@@ -123,6 +155,59 @@ export function ExpositorCard({ exp, compact = false }) {
         </div>
         <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: compact ? 20 : 22, color: "var(--bz-texto-primario)", marginBottom: 8, lineHeight: 1.15 }}>{exp.name}</h3>
         {!compact && <p style={{ fontSize: 13, color: "var(--bz-texto-secundario)", lineHeight: 1.6 }}>{exp.desc}</p>}
+      </div>
+    </article>
+  );
+}
+
+export function CategoriaIcon({ id, size = 30 }) {
+  const common = { width: size, height: size, viewBox: "0 0 28 28", fill: "none", stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round", strokeLinejoin: "round" };
+  switch (id) {
+    case "alimentos":
+      return (<svg {...common}><path d="M14 9c-2-3-7-2.5-7 2.5C7 17 10 21 14 21s7-4 7-9.5c0-5-5-5.5-7-2.5z"/><path d="M14 9c0-2.5 1.2-4 3.5-4.8"/></svg>);
+    case "cosmetica":
+      return (<svg {...common}><path d="M14 4c4 5.5 6.5 8.5 6.5 11.5a6.5 6.5 0 0 1-13 0C7.5 12.5 10 9.5 14 4z"/></svg>);
+    case "diseno":
+      return (<svg {...common}><path d="M7 11l3-4.5h8L21 11l-7 10z"/><path d="M7 11h14M11 6.5l3 4.5 3-4.5"/></svg>);
+    case "bienestar":
+      return (<svg {...common}><circle cx="14" cy="14" r="4"/><path d="M14 4v2.5M14 21.5V24M4 14h2.5M21.5 14H24M7 7l1.8 1.8M19.2 19.2L21 21M21 7l-1.8 1.8M8.8 19.2L7 21"/></svg>);
+    case "infantil":
+      return (<svg {...common}><circle cx="14" cy="11" r="6"/><path d="M14 17v4.5M13 21.5h2"/></svg>);
+    case "gastro":
+      return (<svg {...common}><path d="M5 13.5h18a9 9 0 0 1-18 0z"/><path d="M11 5.5c-1 1-1 2 0 3M14 4.5c-1 1-1 2 0 3M17 5.5c-1 1-1 2 0 3"/></svg>);
+    default: return null;
+  }
+}
+
+export function CategoriaCard({ cat, large = false }) {
+  return (
+    <article style={{
+      background: "var(--bz-beige-hueso)",
+      borderRadius: "var(--bz-radius-lg)",
+      border: "0.5px solid var(--bz-borde-ligero)",
+      padding: large ? "36px 32px" : "28px 26px",
+      transition: "transform 300ms var(--bz-ease), box-shadow 300ms var(--bz-ease), border-color 300ms var(--bz-ease)",
+      display: "flex", flexDirection: "column",
+      height: "100%",
+    }}
+    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "var(--bz-shadow-md)"; e.currentTarget.style.borderColor = "var(--bz-verde-musgo)"; }}
+    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "var(--bz-borde-ligero)"; }}
+    >
+      <div style={{
+        width: large ? 64 : 54, height: large ? 64 : 54, borderRadius: "50%",
+        background: "var(--bz-verde-pasto)", color: "var(--bz-verde-profundo)",
+        display: "flex", alignItems: "center", justifyContent: "center", marginBottom: large ? 24 : 18,
+      }}>
+        <CategoriaIcon id={cat.id} size={large ? 34 : 30} />
+      </div>
+      <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: large ? 28 : 24, color: "var(--bz-texto-primario)", marginBottom: 8, lineHeight: 1.1 }}>{cat.label}</h3>
+      {cat.desc && <p style={{ fontSize: large ? 14.5 : 13.5, color: "var(--bz-texto-secundario)", lineHeight: 1.6, marginBottom: 18 }}>{cat.desc}</p>}
+      <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+          <span className="display" style={{ fontSize: large ? 34 : 28, color: "var(--bz-tierra-rojo)", lineHeight: 1 }}>{cat.stands}</span>
+          <span style={{ fontSize: 12, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>stands</span>
+        </div>
+        <span className="tag tag-outline">Convocatoria abierta</span>
       </div>
     </article>
   );
@@ -180,14 +265,14 @@ export function CTABanner({ setPage }) {
           <div style={{ position: "relative", zIndex: 1 }}>
             <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>13 · 14 · 15 nov 2026</div>
             <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05, marginBottom: 18 }}>
-              Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>el Parque.</em>
+              Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>Las Cortaderas.</em>
             </h2>
             <p style={{ fontSize: 17, color: "var(--bz-verde-claro)", maxWidth: 460, lineHeight: 1.55 }}>
-              Tu entrada ya está disponible en precio Early Bird hasta fin de septiembre.
+              Las entradas salen a la venta en septiembre. Dejanos tu mail y te avisamos apenas estén disponibles.
             </p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, position: "relative", zIndex: 1 }} className="bz-cta-actions">
-            <button onClick={() => setPage("entradas")} className="btn btn-ocre" style={{ width: "100%", justifyContent: "center" }}>Comprar entrada</button>
+            <button onClick={() => setPage("entradas")} className="btn btn-ocre" style={{ width: "100%", justifyContent: "center" }}>Ver entradas</button>
             <button onClick={() => setPage("programa")} className="btn" style={{ width: "100%", justifyContent: "center", background: "transparent", color: "var(--bz-beige-hueso)", border: "1.5px solid rgba(250, 246, 237, 0.3)" }}>Ver programa</button>
           </div>
         </div>
@@ -206,46 +291,41 @@ export function ValorIcon({ kind }) {
   const a = "var(--bz-tierra-rojo)";
   const size = 44;
   switch (kind) {
-    case "raíz":
-      return (
-        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
-          <circle cx="22" cy="14" r="4" fill={c} />
-          <path d="M22 18 L22 36" stroke={c} strokeWidth="2" strokeLinecap="round" />
-          <path d="M22 26 L12 36 M22 28 L32 38 M22 32 L18 40 M22 32 L26 40" stroke={c} strokeWidth="1.5" strokeLinecap="round" />
-          <circle cx="22" cy="14" r="4" stroke={a} strokeWidth="1.5" fill="none" />
-        </svg>
-      );
-    case "círculo":
-      return (
-        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
-          <path d="M36 22 A 14 14 0 1 1 22 8" stroke={c} strokeWidth="2" strokeLinecap="round" fill="none" />
-          <path d="M22 8 L30 8 L30 16" stroke={a} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      );
-    case "ola":
-      return (
-        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
-          <path d="M4 18 Q 11 12, 18 18 T 32 18 T 40 18" stroke={c} strokeWidth="2" strokeLinecap="round" fill="none" />
-          <path d="M4 28 Q 11 22, 18 28 T 32 28 T 40 28" stroke={a} strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7" />
-        </svg>
-      );
-    case "trama":
-      return (
-        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
-          <circle cx="14" cy="14" r="3" fill={c} />
-          <circle cx="30" cy="14" r="3" fill={c} />
-          <circle cx="22" cy="30" r="3" fill={a} />
-          <path d="M14 14 L30 14 L22 30 Z" stroke={c} strokeWidth="1.5" fill="none" />
-        </svg>
-      );
-    case "brote":
-      return (
-        <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
-          <path d="M22 38 L22 18" stroke={c} strokeWidth="2" strokeLinecap="round" />
-          <path d="M22 22 C 14 22, 12 16, 12 12 C 18 13, 22 16, 22 22 Z" fill={c} />
-          <path d="M22 18 C 30 18, 32 14, 32 10 C 26 11, 22 12, 22 18 Z" fill={a} />
-        </svg>
-      );
+    case "raíz": return (
+      <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="14" r="4" fill={c} />
+        <path d="M22 18 L22 36" stroke={c} strokeWidth="2" strokeLinecap="round" />
+        <path d="M22 26 L12 36 M22 28 L32 38 M22 32 L18 40 M22 32 L26 40" stroke={c} strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="22" cy="14" r="4" stroke={a} strokeWidth="1.5" fill="none" />
+      </svg>
+    );
+    case "círculo": return (
+      <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+        <path d="M36 22 A 14 14 0 1 1 22 8" stroke={c} strokeWidth="2" strokeLinecap="round" fill="none" />
+        <path d="M22 8 L30 8 L30 16" stroke={a} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+    case "ola": return (
+      <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+        <path d="M4 18 Q 11 12, 18 18 T 32 18 T 40 18" stroke={c} strokeWidth="2" strokeLinecap="round" fill="none" />
+        <path d="M4 28 Q 11 22, 18 28 T 32 28 T 40 28" stroke={a} strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.7" />
+      </svg>
+    );
+    case "trama": return (
+      <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+        <circle cx="14" cy="14" r="3" fill={c} />
+        <circle cx="30" cy="14" r="3" fill={c} />
+        <circle cx="22" cy="30" r="3" fill={a} />
+        <path d="M14 14 L30 14 L22 30 Z" stroke={c} strokeWidth="1.5" fill="none" />
+      </svg>
+    );
+    case "brote": return (
+      <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
+        <path d="M22 38 L22 18" stroke={c} strokeWidth="2" strokeLinecap="round" />
+        <path d="M22 22 C 14 22, 12 16, 12 12 C 18 13, 22 16, 22 22 Z" fill={c} />
+        <path d="M22 18 C 30 18, 32 14, 32 10 C 26 11, 22 12, 22 18 Z" fill={a} />
+      </svg>
+    );
     default: return null;
   }
 }
@@ -267,91 +347,10 @@ export function ValorBlock({ valor, index }) {
   );
 }
 
-export function TicketCard({ ticket, index }) {
-  const colors = {
-    ocre:    { bg: "var(--bz-ocre-calido)",    fg: "var(--bz-verde-profundo)", accent: "var(--bz-verde-profundo)", border: "var(--bz-ocre-tostado)" },
-    verde:   { bg: "var(--bz-verde-profundo)", fg: "var(--bz-beige-hueso)",    accent: "var(--bz-ocre-calido)",    border: "var(--bz-verde-profundo)" },
-    tierra:  { bg: "var(--bz-beige-hueso)",    fg: "var(--bz-texto-primario)", accent: "var(--bz-tierra-rojo)",    border: "var(--bz-borde-suave)" },
-  };
-  const c = colors[ticket.color];
-  const featured = ticket.destacado;
-
-  return (
-    <article className="reveal" style={{
-      background: c.bg,
-      color: c.fg,
-      borderRadius: "var(--bz-radius-xl)",
-      padding: "40px 36px",
-      border: `1px solid ${c.border}`,
-      boxShadow: featured ? "var(--bz-shadow-lg)" : "none",
-      transform: featured ? "translateY(-12px)" : "none",
-      transition: "transform 300ms var(--bz-ease), box-shadow 300ms var(--bz-ease)",
-      transitionDelay: `${index * 100}ms`,
-      position: "relative",
-      display: "flex", flexDirection: "column",
-    }}
-    onMouseEnter={e => { e.currentTarget.style.transform = featured ? "translateY(-16px)" : "translateY(-4px)"; }}
-    onMouseLeave={e => { e.currentTarget.style.transform = featured ? "translateY(-12px)" : "translateY(0)"; }}
-    >
-      {featured && (
-        <div style={{
-          position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)",
-          background: "var(--bz-ocre-calido)", color: "var(--bz-verde-profundo)",
-          padding: "5px 14px", borderRadius: "var(--bz-radius-pill)",
-          fontSize: 10, fontWeight: 600, letterSpacing: "0.16em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)",
-        }}>★ Más elegida</div>
-      )}
-
-      <div style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)", opacity: 0.7, marginBottom: 14 }}>{ticket.badge}</div>
-      <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: 36, marginBottom: 16, lineHeight: 1 }}>{ticket.name}</h3>
-
-      <div style={{ marginBottom: 28 }}>
-        <div className="display" style={{ fontSize: 48, color: c.accent, lineHeight: 1 }}>{ticket.precio}</div>
-        {ticket.precioOrig && (
-          <div style={{ fontSize: 13, opacity: 0.6, textDecoration: "line-through", marginTop: 6 }}>{ticket.precioOrig}</div>
-        )}
-        {ticket.unidad && (
-          <div style={{ fontSize: 12, opacity: 0.55, marginTop: 4, fontFamily: "var(--bz-font-mono)" }}>{ticket.unidad}</div>
-        )}
-      </div>
-
-      <ul style={{ listStyle: "none", marginBottom: 32, flex: 1 }}>
-        {ticket.incluye.map((item, j) => (
-          <li key={j} style={{ display: "flex", gap: 10, padding: "8px 0", fontSize: 14, lineHeight: 1.5, opacity: 0.9, borderTop: j > 0 ? `0.5px solid ${ticket.color === "verde" ? "rgba(250,246,237,0.15)" : "var(--bz-borde-ligero)"}` : "none" }}>
-            <span style={{ color: c.accent, flexShrink: 0 }}>✓</span>
-            {item}
-          </li>
-        ))}
-      </ul>
-
-      <button style={{
-        padding: "14px 24px",
-        borderRadius: "var(--bz-radius-pill)",
-        background: ticket.color === "verde" ? "var(--bz-ocre-calido)" : "var(--bz-verde-profundo)",
-        color: ticket.color === "verde" ? "var(--bz-verde-profundo)" : "var(--bz-beige-hueso)",
-        fontSize: 14, fontWeight: 500,
-        transition: "transform 200ms var(--bz-spring)",
-      }}
-      onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
-      onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
-        Comprar {ticket.name}
-      </button>
-    </article>
-  );
-}
-
 export function FaqItem({ item, open, onClick, index }) {
   return (
     <div className="reveal" style={{ borderBottom: "0.5px solid var(--bz-borde-suave)", transitionDelay: `${index * 50}ms` }}>
-      <button
-        onClick={onClick}
-        style={{
-          width: "100%",
-          padding: "24px 0",
-          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24,
-          textAlign: "left",
-        }}
-      >
+      <button onClick={onClick} style={{ width: "100%", padding: "24px 0", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, textAlign: "left" }}>
         <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 20, color: "var(--bz-texto-primario)", lineHeight: 1.3, fontWeight: 500 }}>{item.q}</h4>
         <span style={{
           width: 32, height: 32, borderRadius: "50%",
@@ -366,12 +365,7 @@ export function FaqItem({ item, open, onClick, index }) {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 5v14M5 12h14"/></svg>
         </span>
       </button>
-      <div style={{
-        maxHeight: open ? 200 : 0,
-        overflow: "hidden",
-        transition: "max-height 350ms var(--bz-ease), opacity 250ms var(--bz-ease)",
-        opacity: open ? 1 : 0,
-      }}>
+      <div style={{ maxHeight: open ? 300 : 0, overflow: "hidden", transition: "max-height 350ms var(--bz-ease), opacity 250ms var(--bz-ease)", opacity: open ? 1 : 0 }}>
         <p style={{ paddingBottom: 28, paddingRight: 56, fontSize: 15, color: "var(--bz-texto-secundario)", lineHeight: 1.7 }}>{item.a}</p>
       </div>
     </div>
