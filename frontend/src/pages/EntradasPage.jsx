@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useReveal, SectionHead, SubPageHeader, FaqItem } from '../components/shared.jsx';
 import { TICKETS, FAQ, BZ_EMAIL, BZ_WHATSAPP_LINK } from '../data.js';
+import { subscribeNewsletter } from '../services/api.js';
 
 function TicketCard({ ticket, index }) {
   const colors = {
@@ -13,8 +14,15 @@ function TicketCard({ ticket, index }) {
   const [notify, setNotify] = useState(false);
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const onNotify = (e) => { e.preventDefault(); if (email.includes("@")) setSent(true); };
+  const onNotify = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try { await subscribeNewsletter(email); } catch (_) {}
+    setSent(true);
+    setLoading(false);
+  };
   const btnBg = ticket.color === "verde" ? "var(--bz-ocre-calido)" : "var(--bz-verde-profundo)";
   const btnFg = ticket.color === "verde" ? "var(--bz-verde-profundo)" : "var(--bz-beige-hueso)";
 
@@ -69,10 +77,10 @@ function TicketCard({ ticket, index }) {
       ) : notify ? (
         <form onSubmit={onNotify} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@correo.com" autoFocus required style={{ width: "100%", padding: "13px 18px", fontSize: 14, fontFamily: "var(--bz-font-body)", border: "1px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-pill)", background: "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", outline: "none" }} />
-          <button type="submit" style={{ padding: "14px 24px", borderRadius: "var(--bz-radius-pill)", background: btnBg, color: btnFg, fontSize: 14, fontWeight: 500, transition: "transform 200ms var(--bz-spring)" }}
+          <button type="submit" disabled={loading} style={{ padding: "14px 24px", borderRadius: "var(--bz-radius-pill)", background: btnBg, color: btnFg, fontSize: 14, fontWeight: 500, transition: "transform 200ms var(--bz-spring)", opacity: loading ? 0.7 : 1 }}
             onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
             onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
-            Confirmar
+            {loading ? "..." : "Confirmar"}
           </button>
         </form>
       ) : (

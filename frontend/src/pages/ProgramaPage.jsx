@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { useReveal, SubPageHeader, CTABanner } from '../components/shared.jsx';
 import { DIAS, TIPOS_ACTIVIDAD } from '../data.js';
+import { subscribeNewsletter } from '../services/api.js';
 
 function GrillaSubscribe() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
-  const onSubmit = (e) => { e.preventDefault(); if (email.includes("@")) setSent(true); };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try { await subscribeNewsletter(email); } catch (_) {}
+    setSent(true);
+  };
   return (
     <div style={{ marginTop: 44, padding: "24px 26px", background: "var(--bz-verde-pasto)", borderRadius: "var(--bz-radius-md)" }}>
       <p style={{ fontSize: 13, color: "var(--bz-verde-bosque)", fontFamily: "var(--bz-font-mono)", lineHeight: 1.6, letterSpacing: "0.02em", marginBottom: 16 }}>

@@ -15,9 +15,7 @@ export default function FeriaPage({ setPage }) {
         <div className="container">
           <div className="bz-feria-history" style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 80, alignItems: "start" }}>
             <div className="reveal" style={{ position: "sticky", top: 120 }}>
-              <div className="ph" style={{ width: "100%", aspectRatio: "3 / 4", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
-                <span className="ph-label">foto · productores patagónicos</span>
-              </div>
+              <img src="/foto-bioraiz-verde.png" alt="BIORAIZ · productores patagónicos" style={{ width: "100%", aspectRatio: "3 / 4", objectFit: "cover", borderRadius: "var(--bz-radius-lg)", display: "block" }} />
             </div>
             <div>
               <div className="reveal eyebrow" style={{ marginBottom: 14 }}>Por qué nace</div>

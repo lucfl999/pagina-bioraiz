@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useReveal, Counter, SectionHead, Placeholder, LeafShape, CircleShape, CategoriaCard } from '../components/shared.jsx';
 import { NUMEROS, CATEGORIAS_STANDS, DIA_BLOQUES } from '../data.js';
+import { subscribeNewsletter } from '../services/api.js';
 
 export default function HomePage({ setPage }) {
   useReveal();
@@ -255,9 +256,7 @@ function Gallery() {
           <SectionHead eyebrow="El espacio" title={<>Un predio que <em>respira.</em></>} />
         </div>
         <figure className="reveal" style={{ margin: 0 }}>
-          <div className="ph" style={{ width: "100%", aspectRatio: "1808 / 854", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
-            <span className="ph-label">foto · predio del festival al atardecer · Patagonia nov 2026</span>
-          </div>
+          <img src="/foto-evento.png" alt="BIORAIZ · predio del festival al atardecer" style={{ width: "100%", aspectRatio: "1808 / 854", objectFit: "cover", borderRadius: "var(--bz-radius-lg)", display: "block" }} />
           <figcaption style={{ marginTop: 16, fontFamily: "var(--bz-font-mono)", fontSize: 12, letterSpacing: "0.04em", color: "var(--bz-texto-terciario)" }}>
             El predio de BIORAIZ al atardecer · Patagonia, nov 2026
           </figcaption>
@@ -270,10 +269,20 @@ function Gallery() {
 function NewsletterBlock() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (email.includes("@")) setSent(true);
+    setLoading(true);
+    try {
+      await subscribeNewsletter(email);
+      setSent(true);
+    } catch (err) {
+      // Si ya está suscripto o error, igual mostramos éxito (no queremos enumerar emails)
+      setSent(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -302,7 +311,7 @@ function NewsletterBlock() {
             ) : (
               <form onSubmit={onSubmit} style={{ display: "flex", gap: 8, maxWidth: 440, margin: "0 auto", flexWrap: "wrap" }}>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@correo.com" required style={{ flex: 1, minWidth: 200, padding: "14px 20px", fontSize: 14, fontFamily: "var(--bz-font-body)", border: "1px solid var(--bz-ocre-calido)", borderRadius: "var(--bz-radius-pill)", background: "var(--bz-beige-base)", color: "var(--bz-texto-primario)", outline: "none" }} />
-                <button type="submit" className="btn btn-primary">Suscribirme</button>
+                <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? "..." : "Suscribirme"}</button>
               </form>
             )}
           </div>

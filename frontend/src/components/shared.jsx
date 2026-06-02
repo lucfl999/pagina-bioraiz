@@ -3,15 +3,19 @@ import { CATEGORIES } from '../data.js';
 
 export function BzLogo({ size = 28, color }) {
   const c = color || "var(--bz-verde-profundo)";
-  const acc = "var(--bz-ocre-tostado)";
+  const onDark = color === "var(--bz-beige-hueso)";
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-      <svg width={size * 1.42} height={size * 1.42} viewBox="0 0 32 32" fill="none" style={{ flexShrink: 0 }}>
-        <path d="M16 28 L16 14" stroke={c} strokeWidth="2" strokeLinecap="round" />
-        <path d="M16 18 C 9 18, 7 12, 7 8 C 12 9, 16 12, 16 18 Z" fill={c} />
-        <path d="M16 14 C 23 14, 25 9, 25 5 C 20 6, 16 8, 16 14 Z" fill={color ? c : acc} />
-        <circle cx="16" cy="28" r="1.6" fill={c} />
-      </svg>
+      <img
+        src="/bioraiz-symbol.png"
+        alt="BIORAIZ"
+        style={{
+          height: size * 1.42,
+          width: "auto",
+          flexShrink: 0,
+          filter: onDark ? "brightness(0) invert(0.96)" : "none",
+        }}
+      />
       <span style={{
         fontFamily: "var(--bz-font-display)",
         fontWeight: 600,
