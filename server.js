@@ -32,6 +32,9 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Servir archivos estáticos
+app.use(express.static(__dirname));
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
