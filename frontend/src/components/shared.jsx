@@ -206,11 +206,7 @@ export function CategoriaCard({ cat, large = false }) {
       </div>
       <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: large ? 28 : 24, color: "var(--bz-texto-primario)", marginBottom: 8, lineHeight: 1.1 }}>{cat.label}</h3>
       {cat.desc && <p style={{ fontSize: large ? 14.5 : 13.5, color: "var(--bz-texto-secundario)", lineHeight: 1.6, marginBottom: 18 }}>{cat.desc}</p>}
-      <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-          <span className="display" style={{ fontSize: large ? 34 : 28, color: "var(--bz-tierra-rojo)", lineHeight: 1 }}>{cat.stands}</span>
-          <span style={{ fontSize: 12, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>stands</span>
-        </div>
+      <div style={{ marginTop: "auto" }}>
         <span className="tag tag-outline">Convocatoria abierta</span>
       </div>
     </article>

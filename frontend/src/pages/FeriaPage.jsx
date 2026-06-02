@@ -53,7 +53,7 @@ export default function FeriaPage({ setPage }) {
             title={<>Cinco criterios<br /><em>que usamos para decidir.</em></>}
             sub="Cada decisión de la feria — desde qué expositor sumamos hasta qué tipo de vasos usamos — pasa por estos cinco criterios."
           />
-          <div style={{ marginTop: 64, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
+          <div className="bz-valores-grid" style={{ marginTop: 64, display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
             {VALORES.map((v, i) => (
               <ValorBlock key={i} valor={v} index={i} />
             ))}
@@ -90,7 +90,11 @@ export default function FeriaPage({ setPage }) {
             </div>
           </div>
         </div>
-        <style>{`@media (max-width: 880px) { .bz-feria-sust { grid-template-columns: 1fr !important; gap: 40px !important; } }`}</style>
+        <style>{`
+          @media (max-width: 880px) { .bz-feria-sust { grid-template-columns: 1fr !important; gap: 40px !important; } }
+          @media (max-width: 1100px) { .bz-valores-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+          @media (max-width: 640px)  { .bz-valores-grid { grid-template-columns: 1fr 1fr !important; } }
+        `}</style>
       </section>
 
       <section style={{ padding: "120px 0", background: "var(--bz-fondo-alt)" }}>

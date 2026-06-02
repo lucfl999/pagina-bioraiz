@@ -35,7 +35,6 @@ function Hero({ setPage }) {
     <section style={{ position: "relative", minHeight: "100vh", background: "var(--bz-fondo-dark)", color: "var(--bz-beige-hueso)", overflow: "hidden", paddingTop: 120 }}>
       <div style={{ position: "absolute", inset: 0, zIndex: 0, background: "linear-gradient(135deg, #1A2812 0%, #2A3D24 35%, #3D5A3F 70%, #4A6E4A 100%)" }}>
         <div className="ph ph-dark" style={{ position: "absolute", inset: 0, opacity: 0.4 }}>
-          <span className="ph-label" style={{ position: "absolute", top: 24, right: 24 }}>video loop · mercado al aire libre</span>
         </div>
         <div style={{ position: "absolute", top: "12%", left: "-4%", opacity: 0.55, transform: `translate(${mouse.x * 10}px, ${mouse.y * 8}px) rotate(-12deg)`, transition: "transform 600ms var(--bz-ease)" }}>
           <LeafShape size={280} color="var(--bz-verde-musgo)" />
@@ -102,7 +101,7 @@ function Purpose() {
       <div className="container-narrow" style={{ textAlign: "center" }}>
         <div className="eyebrow reveal" style={{ marginBottom: 32 }}>¿Qué es BIORAIZ?</div>
         <p className="display reveal reveal-delay-1" style={{ fontSize: "clamp(28px, 4vw, 44px)", color: "var(--bz-texto-primario)", lineHeight: 1.25, marginBottom: 32 }}>
-          Una feria de productores patagónicos donde la materia prima tiene origen, la cocina tiene tiempo y la comunidad tiene espacio para <em>encontrarse</em>.
+          Una feria de productores conscientes donde la materia prima tiene origen, la cocina tiene tiempo y la comunidad tiene espacio para <em>encontrarse</em>.
         </p>
         <p className="reveal reveal-delay-2" style={{ fontSize: 17, color: "var(--bz-texto-secundario)", lineHeight: 1.7, maxWidth: 640, margin: "0 auto" }}>
           Es un lugar para detenerse, probar, conversar y volver a casa con algo más que una bolsa. Tres días para encontrarse con la tierra, con los oficios y con la gente que los sostiene.
@@ -155,7 +154,7 @@ function ExpositoresScroll({ setPage }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 24, flexWrap: "wrap" }}>
           <SectionHead
             eyebrow="200+ stands disponibles"
-            title={<>Cosas hechas <em>con manos</em> de la Patagonia.</>}
+            title={<>Hecho con amor <em>y consciencia.</em></>}
             sub="Seis categorías, un mismo criterio: origen verificable, proceso consciente, producto con historia."
           />
           <div style={{ display: "flex", gap: 8 }} className="reveal">
