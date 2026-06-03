@@ -37,4 +37,9 @@ export const createTicketCheckout = async (ticketData) => {
   return api.post('/tickets/create', ticketData);
 };
 
+export const createTicketPreference = async (data) => {
+  const { data: response } = await api.post('/tickets/create-preference', data);
+  return response;
+};
+
 export default api;

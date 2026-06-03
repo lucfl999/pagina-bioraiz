@@ -1,3 +1,6 @@
+// Cambiá a true cuando las entradas estén disponibles para la venta
+export const VENTA_ACTIVA = false;
+
 export const BZ_DATE = "13 · 14 · 15 nov 2026";
 export const BZ_DATE_FULL = "13, 14 y 15 de noviembre, 2026";
 export const BZ_LOCATION = "Neuquén Capital · Patagonia";
@@ -77,35 +80,58 @@ export const TICKETS = [
     name: "Raíces",
     precio: "$ 22.000",
     precioOrig: "$ 30.000",
+    precioNum: 22000,
+    descuento: "−27%",
     unidad: "por día",
     badge: "Raíces · Early Bird",
     color: "ocre",
+    earlyBird: true,
     incluye: [
       "Acceso general 1 día a elección (viernes, sábado o domingo)",
       "Ingreso desde apertura de puertas (12:00 hs)",
       "Acceso a todos los escenarios principales y feria de emprendimientos",
       "Zona wellness: acceso libre (sin sesiones reservadas)",
+    ],
+  },
+  {
+    id: "bosque-early",
+    name: "Bosque",
+    precio: "$ 58.400",
+    precioOrig: "$ 80.000",
+    precioNum: 58400,
+    descuento: "−27%",
+    unidad: "por día",
+    badge: "Bosque · Early Bird",
+    color: "tierra",
+    earlyBird: true,
+    incluye: [
+      "Acceso VIP · 1 día a elección",
+      "Kit de bienvenida: botella de acero inoxidable + snack orgánico + bandana",
+      "Baños VIP exclusivos (menor espera, mejor mantenimiento)",
+      "Ingreso a Zona VIP con barra exclusiva",
     ],
   },
   {
     id: "raices",
     name: "Raíces",
     precio: "$ 30.000",
+    precioNum: 30000,
     unidad: "por día",
     badge: "Raíces · General",
     color: "verde",
+    destacado: true,
     incluye: [
       "Acceso general 1 día a elección (viernes, sábado o domingo)",
       "Ingreso desde apertura de puertas (12:00 hs)",
       "Acceso a todos los escenarios principales y feria de emprendimientos",
       "Zona wellness: acceso libre (sin sesiones reservadas)",
     ],
-    destacado: true,
   },
   {
     id: "bosque",
     name: "Bosque",
     precio: "$ 80.000",
+    precioNum: 80000,
     unidad: "por día",
     badge: "Bosque · VIP",
     color: "tierra",
