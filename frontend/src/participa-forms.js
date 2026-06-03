@@ -37,10 +37,10 @@ export const FORM_SCHEMAS = {
         num: "03", label: "Tamaño de stand", title: "¿Cuánto espacio necesitás?",
         items: [
           { name: "stand", label: "Tamaño solicitado", type: "radio", required: true, options: [
-            { t: "Micro · 9 m² — $800.000", s: "3×3 m · Ideal para cosmética, libros, accesorios o propuestas compactas. · Señal: $200.000 + 3 cuotas de $200.000." },
-            { t: "Estándar · 12 m² — $1.000.000 · + elegido", s: "3×4 m · El más elegido. Espacio para exhibir con comodidad y atender bien. · Señal 25%: $250.000 + 3 cuotas de $250.000." },
-            { t: "Grande · 18 m² — $1.500.000", s: "3×6 m · Para propuestas con mucho producto o que ofrecen experiencia en el stand. · Señal 25%: $375.000 + 3 cuotas de $375.000." },
-            { t: "Premium · 20 m² — $2.500.000", s: "4×5 m · Ubicación destacada en acceso o zona central. · Señal 25%: $625.000 + 3 cuotas de $625.000." },
+            { t: "Micro · 9 m² — $800.000", s: "3×3 m · Ideal para cosmética, libros, accesorios o propuestas compactas. · El stand se reserva con el 50% del valor." },
+            { t: "Estándar · 12 m² — $1.000.000 · + elegido", s: "3×4 m · El más elegido. Espacio para exhibir con comodidad y atender bien. · El stand se reserva con el 50% del valor." },
+            { t: "Grande · 18 m² — $1.500.000", s: "3×6 m · Para propuestas con mucho producto o que ofrecen experiencia en el stand. · El stand se reserva con el 50% del valor." },
+            { t: "Premium · 20 m² — $2.500.000", s: "4×5 m · Ubicación destacada en acceso o zona central. · El stand se reserva con el 50% del valor." },
           ], hint: "El stand incluye: espacio señalizado, acceso a electricidad (800W estándar), 2 acreditaciones de feriante por día, mención en redes y catálogo digital oficial." },
           { name: "electricos", label: "Requerimientos eléctricos especiales", type: "textarea", rows: 2, placeholder: "¿Qué equipos necesitás conectar? Indicá el consumo en watts si lo sabés." },
         ],
