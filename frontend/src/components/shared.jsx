@@ -265,7 +265,7 @@ export function CTABanner({ setPage }) {
           <div style={{ position: "relative", zIndex: 1 }}>
             <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>13 · 14 · 15 nov 2026</div>
             <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05, marginBottom: 18 }}>
-              Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>Neuquén Capital.</em>
+              Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>Las Cortaderas.</em>
             </h2>
             <p style={{ fontSize: 17, color: "var(--bz-verde-claro)", maxWidth: 460, lineHeight: 1.55 }}>
               Las entradas salen a la venta en septiembre. Dejanos tu mail y te avisamos apenas estén disponibles.

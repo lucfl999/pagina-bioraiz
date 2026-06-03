@@ -73,7 +73,7 @@ function Hero({ setPage }) {
                 13 · 14 · 15<br />nov 2026
               </div>
               <div style={{ fontSize: 13, color: "var(--bz-verde-claro)", lineHeight: 1.5, marginTop: 12, paddingTop: 12, borderTop: "0.5px solid rgba(230, 203, 122, 0.2)" }}>
-                Neuquén Capital<br />Patagonia
+                Las Cortaderas<br />Neuquén · Patagonia
               </div>
             </div>
           </div>

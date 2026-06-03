@@ -3,7 +3,7 @@ export const VENTA_ACTIVA = false;
 
 export const BZ_DATE = "13 · 14 · 15 nov 2026";
 export const BZ_DATE_FULL = "13, 14 y 15 de noviembre, 2026";
-export const BZ_LOCATION = "Neuquén Capital · Patagonia";
+export const BZ_LOCATION = "Las Cortaderas · Neuquén";
 export const BZ_EMAIL = "hola@bioraiz.net";
 export const BZ_WHATSAPP_LABEL = "+54 9 2995781006";
 export const BZ_WHATSAPP_LINK = "https://wa.me/5492995781006";

@@ -65,7 +65,7 @@ export const sendSubscriberWelcome = async (email, source = 'newsletter') => {
         <p style="font-size:16px;line-height:1.7;color:#4A5C3A;margin:0 0 20px;">${content.body}</p>
         <p style="font-size:15px;line-height:1.7;color:#4A5C3A;margin:0;">
           <strong>13 · 14 · 15 de noviembre, 2026</strong><br/>
-          Neuquén Capital · Patagonia
+          Las Cortaderas · Neuquén, Patagonia
         </p>
       </div>
       <div style="padding:16px 0;border-top:1px solid #EDE4CF;">
