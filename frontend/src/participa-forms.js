@@ -1,9 +1,9 @@
 export const FORM_SCHEMAS = {
 
   feriantes: {
-    pills: ["200–220 stands disponibles", "50.000 asistentes", "8 categorías", "Cierre 31 ago", "Early bird −15% hasta 31/07"],
-    note: "**Antes de completar:** Hay entre 200 y 220 stands disponibles, seleccionados por curaduría. Se prioriza origen patagónico o regional. Las postulaciones cierran el **31 de agosto de 2026** y los seleccionados son notificados el **15 de septiembre**. El pago confirma el lugar solo tras la notificación oficial.",
-    submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones con una matriz de puntuación y notificamos a los seleccionados antes del 15 de septiembre de 2026. Las postulaciones cierran el 31 de agosto. El pago confirma el lugar solo tras la notificación oficial — no antes.",
+    pills: ["200–220 stands disponibles", "50.000 asistentes", "8 categorías", "Cierre 1 ago"],
+    note: "**Antes de completar:** Hay entre 200 y 220 stands disponibles, seleccionados por curaduría. Se prioriza origen patagónico o regional. Las postulaciones cierran el **1 de agosto de 2026** y los seleccionados son notificados el **15 de septiembre**. El pago confirma el lugar solo tras la notificación oficial.",
+    submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones con una matriz de puntuación y notificamos a los seleccionados antes del 15 de septiembre de 2026. Las postulaciones cierran el 1 de agosto. El pago confirma el lugar solo tras la notificación oficial — no antes.",
     sections: [
       {
         num: "01", label: "Datos del emprendimiento", title: "¿Quiénes son?",
@@ -37,10 +37,10 @@ export const FORM_SCHEMAS = {
         num: "03", label: "Tamaño de stand", title: "¿Cuánto espacio necesitás?",
         items: [
           { name: "stand", label: "Tamaño solicitado", type: "radio", required: true, options: [
-            { t: "Micro · 6 m² — USD 380 (early bird USD 323)", s: "3×2 m · Ideal para cosmética, libros, accesorios o propuestas compactas." },
-            { t: "Estándar · 9 m² — USD 560 (early bird USD 476) · + elegido", s: "3×3 m · El más elegido. Espacio para exhibir con comodidad y atender bien." },
-            { t: "Grande · 12 m² — USD 780 (early bird USD 663)", s: "3×4 m · Para propuestas con mucho producto o que ofrecen experiencia en el stand." },
-            { t: "Premium · 20 m² — USD 1.300 (early bird USD 1.105)", s: "4×5 m · Ubicación destacada en acceso o zona central. Cupo: 5 stands." },
+            { t: "Micro · 9 m² — $800.000", s: "3×3 m · Ideal para cosmética, libros, accesorios o propuestas compactas. · Señal: $200.000 + 3 cuotas de $200.000." },
+            { t: "Estándar · 12 m² — $1.000.000 · + elegido", s: "3×4 m · El más elegido. Espacio para exhibir con comodidad y atender bien. · Señal 25%: $250.000 + 3 cuotas de $250.000." },
+            { t: "Grande · 18 m² — $1.500.000", s: "3×6 m · Para propuestas con mucho producto o que ofrecen experiencia en el stand. · Señal 25%: $375.000 + 3 cuotas de $375.000." },
+            { t: "Premium · 20 m² — $2.500.000", s: "4×5 m · Ubicación destacada en acceso o zona central. · Señal 25%: $625.000 + 3 cuotas de $625.000." },
           ], hint: "El stand incluye: espacio señalizado, acceso a electricidad (800W estándar), 2 acreditaciones de feriante por día, mención en redes y catálogo digital oficial." },
           { name: "electricos", label: "Requerimientos eléctricos especiales", type: "textarea", rows: 2, placeholder: "¿Qué equipos necesitás conectar? Indicá el consumo en watts si lo sabés." },
         ],
@@ -63,9 +63,9 @@ export const FORM_SCHEMAS = {
   },
 
   gastronomicos: {
-    pills: ["38–45 puestos", "0% comisión", "50.000 asistentes", "Cierre 31 ago"],
-    note: "**Antes de completar:** El cupo es limitado a 38–45 puestos seleccionados por curaduría. Se acepta máximo 1 puesto por sub-rubro. Las postulaciones cierran el **31 de agosto de 2026** y los seleccionados son notificados el 10 de septiembre.",
-    submitNote: "**¿Qué pasa después?** Revisamos tu postulación y te avisamos antes del 10 de septiembre de 2026. Las postulaciones cierran el 31 de agosto.",
+    pills: ["38–45 puestos", "0% comisión", "50.000 asistentes", "Cierre 1 ago"],
+    note: "**Antes de completar:** El cupo es limitado a 38–45 puestos seleccionados por curaduría. Se acepta máximo 1 puesto por sub-rubro. Las postulaciones cierran el **1 de agosto de 2026** y los seleccionados son notificados el 10 de septiembre.",
+    submitNote: "**¿Qué pasa después?** Revisamos tu postulación y te avisamos antes del 10 de septiembre de 2026. Las postulaciones cierran el 1 de agosto.",
     sections: [
       {
         num: "01", label: "Datos del emprendimiento", title: "¿Quiénes son?",
