@@ -37,10 +37,10 @@ export const FORM_SCHEMAS = {
         num: "03", label: "Tamaño de stand", title: "¿Cuánto espacio necesitás?",
         items: [
           { name: "stand", label: "Tamaño solicitado", type: "radio", required: true, options: [
-            { t: "Micro · 9 m² — $800.000", s: "3×3 m · Ideal para cosmética, libros, accesorios o propuestas compactas. · El stand se reserva con el 50% del valor." },
-            { t: "Estándar · 12 m² — $1.000.000 · + elegido", s: "3×4 m · El más elegido. Espacio para exhibir con comodidad y atender bien. · El stand se reserva con el 50% del valor." },
-            { t: "Grande · 18 m² — $1.500.000", s: "3×6 m · Para propuestas con mucho producto o que ofrecen experiencia en el stand. · El stand se reserva con el 50% del valor." },
-            { t: "Premium · 20 m² — $2.500.000", s: "4×5 m · Ubicación destacada en acceso o zona central. · El stand se reserva con el 50% del valor." },
+            { t: "Micro · 9 m² — $800.000", s: "3×3 m · Ideal para cosmética, libros, accesorios o propuestas compactas. · El stand se reserva con el 30% del valor y el resto en cuotas." },
+            { t: "Estándar · 12 m² — $1.000.000 · + elegido", s: "3×4 m · El más elegido. Espacio para exhibir con comodidad y atender bien. · El stand se reserva con el 30% del valor y el resto en cuotas." },
+            { t: "Grande · 18 m² — $1.500.000", s: "3×6 m · Para propuestas con mucho producto o que ofrecen experiencia en el stand. · El stand se reserva con el 30% del valor y el resto en cuotas." },
+            { t: "Premium · 20 m² — $2.500.000", s: "4×5 m · Ubicación destacada en acceso o zona central. · El stand se reserva con el 30% del valor y el resto en cuotas." },
           ], hint: "El stand incluye: espacio señalizado, acceso a electricidad (800W estándar), 2 acreditaciones de feriante por día, mención en redes y catálogo digital oficial." },
           { name: "electricos", label: "Requerimientos eléctricos especiales", type: "textarea", rows: 2, placeholder: "¿Qué equipos necesitás conectar? Indicá el consumo en watts si lo sabés." },
         ],
@@ -92,7 +92,11 @@ export const FORM_SCHEMAS = {
       {
         num: "03", label: "Stand y logística", title: "Tamaño y operación",
         items: [
-          { name: "tamano", label: "Tamaño de puesto solicitado", type: "radio", required: true, options: ["Snackería / bebidas — 2×3 m (6 m²) · $450.000", "Estándar — 3×5 m (15 m²) · $750.000", "Premium — 4×6 m (24 m²) · $1.200.000"] },
+          { name: "tamano", label: "Tipo de espacio solicitado", type: "radio", required: true, options: [
+            { t: "Snackería / bebidas — $800.000", s: "El espacio se reserva con el 30% del valor y el resto en cuotas." },
+            { t: "Estándar — $1.200.000", s: "El espacio se reserva con el 30% del valor y el resto en cuotas." },
+            { t: "Premium — $2.000.000", s: "El espacio se reserva con el 30% del valor y el resto en cuotas." },
+          ] },
           { name: "adicional", label: "Observaciones o requerimientos especiales", type: "textarea", rows: 2, placeholder: "Cualquier pregunta o requerimiento." },
         ],
       },
