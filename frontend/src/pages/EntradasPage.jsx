@@ -529,16 +529,69 @@ function PurchaseModal({ ticket, onClose }) {
 
 // ─── Tarjeta de Ticket ────────────────────────────────────────────────────────
 function TicketCard({ ticket, index, onComprar }) {
-  const colors = {
-    ocre:   { bg: 'var(--bz-ocre-calido)',    fg: 'var(--bz-verde-profundo)', accent: 'var(--bz-verde-profundo)', border: 'var(--bz-ocre-tostado)' },
-    verde:  { bg: 'var(--bz-verde-profundo)', fg: 'var(--bz-beige-hueso)',    accent: 'var(--bz-ocre-calido)',    border: 'var(--bz-verde-profundo)' },
-    tierra: { bg: 'var(--bz-beige-hueso)',    fg: 'var(--bz-texto-primario)', accent: 'var(--bz-tierra-rojo)',    border: 'var(--bz-borde-suave)' },
+  const PALETA = {
+    'raices-early': {
+      bg: 'var(--bz-ocre-calido)',
+      fg: 'var(--bz-verde-profundo)',
+      accent: 'var(--bz-verde-profundo)',
+      accentSub: 'rgba(42,61,36,0.7)',
+      border: 'var(--bz-ocre-tostado)',
+      sepColor: 'rgba(42,61,36,0.15)',
+      promoBg: 'rgba(42,61,36,0.1)',
+      promoBorder: 'rgba(42,61,36,0.2)',
+      btnBg: 'var(--bz-verde-profundo)',
+      btnFg: 'var(--bz-beige-hueso)',
+      successBg: 'var(--bz-verde-pasto)',
+      successFg: 'var(--bz-verde-bosque)',
+    },
+    'bosque-early': {
+      bg: '#2C1A0E',
+      fg: '#F5ECD8',
+      accent: '#C8A647',
+      accentSub: 'rgba(200,166,71,0.65)',
+      border: '#5C3A1E',
+      sepColor: 'rgba(200,166,71,0.15)',
+      promoBg: 'rgba(200,166,71,0.1)',
+      promoBorder: 'rgba(200,166,71,0.25)',
+      btnBg: '#C8A647',
+      btnFg: '#2C1A0E',
+      successBg: 'rgba(200,166,71,0.15)',
+      successFg: '#C8A647',
+    },
+    'raices': {
+      bg: 'var(--bz-verde-profundo)',
+      fg: 'var(--bz-beige-hueso)',
+      accent: 'var(--bz-ocre-calido)',
+      accentSub: 'rgba(230,203,122,0.65)',
+      border: 'var(--bz-verde-profundo)',
+      sepColor: 'rgba(250,246,237,0.15)',
+      promoBg: 'rgba(230,203,122,0.12)',
+      promoBorder: 'rgba(230,203,122,0.25)',
+      btnBg: 'var(--bz-ocre-calido)',
+      btnFg: 'var(--bz-verde-profundo)',
+      successBg: 'rgba(250,246,237,0.12)',
+      successFg: 'var(--bz-beige-hueso)',
+    },
+    'bosque': {
+      bg: 'var(--bz-beige-hueso)',
+      fg: 'var(--bz-texto-primario)',
+      accent: 'var(--bz-tierra-rojo)',
+      accentSub: 'rgba(163,58,30,0.6)',
+      border: 'var(--bz-borde-suave)',
+      sepColor: 'var(--bz-borde-ligero)',
+      promoBg: 'rgba(163,58,30,0.07)',
+      promoBorder: 'rgba(163,58,30,0.18)',
+      btnBg: 'var(--bz-verde-profundo)',
+      btnFg: 'var(--bz-beige-hueso)',
+      successBg: 'var(--bz-verde-pasto)',
+      successFg: 'var(--bz-verde-bosque)',
+    },
   };
-  const c = colors[ticket.color];
+
+  const p = PALETA[ticket.id] || PALETA['bosque'];
   const featured = ticket.destacado;
   const precio3 = ticket.precioNum * 2;
 
-  // Estado para el formulario "Avisame cuando salga" (se usa cuando VENTA_ACTIVA = false)
   const [notify, setNotify] = useState(false);
   const [notifyEmail, setNotifyEmail] = useState('');
   const [notifySent, setNotifySent] = useState(false);
@@ -552,103 +605,112 @@ function TicketCard({ ticket, index, onComprar }) {
     setNotifyLoading(false);
   };
 
-  const btnBg = ticket.color === 'verde' ? 'var(--bz-ocre-calido)' : 'var(--bz-verde-profundo)';
-  const btnFg = ticket.color === 'verde' ? 'var(--bz-verde-profundo)' : 'var(--bz-beige-hueso)';
-
   return (
-    <article className="reveal" style={{
-      background: c.bg, color: c.fg,
-      borderRadius: 'var(--bz-radius-xl)', padding: '36px 30px',
-      border: `1px solid ${c.border}`,
-      boxShadow: featured ? 'var(--bz-shadow-lg)' : 'none',
-      transform: featured ? 'translateY(-12px)' : 'none',
-      transition: 'transform 300ms var(--bz-ease), box-shadow 300ms var(--bz-ease)',
-      transitionDelay: `${index * 80}ms`,
-      position: 'relative', display: 'flex', flexDirection: 'column',
-    }}
-      onMouseEnter={e => { e.currentTarget.style.transform = featured ? 'translateY(-16px)' : 'translateY(-4px)'; }}
-      onMouseLeave={e => { e.currentTarget.style.transform = featured ? 'translateY(-12px)' : 'translateY(0)'; }}
+    <article
+      className="reveal"
+      style={{
+        background: p.bg,
+        color: p.fg,
+        borderRadius: 20,
+        border: `1px solid ${p.border}`,
+        boxShadow: featured ? 'var(--bz-shadow-xl)' : 'var(--bz-shadow-sm)',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 0,
+        overflow: 'hidden',
+        transition: 'transform 280ms var(--bz-ease), box-shadow 280ms var(--bz-ease)',
+        transitionDelay: `${index * 70}ms`,
+      }}
+      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--bz-shadow-lg)'; }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = featured ? 'var(--bz-shadow-xl)' : 'var(--bz-shadow-sm)'; }}
     >
-      {featured && (
-        <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: 'var(--bz-ocre-calido)', color: 'var(--bz-verde-profundo)', padding: '5px 14px', borderRadius: 'var(--bz-radius-pill)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', whiteSpace: 'nowrap' }}>★ Más elegida</div>
-      )}
-      {ticket.earlyBird && (
-        <div style={{ position: 'absolute', top: 16, right: 16, background: ticket.color === 'ocre' ? 'var(--bz-verde-profundo)' : 'var(--bz-ocre-calido)', color: ticket.color === 'ocre' ? 'var(--bz-ocre-calido)' : 'var(--bz-verde-profundo)', padding: '3px 10px', borderRadius: 'var(--bz-radius-pill)', fontSize: 9, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)' }}>⚡ EARLY</div>
-      )}
+      {/* Franja lateral de color */}
+      <div style={{ width: 5, flexShrink: 0, background: p.accent, opacity: 0.7 }} />
 
-      <div style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', opacity: 0.7, marginBottom: 12 }}>{ticket.badge}</div>
-      <h3 style={{ fontFamily: 'var(--bz-font-display)', fontSize: 32, marginBottom: 14, lineHeight: 1 }}>{ticket.name}</h3>
+      <div style={{ padding: '28px 28px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
-      <div style={{ marginBottom: 24 }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-          <span className="display" style={{ fontSize: 42, color: c.accent, lineHeight: 1 }}>{ticket.precio}</span>
-          {ticket.unidad && <span style={{ fontSize: 12, opacity: 0.7, fontFamily: 'var(--bz-font-mono)' }}>{ticket.unidad}</span>}
-        </div>
-        {ticket.precioOrig && (
-          <div style={{ fontSize: 13, marginTop: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ opacity: 0.55, textDecoration: 'line-through' }}>{ticket.precioOrig}</span>
-            <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', padding: '2px 8px', borderRadius: 'var(--bz-radius-pill)', background: 'rgba(163,58,30,0.14)', color: 'var(--bz-tierra-rojo)' }}>{ticket.descuento}</span>
+        {/* Header: badge + chips */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', opacity: 0.65 }}>{ticket.badge}</div>
+          <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
+            {ticket.earlyBird && (
+              <div style={{ background: p.accent, color: p.bg, padding: '3px 9px', borderRadius: 100, fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)' }}>⚡ EARLY</div>
+            )}
+            {featured && (
+              <div style={{ background: 'var(--bz-ocre-calido)', color: 'var(--bz-verde-profundo)', padding: '3px 9px', borderRadius: 100, fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)' }}>★ TOP</div>
+            )}
           </div>
+        </div>
+
+        {/* Nombre + precio */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
+          <h3 style={{ fontFamily: 'var(--bz-font-display)', fontSize: 30, lineHeight: 1, margin: 0 }}>{ticket.name}</h3>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+              <span style={{ fontFamily: 'var(--bz-font-display)', fontSize: 30, fontWeight: 400, color: p.accent, lineHeight: 1 }}>{ticket.precio}</span>
+              <span style={{ fontSize: 11, opacity: 0.6, fontFamily: 'var(--bz-font-mono)' }}>{ticket.unidad}</span>
+            </div>
+            {ticket.precioOrig && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end', marginTop: 4 }}>
+                <span style={{ fontSize: 12, opacity: 0.45, textDecoration: 'line-through' }}>{ticket.precioOrig}</span>
+                <span style={{ fontSize: 10, fontWeight: 600, padding: '1px 7px', borderRadius: 100, background: 'rgba(163,58,30,0.15)', color: '#A33A1E', fontFamily: 'var(--bz-font-mono)' }}>{ticket.descuento}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Separador */}
+        <div style={{ height: 1, background: p.sepColor, marginBottom: 16 }} />
+
+        {/* Beneficios */}
+        <ul style={{ listStyle: 'none', margin: '0 0 18px', padding: 0, flex: 1 }}>
+          {ticket.incluye.map((item, j) => (
+            <li key={j} style={{ display: 'flex', gap: 10, paddingBottom: 9, fontSize: 13, lineHeight: 1.4, opacity: 0.88 }}>
+              <span style={{ color: p.accent, flexShrink: 0, fontSize: 12, marginTop: 1 }}>✓</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        {/* Promo 3×2 */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', borderRadius: 10, background: p.promoBg, border: `1px solid ${p.promoBorder}`, marginBottom: 16 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', opacity: 0.65 }}>3 días · 3×2</div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: p.accent }}>
+            {fmtARS(precio3)}
+            <span style={{ fontSize: 11, fontWeight: 400, opacity: 0.7, marginLeft: 5 }}>pagás 2</span>
+          </div>
+        </div>
+
+        {/* CTA */}
+        {VENTA_ACTIVA ? (
+          <button onClick={() => onComprar(ticket)}
+            style={{ padding: '13px 24px', borderRadius: 100, background: p.btnBg, color: p.btnFg, fontSize: 14, fontWeight: 600, border: 'none', cursor: 'pointer', letterSpacing: '0.05em', transition: 'transform 200ms var(--bz-spring)' }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+          >COMPRAR →</button>
+        ) : notifySent ? (
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '14px 16px', borderRadius: 10, background: p.successBg, color: p.successFg, fontSize: 13, lineHeight: 1.5 }}>
+            <span style={{ flexShrink: 0 }}>✓</span>
+            <span>Listo. Te avisamos cuando salga:<br /><strong style={{ wordBreak: 'break-all' }}>{notifyEmail}</strong></span>
+          </div>
+        ) : notify ? (
+          <form onSubmit={onNotify} style={{ display: 'flex', gap: 8 }}>
+            <input type="email" value={notifyEmail} onChange={e => setNotifyEmail(e.target.value)} placeholder="tu@correo.com" autoFocus required
+              style={{ flex: 1, padding: '12px 16px', fontSize: 13, fontFamily: 'var(--bz-font-body)', border: `1px solid ${p.border}`, borderRadius: 100, background: 'rgba(255,255,255,0.12)', color: p.fg, outline: 'none' }} />
+            <button type="submit" disabled={notifyLoading}
+              style={{ padding: '12px 20px', borderRadius: 100, background: p.btnBg, color: p.btnFg, fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', opacity: notifyLoading ? 0.7 : 1 }}>
+              {notifyLoading ? '...' : 'OK'}
+            </button>
+          </form>
+        ) : (
+          <button onClick={() => setNotify(true)}
+            style={{ padding: '13px 24px', borderRadius: 100, background: p.btnBg, color: p.btnFg, fontSize: 14, fontWeight: 500, border: 'none', cursor: 'pointer', transition: 'transform 200ms var(--bz-spring)' }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+          >Avisame cuando salga</button>
         )}
       </div>
-
-      <ul style={{ listStyle: 'none', marginBottom: 20, flex: 1 }}>
-        {ticket.incluye.map((item, j) => (
-          <li key={j} style={{ display: 'flex', gap: 10, padding: '7px 0', fontSize: 13, lineHeight: 1.5, opacity: 0.9, borderTop: j > 0 ? `0.5px solid ${ticket.color === 'verde' ? 'rgba(250,246,237,0.15)' : 'var(--bz-borde-ligero)'}` : 'none' }}>
-            <span style={{ color: c.accent, flexShrink: 0 }}>✓</span>
-            {item}
-          </li>
-        ))}
-      </ul>
-
-      {/* Promo 3x2 */}
-      <div style={{
-        marginBottom: 18,
-        padding: '10px 14px',
-        borderRadius: 10,
-        background: ticket.color === 'verde' ? 'rgba(250,246,237,0.1)' : 'rgba(42,61,36,0.08)',
-        border: `0.5px solid ${ticket.color === 'verde' ? 'rgba(250,246,237,0.2)' : 'rgba(42,61,36,0.18)'}`,
-      }}>
-        <div style={{ fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', opacity: 0.7, marginBottom: 4 }}>Promo 3 días · 3×2</div>
-        <div style={{ fontSize: 14, fontWeight: 600, color: c.accent }}>
-          {fmtARS(precio3)} <span style={{ fontSize: 11, fontWeight: 400, opacity: 0.75 }}>los 3 días (pagás 2)</span>
-        </div>
-      </div>
-
-      {VENTA_ACTIVA ? (
-        /* Botón de compra — se activa cuando VENTA_ACTIVA = true en data.js */
-        <button
-          onClick={() => onComprar(ticket)}
-          style={{ padding: '14px 24px', borderRadius: 'var(--bz-radius-pill)', background: btnBg, color: btnFg, fontSize: 14, fontWeight: 600, border: 'none', cursor: 'pointer', letterSpacing: '0.06em', transition: 'transform 200ms var(--bz-spring)' }}
-          onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'}
-          onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          COMPRAR →
-        </button>
-      ) : notifySent ? (
-        /* Confirmación de registro */
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '16px 18px', borderRadius: 'var(--bz-radius-md)', background: ticket.color === 'verde' ? 'rgba(250,246,237,0.12)' : 'var(--bz-verde-pasto)', color: ticket.color === 'verde' ? 'var(--bz-beige-hueso)' : 'var(--bz-verde-bosque)', fontSize: 13.5, lineHeight: 1.5 }}>
-          <span style={{ flexShrink: 0 }}>✓</span>
-          <span>Listo. Te avisamos apenas salga a la venta:<br /><strong style={{ wordBreak: 'break-all' }}>{notifyEmail}</strong></span>
-        </div>
-      ) : notify ? (
-        /* Formulario de email */
-        <form onSubmit={onNotify} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <input type="email" value={notifyEmail} onChange={e => setNotifyEmail(e.target.value)} placeholder="tu@correo.com" autoFocus required style={{ width: '100%', padding: '13px 18px', fontSize: 14, fontFamily: 'var(--bz-font-body)', border: '1px solid var(--bz-borde-suave)', borderRadius: 'var(--bz-radius-pill)', background: 'var(--bz-beige-hueso)', color: 'var(--bz-texto-primario)', outline: 'none' }} />
-          <button type="submit" disabled={notifyLoading} style={{ padding: '14px 24px', borderRadius: 'var(--bz-radius-pill)', background: btnBg, color: btnFg, fontSize: 14, fontWeight: 500, border: 'none', cursor: 'pointer', transition: 'transform 200ms var(--bz-spring)', opacity: notifyLoading ? 0.7 : 1 }}
-            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
-            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-            {notifyLoading ? '...' : 'Confirmar'}
-          </button>
-        </form>
-      ) : (
-        /* Botón Avisame — estado por defecto mientras no hay venta */
-        <button onClick={() => setNotify(true)} style={{ padding: '14px 24px', borderRadius: 'var(--bz-radius-pill)', background: btnBg, color: btnFg, fontSize: 14, fontWeight: 500, border: 'none', cursor: 'pointer', transition: 'transform 200ms var(--bz-spring)' }}
-          onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
-          onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-          Avisame cuando salga
-        </button>
-      )}
     </article>
   );
 }
@@ -717,17 +779,34 @@ export default function EntradasPage({ setPage }) {
       )}
 
       {/* Grid de tickets */}
-      <section style={{ padding: '60px 0 80px', background: 'var(--bz-fondo-base)' }}>
-        <div className="container">
-          <div className="bz-tickets-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, alignItems: 'end' }}>
-            {TICKETS.map((t, i) => (
+      <section style={{ padding: '56px 0 80px', background: 'var(--bz-fondo-base)' }}>
+        <div className="container-narrow" style={{ maxWidth: 960 }}>
+
+          {/* Sección Early Bird */}
+          <div className="reveal" style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
+            <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', color: 'var(--bz-ocre-tostado)', whiteSpace: 'nowrap' }}>⚡ Early Bird · cupos limitados</div>
+            <div style={{ flex: 1, height: 1, background: 'var(--bz-borde-ligero)' }} />
+          </div>
+          <div className="bz-tickets-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
+            {TICKETS.filter(t => t.earlyBird).map((t, i) => (
               <TicketCard key={t.id} ticket={t} index={i} onComprar={setSelectedTicket} />
             ))}
           </div>
+
+          {/* Sección General */}
+          <div className="reveal" style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
+            <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', color: 'var(--bz-texto-terciario)', whiteSpace: 'nowrap' }}>Entradas generales</div>
+            <div style={{ flex: 1, height: 1, background: 'var(--bz-borde-ligero)' }} />
+          </div>
+          <div className="bz-tickets-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            {TICKETS.filter(t => !t.earlyBird).map((t, i) => (
+              <TicketCard key={t.id} ticket={t} index={i + 2} onComprar={setSelectedTicket} />
+            ))}
+          </div>
+
         </div>
         <style>{`
-          @media (max-width: 1100px) { .bz-tickets-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-          @media (max-width: 620px)  { .bz-tickets-grid { grid-template-columns: 1fr !important; } }
+          @media (max-width: 640px) { .bz-tickets-grid { grid-template-columns: 1fr !important; } }
           @keyframes bz-modal-in {
             from { opacity: 0; transform: scale(0.92) translateY(20px); }
             to   { opacity: 1; transform: scale(1)    translateY(0);    }
