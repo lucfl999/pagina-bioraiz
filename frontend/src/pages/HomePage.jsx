@@ -63,6 +63,7 @@ function Hero({ setPage }) {
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap", animation: "bz-fade-up 1000ms var(--bz-ease) 500ms both" }}>
               <button onClick={() => setPage("entradas")} className="btn btn-ocre">Quiero ir</button>
               <button onClick={() => setPage("programa")} className="btn" style={{ background: "rgba(250, 246, 237, 0.1)", color: "var(--bz-beige-hueso)", border: "1.5px solid rgba(250, 246, 237, 0.3)" }}>Ver programa</button>
+              <button onClick={() => setPage("participa")} className="btn" style={{ background: "rgba(250, 246, 237, 0.1)", color: "var(--bz-beige-hueso)", border: "1.5px solid rgba(250, 246, 237, 0.3)" }}>Quiero exponer</button>
             </div>
           </div>
 
