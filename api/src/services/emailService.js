@@ -177,8 +177,16 @@ const buildConfirmationHtml = (body) => `
   </div>`;
 
 export const sendParticipationConfirmation = async (email, participationType, participantName) => {
-  // Map form types to confirmation types (handle both singular and plural forms)
+  // Map form types to confirmation types - handle both the full labels from frontend and simple IDs
   const typeMap = {
+    // From frontend tab.label values
+    'feriantes / emprendedores': 'feriantes',
+    'gastronómicos': 'gastronomicos',
+    'artistas / músicos': 'artistas',
+    'speakers': 'speakers',
+    'facilitadores': 'facilitadores',
+    'prensa / media': 'prensa',
+    // Alternative simple IDs
     'feriante': 'feriantes',
     'feriantes': 'feriantes',
     'gastronomico': 'gastronomicos',
@@ -192,11 +200,11 @@ export const sendParticipationConfirmation = async (email, participationType, pa
     'prensa': 'prensa',
   };
 
-  const normalizedType = typeMap[participationType?.toLowerCase()] || participationType?.toLowerCase();
+  const normalizedType = typeMap[participationType?.toLowerCase()];
   const config = PARTICIPATION_CONFIRMATIONS[normalizedType];
 
   if (!config) {
-    console.warn(`No confirmation template found for type: ${participationType}`);
+    console.warn(`No confirmation template found for type: ${participationType}. Available types: ${Object.keys(PARTICIPATION_CONFIRMATIONS).join(', ')}`);
     return { success: false, error: 'Unknown participation type' };
   }
 
