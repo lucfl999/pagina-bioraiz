@@ -148,6 +148,17 @@ const PARTICIPATION_CONFIRMATIONS = {
       <p style="margin:0;">Booking · BIORAIZ<br/>contact@bioraiz.net</p>
     `,
   },
+  sponsors: {
+    subject: 'Recibimos tu solicitud · BIORAIZ 2026 · Alianzas y Sponsorships',
+    replyTo: 'contact@bioraiz.net',
+    body: (name) => `
+      <p style="margin:0 0 16px;">Hola ${name},</p>
+      <p style="margin:0 0 16px;">Recibimos tu solicitud para ser sponsor o aliada de BIORAIZ 2026 — Bio & Wellness Festival Patagonia, 13 al 15 de noviembre en Neuquén Capital.</p>
+      <p style="margin:0 0 16px;">El equipo de alianzas revisa todas las propuestas y se comunica con los interesados en las próximas semanas. Buscamos partners que compartan nuestros valores de sostenibilidad y conciencia.</p>
+      <p style="margin:0 0 16px;">Si tenés consultas mientras tanto, respondé este email y te llegamos.</p>
+      <p style="margin:0;">Alianzas y Sponsors · BIORAIZ<br/>contact@bioraiz.net</p>
+    `,
+  },
   prensa: {
     subject: 'Recibimos tu solicitud de acreditación · BIORAIZ 2026 · Prensa',
     replyTo: 'prensa@bioraiz.net',
@@ -185,6 +196,7 @@ export const sendParticipationConfirmation = async (email, participationType, pa
     'artistas / músicos': 'artistas',
     'speakers': 'speakers',
     'facilitadores': 'facilitadores',
+    'sponsors / alianzas': 'sponsors',
     'prensa / media': 'prensa',
     // Alternative simple IDs
     'feriante': 'feriantes',
@@ -197,6 +209,8 @@ export const sendParticipationConfirmation = async (email, participationType, pa
     'facilitadores': 'facilitadores',
     'artista': 'artistas',
     'artistas': 'artistas',
+    'sponsor': 'sponsors',
+    'sponsors': 'sponsors',
     'prensa': 'prensa',
   };
 
