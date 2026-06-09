@@ -90,7 +90,7 @@ export const TICKETS = [
       "Acceso general 1 día a elección (viernes, sábado o domingo)",
       "Ingreso desde apertura de puertas (12:00 hs)",
       "Acceso a todos los escenarios principales y feria de emprendimientos",
-      "Zona wellness: acceso libre (sin sesiones reservadas)",
+      "Zona wellness: acceso libre",
     ],
   },
   {
@@ -124,7 +124,7 @@ export const TICKETS = [
       "Acceso general 1 día a elección (viernes, sábado o domingo)",
       "Ingreso desde apertura de puertas (12:00 hs)",
       "Acceso a todos los escenarios principales y feria de emprendimientos",
-      "Zona wellness: acceso libre (sin sesiones reservadas)",
+      "Zona wellness: acceso libre",
     ],
   },
   {
