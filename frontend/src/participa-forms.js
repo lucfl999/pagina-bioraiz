@@ -31,6 +31,7 @@ export const FORM_SCHEMAS = {
           { name: "descripcion", label: "Descripción del emprendimiento", type: "textarea", required: true, rows: 4, placeholder: "¿Qué ofrecés? ¿Cómo lo producís? ¿Qué lo hace diferente?", hint: "Máximo 150 palabras. Sé específico/a: esto es lo que lee el jurado para decidir si tu propuesta encaja." },
           { name: "antiguedad", label: "¿Hace cuánto tiempo existe el emprendimiento?", type: "text", required: true, placeholder: "Ej: Desde marzo 2022 — 4 años de actividad" },
           { name: "referencia", label: "Link de referencia (tienda, Instagram, web)", type: "text", placeholder: "https://... o @usuario" },
+          { name: "foto_marca", label: "Foto o logo de tu marca (PNG)", type: "file", accept: ".png", hint: "**Opcional pero recomendado.** Si nos subís la foto de tu marca o logo, la usaremos para los medios de comunicación y la promoción del festival. Solo aceptamos PNG." },
         ],
       },
       {
@@ -87,6 +88,7 @@ export const FORM_SCHEMAS = {
           { name: "categoria", label: "Categoría principal", type: "select", required: true, options: ["Comida saludable rápida (bowls, wraps, sándwiches)", "Gastronomía bio / plato elaborado", "100% vegano / vegetariano", "Bebidas saludables (jugos, smoothies, kombucha)", "Snacks y barras naturales", "Repostería sin TACC / raw food", "Panadería artesanal", "Cocina regional patagónica consciente"] },
           { name: "menu", label: "Menú tentativo con precios aproximados", type: "textarea", required: true, rows: 4, placeholder: "Listá los 4 a 8 ítems principales que ofrecerías con su precio orientativo." },
           { name: "local_ing", label: "¿Qué porcentaje de tus ingredientes son de origen local o patagónico?", type: "radio", required: true, options: ["Más del 80% — casi todo es local o patagónico", "Entre 50% y 80% — la mayoría es local", "Entre 20% y 50% — algunos ingredientes locales", "Menos del 20% — principalmente ingredientes de otra procedencia"] },
+          { name: "foto_marca", label: "Foto de tu local, logo o identidad visual (PNG)", type: "file", accept: ".png", hint: "**Opcional pero recomendado.** Nos ayuda a promocionar tu propuesta gastronómica en medios y redes del festival." },
         ],
       },
       {
@@ -132,6 +134,7 @@ export const FORM_SCHEMAS = {
           { name: "genero", label: "Género / estilo principal", type: "select", required: true, options: ["Folk / cantautor/a", "Indie / rock alternativo", "Folk andino / world music patagónica", "Electrónica orgánica / downtempo", "Ambient / música experimental", "Pop consciente / pop alternativo", "Jazz / bossa nova / música de cámara", "Música de raíz latinoamericana", "Fusión / inclasificable", "DJ set (electrónica de baja-media intensidad)", "Música ceremonial / sagrada"] },
           { name: "material", label: "Link a material para escuchar — Spotify, YouTube, SoundCloud o similar", type: "url", required: true, placeholder: "https://open.spotify.com/... o https://youtu.be/..." },
           { name: "encaje", label: "¿Por qué tu propuesta encaja en BIORAIZ?", type: "textarea", rows: 3, placeholder: "¿Qué tienen en común tu música y el espíritu del festival?" },
+          { name: "logo_artista", label: "Logo o identidad visual (PNG)", type: "file", accept: ".png", hint: "**Opcional pero recomendado.** Tu logo será incluido en la promoción del festival en medios de comunicación y catálogo digital." },
         ],
       },
       {
@@ -185,6 +188,7 @@ export const FORM_SCHEMAS = {
             { name: "duracion", label: "Duración propuesta", type: "select", options: ["45 minutos", "60 minutos", "90 minutos (taller + charla)"] },
             { name: "practico", label: "¿Tiene componente práctico o participativo?", type: "select", options: ["No, es una charla expositiva", "Sí, tiene dinámicas o ejercicios cortos", "Sí, es principalmente un taller práctico"] },
           ]},
+          { name: "foto_speaker", label: "Foto de perfil o de difusión (PNG)", type: "file", accept: ".png", hint: "**Opcional pero recomendado.** Será usada en la promoción de tu charla en medios de comunicación y redes del festival." },
         ],
       },
       {
@@ -225,6 +229,7 @@ export const FORM_SCHEMAS = {
           { row: [
             { name: "duracion", label: "Duración de la sesión", type: "select", options: ["45 minutos", "60 minutos", "75 minutos", "90 minutos"] },
             { name: "nivel", label: "Nivel de la práctica", type: "select", options: ["Apto para todos — sin experiencia previa necesaria", "Principiantes y práctica regular", "Intermedio / practica regular", "Avanzado"] },
+          { name: "foto_facilitador", label: "Foto de perfil o de difusión (PNG)", type: "file", accept: ".png", hint: "**Opcional pero recomendado.** Será usada para promocionar tu sesión en los medios de comunicación y redes del festival." },
           ]},
         ],
       },
@@ -259,6 +264,7 @@ export const FORM_SCHEMAS = {
             { name: "telefono", label: "Teléfono / WhatsApp", type: "tel", placeholder: "+54 9 000 000-0000" },
             { name: "tipo", label: "Tipo de alianza", type: "select", required: true, options: ["Sponsor principal", "Sponsor", "Canje", "Institucional / ONG"] },
           ]},
+          { name: "logo_sponsor", label: "Logo o identidad de marca (PNG)", type: "file", accept: ".png", hint: "**Opcional pero recomendado.** Tu marca aparecerá en la sección de sponsors del festival, en medios de comunicación y el sitio web." },
           { name: "propuesta", label: "Propuesta de colaboración", type: "textarea", rows: 3, placeholder: "Cómo te imaginás la alianza con BIORAIZ…" },
         ],
       },

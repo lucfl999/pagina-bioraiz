@@ -90,6 +90,7 @@ function OptionGroup({ field }) {
 
 function ParticipaField({ field }) {
   const [focus, setFocus] = useState(false);
+  const [fileName, setFileName] = useState("");
   const baseStyle = {
     width: "100%", background: PZ.campo,
     border: `1px solid ${focus ? PZ.borde : "rgba(122,158,90,0.45)"}`,
@@ -117,6 +118,22 @@ function ParticipaField({ field }) {
         </svg>
       </div>
     );
+  } else if (field.type === "file") {
+    control = (
+      <div>
+        <label style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, padding: "22px 16px", borderRadius: "var(--bz-radius-md)", border: `2px dashed ${focus ? PZ.borde : "rgba(122,158,90,0.35)"}`, background: "rgba(122,158,90,0.05)", cursor: "pointer", transition: "border-color 200ms var(--bz-ease), background 200ms var(--bz-ease)" }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={focus ? PZ.borde : "rgba(122,158,90,0.6)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          <span style={{ color: focus ? PZ.borde : "rgba(245,240,232,0.68)", fontSize: 14, fontWeight: 500 }}>
+            {fileName || "Subir archivo (PNG)"}
+          </span>
+          <input {...common} type="file" accept={field.accept || ".png"} onChange={(e) => { setFileName(e.target.files?.[0]?.name || ""); }} style={{ position: "absolute", opacity: 0, width: 0, height: 0 }} />
+        </label>
+      </div>
+    );
   } else {
     control = <input {...common} type={field.type} style={baseStyle} />;
   }
@@ -127,7 +144,7 @@ function ParticipaField({ field }) {
         {field.label}{field.required && <span style={{ color: PZ.borde, marginLeft: 4 }}>*</span>}
       </label>
       {control}
-      {field.hint && <p style={pzHint}>{field.hint}</p>}
+      {field.hint && <p style={pzHint}>{richText(field.hint)}</p>}
     </div>
   );
 }
@@ -168,8 +185,21 @@ function ParticipaForm({ tab }) {
     setStatus("sending");
     try {
       const form = e.currentTarget;
+      const formData = new FormData(form);
       const data = { tipo_participacion: tab.label };
-      new FormData(form).forEach((v, k) => { if (v) data[k] = v; });
+      
+      // Convert FormData to object, handling files specially
+      formData.forEach((v, k) => {
+        if (v) {
+          if (v instanceof File) {
+            // For files, store just the file info (name and size)
+            data[k] = `[Archivo: ${v.name} (${(v.size / 1024).toFixed(1)} KB)]`;
+          } else {
+            data[k] = v;
+          }
+        }
+      });
+      
       await api.post('/forms/participa', data);
       setStatus("sent");
       form.reset();
