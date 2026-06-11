@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useReveal, SubPageHeader, LeafShape } from '../components/shared.jsx';
+import CloudinaryWidget from '../components/CloudinaryWidget.jsx';
 import { FORM_SCHEMAS, PARTICIPA_TABS } from '../participa-forms.js';
 import api from '../services/api.js';
 
@@ -88,7 +89,7 @@ function OptionGroup({ field }) {
   );
 }
 
-function ParticipaField({ field }) {
+function ParticipaField({ field, cloudinaryUrls, onCloudinaryUpload }) {
   const [focus, setFocus] = useState(false);
   const [fileName, setFileName] = useState("");
   const baseStyle = {
@@ -119,19 +120,26 @@ function ParticipaField({ field }) {
       </div>
     );
   } else if (field.type === "file") {
+    const currentUrl = cloudinaryUrls[field.name];
     control = (
       <div>
-        <label style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, padding: "22px 16px", borderRadius: "var(--bz-radius-md)", border: `2px dashed ${focus ? PZ.borde : "rgba(122,158,90,0.35)"}`, background: "rgba(122,158,90,0.05)", cursor: "pointer", transition: "border-color 200ms var(--bz-ease), background 200ms var(--bz-ease)" }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={focus ? PZ.borde : "rgba(122,158,90,0.6)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="17 8 12 3 7 8" />
-            <line x1="12" y1="3" x2="12" y2="15" />
-          </svg>
-          <span style={{ color: focus ? PZ.borde : "rgba(245,240,232,0.68)", fontSize: 14, fontWeight: 500 }}>
-            {fileName || "Subir archivo (PNG)"}
-          </span>
-          <input {...common} type="file" accept={field.accept || ".png"} onChange={(e) => { setFileName(e.target.files?.[0]?.name || ""); }} style={{ position: "absolute", opacity: 0, width: 0, height: 0 }} />
-        </label>
+        <CloudinaryWidget
+          field={field}
+          fileName={currentUrl ? currentUrl.split('/').pop() : fileName}
+          onImageUpload={(url, name) => {
+            setFileName(name);
+            onCloudinaryUpload(field.name, url);
+          }}
+        />
+        {currentUrl && (
+          <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: "var(--bz-radius-md)", background: "rgba(122,158,90,0.12)", border: "1px solid rgba(122,158,90,0.26)" }}>
+            <p style={{ fontSize: 12, color: "rgba(245,240,232,0.7)", margin: "0 0 8px 0" }}>✓ Imagen subida:</p>
+            <a href={currentUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: PZ.borde, textDecoration: "underline", wordBreak: "break-all" }}>
+              {currentUrl.substring(currentUrl.lastIndexOf('/') + 1)}
+            </a>
+            <input type="hidden" name={field.name} value={currentUrl} />
+          </div>
+        )}
       </div>
     );
   } else {
@@ -149,7 +157,7 @@ function ParticipaField({ field }) {
   );
 }
 
-function ParticipaSection({ section, last }) {
+function ParticipaSection({ section, last, cloudinaryUrls, onCloudinaryUpload }) {
   return (
     <div style={{ paddingBottom: last ? 0 : 44, marginBottom: last ? 0 : 44, borderBottom: last ? "none" : "1px solid rgba(122,158,90,0.16)" }}>
       <div style={{ marginBottom: 26 }}>
@@ -165,11 +173,11 @@ function ParticipaSection({ section, last }) {
           if (item.row) {
             return (
               <div key={i} className="pz-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "22px 24px" }}>
-                {item.row.map(f => <ParticipaField key={f.name} field={f} />)}
+                {item.row.map(f => <ParticipaField key={f.name} field={f} cloudinaryUrls={cloudinaryUrls} onCloudinaryUpload={onCloudinaryUpload} />)}
               </div>
             );
           }
-          return <ParticipaField key={item.name} field={item} />;
+          return <ParticipaField key={item.name} field={item} cloudinaryUrls={cloudinaryUrls} onCloudinaryUpload={onCloudinaryUpload} />;
         })}
       </div>
     </div>
@@ -179,6 +187,14 @@ function ParticipaSection({ section, last }) {
 function ParticipaForm({ tab }) {
   const schema = FORM_SCHEMAS[tab.id];
   const [status, setStatus] = useState("idle");
+  const [cloudinaryUrls, setCloudinaryUrls] = useState({});
+
+  const handleCloudinaryUpload = (fieldName, url) => {
+    setCloudinaryUrls(prev => ({
+      ...prev,
+      [fieldName]: url
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -188,21 +204,22 @@ function ParticipaForm({ tab }) {
       const formData = new FormData(form);
       const data = { tipo_participacion: tab.label };
       
-      // Convert FormData to object, handling files specially
+      // Convert FormData to object
       formData.forEach((v, k) => {
         if (v) {
-          if (v instanceof File) {
-            // For files, store just the file info (name and size)
-            data[k] = `[Archivo: ${v.name} (${(v.size / 1024).toFixed(1)} KB)]`;
-          } else {
-            data[k] = v;
-          }
+          data[k] = v;
         }
+      });
+      
+      // Add Cloudinary URLs
+      Object.entries(cloudinaryUrls).forEach(([k, url]) => {
+        data[k] = url;
       });
       
       await api.post('/forms/participa', data);
       setStatus("sent");
       form.reset();
+      setCloudinaryUrls({});
     } catch (err) {
       console.error('Form error:', err);
       setStatus("error");
@@ -225,6 +242,8 @@ function ParticipaForm({ tab }) {
 
   const sending = status === "sending";
 
+  const sending = status === "sending";
+
   return (
     <form onSubmit={handleSubmit}>
       <input type="hidden" name="tipo_participacion" value={tab.label} />
@@ -236,7 +255,7 @@ function ParticipaForm({ tab }) {
       )}
       <fieldset disabled={sending} style={{ border: "none", margin: 0, padding: 0, minInlineSize: "auto" }}>
         {schema.sections.map((s, i) => (
-          <ParticipaSection key={i} section={s} last={i === schema.sections.length - 1} />
+          <ParticipaSection key={i} section={s} last={i === schema.sections.length - 1} cloudinaryUrls={cloudinaryUrls} onCloudinaryUpload={handleCloudinaryUpload} />
         ))}
       </fieldset>
       {schema.submitNote && (
