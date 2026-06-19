@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía: Carpeta de Presentación · BIORAIZ Festival</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1410;
+  --surface:#131a15;
+  --surface2:#192010;
+  --border:#2a3a28;
+  --border2:#354530;
+  --text:#e8ede4;
+  --muted:#7a8c74;
+  --accent:#6fcf60;
+  --accent2:#a8f096;
+  --warn:#f0802a;
+  --danger:#e84040;
+  --info:#4aacf0;
+  --gold:#d4a830;
+  --purple:#a070d8;
+  --rose:#e8709a;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+
+/* ── COVER ── */
+.cover{
+  min-height:100vh;
+  background:linear-gradient(160deg,#060e08 0%,#122010 45%,#0a1a0c 100%);
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:80px 64px;position:relative;overflow:hidden;
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 60% at 85% 15%, rgba(212,168,48,.07) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 8% 85%, rgba(111,207,96,.05) 0%, transparent 65%);
+  pointer-events:none;
+}
+.cover-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;opacity:.9}
+.cover h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(38px,5vw,72px);line-height:1.05;letter-spacing:-1px;max-width:780px;margin-bottom:12px}
+.cover h1 em{font-style:italic;color:var(--accent);font-weight:400}
+.cover-sub{font-size:16px;color:var(--muted);max-width:560px;margin-bottom:40px;line-height:1.75}
+.cover-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:60px}
+.pill{font-family:'DM Mono',monospace;font-size:10.5px;padding:5px 14px;border-radius:20px;letter-spacing:.5px}
+.pill-g{background:rgba(111,207,96,.12);color:var(--accent);border:1px solid rgba(111,207,96,.25)}
+.pill-o{background:rgba(240,128,42,.12);color:var(--warn);border:1px solid rgba(240,128,42,.25)}
+.pill-b{background:rgba(74,172,240,.12);color:var(--info);border:1px solid rgba(74,172,240,.25)}
+.pill-gold{background:rgba(212,168,48,.12);color:var(--gold);border:1px solid rgba(212,168,48,.25)}
+.pill-p{background:rgba(160,112,216,.12);color:var(--purple);border:1px solid rgba(160,112,216,.25)}
+.pill-r{background:rgba(232,112,154,.12);color:var(--rose);border:1px solid rgba(232,112,154,.25)}
+.cover-intro{background:rgba(212,168,48,.07);border:1px solid rgba(212,168,48,.25);border-radius:8px;padding:18px 22px;max-width:700px;font-size:13.5px;line-height:1.75;color:rgba(228,208,140,.9)}
+.cover-intro strong{color:var(--gold)}
+
+/* ── NAV ── */
+.nav-bar{background:rgba(13,20,16,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 48px;display:flex;align-items:center;gap:0;overflow-x:auto}
+.nav-item{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:15px 16px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;text-decoration:none;display:block}
+.nav-item:hover{color:var(--text)}
+.nav-item.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* ── LAYOUT ── */
+.page{max-width:1080px;margin:0 auto;padding:64px 32px}
+.section{display:none;animation:fadeIn .3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION HEADER ── */
+.sec-header{margin-bottom:40px}
+.sec-number{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.sec-title{font-family:'Playfair Display',serif;font-weight:700;font-size:34px;letter-spacing:-.5px;margin-bottom:10px}
+.sec-desc{font-size:14px;color:var(--muted);max-width:660px;line-height:1.75}
+
+/* ── DIVIDER ── */
+.divider{display:flex;align-items:center;gap:14px;margin:36px 0 24px}
+.divider-label{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);white-space:nowrap}
+.divider-line{flex:1;height:1px;background:var(--border)}
+
+/* ── ALERT BOXES ── */
+.alert{border-radius:8px;padding:14px 18px;margin-bottom:18px;font-size:13px;line-height:1.7}
+.alert-gold{background:rgba(212,168,48,.08);border:1px solid rgba(212,168,48,.3);color:rgba(228,200,120,.95)}
+.alert-gold strong{color:var(--gold)}
+.alert-warn{background:rgba(240,128,42,.08);border:1px solid rgba(240,128,42,.3);color:rgba(240,160,80,.95)}
+.alert-warn strong{color:var(--warn)}
+.alert-info{background:rgba(74,172,240,.08);border:1px solid rgba(74,172,240,.3);color:rgba(100,180,240,.95)}
+.alert-info strong{color:var(--info)}
+.alert-ok{background:rgba(111,207,96,.08);border:1px solid rgba(111,207,96,.3);color:rgba(140,220,120,.95)}
+.alert-ok strong{color:var(--accent)}
+
+/* ── TABLES ── */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.data-table{width:100%;border-collapse:collapse;font-size:13px}
+.data-table th{text-align:left;padding:11px 16px;background:var(--surface2);border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+.data-table td{padding:10px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:rgba(255,255,255,.02)}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px}
+.card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.card-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.icon-gold{background:rgba(212,168,48,.15);border:1px solid rgba(212,168,48,.3)}
+.icon-green{background:rgba(111,207,96,.15);border:1px solid rgba(111,207,96,.3)}
+.icon-blue{background:rgba(74,172,240,.15);border:1px solid rgba(74,172,240,.3)}
+.icon-purple{background:rgba(160,112,216,.15);border:1px solid rgba(160,112,216,.3)}
+.icon-orange{background:rgba(240,128,42,.15);border:1px solid rgba(240,128,42,.3)}
+.icon-rose{background:rgba(232,112,154,.15);border:1px solid rgba(232,112,154,.3)}
+.card-title{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text);font-weight:500}
+.card-body{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* ── PROMPT BLOCK ── */
+.prompt-block{background:#0a1208;border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 22px;margin:16px 0 24px;position:relative}
+.prompt-label{font-family:'DM Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.prompt-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block}
+.prompt-text{font-family:'DM Mono',monospace;font-size:12.5px;line-height:1.75;color:rgba(228,237,228,.85);white-space:pre-wrap;word-break:break-word}
+.prompt-copy{position:absolute;top:14px;right:14px;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:4px 8px;cursor:pointer;transition:all .2s}
+.prompt-copy:hover{color:var(--gold);border-color:rgba(212,168,48,.4)}
+
+/* ── STEP BLOCKS ── */
+.step-list{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{font-family:'DM Mono',monospace;font-size:22px;color:var(--border2);font-weight:500;min-width:36px;line-height:1.2;padding-top:2px}
+.step-content{flex:1}
+.step-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:6px}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+
+/* ── AUDIENCE TABS ── */
+.audience-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.aud-tab{font-family:'DM Mono',monospace;font-size:10.5px;padding:7px 16px;border-radius:6px;cursor:pointer;border:1px solid var(--border);color:var(--muted);transition:all .2s;user-select:none}
+.aud-tab:hover{border-color:var(--border2);color:var(--text)}
+.aud-tab.active-gold{background:rgba(212,168,48,.15);border-color:rgba(212,168,48,.4);color:var(--gold)}
+.aud-tab.active-green{background:rgba(111,207,96,.15);border-color:rgba(111,207,96,.4);color:var(--accent)}
+.aud-tab.active-blue{background:rgba(74,172,240,.15);border-color:rgba(74,172,240,.4);color:var(--info)}
+.aud-tab.active-purple{background:rgba(160,112,216,.15);border-color:rgba(160,112,216,.4);color:var(--purple)}
+.aud-tab.active-orange{background:rgba(240,128,42,.15);border-color:rgba(240,128,42,.4);color:var(--warn)}
+.aud-tab.active-rose{background:rgba(232,112,154,.15);border-color:rgba(232,112,154,.4);color:var(--rose)}
+
+.audience-panel{display:none}
+.audience-panel.visible{display:block;animation:fadeIn .25s ease}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:12px 0 20px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted);line-height:1.6}
+.checklist li::before{content:'◆';color:var(--border2);font-size:8px;margin-top:5px;flex-shrink:0}
+.checklist li strong{color:var(--text)}
+
+/* ── BADGE ── */
+.badge{display:inline-flex;align-items:center;font-family:'DM Mono',monospace;font-size:9.5px;padding:3px 10px;border-radius:12px;letter-spacing:.5px;text-transform:uppercase}
+.badge-gold{background:rgba(212,168,48,.12);color:var(--gold);border:1px solid rgba(212,168,48,.3)}
+.badge-green{background:rgba(111,207,96,.12);color:var(--accent);border:1px solid rgba(111,207,96,.3)}
+.badge-blue{background:rgba(74,172,240,.12);color:var(--info);border:1px solid rgba(74,172,240,.3)}
+.badge-purple{background:rgba(160,112,216,.12);color:var(--purple);border:1px solid rgba(160,112,216,.3)}
+.badge-orange{background:rgba(240,128,42,.12);color:var(--warn);border:1px solid rgba(240,128,42,.3)}
+.badge-rose{background:rgba(232,112,154,.12);color:var(--rose);border:1px solid rgba(232,112,154,.3)}
+
+/* ── STAT ROW ── */
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}
+.stat-box{flex:1;min-width:140px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.stat-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;line-height:1;margin-bottom:4px}
+.stat-lab{font-family:'DM Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.val-gold{color:var(--gold)}
+.val-green{color:var(--accent)}
+.val-blue{color:var(--info)}
+.val-purple{color:var(--purple)}
+.val-orange{color:var(--warn)}
+
+/* ── STRUCTURE MAP ── */
+.structure-tree{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin-bottom:24px}
+.tree-root{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.tree-root::before{content:'📁';font-size:18px}
+.tree-section{margin-bottom:12px}
+.tree-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.tree-item:last-child{border-bottom:none}
+.tree-icon{width:22px;text-align:center;flex-shrink:0;margin-top:1px}
+.tree-label{color:var(--text);font-weight:500}
+.tree-sub{color:var(--muted);font-size:12px;margin-top:2px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .cover{padding:48px 24px}
+  .cover h1{font-size:clamp(28px,8vw,48px)}
+  .nav-bar{padding:0 16px}
+  .page{padding:40px 20px}
+  .card-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">BIORAIZ · Festival de Bienestar Patagonia</div>
+  <h1>Guía Maestra: <em>Carpeta de Presentación</em></h1>
+  <p class="cover-sub">Manual operativo con prompts exactos para generar cada sección de la carpeta de presentación del festival — para sponsors, artistas, feriantes, gastronómicos, media, municipio y más.</p>
+  <div class="cover-pills">
+    <span class="pill pill-gold">Sponsors &amp; Marcas</span>
+    <span class="pill pill-g">Artistas</span>
+    <span class="pill pill-b">Media &amp; Prensa</span>
+    <span class="pill pill-p">Municipio</span>
+    <span class="pill pill-o">Gastronómicos</span>
+    <span class="pill pill-r">Feriantes</span>
+  </div>
+  <div class="cover-intro">
+    <strong>Cómo usar esta guía:</strong> cada sección incluye el contexto necesario (qué generar), la estructura recomendada del documento, y los prompts exactos que podés copiar y pegar en Claude o ChatGPT. Seguí el orden — el Bloque Base se genera primero y se reutiliza en todos los demás.
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar" id="mainNav">
+  <a class="nav-item active" onclick="showSection('intro')">Intro</a>
+  <a class="nav-item" onclick="showSection('estructura')">Estructura</a>
+  <a class="nav-item" onclick="showSection('base')">Bloque Base</a>
+  <a class="nav-item" onclick="showSection('audiencias')">Por Audiencia</a>
+  <a class="nav-item" onclick="showSection('visual')">Diseño Visual</a>
+  <a class="nav-item" onclick="showSection('checklist')">Checklist</a>
+</nav>
+
+<!-- INTRO -->
+<div class="page">
+<div class="section active" id="intro">
+
+  <div class="sec-header">
+    <div class="sec-number">00 · Introducción</div>
+    <h2 class="sec-title">¿Qué es una carpeta de presentación?</h2>
+    <p class="sec-desc">Una carpeta de presentación (también llamada media kit, press kit o deck de propuesta) es el documento oficial que BIORAIZ entrega a cada audiencia estratégica. Cada versión tiene el mismo núcleo pero adapta el foco, el lenguaje y los beneficios según quién la lee.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-val val-gold">7</div><div class="stat-lab">Audiencias destino</div></div>
+    <div class="stat-box"><div class="stat-val val-green">1</div><div class="stat-lab">Bloque Base reutilizable</div></div>
+    <div class="stat-box"><div class="stat-val val-blue">30+</div><div class="stat-lab">Prompts listos</div></div>
+    <div class="stat-box"><div class="stat-val val-purple">HTML</div><div class="stat-lab">Formato recomendado</div></div>
+  </div>
+
+  <div class="divider"><span class="divider-label">Principios de la carpeta</span><div class="divider-line"></div></div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-gold">🎯</div><div class="card-title">Un mensaje, una audiencia</div></div>
+      <div class="card-body">Cada versión responde una sola pregunta: "¿qué gana <em>esta persona</em> siendo parte de BIORAIZ?". No es un documento genérico — es una propuesta directa.</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-green">🌱</div><div class="card-title">Identidad consistente</div></div>
+      <div class="card-body">Todos los documentos comparten el tono, la paleta y el espíritu de BIORAIZ: orgánico, premium, patagónico. La presentación visual refuerza la credibilidad del evento.</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-blue">📐</div><div class="card-title">Estructura modular</div></div>
+      <div class="card-body">El Bloque Base se genera una sola vez. Cada carpeta de audiencia importa esos datos y agrega su capa específica. Eficiente y coherente.</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-purple">⚡</div><div class="card-title">Generado con IA + revisado</div></div>
+      <div class="card-body">Los prompts de esta guía generan el 80% del contenido. El 20% restante — datos reales, fotos, cifras confirmadas — lo completás vos antes de enviar.</div>
+    </div>
+  </div>
+
+  <div class="alert alert-gold">
+    <strong>Importante antes de empezar:</strong> Reemplazá todos los valores entre corchetes <code>[así]</code> con datos reales antes de usar cualquier documento generado. Números de ediciones anteriores, fecha confirmada, predio, presupuesto y datos de contacto son los más críticos.
+  </div>
+
+</div>
+
+<!-- ESTRUCTURA -->
+<div class="section" id="estructura">
+
+  <div class="sec-header">
+    <div class="sec-number">01 · Arquitectura</div>
+    <h2 class="sec-title">Estructura de la carpeta completa</h2>
+    <p class="sec-desc">La carpeta de presentación de BIORAIZ se organiza en un Bloque Base + módulos específicos por audiencia. Así podés reutilizar el trabajo central y solo adaptar lo relevante.</p>
+  </div>
+
+  <div class="structure-tree">
+    <div class="tree-root">BIORAIZ · Carpeta de Presentación</div>
+
+    <div class="tree-section">
+      <div class="divider"><span class="divider-label">Bloque Base (común a todos)</span><div class="divider-line"></div></div>
+      <div class="tree-item"><div class="tree-icon">📄</div><div><div class="tree-label">Manifiesto del festival</div><div class="tree-sub">Qué es BIORAIZ, visión, propósito y por qué existe</div></div></div>
+      <div class="tree-item"><div class="tree-icon">📊</div><div><div class="tree-label">Datos del evento</div><div class="tree-sub">Fechas, predio, capacidad, duración, ubicación en Neuquén/Patagonia</div></div></div>
+      <div class="tree-item"><div class="tree-icon">👥</div><div><div class="tree-label">Público objetivo</div><div class="tree-sub">Perfil demográfico, psicográfico y segmentos principales</div></div></div>
+      <div class="tree-item"><div class="tree-icon">🗺</div><div><div class="tree-label">Mapa de zonas y programación</div><div class="tree-sub">Escenarios, feria, gastronomía, zonas experienciales</div></div></div>
+      <div class="tree-item"><div class="tree-icon">🌿</div><div><div class="tree-label">Identidad y valores</div><div class="tree-sub">Paleta, tono, propuesta diferencial frente a otros festivales</div></div></div>
+      <div class="tree-item"><div class="tree-icon">📞</div><div><div class="tree-label">Equipo y contacto</div><div class="tree-sub">Directores por área, emails, redes sociales</div></div></div>
+    </div>
+
+    <div class="tree-section">
+      <div class="divider"><span class="divider-label">Módulos por Audiencia</span><div class="divider-line"></div></div>
+      <div class="tree-item"><div class="tree-icon">💛</div><div><div class="tree-label">Carpeta Sponsors &amp; Marcas</div><div class="tree-sub">Tiers, beneficios, retorno estimado, audiencia, proceso de cierre</div></div></div>
+      <div class="tree-item"><div class="tree-icon">🎵</div><div><div class="tree-label">Carpeta Artistas</div><div class="tree-sub">Propuesta artística, rider, caché, logística, hospitalidad</div></div></div>
+      <div class="tree-item"><div class="tree-icon">🍽</div><div><div class="tree-label">Carpeta Gastronómicos</div><div class="tree-sub">Condiciones, estándares bio, cupos, % de ventas, servicios incluidos</div></div></div>
+      <div class="tree-item"><div class="tree-icon">🛍</div><div><div class="tree-label">Carpeta Feriantes &amp; Emprendedores</div><div class="tree-sub">Tipo de stand, condiciones, selección, costo, perfil buscado</div></div></div>
+      <div class="tree-item"><div class="tree-icon">📰</div><div><div class="tree-label">Carpeta Media &amp; Prensa</div><div class="tree-sub">Cifras, ángulos editoriales, acreditación, imágenes disponibles</div></div></div>
+      <div class="tree-item"><div class="tree-icon">🏛</div><div><div class="tree-label">Carpeta Municipio &amp; Provincia</div><div class="tree-sub">Impacto económico, turismo, empleos, permisos necesarios</div></div></div>
+      <div class="tree-item"><div class="tree-icon">🎓</div><div><div class="tree-label">Carpeta Speakers &amp; Facilitadores</div><div class="tree-sub">Escenario, audiencia, propuesta de contenido, condiciones</div></div></div>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>Formato recomendado:</strong> HTML interactivo (como los documentos de tu carpeta actual), con navegación por secciones. Es más fácil de enviar por link, no pesa como PDF, y podés actualizarlo en cualquier momento. Para impresión o envío formal, convertí a PDF con el plugin de Chrome.
+  </div>
+
+</div>
+
+<!-- BLOQUE BASE -->
+<div class="section" id="base">
+
+  <div class="sec-header">
+    <div class="sec-number">02 · Bloque Base</div>
+    <h2 class="sec-title">Generar el núcleo de la carpeta</h2>
+    <p class="sec-desc">Este es el primer documento que generás. Su contenido se reutiliza en todas las carpetas de audiencia. Generalo en partes — cada prompt de abajo corresponde a una sección específica.</p>
+  </div>
+
+  <div class="divider"><span class="divider-label">Paso 1 · Manifiesto</span><div class="divider-line"></div></div>
+  <div class="step-list">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">Manifiesto del Festival</div>
+        <div class="step-desc">El texto de apertura que define BIORAIZ en 3 párrafos potentes. Funciona como primera página de todas las carpetas. Debe tener vocación, diferenciación y emoción.</div>
+        <div class="prompt-block">
+          <div class="prompt-label">Prompt · Manifiesto</div>
+          <div class="prompt-text">Sos redactor creativo senior especializado en festivales de cultura y bienestar en Latinoamérica. Escribí el manifiesto oficial de BIORAIZ, un festival de bienestar de gran formato (50.000-100.000 asistentes) ubicado en Neuquén, Patagonia Argentina.
+
+El manifiesto debe:
+- Tener 3 párrafos de 4-5 líneas cada uno
+- Párrafo 1: el propósito y el porqué del festival (conectar cuerpo, mente y naturaleza en la Patagonia)
+- Párrafo 2: lo que nos diferencia de otros festivales (no somos Lollapalooza con stand de yoga, ni feria orgánica con DJ — somos el primer festival bio de escala real en la Patagonia)
+- Párrafo 3: la promesa al asistente, al artista, al emprendedor y al territorio
+
+Tono: poético pero con autoridad. Inspiracional sin ser vago. Evitá clichés del wellness. Usá imágenes de la Patagonia (viento, raíces, volcanes, luz de verano, comunidad).
+
+Formato de salida: texto plano, sin títulos ni bullets. Solo 3 párrafos separados.</div>
+          <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">Datos Maestros del Evento</div>
+        <div class="step-desc">Ficha técnica completa del festival. Se usa como referencia en todas las carpetas. Completá los datos reales en los corchetes antes de correr el prompt.</div>
+        <div class="prompt-block">
+          <div class="prompt-label">Prompt · Ficha Técnica</div>
+          <div class="prompt-text">Sos un productor ejecutivo de eventos. Generá la ficha técnica oficial de BIORAIZ para incluir en carpetas de presentación. Usá estos datos reales:
+
+- Nombre completo: BIORAIZ · Bio & Wellness Festival Patagonia
+- Fecha: [1er fin de semana de noviembre / completar con fecha confirmada]
+- Duración: 3 días (viernes a domingo)
+- Predio: [nombre del predio], Neuquén, Patagonia Argentina
+- Capacidad: 50.000 a 100.000 asistentes total
+- Escenarios: 3 escenarios principales (El Claro, El Monte, El Claro Chico)
+- Feria de emprendedores: 80-120 stands seleccionados
+- Zona gastronómica: 25-35 puestos de cocina bio/natural
+- Actividades: yoga, meditación, talleres, charlas, activaciones de marca
+- Edición: [primera edición / completar]
+- Organización: [nombre del equipo / organización]
+
+Presentá esta información como una ficha visual con categorías claras. Tono profesional y conciso. Incluí también 3 números impacto: proyección de asistentes, proyección de artistas confirmados, proyección de emprendedores participantes.
+
+Formato: texto estructurado con etiquetas/categorías. Sin HTML.</div>
+          <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">Perfil del Público Objetivo</div>
+        <div class="step-desc">Descripción del asistente tipo. Crítica para sponsors y media — necesitan saber a quién llega el festival.</div>
+        <div class="prompt-block">
+          <div class="prompt-label">Prompt · Público Objetivo</div>
+          <div class="prompt-text">Sos estratega de marketing de festivales. Redactá el perfil del público objetivo de BIORAIZ para incluir en una carpeta de presentación profesional.
+
+El festival tiene estos segmentos principales:
+1. Wellness Seekers: 25-40 años, urbanos, profesionales con ingresos medios-altos
+2. Familias Conscientes: 30-45 años con hijos, consumo responsable
+3. Emprendedores Bio: 25-45 años, productores, marcas sustentables, makers
+4. Jóvenes Exploradores: 18-28 años, primera experiencia de este tipo
+5. Turistas de Bienestar: visitantes de otras provincias y el exterior
+
+Datos demográficos generales:
+- Core de edad: 25-45 años
+- Género: 60% femenino / 40% masculino
+- NSE: medio-alto y alto
+- Origen: 60% local/regional, 40% nacional e internacional
+
+Para cada segmento describí: perfil, motivación para asistir, canal de captación principal.
+Luego escribí un párrafo de síntesis sobre el perfil psicográfico compartido.
+
+Tono: profesional, orientado a marcas y anunciantes. Sin jerga de marketing genérica.</div>
+          <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <div class="step-title">Propuesta de Valor Diferencial</div>
+        <div class="step-desc">Por qué BIORAIZ es único. Un texto de una página que responde "¿por qué este festival y no otro?". Se usa en todas las carpetas.</div>
+        <div class="prompt-block">
+          <div class="prompt-label">Prompt · Diferenciación</div>
+          <div class="prompt-text">Sos un consultor de posicionamiento de eventos culturales en Latinoamérica. Escribí la sección "¿Por qué BIORAIZ?" para una carpeta de presentación del festival.
+
+El argumento central: BIORAIZ ocupa un espacio que no existe en Argentina — el festival de gran formato orientado al bienestar integral, con estándares de producción de primer nivel, anclado en la identidad patagónica.
+
+Desarrollá estos cuatro argumentos de diferenciación:
+1. Escala real: 50K-100K asistentes en formato bio (no existe en Argentina)
+2. Territorio único: Patagonia como propuesta de valor — luz natural 15+ horas en verano, paisaje volcánico, identidad territorial
+3. Comunidad protagonista: los emprendedores, productores y facilitadores locales son parte del evento, no proveedores
+4. Producción premium + valores: no sacrificamos calidad por "sustentabilidad estética"
+
+Formato: 4 bloques de texto de 3-4 líneas cada uno, con un título corto por bloque. Más un párrafo de cierre que sintetice la oportunidad para quien participa.
+
+Tono: seguro, con autoridad. Sin hipérbole. Sin clichés.</div>
+          <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <div class="step-title">Mapa de Zonas y Experiencias</div>
+        <div class="step-desc">Descripción de cada zona del festival para que los potenciales participantes entiendan la experiencia completa.</div>
+        <div class="prompt-block">
+          <div class="prompt-label">Prompt · Mapa de Experiencias</div>
+          <div class="prompt-text">Sos el director de programación de BIORAIZ. Escribí la descripción narrativa del mapa de experiencias del festival para la carpeta de presentación.
+
+Zonas a describir:
+- El Claro: escenario principal, shows nocturnos y headliners
+- El Monte: escenario de bienestar, yoga, meditación, charlas al aire libre
+- El Claro Chico: escenario íntimo, artistas emergentes y activaciones
+- Feria de Emprendedores: 80-120 stands de productos bio, artesanías, economía circular
+- Zona Gastronómica: cocina natural y de autor, food trucks bio
+- Zona Familiar: actividades para niños, crianza consciente
+- Zona Agua: hidratación libre de plástico, estaciones de agua filtrada
+- Zona Chill Out: descanso activo, hamacas, pufs, silencio opcional
+- Zona Silencio: meditación, sonidos de naturaleza, sin amplificación
+
+Para cada zona: 2-3 líneas que describan la experiencia sensorial + quién la disfruta más.
+Luego una frase de cierre que unifique todas las zonas bajo el concepto de BIORAIZ.
+
+Tono: evocador pero informativo. Que quien lea pueda imaginarse estar ahí.</div>
+          <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- AUDIENCIAS -->
+<div class="section" id="audiencias">
+
+  <div class="sec-header">
+    <div class="sec-number">03 · Por Audiencia</div>
+    <h2 class="sec-title">Carpetas específicas por destinatario</h2>
+    <p class="sec-desc">Seleccioná la audiencia para ver los prompts específicos de cada versión de la carpeta. Siempre generá primero el Bloque Base — estas secciones se construyen sobre él.</p>
+  </div>
+
+  <div class="audience-tabs">
+    <div class="aud-tab active-gold" onclick="showAudience('sponsors', this)">💛 Sponsors</div>
+    <div class="aud-tab" onclick="showAudience('artistas', this)">🎵 Artistas</div>
+    <div class="aud-tab" onclick="showAudience('gastro', this)">🍽 Gastronómicos</div>
+    <div class="aud-tab" onclick="showAudience('feriantes', this)">🛍 Feriantes</div>
+    <div class="aud-tab" onclick="showAudience('media', this)">📰 Media</div>
+    <div class="aud-tab" onclick="showAudience('municipio', this)">🏛 Municipio</div>
+    <div class="aud-tab" onclick="showAudience('speakers', this)">🎓 Speakers</div>
+  </div>
+
+  <!-- SPONSORS -->
+  <div class="audience-panel visible" id="aud-sponsors">
+    <div class="alert alert-gold"><strong>Objetivo de esta carpeta:</strong> Convertir marcas en sponsors. El lenguaje es de inversión y retorno, no de donación. Mostrá ROI, audiencia calificada y exclusividad.</div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 1 · Propuesta de Sponsorship — Presentación</div>
+      <div class="prompt-text">Sos un experto en venta de sponsorships para festivales de cultura y bienestar en Latinoamérica. Redactá la sección de apertura del deck de sponsorship de BIORAIZ.
+
+Esta sección debe responder: "¿Por qué sponsorear BIORAIZ?"
+
+Argumentos a desarrollar:
+- Acceso a 50K-100K personas con alto poder adquisitivo, valores conscientes y alta propensión a recomendar marcas
+- Público millennial-GenZ adulto con NSE medio-alto: el segmento más difícil de impactar en medios tradicionales
+- Contexto festival = receptividad emocional máxima (las marcas no interrumpen, acompañan la experiencia)
+- Patagonia como halo de credibilidad: territorio asociado a calidad, naturaleza y autenticidad
+- Festival bio = alineación de valores para marcas con agenda de sustentabilidad
+
+Formato: 5 argumentos con título corto + desarrollo de 2-3 líneas cada uno. Más un párrafo de cierre con llamada a la acción suave.
+
+Tono: ejecutivo pero con alma. Para un director de marketing que ya vio muchos decks.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 2 · Tiers de Sponsorship</div>
+      <div class="prompt-text">Sos el director comercial de BIORAIZ. Creá la estructura de tiers de sponsorship del festival con sus beneficios detallados.
+
+Diseñá 4 niveles:
+- RAÍZ DORADA (Sponsor Titulante) — máxima exclusividad, naming de un escenario
+- RAÍZ MAYOR (Sponsor Principal) — 2 o 3 marcas, alta visibilidad
+- RAÍZ MEDIA (Sponsor Oficial) — 5-8 marcas por categoría
+- RAÍZ VERDE (Sponsor Colaborador) — marcas emergentes, emprendimientos premium
+
+Para cada tier incluí:
+1. Precio sugerido en USD (poner rango orientativo, aclarar que es negociable)
+2. Visibilidad: cartelería, escenario, comunicación, digital
+3. Activación: espacio propio en el festival, sampling, experiencias de marca
+4. Medios: menciones en prensa, redes, email a base de datos
+5. Hospitalidad: entradas VIP, acceso backstage, meet & greet
+6. Exclusividad de categoría (sí/no)
+
+Tono: claro, sin ambigüedades. Las marcas necesitan saber exactamente qué reciben.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 3 · Casos de Activación Sugerida por Rubro</div>
+      <div class="prompt-text">Sos un strategist de activaciones de marca en festivales. Generá ideas de activación específicas para sponsors de BIORAIZ, organizadas por rubro.
+
+Rubros a cubrir:
+- Marcas de alimentos y bebidas saludables
+- Bancos y fintech
+- Marcas de ropa y accesorios
+- Automotrices (movilidad sustentable)
+- Tecnología y apps de bienestar
+- Hoteles y turismo
+- Marcas de cosmética natural
+
+Para cada rubro: 2-3 ideas de activación concreta (no genéricas) que tengan sentido en el contexto del festival bio. Que conecten con los valores de BIORAIZ (naturaleza, bienestar, comunidad, sustentabilidad).
+
+Tono: creativo y específico. Que quien lo lea piense "eso lo haríamos nosotros".</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 4 · Proceso de Cierre y Próximos Pasos</div>
+      <div class="prompt-text">Redactá la sección final del deck de sponsorship de BIORAIZ: el proceso de cierre y los próximos pasos para una marca interesada.
+
+Incluí:
+1. Proceso en 4 pasos: (1) reunión de alineación, (2) propuesta personalizada, (3) contrato, (4) kick-off de producción
+2. Calendario de decisión: cuándo cierran los tiers (por ejemplo: Raíz Dorada cierra 8 meses antes, Raíz Verde cierra 3 meses antes)
+3. Qué aporta BIORAIZ: creatividad para la activación, producción en sitio, reporte post-evento con métricas
+4. CTA final con datos de contacto: [nombre del director comercial], [email], [teléfono]
+
+Tono: claro, sin presión, con sentido de urgencia genuino (cupos reales limitados por categoría).</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+  </div>
+
+  <!-- ARTISTAS -->
+  <div class="audience-panel" id="aud-artistas">
+    <div class="alert alert-ok"><strong>Objetivo de esta carpeta:</strong> Convencer a artistas y managers de que BIORAIZ es el escenario ideal — no solo por condiciones económicas sino por el contexto, el público y la experiencia única de tocar en la Patagonia.</div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 1 · Por qué tocar en BIORAIZ</div>
+      <div class="prompt-text">Sos el director artístico de BIORAIZ. Redactá la carta de apertura de la carpeta para artistas del festival.
+
+El argumento central: BIORAIZ no es "un festival más" — es tocar para una de las audiencias más atentas, conscientes y agradecidas de Argentina, en uno de los paisajes más únicos del mundo.
+
+Desarrollá estos puntos:
+- El público: quiénes son, cómo escuchan, cómo interactúan con los artistas
+- El contexto: Patagonia en verano, 15+ horas de luz natural, sonido al aire libre con la cordillera de fondo
+- La escena: BIORAIZ como plataforma de artistas con valores — no solo técnica sino mensaje
+- La comunidad: los artistas de BIORAIZ se convierten en embajadores de una nueva escena
+- La producción: rider cumplido al 100%, equipo técnico profesional, hospitalidad de primer nivel
+
+Formato: carta directa, en primera persona del director artístico. 4-5 párrafos. Sin bullet points.
+
+Tono: genuino, apasionado, sin venderse demasiado. De artista a artista.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 2 · Condiciones Técnicas y Hospitalidad</div>
+      <div class="prompt-text">Sos el director técnico y de producción de BIORAIZ. Redactá la sección de condiciones técnicas y hospitalidad para la carpeta de artistas.
+
+Secciones a desarrollar:
+
+PRODUCCIÓN TÉCNICA:
+- Escenario Principal "El Claro": dimensiones, sistema de sonido (line array profesional), iluminación, pantalla LED backdrop, backline disponible
+- Escenario "El Monte": formato acústico / semiacústico, capacidad aforo, carácter de programación (bienestar, ambiental, folk)
+- Proceso de rider: cómo se recibe, qué se puede customizar, plazos
+
+HOSPITALIDAD:
+- Traslado desde/hacia el aeropuerto de Neuquén
+- Alojamiento: tipo, cantidad de noches, acompañantes
+- Catering: menu especial bio disponible, horarios
+- Espacio de artistas: backstage privado, wifi, lounge, espacio de calma
+- Entradas para equipo y acompañantes
+
+Tono: profesional y concreto. Los managers necesitan certezas.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 3 · Proceso de Confirmación</div>
+      <div class="prompt-text">Redactá el proceso de confirmación y contratación de artistas para BIORAIZ.
+
+Incluí:
+1. Cómo enviar propuesta artística: formato, qué incluir (EPK, rider, links)
+2. Proceso de evaluación: quién decide, en cuánto tiempo responden
+3. Tipos de contrato disponibles: caché fijo, puerta, combo; ventana de exclusividad
+4. Contrato de hospitalidad: qué firma el artista o management
+5. Timeline: cuándo se confirman artistas por escenario (headliners M-9, programación general M-6)
+6. Contacto directo: [nombre del director artístico], [email]
+
+Tono: claro y profesional. Sin burocracia innecesaria.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+  </div>
+
+  <!-- GASTRONÓMICOS -->
+  <div class="audience-panel" id="aud-gastro">
+    <div class="alert alert-warn"><strong>Objetivo de esta carpeta:</strong> Atraer a los mejores puestos de cocina bio/natural de la región y del país. El foco está en la selección rigurosa, las condiciones claras y el perfil del público que va a consumir.</div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 1 · Convocatoria Gastronómica</div>
+      <div class="prompt-text">Sos el coordinador gastronómico de BIORAIZ. Redactá la propuesta para la carpeta de presentación destinada a puestos gastronómicos y foodtrucks.
+
+BIORAIZ busca 25-35 puestos de cocina bio, natural, de autor o de autor sostenible para el área gastronómica del festival.
+
+Desarrollá:
+1. POR QUÉ ESTAR EN BIORAIZ (gastro): 
+   - 50K-100K asistentes con disposición real a pagar por comida de calidad
+   - Público informado sobre alimentación consciente (no es solo pasar hambre)
+   - Visibilidad de marca frente a la audiencia más receptiva del país
+   - Oportunidad de conectar con emprendedores, distribuidores y medios gastronómicos
+
+2. ESTÁNDARES BIO DE BIORAIZ:
+   - Ingredientes de origen trazable o producción propia
+   - Sin plástico de un solo uso (el festival provee vajilla compostable)
+   - Propuesta de carta clara con opciones veganas/vegetarianas
+   - Sin ultraprocesados ni transgénicos
+
+3. CONDICIONES OPERATIVAS:
+   - Qué provee el festival: espacio, conexión eléctrica, agua, estructura base
+   - Qué trae el puesto: equipamiento propio, cartelería, staff
+   - Sistema de pago: tarjeta unificada del festival + comisión [X%]
+   - Horarios de operación y montaje/desmontaje
+
+Tono: exigente pero atractivo. BIORAIZ no acepta cualquier puesto — y eso es un diferencial para los elegidos.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 2 · Proceso de Selección y Aplicación</div>
+      <div class="prompt-text">Redactá el proceso de selección de puestos gastronómicos para BIORAIZ.
+
+Incluí:
+1. Criterios de selección: propuesta de carta, estándares bio, presentación visual del stand, trayectoria, precio promedio de platos
+2. Formulario de aplicación: qué debe presentar cada interesado (carta, menú tentativo, fotos del stand, redes, referencias)
+3. Timeline: fecha de apertura de convocatoria, cierre, notificación de seleccionados
+4. Cupos disponibles: total de puestos, categorías (cocina caliente, repostería, bebidas, etc.)
+5. Costo de participación: [a definir] o arancel base + porcentaje de ventas
+6. Contacto: [nombre], [email]
+
+Tono: profesional. Que el interesado entienda que hay un proceso serio detrás.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+  </div>
+
+  <!-- FERIANTES -->
+  <div class="audience-panel" id="aud-feriantes">
+    <div class="alert alert-info"><strong>Objetivo de esta carpeta:</strong> Reclutar a los mejores emprendedores, artesanos y marcas bio para la feria. La selección es curada — eso es un valor para quienes son elegidos.</div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 1 · Propuesta para Feriantes y Emprendedores</div>
+      <div class="prompt-text">Sos el coordinador de la Feria de Emprendedores de BIORAIZ. Redactá la propuesta para la carpeta de feriantes y emprendedores sustentables.
+
+La feria de BIORAIZ tiene 80-120 stands seleccionados. No es una feria abierta — es una curaduría de lo mejor del ecosistema bio, sustentable y consciente de Argentina.
+
+Desarrollá:
+1. POR QUÉ LA FERIA DE BIORAIZ ES DIFERENTE:
+   - Curación real: no cualquiera entra — los elegidos comparten un perfil de valores
+   - Acceso directo a 50K-100K consumidores calificados en 3 días
+   - Networking con otros emprendedores, distribuidores, inversores y medios
+   - Visibilidad editorial: el festival documenta la feria en sus redes (UGC + cobertura propia)
+
+2. PERFIL DEL STAND BUSCADO (categorías):
+   - Alimentación y bebidas naturales / suplementos
+   - Cosmética y cuidado personal natural
+   - Indumentaria y accesorios sustentables
+   - Arte, diseño y artesanía consciente
+   - Tecnología y herramientas de bienestar
+   - Libros, editoriales y contenido consciente
+   - Servicios de bienestar (masajes express, lecturas, etc.)
+
+3. QUÉ INCLUYE EL STAND:
+   - Módulo de [X m²], estructura base de madera (estilo BIORAIZ)
+   - Conexión eléctrica
+   - Acreditaciones para [N] personas del stand
+   - Mención en comunicación oficial del festival
+
+Tono: inspirador y selectivo. Que el emprendedor sienta que ser parte de BIORAIZ es un logro, no una compra de espacio.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 2 · Reglamento y Condiciones de Participación</div>
+      <div class="prompt-text">Redactá el reglamento de participación de la Feria de Emprendedores de BIORAIZ.
+
+Incluí:
+1. Estándares de sustentabilidad obligatorios (sin plástico de un solo uso, packaging responsable, etc.)
+2. Estándares de presentación del stand (paleta de colores BIORAIZ disponible para unificar, tipos de estructura permitidos)
+3. Horarios de montaje, operación y desmontaje
+4. Costo de participación: [rango por tamaño de stand]
+5. Qué está prohibido en la feria (productos con ingredientes no trazables, pilas sin destino, etc.)
+6. Proceso de selección: formulario + entrevista + confirmación
+7. Política de cancelación
+8. Contacto de coordinación: [nombre], [email]
+
+Tono: claro y directo. Que no haya ambigüedades sobre lo que se espera.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+  </div>
+
+  <!-- MEDIA -->
+  <div class="audience-panel" id="aud-media">
+    <div class="alert alert-info"><strong>Objetivo de esta carpeta:</strong> Facilitar la cobertura periodística y dar a medios y periodistas todo lo que necesitan para publicar con mínimo esfuerzo. El foco es en la noticiabilidad del evento.</div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 1 · Press Release Oficial</div>
+      <div class="prompt-text">Sos el director de comunicaciones de BIORAIZ. Redactá el press release oficial del festival para medios y periodistas.
+
+Incluí:
+- Titular impactante (máximo 12 palabras)
+- Bajada (2-3 líneas que amplían el titular)
+- Primer párrafo: qué es BIORAIZ, cuándo, dónde, para quién
+- Segundo párrafo: la novedad y por qué es noticia (primer festival bio de escala en la Patagonia)
+- Tercer párrafo: cifras de impacto (capacidad, artistas, emprendedores, turismo proyectado)
+- Cuarto párrafo: cita del director general del festival [nombre]: "[cita que suene auténtica sobre la visión]"
+- Quinto párrafo: próximos pasos (cuándo se anuncian artistas, cuándo abren entradas)
+- Boilerplate: 3 líneas sobre BIORAIZ como organización
+- Contacto de prensa: [nombre], [email], [teléfono]
+
+Formato: press release estándar, sin markdown pesado. Subtítulos de sección si es necesario.
+Tono: periodístico pero con carácter. No corporativo.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 2 · Ángulos Editoriales Sugeridos</div>
+      <div class="prompt-text">Sos el jefe de prensa de BIORAIZ. Generá 8 ángulos editoriales concretos para ofrecer a periodistas de distintos medios sobre el festival.
+
+Para cada ángulo incluí:
+- Título sugerido del artículo
+- Tipo de medio más adecuado (turismo, cultura, gastronomía, emprendimiento, lifestyle, etc.)
+- Por qué es noticia ahora
+- Qué fuentes o datos tiene BIORAIZ para respaldar la nota
+
+Ángulos a cubrir:
+1. El turismo de bienestar como nuevo motor económico de la Patagonia
+2. La feria de emprendedores bio más grande de Argentina
+3. Música + bienestar: el festival que prueba que "saludable" puede ser espectacular
+4. Impacto económico local: cuánto genera un festival de 100K personas en Neuquén
+5. El perfil del nuevo festivalero argentino (wellness seeker, consciente, premium)
+6. La gastronomía bio en escala: 30 puestos, cero plástico, cocina de autor
+7. Patagonia como destino de turismo de experiencias (más allá del trekking)
+8. Sustentabilidad real: cómo un festival de 100K personas puede tener huella mínima
+
+Tono: servicial. Esto es material de trabajo para el periodista, no marketing.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 3 · Condiciones de Acreditación</div>
+      <div class="prompt-text">Redactá la sección de acreditación de prensa de BIORAIZ para la carpeta de medios.
+
+Incluí:
+1. Tipos de acreditación disponibles:
+   - Prensa general (cobertura del evento)
+   - Fotógrafos y camarógrafos
+   - Medios digitales / creadores de contenido
+   - Radio y podcasters
+2. Qué incluye cada acreditación: acceso, zonas permitidas, servicios (sala de prensa, wifi, catering prensa)
+3. Qué se espera del medio acreditado: mención del festival, fecha de publicación, envío de cobertura
+4. Proceso de solicitud: formulario, tiempos, confirmación
+5. Zona de prensa en el festival: ubicación, servicios disponibles
+6. Contacto de acreditación: [nombre], [email], [fecha límite de solicitud]
+
+Tono: claro, sin burocracia. Los periodistas valoran la eficiencia.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+  </div>
+
+  <!-- MUNICIPIO -->
+  <div class="audience-panel" id="aud-municipio">
+    <div class="alert alert-gold"><strong>Objetivo de esta carpeta:</strong> Obtener apoyo institucional y los permisos necesarios. El lenguaje es de impacto económico, turístico y social para la comunidad. No es una carpeta de marketing — es una propuesta de valor para el territorio.</div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 1 · Propuesta Institucional para el Municipio</div>
+      <div class="prompt-text">Sos el director general de BIORAIZ presentando el festival ante autoridades municipales y provinciales de Neuquén. Redactá la carta de presentación institucional del festival.
+
+Argumentos a desarrollar:
+1. IMPACTO ECONÓMICO DIRECTO:
+   - Estimación de turistas que genera el evento (proyección conservadora: 40% de asistentes de fuera de Neuquén)
+   - Gasto promedio estimado por turista en alojamiento, gastronomía y actividades locales
+   - Empleos directos durante el montaje, el evento y el desmontaje
+   - Contratos con proveedores locales (catering, servicios, transporte, seguridad)
+
+2. IMPACTO EN EL POSICIONAMIENTO DE NEUQUÉN:
+   - Neuquén como destino de turismo de bienestar y experiencias (no solo vino y petróleo)
+   - Cobertura de medios nacionales e internacionales durante el festival
+   - Generación de contenido audiovisual de Patagonia que se distribuye en redes
+
+3. IMPACTO SOCIAL Y COMUNITARIO:
+   - Plataforma para emprendedores y productores locales
+   - Formación: talleres, charlas y actividades educativas de acceso libre
+   - Sostenibilidad: política de residuo cero, consumo de agua responsable
+
+4. LO QUE NECESITAMOS DEL MUNICIPIO:
+   - Apoyo en gestión de permisos (mencionar los específicos)
+   - Acceso a infraestructura de servicios (electricidad, agua, accesos)
+   - Comunicación conjunta hacia turistas
+
+Tono: institucional, respetuoso, con datos. Sin hipérboles. Para un intendente o ministro de turismo.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 2 · Plan de Permisos y Coordinación Institucional</div>
+      <div class="prompt-text">Redactá la sección de permisos y coordinación institucional de la carpeta para el municipio/provincia.
+
+Estructurá la información en dos partes:
+
+PARTE 1 — PERMISOS REQUERIDOS (lista):
+- Habilitación del predio para evento masivo
+- Permiso de instalación de escenarios y estructuras temporarias
+- Autorización de sistema de sonido (horarios y decibeles)
+- Coordinación con Bomberos y Defensa Civil
+- Protocolo con SAME / emergencias médicas
+- Habilitación de puestos gastronómicos temporarios
+- Circulación y corte de tránsito si aplica
+- Plan de residuos y aprobación ambiental
+
+PARTE 2 — PROPUESTA DE COLABORACIÓN CONJUNTA:
+- BIORAIZ como evento de marca ciudad/provincia
+- Co-branding opcional: "Neuquén presenta BIORAIZ"
+- Participación del municipio en la feria (stand informativo turístico)
+- Comunicación conjunta en redes y medios
+
+Tono: técnico y colaborativo. El municipio no es un obstáculo — es un socio estratégico.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+  </div>
+
+  <!-- SPEAKERS -->
+  <div class="audience-panel" id="aud-speakers">
+    <div class="alert alert-ok"><strong>Objetivo de esta carpeta:</strong> Atraer a speakers, facilitadores y referentes del mundo wellness, nutrición, meditación, economía circular y bienestar integral para el escenario de charlas y talleres.</div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Prompt 1 · Propuesta para Speakers y Facilitadores</div>
+      <div class="prompt-text">Sos el director de programación de contenidos de BIORAIZ. Redactá la propuesta para speakers, facilitadores y referentes del mundo del bienestar.
+
+Desarrollá:
+1. POR QUÉ DAR UNA CHARLA EN BIORAIZ:
+   - Audiencia de 500-3000 personas por charla (escenario "El Monte", al aire libre)
+   - Público que ya está convencido: no necesitás vender la idea del bienestar, podés ir al siguiente nivel
+   - Plataforma de difusión: el festival graba y comparte el contenido
+   - Comunidad: conexión con otros referentes, artistas y emprendedores del ecosistema
+
+2. EJES TEMÁTICOS BUSCADOS:
+   - Bienestar integral (física, mental, espiritual)
+   - Alimentación consciente y nutrición real
+   - Economía circular y emprendimiento sustentable
+   - Crianza consciente y familia
+   - Psicología positiva y manejo del estrés
+   - Espiritualidad no dogmática
+   - Ecología y relación con la naturaleza
+
+3. FORMATOS DISPONIBLES:
+   - Charla magistral (30-50 minutos)
+   - Panel de conversación (con moderador)
+   - Taller experiencial (1-2 horas, cupos limitados)
+   - Masterclass matutina (formato íntimo, 8am, 30 personas)
+
+4. CONDICIONES:
+   - Honorarios: [a definir por perfil] o sistema de canje
+   - Hospitalidad incluida: traslado + alojamiento + acreditación
+   - Grabación y distribución del contenido con crédito completo
+
+Tono: de par a par. Hablando desde la comunidad.</div>
+      <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- VISUAL -->
+<div class="section" id="visual">
+
+  <div class="sec-header">
+    <div class="sec-number">04 · Diseño Visual</div>
+    <h2 class="sec-title">Generar el documento HTML final</h2>
+    <p class="sec-desc">Con el contenido generado en los pasos anteriores, usá estos prompts para que la IA ensamble todo en un documento HTML interactivo con el estilo visual de BIORAIZ.</p>
+  </div>
+
+  <div class="divider"><span class="divider-label">Prompt maestro de ensamblado</span><div class="divider-line"></div></div>
+
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt · Documento HTML Completo (Sponsors como ejemplo)</div>
+    <div class="prompt-text">Sos un desarrollador frontend especializado en documentos interactivos para festivales y eventos culturales. Creá un documento HTML completo para la carpeta de sponsorship de BIORAIZ.
+
+IDENTIDAD VISUAL BIORAIZ:
+- Paleta: fondo #0d1410 (verde oscuro casi negro), superficie #131a15, texto #e8ede4, acento verde #6fcf60, dorado #d4a830, azul info #4aacf0, naranja warn #f0802a
+- Fuentes: Playfair Display (serif, títulos), DM Sans (cuerpo), DM Mono (etiquetas, datos técnicos)
+- Estilo: dark mode, orgánico-premium, minimal pero con carácter — como un festival boutique de nivel internacional
+
+ESTRUCTURA DEL DOCUMENTO:
+1. Cover page: nombre del festival, título de la sección, pills con datos clave, párrafo intro
+2. Navegación sticky con secciones (igual que los documentos del plan maestro)
+3. Secciones con animación fadeIn al cambiar
+4. Cada sección tiene: número de sección en monospace, título en serif, descripción en muted
+
+CONTENIDO A INCLUIR (pegá aquí el contenido generado en los pasos anteriores):
+[PEGAR AQUÍ: Manifiesto del festival]
+[PEGAR AQUÍ: Perfil del público]
+[PEGAR AQUÍ: Propuesta de sponsorship]
+[PEGAR AQUÍ: Tiers y beneficios]
+[PEGAR AQUÍ: Casos de activación]
+[PEGAR AQUÍ: Proceso de cierre]
+
+ELEMENTOS UI REQUERIDOS:
+- Tablas de tiers con color por nivel (dorado, plata, verde, azul)
+- Cajas de estadísticas (números grandes + label en monospace)
+- Alert boxes con borde izquierdo de color para destacar info clave
+- Dividers con etiqueta entre secciones
+
+Entregá el HTML completo, funcional, con CSS inline en &lt;style&gt; y JS en &lt;script&gt; al final del body.</div>
+    <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+  </div>
+
+  <div class="divider"><span class="divider-label">Prompt de portada visual</span><div class="divider-line"></div></div>
+
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt · Portada de Alto Impacto</div>
+    <div class="prompt-text">Creá solo la sección cover del documento HTML para BIORAIZ. Debe ser visualmente impactante — ocupa 100% del viewport antes de que el usuario haga scroll.
+
+Elementos obligatorios:
+- Fondo: degradado oscuro verde bosque (de #060e08 a #1a2e14)
+- Efecto de partículas sutiles o patrón de raíces SVG animado con opacidad muy baja (como marca de agua)
+- Eyebrow: "BIORAIZ · FESTIVAL DE BIENESTAR PATAGONIA" en DM Mono, uppercase, verde acento
+- Título principal en Playfair Display, tamaño grande con palabra clave en itálica verde
+- Subtitle descriptivo en 2 líneas
+- Pills con datos del evento: fecha, capacidad, duración
+- Caja de intro con borde dorado
+- Sin imágenes externas (solo CSS puro)
+
+El resultado debe verse como la portada de un documento oficial de un festival de primer nivel mundial.
+Entregá solo el HTML de la sección .cover con su CSS incluido.</div>
+    <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+  </div>
+
+  <div class="divider"><span class="divider-label">Prompt de conversión a PDF</span><div class="divider-line"></div></div>
+
+  <div class="alert alert-info">
+    <strong>Para convertir a PDF:</strong> Abrí el HTML en Chrome → menú ⋮ → Imprimir → Destino: "Guardar como PDF" → Configuración: Sin márgenes, escala 100%, habilitar gráficos de fondo. Para mejor resultado en A4, agregá <code>@media print</code> al CSS con los ajustes de página.
+  </div>
+
+  <div class="prompt-block">
+    <div class="prompt-label">Prompt · Optimización para Impresión/PDF</div>
+    <div class="prompt-text">Al documento HTML de BIORAIZ existente, agregá los estilos de impresión necesarios para que genere un PDF de alta calidad al imprimir desde Chrome.
+
+Requerimientos:
+- Cada sección principal comienza en página nueva (@page break)
+- La cover ocupa exactamente una hoja A4 o carta
+- Fuentes se mantienen (Playfair + DM Sans)
+- Los fondos oscuros se imprimen correctamente (-webkit-print-color-adjust: exact)
+- Las tablas no se cortan en mitad de página
+- La navegación sticky no aparece en el PDF
+- Márgenes de página: 0 en cover, 15mm en resto
+- El tamaño de texto aumenta ligeramente para legibilidad impresa (body 15px en print)
+
+Entregá solo el bloque &lt;style&gt; @media print{} listo para agregar al documento.</div>
+    <button class="prompt-copy" onclick="copyPrompt(this)">Copiar</button>
+  </div>
+
+</div>
+
+<!-- CHECKLIST -->
+<div class="section" id="checklist">
+
+  <div class="sec-header">
+    <div class="sec-number">05 · Checklist</div>
+    <h2 class="sec-title">Antes de enviar cada carpeta</h2>
+    <p class="sec-desc">Una carpeta de presentación incompleta hace más daño que no enviarla. Revisá estos puntos antes de distribuir cualquier versión.</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-gold">📋</div><div class="card-title">Contenido</div></div>
+      <ul class="checklist">
+        <li><strong>Datos reales</strong> — sin corchetes [así] en el documento final</li>
+        <li><strong>Fecha confirmada</strong> — no poner "a confirmar"</li>
+        <li><strong>Nombre del predio</strong> — no solo "Neuquén"</li>
+        <li><strong>Contacto real</strong> — email y teléfono funcional</li>
+        <li><strong>Tiers con precios</strong> — al menos orientativos para sponsors</li>
+        <li><strong>Revisión ortográfica</strong> — pasar Grammarly o similar</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-green">🎨</div><div class="card-title">Visual</div></div>
+      <ul class="checklist">
+        <li><strong>Logo de BIORAIZ</strong> incluido en la portada</li>
+        <li><strong>Paleta consistente</strong> — verde bosque + dorado en todas las secciones</li>
+        <li><strong>Fuentes cargan</strong> — testar sin internet (usar fonts locales como fallback)</li>
+        <li><strong>Mobile legible</strong> — abrir en teléfono antes de enviar</li>
+        <li><strong>Sin imágenes rotas</strong> — todas las rutas funcionan o no dependen de servidor</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-blue">🔗</div><div class="card-title">Distribución</div></div>
+      <ul class="checklist">
+        <li><strong>Formato correcto</strong> — HTML para digital, PDF para impresión/formal</li>
+        <li><strong>Nombre de archivo claro</strong> — BIORAIZ_Sponsors_2025.pdf</li>
+        <li><strong>Link de acceso</strong> — si se comparte por link, que sea permanente</li>
+        <li><strong>Versión para el destinatario</strong> — no enviar la de sponsors a un artista</li>
+        <li><strong>Follow-up programado</strong> — enviar carpeta + llamar en 5-7 días</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon icon-purple">⚡</div><div class="card-title">Post-envío</div></div>
+      <ul class="checklist">
+        <li><strong>Registrar en CRM</strong> — quién recibió qué versión y cuándo</li>
+        <li><strong>Versión numerada</strong> — v1, v2 para no confundirse con revisiones</li>
+        <li><strong>NDA si aplica</strong> — para datos financieros y artistas confirmados</li>
+        <li><strong>Actualizar cuando cambien datos</strong> — especialmente artistas y fechas</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-label">Orden de generación recomendado</span><div class="divider-line"></div></div>
+
+  <div class="step-list">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Generá el Bloque Base completo</div>
+        <div class="step-desc">Manifiesto, ficha técnica, público objetivo, diferenciación y mapa de zonas. Guardalo en un documento de texto como referencia. Todo lo demás se construye sobre esto.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Prioridad: Municipio primero</div>
+        <div class="step-desc">Sin permisos no hay festival. La carpeta del municipio/provincia es la más urgente. Generala, revisala con alguien del ámbito legal/institucional y enviala antes de avanzar con el resto.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Sponsors y artistas en paralelo</div>
+        <div class="step-desc">Los sponsors quieren saber quiénes son los artistas. Los artistas preguntan quiénes son los sponsors. Idealmente, llegás a las primeras reuniones con confirmaciones parciales de ambos lados.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Media cuando tengas algo que anunciar</div>
+        <div class="step-desc">No envíes la carpeta de prensa vacía. Esperá a tener al menos: fecha confirmada, 2-3 artistas o speakers relevantes, y el predio. Con eso ya tenés una nota.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <div class="step-title">Feriantes y gastronómicos con 6+ meses de anticipación</div>
+        <div class="step-desc">Los mejores emprendedores y puestos de comida tienen agenda llena. Abrí la convocatoria temprano y comunicá la fecha de cierre con claridad.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-ok">
+    <strong>Tip final:</strong> La mejor carpeta de presentación es la que se envía, no la perfecta. Empezá con una versión "suficientemente buena" para los primeros contactos estratégicos (municipio, headliner, sponsor ancla) y mejorala con el feedback que recibís. La versión final la tenés a M-6.
+  </div>
+
+</div>
+</div><!-- end .page -->
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navItems = document.querySelectorAll('.nav-item');
+  const sectionNames = ['intro','estructura','base','audiencias','visual','checklist'];
+  const idx = sectionNames.indexOf(id);
+  if(idx >= 0) navItems[idx].classList.add('active');
+  window.scrollTo({top: document.querySelector('.nav-bar').offsetTop - 2, behavior:'smooth'});
+}
+
+const audienceColors = {
+  sponsors: 'active-gold',
+  artistas: 'active-green',
+  gastro: 'active-orange',
+  feriantes: 'active-blue',
+  media: 'active-blue',
+  municipio: 'active-gold',
+  speakers: 'active-green'
+};
+
+function showAudience(id, tabEl) {
+  document.querySelectorAll('.audience-panel').forEach(p => p.classList.remove('visible'));
+  document.getElementById('aud-' + id).classList.add('visible');
+  document.querySelectorAll('.aud-tab').forEach(t => {
+    t.className = 'aud-tab';
+  });
+  if(tabEl) {
+    tabEl.classList.add(audienceColors[id] || 'active-gold');
+  }
+}
+
+function copyPrompt(btn) {
+  const block = btn.closest('.prompt-block');
+  const text = block.querySelector('.prompt-text').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = 'Copiar', 2000);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIORAIZ — Guía de Desarrollo Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bosque: #1E3320;
+    --hoja: #7A9E5A;
+    --tierra: #C8B87A;
+    --hueso: #F5F0E8;
+    --brote: #9DC99F;
+    --corteza: #8B6F47;
+    --turba: #2C2418;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--turba);
+    color: var(--hueso);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--bosque);
+    border-bottom: 2px solid var(--tierra);
+    padding: 60px 40px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(122,158,90,0.15) 0%, transparent 70%);
+  }
+
+  .header-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--tierra);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700;
+    color: var(--hueso);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .header h1 span {
+    color: var(--hoja);
+  }
+
+  .header-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--brote);
+    opacity: 0.8;
+    margin-top: 16px;
+    font-weight: 400;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--bosque);
+    border-bottom: 1px solid rgba(200,184,122,0.2);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--hueso);
+    opacity: 0.5;
+    text-decoration: none;
+    padding: 18px 20px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .nav a:hover {
+    opacity: 1;
+    color: var(--tierra);
+    border-bottom-color: var(--tierra);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* SECCIONES */
+  .section {
+    margin-bottom: 80px;
+    scroll-margin-top: 60px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(200,184,122,0.25);
+  }
+
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--tierra);
+    opacity: 0.3;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .section-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--tierra);
+    margin-bottom: 6px;
+  }
+
+  .section-title-block p {
+    font-size: 14px;
+    color: var(--brote);
+    opacity: 0.7;
+  }
+
+  /* CARDS */
+  .card {
+    background: rgba(30,51,32,0.4);
+    border: 1px solid rgba(122,158,90,0.2);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--tierra);
+    margin-bottom: 16px;
+  }
+
+  /* PROMPT BOXES */
+  .prompt-box {
+    background: var(--bosque);
+    border: 1px solid rgba(157,201,159,0.3);
+    border-left: 3px solid var(--hoja);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    position: relative;
+  }
+
+  .prompt-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--hoja);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .prompt-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--hueso);
+    white-space: pre-wrap;
+  }
+
+  /* STEPS */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+  }
+
+  .step {
+    counter-increment: step;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+
+  .step::before {
+    content: counter(step);
+    background: var(--hoja);
+    color: var(--bosque);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--tierra);
+    margin-bottom: 4px;
+    font-size: 15px;
+  }
+
+  .step-content p {
+    font-size: 14px;
+    color: var(--hueso);
+    opacity: 0.75;
+    line-height: 1.6;
+  }
+
+  .step-content code {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    background: rgba(122,158,90,0.15);
+    color: var(--brote);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin: 3px;
+  }
+
+  .tag-green { background: rgba(122,158,90,0.2); color: var(--brote); border: 1px solid rgba(122,158,90,0.3); }
+  .tag-gold { background: rgba(200,184,122,0.15); color: var(--tierra); border: 1px solid rgba(200,184,122,0.3); }
+  .tag-brown { background: rgba(139,111,71,0.2); color: var(--corteza); border: 1px solid rgba(139,111,71,0.3); }
+
+  /* NOTA IMPORTANTE */
+  .nota {
+    background: rgba(200,184,122,0.08);
+    border: 1px solid rgba(200,184,122,0.3);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: var(--tierra);
+  }
+
+  .nota strong { font-weight: 500; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(122,158,90,0.15);
+    margin: 32px 0;
+  }
+
+  /* SUBSECTION */
+  .subsection {
+    margin: 32px 0;
+  }
+
+  .subsection h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--hoja);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(122,158,90,0.15);
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.8);
+    margin-bottom: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bosque);
+    border-top: 1px solid rgba(200,184,122,0.2);
+    text-align: center;
+    padding: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--tierra);
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">Guía de Desarrollo Digital · 2026</div>
+  <h1>BIO<span>RAIZ</span></h1>
+  <div class="header-sub">Festival de Bienestar Patagonia · Neuquén · 13, 14 y 15 Nov 2026</div>
+</div>
+
+<nav class="nav">
+  <a href="#app">01 — App Staff</a>
+  <a href="#servidor">02 — Servidor Local</a>
+  <a href="#web">03 — Web + Tickets + Formularios</a>
+</nav>
+
+<main>
+
+  <!-- ================================================
+       SECCIÓN 1 — APP DE STAFF
+  ================================================ -->
+  <section class="section" id="app">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-title-block">
+        <h2>App de Control de Acceso (Staff)</h2>
+        <p>Web app con escáner QR, verificación visual y dashboard en tiempo real</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">¿Qué es y qué hace?</div>
+      <p>Una web app (no requiere Play Store) que funciona en el celular del staff. Permite escanear QRs de entradas, mostrar la foto y nombre del asistente, registrar entradas y salidas, y ver el aforo en tiempo real. Los organizadores tienen vista de dashboard completa.</p>
+      <div style="margin-top:12px">
+        <span class="tag tag-green">React</span>
+        <span class="tag tag-green">Firebase Realtime DB</span>
+        <span class="tag tag-gold">html5-qrcode</span>
+        <span class="tag tag-gold">Red WiFi local</span>
+        <span class="tag tag-brown">PWA (sin Play Store)</span>
+      </div>
+    </div>
+
+    <!-- PROMPTS -->
+    <div class="subsection">
+      <h3>Prompts para Claude — App de Staff</h3>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 1 — Estructura base y autenticación</span>
+        <div class="prompt-text">Creá una web app PWA en React con identidad visual del festival BIORAIZ. La paleta es: #1E3320 (bosque, dominante), #7A9E5A (hoja, acento), #C8B87A (tierra dorada, jerarquía), #F5F0E8 (hueso, fondo), #9DC99F (brote, secundario). Tipografías: Playfair Display para títulos, DM Sans para cuerpo, DM Mono para datos y códigos (todas en Google Fonts).
+
+La app tiene dos roles con login por usuario y contraseña:
+- STAFF: solo ve la vista de escaneo
+- ADMIN: ve el dashboard completo
+
+Pantalla de login centrada, logo BIORAIZ en tipografía Playfair Display, campo usuario y contraseña, fondo color bosque (#1E3320), botón en color hoja (#7A9E5A). Autenticación con Firebase Auth. Una vez logueado, redirige según el rol del usuario.</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 2 — Vista de escaneo (rol Staff)</span>
+        <div class="prompt-text">Creá la vista de escaneo para el rol STAFF de la app BIORAIZ. Usá la librería html5-qrcode para activar la cámara del celular.
+
+Cuando el QR es escaneado, la app consulta Firebase Realtime Database con el ID único del QR. La pantalla debe mostrar:
+
+✅ INGRESO (fondo verde #7A9E5A) o 🔄 SALIDA (fondo tierra #C8B87A) o ❌ INVÁLIDO (fondo rojo oscuro)
+
+Debajo del estado mostrar:
+- Foto de perfil del asistente (circular, 120px)
+- Nombre completo en Playfair Display, 24px
+- Tipo de entrada en DM Mono (ej. "BOSQUE · 3 DÍAS")
+
+La lógica de entrada/salida es automática: si el último estado del asistente es "afuera", registra INGRESO. Si es "adentro", registra SALIDA.
+
+Después de 3 segundos, la pantalla vuelve automáticamente al escáner. El estado se guarda en Firebase con timestamp.</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 3 — Dashboard (rol Admin)</span>
+        <div class="prompt-text">Creá el dashboard para el rol ADMIN de la app BIORAIZ con fondo #1E3320.
+
+Sección superior: 3 cards en fila mostrando en tiempo real (Firebase listener):
+- ADENTRO AHORA: número grande en Playfair Display, color #C8B87A
+- INGRESARON HOY: total acumulado del día
+- CAPACIDAD: porcentaje del aforo (adentro / máximo configurado)
+
+Debajo: tabla de asistentes que están ADENTRO en este momento con columnas: Foto (miniatura 40px circular), Nombre, Tipo de entrada, Hora de ingreso. La tabla se actualiza en tiempo real.
+
+Buscador por nombre o DNI en la parte superior de la tabla.
+
+Debajo de la tabla: gráfico de barras por hora mostrando el flujo de ingresos del día (cuántas personas entraron por hora). Usá recharts para el gráfico, color de barras #7A9E5A.
+
+Botón "Exportar CSV" que descarga todos los movimientos del día (nombre, entrada, hora ingreso, hora salida).</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 4 — Configuración PWA y modo offline parcial</span>
+        <div class="prompt-text">Configurá esta app React como PWA (Progressive Web App) para BIORAIZ.
+
+Agregá un manifest.json con nombre "BIORAIZ Staff", color de tema #1E3320, icono en color verde hoja, para que se pueda instalar en la pantalla de inicio del celular.
+
+Configurá Firebase para que trabaje contra la IP local del servidor en el predio (no internet): el archivo de config de Firebase debe tener la URL del host configurable por variable de entorno, para que en el evento apunte a 192.168.1.X (la notebook del predio) en lugar de los servidores de Google.
+
+Agregá un indicador de conexión visible en la app: punto verde "CONECTADO" o punto rojo "SIN CONEXIÓN" en la esquina superior derecha. Si pierde conexión, la app muestra un banner "Trabajando en modo local" y encola los escaneos para sincronizar cuando vuelva la red.</div>
+      </div>
+    </div>
+
+    <!-- PASO A PASO -->
+    <div class="subsection">
+      <h3>Paso a paso de desarrollo</h3>
+      <ol class="steps">
+        <li class="step">
+          <div class="step-content">
+            <h4>Crear proyecto React</h4>
+            <p>Ejecutá <code>npx create-react-app bioraiz-staff</code> o usá Vite: <code>npm create vite@latest bioraiz-staff -- --template react</code>. Instalá dependencias: <code>firebase</code>, <code>html5-qrcode</code>, <code>recharts</code>.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Configurar Firebase</h4>
+            <p>Crear proyecto en Firebase Console. Activar Authentication (email/password) y Realtime Database. Crear usuarios de staff y admin desde la consola. Guardar la config en <code>.env</code> con la URL apuntando al servidor local.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 1 → Estructura base y login</h4>
+            <p>Pegá el Prompt 1 en Claude. Revisá que el login funcione con Firebase Auth y que redirija correctamente según el rol guardado en la base de datos.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 2 → Vista de escaneo</h4>
+            <p>Pegá el Prompt 2. Probá el escáner con QRs de prueba. Verificá que la lógica entrada/salida funcione correctamente y que el resultado se guarde en Firebase con timestamp.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 3 → Dashboard admin</h4>
+            <p>Pegá el Prompt 3. Verificá que el aforo se actualice en tiempo real al escanear desde otro dispositivo. Probá la exportación CSV.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 4 → PWA y modo offline</h4>
+            <p>Configurá el manifest y el service worker. Probá instalar la app en un celular Android desde Chrome (opción "Agregar a pantalla de inicio"). Verificá el indicador de conexión.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Prueba en red local</h4>
+            <p>Conectá la notebook y los celulares del staff al mismo router WiFi. Abrí la app desde cada celular apuntando a la IP local. Realizá escaneos simultáneos para verificar que el dashboard se actualiza en todos los dispositivos.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Cargar datos reales antes del evento</h4>
+            <p>Cuando la web de venta tenga compradores, exportá el CSV de asistentes y usá un script para importarlos a Firebase. Cada registro debe tener: ID único (mismo que el QR), nombre, teléfono, email, tipo de entrada, URL de la foto, estado inicial "afuera".</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SECCIÓN 2 — SERVIDOR LOCAL
+  ================================================ -->
+  <section class="section" id="servidor">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-title-block">
+        <h2>Servidor Local del Predio</h2>
+        <p>Notebook en el evento que centraliza datos, fotos y sincronización de la app del staff</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">¿Qué hace el servidor local?</div>
+      <p>Una notebook en el predio corre un servidor Node.js que almacena todos los datos de asistentes y fotos, y responde las consultas de la app del staff vía WiFi local. No necesita internet para funcionar durante el evento.</p>
+      <div style="margin-top:12px">
+        <span class="tag tag-green">Node.js + Express</span>
+        <span class="tag tag-gold">SQLite (base de datos local)</span>
+        <span class="tag tag-gold">Router WiFi local</span>
+        <span class="tag tag-brown">Sin dependencia de internet</span>
+      </div>
+    </div>
+
+    <div class="nota">
+      <strong>Requisito de hardware:</strong> Cualquier notebook con al menos 8GB de RAM y 10GB de espacio libre. Se conecta a un router WiFi al que también se conectan los celulares del staff. El router NO necesita tener internet.
+    </div>
+
+    <!-- PROMPTS -->
+    <div class="subsection">
+      <h3>Prompts para Claude — Servidor Local</h3>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 1 — Servidor base y base de datos</span>
+        <div class="prompt-text">Creá un servidor Node.js con Express para el festival BIORAIZ que corra localmente en una notebook durante el evento.
+
+Usá SQLite como base de datos (librería better-sqlite3) con una tabla "asistentes" que tenga los campos:
+- id_qr (texto, clave primaria, único e irrepetible)
+- nombre (texto)
+- email (texto)
+- telefono (texto)
+- tipo_entrada (texto: RAICES_1DIA, BOSQUE_3DIAS, etc.)
+- foto_path (texto, ruta local a la imagen)
+- estado (texto: "afuera" o "adentro")
+- ultimo_movimiento (timestamp)
+
+Y una tabla "movimientos" con:
+- id (autoincrement)
+- id_qr (referencia al asistente)
+- tipo (INGRESO o SALIDA)
+- timestamp
+
+El servidor debe correr en el puerto 3001 y aceptar conexiones desde cualquier IP de la red local (CORS abierto para la red 192.168.x.x).</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 2 — Endpoints de la API</span>
+        <div class="prompt-text">Agregá al servidor Node.js de BIORAIZ los siguientes endpoints REST:
+
+GET /api/asistente/:id_qr
+→ Devuelve los datos del asistente + su foto en base64 + estado actual
+
+POST /api/escanear/:id_qr
+→ Cambia el estado del asistente (si estaba afuera pasa a adentro y viceversa)
+→ Registra el movimiento en la tabla "movimientos" con timestamp
+→ Devuelve { tipo: "INGRESO" o "SALIDA", nombre, foto_base64, tipo_entrada }
+
+GET /api/dashboard
+→ Devuelve: total adentro ahora, total ingresaron hoy, lista de quién está adentro con nombre + foto + hora_ingreso
+
+GET /api/movimientos/hoy
+→ Devuelve todos los movimientos del día para exportar CSV
+
+POST /api/importar
+→ Recibe un JSON con array de asistentes y los inserta en la base de datos. Ignora duplicados (INSERT OR IGNORE). Para cargar los datos antes del evento.
+
+Todos los endpoints deben responder en menos de 100ms.</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 3 — Script de importación de datos</span>
+        <div class="prompt-text">Creá un script Node.js llamado importar_asistentes.js para el servidor BIORAIZ que:
+
+1. Lee un archivo CSV llamado asistentes.csv con columnas: id_qr, nombre, email, telefono, tipo_entrada, foto_url
+2. Para cada fila, descarga la foto desde foto_url, la guarda en la carpeta local ./fotos/ con nombre {id_qr}.jpg, redimensionada a máximo 200x200px (usá la librería sharp)
+3. Inserta el registro en la base de datos SQLite con la ruta local de la foto
+4. Muestra progreso en consola: "Importando asistente 1450/50000..."
+5. Al final muestra: total importados, total errores, tiempo total
+
+El script debe poder correrse con: node importar_asistentes.js
+Y debe manejar errores de fotos que no cargan (pone una foto placeholder en su lugar).</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 4 — Panel de administración web del servidor</span>
+        <div class="prompt-text">Creá una página web HTML/CSS/JS que sirva el servidor Node.js de BIORAIZ en la ruta GET / (raíz).
+
+Es el panel de administración del servidor local con fondo #1E3320, tipografías Playfair Display y DM Sans. Debe mostrar:
+
+- Estado del servidor: "OPERATIVO" en verde, con la IP local detectada automáticamente
+- Total de asistentes cargados en la base de datos
+- Botón "Importar CSV" que permite subir el archivo asistentes.csv y dispara el proceso de importación mostrando progreso en tiempo real via Server-Sent Events
+- Botón "Backup ahora" que hace una copia de la base de datos SQLite a backup_{timestamp}.db
+- Log en tiempo real de los últimos 20 escaneos (id, nombre, tipo INGRESO/SALIDA, hora)
+- Indicador de cuántos dispositivos están conectados a la red local
+
+Diseño acorde a la identidad BIORAIZ: colores bosque, tierra y hoja, tipografía Playfair Display para títulos.</div>
+      </div>
+    </div>
+
+    <!-- PASO A PASO -->
+    <div class="subsection">
+      <h3>Paso a paso de desarrollo</h3>
+      <ol class="steps">
+        <li class="step">
+          <div class="step-content">
+            <h4>Instalar Node.js en la notebook del evento</h4>
+            <p>Descargá Node.js LTS desde nodejs.org. Creá una carpeta <code>bioraiz-servidor</code>. Ejecutá <code>npm init -y</code> e instalá: <code>npm install express better-sqlite3 sharp cors</code>.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 1 → Estructura del servidor y base de datos</h4>
+            <p>Pegá el Prompt 1 en Claude, guardá el resultado como <code>server.js</code>. Ejecutá <code>node server.js</code> y verificá que el servidor arranca en el puerto 3001.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 2 → Endpoints de la API</h4>
+            <p>Pegá el Prompt 2. Probá cada endpoint con Postman o desde el navegador. Verificá que <code>GET /api/asistente/TEST123</code> responde correctamente.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 3 → Script de importación</h4>
+            <p>Pegá el Prompt 3. Probá con un CSV de 10 asistentes de prueba. Verificá que las fotos se descargan y las miniaturas se generan correctamente en la carpeta <code>./fotos/</code>.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 4 → Panel web del servidor</h4>
+            <p>Pegá el Prompt 4. Abrí el navegador en <code>http://localhost:3001</code> y verificá el panel de administración. Probá la importación de CSV desde la interfaz.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Conectar la app de staff al servidor local</h4>
+            <p>Cambiá la URL base de la app de staff de Firebase a <code>http://192.168.1.X:3001</code> (la IP de la notebook en la red local). Probá desde un celular conectado al mismo router.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Configurar inicio automático</h4>
+            <p>En Windows: creá un acceso directo que ejecute <code>node server.js</code> al iniciar Windows (carpeta Inicio). En Mac: configurá un LaunchAgent. Así el servidor arranca solo cuando prendés la notebook en el evento.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Prueba final integrada</h4>
+            <p>Conectá router + notebook + 2 celulares. Importá 100 registros de prueba. Hacé escaneos desde ambos celulares simultáneamente. Verificá que el dashboard se actualiza en tiempo real y que no hay conflictos.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SECCIÓN 3 — WEB + TICKETS + FORMULARIOS
+  ================================================ -->
+  <section class="section" id="web">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div class="section-title-block">
+        <h2>Web Oficial — Tickets, QR y Formularios</h2>
+        <p>Sección de compra con Mercado Pago, generación de QR único en PDF, y formularios con envío al mail</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">¿Qué hace esta sección de la web?</div>
+      <p>La web ya existente se le agregan dos bloques: (1) Compra de entradas integrada con Mercado Pago, que recolecta datos del comprador + foto de perfil y genera un PDF con QR único irrepetible que llega por mail. (2) Formularios por rubro (ya los tenés en HTML) embebidos en la web, que al enviarse mandan un mail a tu cuenta.</p>
+      <div style="margin-top:12px">
+        <span class="tag tag-green">Mercado Pago SDK</span>
+        <span class="tag tag-gold">Formspree / EmailJS</span>
+        <span class="tag tag-gold">QR Code + jsPDF</span>
+        <span class="tag tag-brown">Google Sheets (backup de datos)</span>
+      </div>
+    </div>
+
+    <div class="nota">
+      <strong>Importante:</strong> Para que MP funcione en la web necesitás tener una cuenta de Mercado Pago verificada y obtener tus credenciales (Public Key y Access Token) desde el panel de desarrolladores de MP en <strong>developers.mercadopago.com</strong>.
+    </div>
+
+    <hr class="divider">
+
+    <!-- PARTE A: TICKETS -->
+    <div class="subsection">
+      <h3>Parte A — Sección de compra de entradas con MP</h3>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 1 — Sección de tickets con identidad BIORAIZ</span>
+        <div class="prompt-text">Agregá una sección de compra de entradas a la web de BIORAIZ. Identidad visual: fondo #1E3320, acento #7A9E5A, dorado #C8B87A, tipografías Playfair Display y DM Sans.
+
+La sección muestra 4 tipos de entrada en cards:
+
+RAÍCES — 1 día a elección — $38.000 ARS — Acceso general, zona wellness libre, mapa interactivo
+BOSQUE — Abono 3 días — $88.000 ARS — Todo lo anterior + sesión wellness reservada + 10% descuento gastronómico + acceso anticipado
+TIERRA — VIP 1 día — $120.000 ARS — Todo lo anterior + zona VIP + meet & greet artistas
+CIELO — VIP 3 días — $260.000 ARS — La experiencia completa premium
+
+Cada card tiene: nombre, precio en ARS y referencia en USD (TC $1.450), lista de beneficios, botón "COMPRAR" en color hoja (#7A9E5A).
+
+Al clickear COMPRAR se abre un modal/formulario de datos del comprador. Diseño acorde a la identidad del festival, con animación suave de entrada.</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 2 — Formulario de datos del comprador</span>
+        <div class="prompt-text">Creá el modal/formulario de compra de BIORAIZ que se abre al seleccionar una entrada. Campos obligatorios:
+
+- Nombre completo
+- Email (se usa para enviar el ticket)
+- Teléfono (con prefijo +54 por defecto)
+- DNI
+- Foto de perfil (input file, solo imágenes, máx 5MB. Al cargar, mostrar preview circular. Comprimir automáticamente a máx 200x200px antes de enviar usando canvas)
+- Día de asistencia (solo para entradas de 1 día: Viernes 13 / Sábado 14 / Domingo 15 Nov)
+- Checkbox de aceptación de términos y condiciones (obligatorio). El texto del link "Términos" abre un modal con: autorización de registro de imagen para acreditación biométrica y uso de datos según Ley 25.326.
+
+Botón "CONTINUAR AL PAGO" deshabilitado hasta que todos los campos estén completos y la foto cargada.
+
+Validación en tiempo real de cada campo. Diseño con fondo #1E3320, bordes #7A9E5A, tipografía DM Sans.</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 3 — Integración Mercado Pago</span>
+        <div class="prompt-text">Integrá Mercado Pago en la web de BIORAIZ usando el SDK de MP para JavaScript (Checkout Pro o Checkout Bricks).
+
+El flujo es:
+1. El usuario completa el formulario de datos
+2. Al clickear "CONTINUAR AL PAGO", el frontend llama a un endpoint del backend (o serverless function) que crea una preferencia de pago en MP con el monto correcto según el tipo de entrada
+3. MP redirige al usuario a su checkout
+4. Tras el pago exitoso, MP hace un webhook POST a tu endpoint de confirmación
+5. El endpoint de confirmación genera el QR único, el PDF y envía el mail al comprador
+
+La preferencia de pago debe incluir en los metadata: nombre, email, telefono, dni, tipo_entrada, dia_asistencia, foto_base64.
+
+Usá las credenciales de MP desde variables de entorno: MP_PUBLIC_KEY y MP_ACCESS_TOKEN. Nunca expongas el Access Token en el frontend.</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 4 — Generación de QR único y PDF del ticket</span>
+        <div class="prompt-text">Creá la función de generación de ticket PDF para BIORAIZ que se ejecuta tras la confirmación de pago de Mercado Pago.
+
+El ID único del QR se genera combinando: timestamp_unix + primeras 8 letras del nombre + 6 caracteres aleatorios en mayúsculas. Ejemplo: "1748823600_MARIAGON_X7K2PQ". Este ID es ÚNICO e IRREPETIBLE.
+
+El PDF del ticket debe tener diseño acorde a BIORAIZ:
+- Fondo color bosque (#1E3320)
+- Logo/nombre BIORAIZ en Playfair Display dorado
+- Subtítulo "Festival de Bienestar Patagonia · Neuquén · Nov 2026"
+- Foto de perfil del comprador (circular)
+- Nombre completo, tipo de entrada, día(s) de asistencia, DNI
+- QR grande y centrado (el QR codifica el ID único)
+- Texto "Este ticket es personal e intransferible" en DM Mono
+- Número de orden de MP
+
+Usá la librería jsPDF + qrcode.js para generarlo en el backend (Node.js). Guardá la foto en el servidor con nombre {id_qr}.jpg para el sistema de control de acceso.
+
+Tras generar el PDF, envialo por mail usando Nodemailer con el asunto "Tu entrada para BIORAIZ 🌿 · {nombre}".</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 5 — CSV de asistentes para el servidor local</span>
+        <div class="prompt-text">Creá un endpoint protegido con contraseña en el backend de BIORAIZ: GET /admin/exportar-csv?clave=XXXX
+
+Este endpoint genera y descarga un archivo CSV con todos los compradores confirmados (pagos exitosos de MP), con las columnas:
+id_qr, nombre, email, telefono, dni, tipo_entrada, dia_asistencia, foto_url, fecha_compra
+
+El CSV se usa para importar los datos al servidor local del predio antes del evento.
+
+También creá un endpoint GET /admin/dashboard que muestra una página HTML simple (protegida con la misma clave) con:
+- Total de entradas vendidas por tipo
+- Total de ingresos en ARS y USD
+- Lista de compradores con nombre, tipo de entrada y fecha de compra
+- Botón para descargar el CSV
+
+Diseño simple con la paleta BIORAIZ.</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- PARTE B: FORMULARIOS -->
+    <div class="subsection">
+      <h3>Parte B — Formularios por rubro con envío al mail</h3>
+
+      <div class="nota">
+        <strong>Nota:</strong> Ya tenés los formularios en HTML. El trabajo acá es integrarlos a la web y conectarlos a Formspree para que el envío llegue a tu mail. No necesitás backend propio para esto.
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 1 — Sección de formularios en la web</span>
+        <div class="prompt-text">Agregá a la web de BIORAIZ una sección llamada "Participá del Festival" con tabs o acordeón para seleccionar el tipo de participación:
+
+🌿 Feriantes / Emprendedores
+🍽️ Gastronómicos
+🎤 Artistas / Músicos
+🎙️ Speakers / Facilitadores
+📢 Sponsors / Alianzas
+📰 Prensa / Media
+
+Al seleccionar cada tab, se muestra el formulario HTML correspondiente (ya los tengo, los voy a pegar en cada sección).
+
+El diseño de la sección: fondo #1E3320, tabs con borde inferior #7A9E5A para el activo, tipografía DM Sans. Cada formulario debe tener campos con estilo coherente con la web: fondo #2C2418, borde #7A9E5A, texto #F5F0E8, labels en DM Mono color #C8B87A.
+
+El botón de envío de cada formulario dice "ENVIAR SOLICITUD" en color hoja (#7A9E5A).</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt 2 — Conectar formularios a Formspree (envío al mail)</span>
+        <div class="prompt-text">Integrá los formularios de la web de BIORAIZ con Formspree para que cada envío llegue por mail.
+
+El proceso es:
+1. Creá una cuenta en formspree.io (gratuita)
+2. Para cada formulario (feriantes, gastronómicos, artistas, speakers, sponsors, prensa) creá un "form" diferente en Formspree y obtenés un endpoint único tipo https://formspree.io/f/XXXXXXX
+3. En el HTML de cada formulario, el atributo action del form apunta a su endpoint de Formspree y method="POST"
+4. Agregar campo hidden: input name="_subject" con el asunto del mail (ej. "Nueva solicitud Feriante — BIORAIZ")
+5. Agregar campo hidden: input name="_replyto" que tome el valor del campo email del formulario
+
+Al enviar, Formspree manda el mail a tu email configurado en la cuenta.
+
+Agregá una pantalla de confirmación después del envío: mensaje con fondo #1E3320, ícono de hoja, texto "¡Recibimos tu solicitud! Te contactaremos en los próximos días." en Playfair Display.
+
+Mostrá el formulario HTML actualizado con todos estos cambios para el caso de Feriantes como ejemplo.</div>
+      </div>
+
+      <div class="prompt-box">
+        <span class="prompt-label">Prompt alternativo — Sin Formspree, con EmailJS (si preferís sin cuenta extra)</span>
+        <div class="prompt-text">Integrá los formularios de BIORAIZ con EmailJS para enviar los mails directamente desde el frontend sin backend.
+
+1. Creá cuenta en emailjs.com, conectá tu cuenta de Gmail del evento
+2. Creá una template para cada tipo de formulario (feriantes, gastronómicos, etc.)
+3. En el JS de la web, al hacer submit del formulario:
+   - Prevení el comportamiento default
+   - Mostrá spinner de carga
+   - Llamá a emailjs.sendForm('SERVICE_ID', 'TEMPLATE_ID', formElement)
+   - Si éxito: ocultá el formulario y mostrá mensaje de confirmación con animación
+   - Si error: mostrá mensaje de error en rojo con opción de reintentar
+
+Las credenciales de EmailJS (public key, service ID, template IDs) van en variables de configuración al inicio del archivo JS.
+
+Mostrá el código completo para el formulario de Feriantes como ejemplo, con manejo de estados (loading, success, error) y diseño acorde a BIORAIZ.</div>
+      </div>
+    </div>
+
+    <!-- PASO A PASO WEB -->
+    <div class="subsection">
+      <h3>Paso a paso completo — Web + Tickets + Formularios</h3>
+      <ol class="steps">
+        <li class="step">
+          <div class="step-content">
+            <h4>Crear cuenta de desarrollador en Mercado Pago</h4>
+            <p>Ir a <code>developers.mercadopago.com</code>. Crear aplicación. Obtener Public Key y Access Token de prueba (sandbox) para testear, y los de producción para el evento real.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Configurar backend mínimo</h4>
+            <p>Necesitás un backend para crear preferencias de MP y recibir webhooks. Lo más simple: desplegá un servidor Node.js en Railway.app o Render.com (gratis). Usá el Prompt 3 para el código.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 1 → Sección de tickets en la web</h4>
+            <p>Agregá la sección de las 4 cards de entradas a tu web existente. Verificá que los precios y beneficios están correctos y el diseño es coherente.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 2 → Formulario de datos del comprador</h4>
+            <p>Agregá el modal con todos los campos. Probá la compresión de la foto y el preview circular. Verificá que el botón se deshabilita correctamente si falta algún campo.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 3 → Integrar Mercado Pago</h4>
+            <p>Probá primero en modo sandbox. Hacé una compra de prueba completa. Verificá que el webhook llega y que el flujo post-pago se ejecuta.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 4 → Generación de QR único y PDF</h4>
+            <p>Probá que el PDF se genera correctamente y que el mail llega con el adjunto. Verificá que el ID del QR es realmente único en cada prueba. Probá que la foto se guarda correctamente en el servidor.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 5 → Panel admin y exportación CSV</h4>
+            <p>Verificá que el CSV se genera con todos los campos necesarios para importar al servidor local. Hacé una prueba completa: compra → CSV → importar al servidor local → escanear QR con la app.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Crear cuenta en Formspree y configurar formularios</h4>
+            <p>Crear una cuenta en <code>formspree.io</code>. Crear 6 forms (uno por rubro). Copiar los endpoints. Seguir el Prompt 2 de formularios para integrarlos.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 1 de formularios → Sección en la web</h4>
+            <p>Agregar la sección con tabs a la web. Pegar tus formularios HTML existentes en cada tab. Aplicar el estilo BIORAIZ a todos los campos.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Usar Prompt 2 de formularios → Conectar Formspree</h4>
+            <p>Actualizar cada formulario con su endpoint de Formspree. Hacer un envío de prueba de cada formulario. Verificar que el mail llega correctamente a tu email del evento.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-content">
+            <h4>Prueba final end-to-end</h4>
+            <p>Simular el flujo completo: comprar entrada → recibir PDF por mail → escanear QR con la app del staff → ver que aparece en el dashboard. Luego completar un formulario de feriante → verificar que llega el mail.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  BIORAIZ · Festival de Bienestar Patagonia · Neuquén · 13, 14 y 15 Noviembre 2026<br>
+  <span style="opacity:0.4;margin-top:8px;display:block">Guía de Desarrollo Digital · Producción ZENZZO</span>
+</footer>
+
+</body>
+</html>

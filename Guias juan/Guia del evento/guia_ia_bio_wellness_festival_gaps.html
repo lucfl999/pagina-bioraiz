@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Gaps IA — Bio & Wellness Festival Patagonia</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e6f0;
+    --text2: #9390a8;
+    --text3: #5c5a70;
+    --accent: #7c6fff;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --amber: #fbbf24;
+    --coral: #f87171;
+    --teal: #2dd4bf;
+    --blue: #60a5fa;
+    --c1: #7c6fff;
+    --c2: #2dd4bf;
+    --c3: #f87171;
+    --c4: #fbbf24;
+    --c5: #60a5fa;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 56px 40px 40px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 340px;
+    background: radial-gradient(ellipse, rgba(52,211,153,0.12) 0%, rgba(124,111,255,0.08) 50%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.25);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 4.5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 720px;
+    margin-bottom: 14px;
+  }
+  .header h1 span { color: var(--green); }
+  .header p { color: var(--text2); max-width: 580px; font-size: 15px; }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .meta-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+  }
+
+  /* AUDIT BANNER */
+  .audit-banner {
+    background: linear-gradient(135deg, rgba(52,211,153,0.06) 0%, rgba(124,111,255,0.06) 100%);
+    border: 1px solid rgba(52,211,153,0.15);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 28px 40px 0;
+  }
+  .audit-banner-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 16px;
+  }
+  .audit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .audit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid;
+    font-size: 13px;
+  }
+  .audit-item.ok {
+    background: rgba(52,211,153,0.05);
+    border-color: rgba(52,211,153,0.2);
+    color: var(--text2);
+  }
+  .audit-item.ok .audit-badge { color: var(--green); font-size: 15px; flex-shrink: 0; }
+  .audit-item.gap {
+    background: rgba(248,113,113,0.05);
+    border-color: rgba(248,113,113,0.2);
+    color: var(--text2);
+  }
+  .audit-item.gap .audit-badge { color: var(--coral); font-size: 15px; flex-shrink: 0; }
+  .audit-item.partial {
+    background: rgba(251,191,36,0.05);
+    border-color: rgba(251,191,36,0.2);
+    color: var(--text2);
+  }
+  .audit-item.partial .audit-badge { color: var(--amber); font-size: 15px; flex-shrink: 0; }
+  .audit-item-text strong { display: block; color: var(--text); font-size: 12.5px; font-weight: 500; margin-bottom: 2px; }
+
+  /* LAYOUT */
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 280px);
+  }
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 28px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 0 20px 12px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 2px solid transparent;
+    user-select: none;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.04); }
+  .nav-item.active {
+    background: rgba(52,211,153,0.08);
+    border-left-color: var(--green);
+  }
+  .nav-item.active .nav-title { color: var(--green); }
+  .nav-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text3);
+    min-width: 18px;
+  }
+  .nav-title { font-size: 13px; color: var(--text2); font-weight: 400; line-height: 1.3; }
+  .nav-phase {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 16px 20px 6px;
+    margin-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-phase:first-child { margin-top: 0; border-top: none; }
+  .nav-status {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+  .nav-status.gap {
+    background: rgba(248,113,113,0.12);
+    color: var(--coral);
+    border: 1px solid rgba(248,113,113,0.25);
+  }
+  .nav-status.partial {
+    background: rgba(251,191,36,0.1);
+    color: var(--amber);
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+  .nav-status.ok {
+    background: rgba(52,211,153,0.08);
+    color: var(--green);
+    border: 1px solid rgba(52,211,153,0.2);
+  }
+
+  /* MAIN */
+  .main { padding: 0; overflow-y: auto; }
+
+  /* DEPT */
+  .dept { display: none; padding: 40px 48px; animation: fadeIn 0.25s ease; }
+  .dept.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dept-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dept-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--border2);
+    min-width: 56px;
+  }
+  .dept-info { flex: 1; }
+  .dept-phase-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .dept-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .dept-desc { color: var(--text2); font-size: 14px; max-width: 580px; }
+
+  /* STATUS BADGE */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border: 1px solid;
+  }
+  .status-badge.gap {
+    background: rgba(248,113,113,0.08);
+    border-color: rgba(248,113,113,0.25);
+    color: var(--coral);
+  }
+  .status-badge.partial {
+    background: rgba(251,191,36,0.08);
+    border-color: rgba(251,191,36,0.25);
+    color: var(--amber);
+  }
+  .status-badge.ok {
+    background: rgba(52,211,153,0.08);
+    border-color: rgba(52,211,153,0.25);
+    color: var(--green);
+  }
+
+  /* WHAT YOU HAVE */
+  .have-box {
+    background: rgba(52,211,153,0.04);
+    border: 1px solid rgba(52,211,153,0.12);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+  }
+  .have-box-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .have-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .have-list li {
+    font-size: 13.5px;
+    color: var(--text2);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .have-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* WHAT'S MISSING */
+  .missing-box {
+    background: rgba(248,113,113,0.04);
+    border: 1px solid rgba(248,113,113,0.15);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+  }
+  .missing-box-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 10px;
+  }
+  .missing-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .missing-list li {
+    font-size: 13.5px;
+    color: var(--text2);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .missing-list li::before { content: '✗'; color: var(--coral); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* TOOLS */
+  .dept-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .tool-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+  .tool-chip.primary {
+    background: rgba(124,111,255,0.1);
+    border-color: rgba(124,111,255,0.3);
+    color: var(--accent2);
+  }
+  .tool-chip.secondary {
+    background: rgba(255,255,255,0.04);
+    border-color: var(--border2);
+    color: var(--text2);
+  }
+
+  /* STEPS */
+  .steps-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 16px;
+  }
+  .steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: var(--border2); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(124,111,255,0.1);
+    border-radius: 4px;
+    min-width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-tool {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 3px;
+  }
+  .step-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .step-text strong { color: var(--text); font-weight: 500; }
+
+  /* PROMPT BOX */
+  .prompt-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .prompt-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .prompt-box {
+    position: relative;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 20px 16px;
+    margin-bottom: 12px;
+  }
+  .prompt-box:hover { border-color: var(--border2); }
+  .prompt-tool-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tool-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .prompt-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+  .prompt-text em { color: var(--amber); font-style: normal; }
+  .copy-btn {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text2);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .copy-btn:hover { background: rgba(124,111,255,0.15); color: var(--accent2); border-color: rgba(124,111,255,0.3); }
+  .copy-btn.copied { color: var(--green); border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.08); }
+
+  .output-box {
+    background: rgba(52,211,153,0.05);
+    border: 1px solid rgba(52,211,153,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 8px;
+  }
+  .output-box strong { color: var(--green); font-weight: 500; }
+
+  .tip-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .tip-icon { color: var(--amber); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  .alert-box {
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+  .alert-icon { color: var(--coral); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  .divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+  /* Phase colors */
+  .phase-legal { color: #f87171; }
+  .phase-financiero { color: #fbbf24; }
+  .phase-artistas { color: #a78bfa; }
+  .phase-comunicacion { color: #60a5fa; }
+  .phase-operaciones { color: #2dd4bf; }
+  .phase-postevent { color: #9390a8; }
+
+  .bg-legal { background: rgba(248,113,113,0.08); border-color: rgba(248,113,113,0.2); }
+  .bg-financiero { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.2); }
+  .bg-artistas { background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); }
+  .bg-comunicacion { background: rgba(96,165,250,0.08); border-color: rgba(96,165,250,0.2); }
+  .bg-operaciones { background: rgba(45,212,191,0.08); border-color: rgba(45,212,191,0.2); }
+  .bg-postevent { background: rgba(255,255,255,0.04); border-color: var(--border2); }
+
+  .nav-item[data-phase="legal"].active { border-left-color: var(--coral); background: rgba(248,113,113,0.08); }
+  .nav-item[data-phase="legal"].active .nav-title { color: var(--coral); }
+  .nav-item[data-phase="financiero"].active { border-left-color: var(--amber); background: rgba(251,191,36,0.08); }
+  .nav-item[data-phase="financiero"].active .nav-title { color: var(--amber); }
+  .nav-item[data-phase="artistas"].active { border-left-color: #a78bfa; background: rgba(167,139,250,0.08); }
+  .nav-item[data-phase="artistas"].active .nav-title { color: #a78bfa; }
+  .nav-item[data-phase="comunicacion"].active { border-left-color: var(--blue); background: rgba(96,165,250,0.08); }
+  .nav-item[data-phase="comunicacion"].active .nav-title { color: var(--blue); }
+  .nav-item[data-phase="operaciones"].active { border-left-color: var(--teal); background: rgba(45,212,191,0.08); }
+  .nav-item[data-phase="operaciones"].active .nav-title { color: var(--teal); }
+  .nav-item[data-phase="postevent"].active { border-left-color: var(--text2); background: rgba(255,255,255,0.04); }
+  .nav-item[data-phase="postevent"].active .nav-title { color: var(--text); }
+
+  /* PROGRESS */
+  .progress-bar { height: 3px; background: var(--border); position: relative; }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--teal));
+    transition: width 0.3s ease;
+  }
+
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .dept { padding: 28px 20px; }
+    .header { padding: 36px 20px 28px; }
+    .audit-banner { margin: 16px 20px 0; }
+    .dept-header { flex-direction: column; gap: 12px; }
+    .dept-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:10%"></div></div>
+
+<div class="header">
+  <div class="header-tag">🔍 Auditoría + Guía de gaps</div>
+  <h1>Lo que falta para tu<br><span>Bio & Wellness Festival</span></h1>
+  <p>Auditoría completa de todo lo producido para el festival. Gaps identificados, priorizados por urgencia, con prompts y pasos exactos para cerrar cada uno.</p>
+  <div class="header-meta">
+    <div class="meta-pill"><div class="meta-dot" style="background:var(--green);box-shadow:0 0 8px var(--green)"></div> 10 áreas cubiertas</div>
+    <div class="meta-pill"><div class="meta-dot" style="background:var(--coral);box-shadow:0 0 8px var(--coral)"></div> 8 gaps críticos</div>
+    <div class="meta-pill"><div class="meta-dot" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></div> Neuquén · Nov 2026</div>
+  </div>
+</div>
+
+<!-- AUDIT SUMMARY -->
+<div class="audit-banner">
+  <div class="audit-banner-title">📊 Resumen de auditoría — qué tenés y qué falta</div>
+  <div class="audit-grid">
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Rider técnico</strong>Escenario, audio, video, energía, sanitarios — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Plan espacial / zonificación</strong>Plano, flujos, densidades, señalética — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Plan de montaje</strong>11 días, personal técnico, orden, checklist — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Plan de seguridad</strong>Riesgos, accesos, multitud, evacuación — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Identidad de marca</strong>Naming, concepto, paleta, tipografía, tono — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Plan de marketing</strong>13 semanas, 5 fases, copies, email, influencers — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Gastronomía</strong>Puestos, mix, precios, restricciones, convocatoria — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Feria de emprendedores</strong>Estrategia, convocatoria, evaluación, reglamento — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Activaciones y gamificación</strong>5 instalaciones, pasaporte, premios, UGC — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Runbook operacional</strong>Hora a hora, Go/No-Go, comunicación, incidentes — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Plan de bienestar</strong>6 zonas, hidratación, médica, accesibilidad — completo</div></div>
+    <div class="audit-item ok"><span class="audit-badge">✓</span><div class="audit-item-text"><strong>Proveedores</strong>Pliego, criterios, penalidades, tabla base — completo</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>Marco legal y habilitaciones</strong>Permisos municipales, defensa civil, SADAIC — FALTA</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>Presupuesto financiero</strong>P&L, flujo de caja, punto de equilibrio — FALTA</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>Programa artístico</strong>Lineup, contratos, riders, hospitality — FALTA</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>Estrategia de ticketing</strong>Plataforma, precios, categorías, reventa — FALTA</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>Plan de sponsors</strong>Deck, categorías, beneficios, contrato — FALTA</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>RRHH y staffing</strong>Organigrama, roles, contratos, brief — FALTA</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>Sustentabilidad</strong>Plan de residuos, compensación, certificación — FALTA</div></div>
+    <div class="audit-item gap"><span class="audit-badge">✗</span><div class="audit-item-text"><strong>Post-evento y métricas</strong>Encuesta, informe, retención, próxima edición — FALTA</div></div>
+    <div class="audit-item partial"><span class="audit-badge">⚠</span><div class="audit-item-text"><strong>Comunicación en sitio</strong>Guía del asistente, FAQ, app — falta desarrollar</div></div>
+    <div class="audit-item partial"><span class="audit-badge">⚠</span><div class="audit-item-text"><strong>Programa / agenda</strong>Cronograma de actividades publicable — falta</div></div>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-label">Gaps por área</div>
+
+    <div class="nav-phase">🔴 Urgente — antes de todo</div>
+    <div class="nav-item active" data-dept="1" data-phase="legal" onclick="showDept(1)">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Legal y habilitaciones</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+    <div class="nav-item" data-dept="2" data-phase="financiero" onclick="showDept(2)">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Presupuesto y finanzas</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+
+    <div class="nav-phase">🟠 Crítico — próximas 2 semanas</div>
+    <div class="nav-item" data-dept="3" data-phase="artistas" onclick="showDept(3)">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Programa artístico</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+    <div class="nav-item" data-dept="4" data-phase="comunicacion" onclick="showDept(4)">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Ticketing y ventas</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+    <div class="nav-item" data-dept="5" data-phase="financiero" onclick="showDept(5)">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Plan de sponsors</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+
+    <div class="nav-phase">🟡 Importante — próximo mes</div>
+    <div class="nav-item" data-dept="6" data-phase="operaciones" onclick="showDept(6)">
+      <span class="nav-num">06</span>
+      <span class="nav-title">RRHH y staffing</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+    <div class="nav-item" data-dept="7" data-phase="operaciones" onclick="showDept(7)">
+      <span class="nav-num">07</span>
+      <span class="nav-title">Sustentabilidad</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+
+    <div class="nav-phase">🔵 Completar lo que empezaste</div>
+    <div class="nav-item" data-dept="8" data-phase="comunicacion" onclick="showDept(8)">
+      <span class="nav-num">08</span>
+      <span class="nav-title">Programa / agenda pública</span>
+      <span class="nav-status partial">INCOMPLETO</span>
+    </div>
+    <div class="nav-item" data-dept="9" data-phase="comunicacion" onclick="showDept(9)">
+      <span class="nav-num">09</span>
+      <span class="nav-title">Guía del asistente</span>
+      <span class="nav-status partial">INCOMPLETO</span>
+    </div>
+
+    <div class="nav-phase">⚪ Cierre</div>
+    <div class="nav-item" data-dept="10" data-phase="postevent" onclick="showDept(10)">
+      <span class="nav-num">10</span>
+      <span class="nav-title">Post-evento y métricas</span>
+      <span class="nav-status gap">FALTA</span>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- GAP 01: LEGAL -->
+    <div class="dept active" id="dept-1">
+      <div class="dept-header">
+        <div class="dept-num">01</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-legal">🔴 Urgente — sin esto el evento no puede existir</div>
+          <div class="dept-title">Marco Legal y Habilitaciones</div>
+          <div class="dept-desc">El área más crítica y más ignorada en la planificación. Sin los permisos municipales, defensa civil y SADAIC, el festival puede ser clausurado el día del evento. Hay plazos que no se pueden recuperar.</div>
+        </div>
+      </div>
+
+      <div class="status-badge gap">✗ Completamente ausente en tu documentación</div>
+
+      <div class="have-box">
+        <div class="have-box-title">Lo que sí tenés (referencias en otros docs)</div>
+        <ul class="have-list">
+          <li>Mención a NFPA 101 e ISO 20121 en el plan de seguridad</li>
+          <li>Aviso legal en el plan de seguridad sobre la necesidad de firma profesional</li>
+          <li>Pliego de proveedores con requisito de seguros de RC y ART</li>
+        </ul>
+      </div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta completamente</div>
+        <ul class="missing-list">
+          <li>Checklist de permisos municipales (Municipalidad de Neuquén / localidad específica)</li>
+          <li>Aprobación de Defensa Civil provincial (plazo mínimo 30 días antes del evento)</li>
+          <li>Habilitación del predio para evento masivo (chacra privada → uso eventual)</li>
+          <li>Contrato/permiso de SADAIC, AADI-CAPIF para música en vivo y grabada</li>
+          <li>Inscripción en AFIP como productor de espectáculos (si no está)</li>
+          <li>Seguro de responsabilidad civil del organizador (diferente al de proveedores)</li>
+          <li>Autorización de Policía de Neuquén para evento +5.000 personas</li>
+          <li>Habilitación bromatológica municipal para zona gastronómica</li>
+          <li>Autorización de uso de espacio aéreo si va a haber drones</li>
+          <li>Protocolo COVID/sanitario vigente si aplica normativa local</li>
+          <li>Contrato de locación del predio (chacra privada) con cláusulas de evento</li>
+        </ul>
+      </div>
+
+      <div class="alert-box">
+        <span class="alert-icon">⚠</span>
+        <span><strong style="color:var(--coral)">Alerta crítica:</strong> La Defensa Civil de Neuquén exige presentación del plan de seguridad con firma de profesional matriculado <strong>mínimo 30 días antes</strong> del evento. Si tu evento es el 28 de noviembre, el deadline es el 29 de octubre. Si no está listo, no se puede abrir. Esto es bloqueante absoluto.</span>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (checklist y contratos)</span>
+        <span class="tool-chip secondary">Abogado local matriculado (obligatorio)</span>
+        <span class="tool-chip secondary">Municipalidad de Neuquén</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude — hoy mismo</div><div class="step-text">Generá el <strong>mapa completo de trámites legales</strong> usando el prompt de abajo. Esto te da la lista priorizada de todo lo que necesitás tramitar y en qué orden.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Acción real — esta semana</div><div class="step-text">Contactá a un <strong>abogado especializado en espectáculos públicos en Neuquén</strong>. No es opcional: los trámites ante Defensa Civil y Municipalidad requieren firma de profesional habilitado en la provincia.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá los <strong>minutas de contratos clave</strong>: contrato de locación del predio, contrato tipo con proveedores técnicos, y carta de intención con artistas. El abogado los revisa, no los emite desde cero.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Creá una <strong>tabla de seguimiento de habilitaciones</strong> con: trámite, organismo, responsable, fecha límite de presentación, estado. Actualizarla semanalmente.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Mapa legal completo para evento masivo en Argentina</div>
+      <div class="prompt-box bg-legal">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Claude</div>
+        <div class="prompt-text">Actuá como abogado especializado en espectáculos públicos y eventos masivos en Argentina, con experiencia en la provincia de Neuquén.
+
+Contexto del evento:
+- Nombre: Bio & Wellness Festival Patagonia
+- Fecha: 28, 29 y 30 de noviembre de 2026
+- Lugar: Chacra privada, Neuquén capital o alrededores
+- Aforo: 50.000–60.000 personas en flujo total, ~8.000 pico simultáneo
+- Formato: evento al aire libre con escenario principal, feria de emprendedores, zona gastronómica, actividades de bienestar
+- Productora: <em>[RAZÓN SOCIAL O NOMBRE DEL ORGANIZADOR]</em>
+- El predio es una chacra privada (no municipalidad, no estadio), habilitación de uso eventual necesaria
+
+Generá el mapa legal completo del evento con:
+
+1. HABILITACIONES MUNICIPALES (Municipalidad de Neuquén):
+   - Lista exacta de trámites requeridos para evento en predio privado
+   - Organismo al que se presenta cada uno
+   - Documentación requerida para cada trámite
+   - Plazo mínimo de presentación antes del evento
+   - Costo estimado (si aplica arancel)
+
+2. DEFENSA CIVIL PROVINCIAL:
+   - Plan de seguridad: qué secciones debe incluir, quién lo firma, dónde se presenta
+   - Plazo de presentación (días hábiles de anticipación)
+   - Qué pasa si no está aprobado: ¿puede clausurar el evento?
+
+3. DERECHOS DE AUTOR Y MÚSICA:
+   - SADAIC: qué formulario, cómo se calcula el canon, plazo
+   - AADI-CAPIF: cuándo aplica (música grabada vs. en vivo)
+   - Cómo se tramita cuando hay artistas que incluyen música original y covers
+
+4. IMPOSITIVO / AFIP:
+   - Condición fiscal necesaria para vender entradas
+   - Facturación de entradas: cómo facturar la venta de tickets
+   - Ingresos brutos: ¿necesitás inscripción adicional en Neuquén?
+
+5. SEGUROS OBLIGATORIOS:
+   - Seguro de RC del organizador: cobertura mínima, quién puede asegurar
+   - Diferencia entre el seguro del organizador y el de los proveedores
+   - ¿Se necesita seguro de cancelación de evento?
+
+6. CONTRATOS CLAVE:
+   - Contrato de locación de predio para evento: 5 cláusulas que no pueden faltar
+   - Contrato con artistas: estructura mínima, cláusulas de fuerza mayor, penalidades
+   - Contrato con proveedores técnicos: cláusulas de performance y responsabilidad
+
+7. TABLA DE SEGUIMIENTO:
+   Generá una tabla con columnas: Trámite | Organismo | Responsable | Fecha límite | Estado
+   Ordenada por urgencia (primero los que tienen plazos más cortos)
+
+Indicá con ⚠ los trámites bloqueantes: si no están aprobados, el evento no puede realizarse.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="prompt-label">Prompt — Contrato de locación del predio</div>
+      <div class="prompt-box bg-legal">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Claude</div>
+        <div class="prompt-text">Redactá una minuta de contrato de locación de predio para evento masivo en Argentina bajo el Código Civil y Comercial vigente.
+
+Partes:
+- Locador: <em>[PROPIETARIO DE LA CHACRA]</em>
+- Locatario: <em>[TU EMPRESA/NOMBRE]</em>
+
+El contrato debe incluir:
+1. Objeto: uso del predio para evento de hasta 60.000 asistentes en flujo total (3 días)
+2. Período de uso: acceso desde el 17/11/2026 (montaje) hasta el 2/12/2026 (desmontaje)
+3. Canon y forma de pago
+4. Obligaciones del locatario: seguros, permisos a cargo de quién, estado de devolución del predio
+5. Responsabilidad por daños: daños al suelo, infraestructura, vegetación
+6. Cláusula de fuerza mayor y caso fortuito (lluvia, viento extremo, suspensión por autoridad)
+7. Cláusula de cancelación: por qué causas puede cancelarse y penalidades para cada parte
+8. Autorización expresa al locatario para instalar estructuras temporales y modificar el terreno de forma reversible
+9. Autorización para obtener permisos municipales con el consentimiento del propietario
+10. Jurisdicción: Neuquén
+
+Nota: este documento es una minuta de uso interno para revisión por abogado. No es un contrato final.</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Tabla de trámites priorizada, minutas de contratos base para revisión legal, checklist de seguros. Llevá todo esto a un abogado neuquino en la primera reunión.</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>En Neuquén, el trámite ante Defensa Civil Provincial se inicia en la Dirección General de Defensa Civil ubicada en Casa de Gobierno. Buscá el formulario de "Habilitación de espectáculos públicos masivos". Muchos organizadores novatos se enteran de esto una semana antes y el evento queda sin aprobación. Es el primer trámite a iniciar, incluso antes de confirmar artistas.</span>
+      </div>
+    </div>
+
+    <!-- GAP 02: FINANZAS -->
+    <div class="dept" id="dept-2">
+      <div class="dept-header">
+        <div class="dept-num">02</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-financiero">🔴 Urgente — sin esto no sabés si el evento es viable</div>
+          <div class="dept-title">Presupuesto y Finanzas</div>
+          <div class="dept-desc">Tenés todos los planes operativos pero ningún número. Sin un P&L y flujo de caja, no podés saber si el evento gana o pierde plata, cuánto capital inicial necesitás, ni cuándo tenés que vender X entradas para cubrir costos fijos.</div>
+        </div>
+      </div>
+
+      <div class="status-badge gap">✗ Ausente — tenés planes sin números</div>
+
+      <div class="have-box">
+        <div class="have-box-title">Lo que sí tenés (datos dispersos en otros documentos)</div>
+        <ul class="have-list">
+          <li>Precios de stands de feria (USD 380–1.300 por 3 días, 90 stands)</li>
+          <li>Rango de inversión en activaciones (USD 17.500–24.500)</li>
+          <li>Precios de stands gastronómicos y feria</li>
+          <li>Estructura de stand con costos de referencia (USD 280–780)</li>
+          <li>Cronograma de pagos a proveedores (30/40/30 en pliego)</li>
+        </ul>
+      </div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta completamente</div>
+        <ul class="missing-list">
+          <li>P&L (Estado de resultados proyectado): ingresos vs. costos totales</li>
+          <li>Punto de equilibrio: cuántas entradas tenés que vender antes de ganar</li>
+          <li>Flujo de caja mes a mes: cuándo entra y sale plata (mayo–diciembre 2026)</li>
+          <li>Presupuesto por área: cuánto cuesta realmente cada departamento</li>
+          <li>Capital inicial necesario antes de que entren los ingresos de tickets</li>
+          <li>Escenarios financieros: best case / base case / worst case</li>
+          <li>Revenue streams completo: tickets + stands + sponsors + gastronomía + merch</li>
+          <li>Política de devoluciones y cancelación (impacto financiero)</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (modelo financiero)</span>
+        <span class="tool-chip secondary">Excel / Google Sheets</span>
+        <span class="tool-chip secondary">Contador (validación)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>estructura completa del P&L</strong> del evento con todos los rubros de ingresos y costos. Llenás los números reales a medida que obtenés cotizaciones.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Pedile que calcule el <strong>punto de equilibrio</strong>: cuántas entradas de cada categoría necesitás vender para cubrir todos los costos fijos.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude + Sheets</div><div class="step-text">Convertí el modelo en un <strong>flujo de caja mensual</strong> desde hoy hasta diciembre 2026. Identifica en qué meses el saldo es negativo y cuánto capital tenés que tener disponible.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá los <strong>3 escenarios</strong>: optimista (sold out), base (70%), pesimista (40%) y qué decisiones tomás en cada uno.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Modelo financiero completo del evento</div>
+      <div class="prompt-box bg-financiero">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#fbbf24"></span> Claude</div>
+        <div class="prompt-text">Actuá como CFO de una productora de eventos masivos. Necesito construir el modelo financiero completo del Bio & Wellness Festival Patagonia.
+
+Datos del evento:
+- Fechas: 28, 29 y 30 de noviembre 2026
+- Aforo objetivo: 20.000 personas/día = 60.000 flujo total
+- Pico simultáneo: ~8.000 personas
+- Tipo: festival al aire libre con escenario, feria, gastronomía y bienestar
+- Ciudad: Neuquén
+
+Datos conocidos hasta ahora:
+- Stands de feria: 90 stands entre USD 380 y USD 1.300 (3 días)
+- Stands gastronómicos: 38–45 puestos (precio a definir)
+- Activaciones propias: USD 17.500–24.500 inversión
+- Merchandising: a definir
+- Sponsors: sin cerrar todavía
+
+Generá el modelo financiero completo con:
+
+1. ESTRUCTURA DE INGRESOS (con columnas: unidades / precio unitario / total):
+   - Ventas de entradas: diseñá 4 categorías (Early Bird / General / VIP / Premium) con precios sugeridos para un festival wellness de este tamaño en Argentina noviembre 2026
+   - Revenue de feria: 90 stands × precio promedio por tamaño
+   - Revenue de gastronomía: comisión del festival sobre ventas (royalty % o precio fijo de puesto)
+   - Revenue de sponsors: 3 categorías (Sponsor principal / Co-sponsor / Auspiciante) con rangos
+   - Revenue de merchandising: estimación por asistente
+   - Otros: parking, casilleros, fotos profesionales
+
+2. ESTRUCTURA DE COSTOS (categorías principales):
+   COSTOS FIJOS (no dependen de la asistencia):
+   - Escenario y producción técnica (sonido, iluminación, video, energía)
+   - Estructura feria (módulos, toldos, señalética)
+   - Seguridad privada (cantidad de personas × precio por hora × días)
+   - Servicios médicos (ambulancias, enfermeros, puesto)
+   - Sanitarios portátiles (cantidad × precio de alquiler 3 días)
+   - Permisos y habilitaciones (SADAIC, Defensa Civil, municipal)
+   - Seguros (RC organizador, cancelación)
+   - Marketing y publicidad (campaña digital, imprenta, influencers)
+   - RRHH producción (sueldos del equipo organizador)
+   - Alquiler del predio
+   - Logística y montaje (grúas, camiones, personal)
+   
+   COSTOS VARIABLES (por asistente):
+   - Pulseras RFID o papel
+   - Personal de staff extra
+   - Hidratación gratuita y materiales de bienestar
+   - Gamificación (pasaportes, premios)
+
+3. PUNTO DE EQUILIBRIO:
+   - Con los ingresos y costos estimados, ¿cuántas entradas a qué precio promedio cubren los costos fijos?
+   - Mostrá la fórmula y el resultado
+   - ¿Qué % del aforo máximo representa el punto de equilibrio?
+
+4. FLUJO DE CAJA MENSUAL (jun–dic 2026):
+   Para cada mes mostrá:
+   - Ingresos esperados (cuándo entran los pagos de sponsors, stands, tickets)
+   - Egresos esperados (cuándo se pagan los proveedores: señas, anticipos, saldo)
+   - Saldo neto del mes
+   - Saldo acumulado
+   - Alerta si el saldo acumulado es negativo (necesita capital)
+
+5. TRES ESCENARIOS:
+   - Optimista: 85% del aforo vendido
+   - Base: 65% del aforo vendido
+   - Pesimista: 40% del aforo vendido
+   Para cada uno: total de ingresos, total de costos, resultado neto, y decisión recomendada
+
+6. CAPITAL INICIAL NECESARIO:
+   ¿Cuánto dinero necesitás tener disponible antes de que empiecen a entrar los ingresos por tickets? (Calculalo como el saldo negativo máximo del flujo de caja)
+
+Formateá todo de forma clara. Usá tablas donde sea posible. Indicá con <em>[PENDIENTE]</em> los valores que no puedo estimar sin cotizaciones reales.</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Modelo financiero completo listo para llenar con cotizaciones reales. Punto de equilibrio claro. Capital inicial necesario identificado. Con esto podés decidir si el evento es viable antes de comprometer más presupuesto.</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>La mayoría de los festivales que fracasan financieramente lo hacen porque el organizador calculó los ingresos pero no el flujo de caja. Vendiste el 50% de las entradas pero los proveedores piden el anticipo en agosto y las entradas se venden en octubre. Ese gap de liquidez es el que mata eventos. El flujo de caja es más importante que el P&L.</span>
+      </div>
+    </div>
+
+    <!-- GAP 03: ARTISTAS -->
+    <div class="dept" id="dept-3">
+      <div class="dept-header">
+        <div class="dept-num">03</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-artistas">🟠 Crítico — define el evento entero</div>
+          <div class="dept-title">Programa Artístico y Lineup</div>
+          <div class="dept-desc">Tenés un escenario, un rider técnico y una zona de charlas perfectamente diseñada, pero no tenés un solo artista, speaker ni propuesta de contenido confirmada. El lineup es lo que vende las entradas.</div>
+        </div>
+      </div>
+
+      <div class="status-badge gap">✗ Ausente — el contenido del festival no está definido</div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Estrategia de lineup: qué tipo de artistas encajan con el concepto bio/wellness</li>
+          <li>Longlist de artistas/speakers candidatos por categoría</li>
+          <li>Grilla horaria de 3 días (escenario principal + escenario 2 + bienestar)</li>
+          <li>Proceso de contratación de artistas (cómo contactarlos, qué ofrecer)</li>
+          <li>Estructura de contratos artísticos con riders técnicos y hospitality</li>
+          <li>Presupuesto de booking (cuánto asignás a artistas del total)</li>
+          <li>Propuesta de charlas/talleres: qué speakers/coaches de bienestar</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (estrategia y grilla)</span>
+        <span class="tool-chip secondary">Spotify / Instagram (research)</span>
+        <span class="tool-chip secondary">Booker o manager (contratación real)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí la <strong>estrategia de lineup</strong>: qué mix de artistas necesitás (headliner nacional, artistas regionales, DJs, speakers wellness, artistas locales neuquinos) y cuánto presupuesto asignás a cada categoría.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>longlist de candidatos por categoría</strong>: artistas nacionales con perfil bio/conscious, referentes del wellness, artistas patagónicos. Con criterios de selección.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Diseñá la <strong>grilla horaria</strong> de los 3 días: qué va en qué escenario, a qué hora, cómo se evitan superposiciones y cómo se distribuye la energía a lo largo del día.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>template de contrato artístico</strong> y el brief de hospitality. Qué le pedís al artista y qué le ofrecés en rider técnico y logística.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Estrategia de lineup y programa artístico</div>
+      <div class="prompt-box bg-artistas">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#a78bfa"></span> Claude</div>
+        <div class="prompt-text">Actuá como director artístico y booker con experiencia en festivales de bienestar, música consciente y cultura patagónica en Argentina.
+
+Contexto:
+- Festival: Bio & Wellness Festival Patagonia · Neuquén · 28, 29 y 30 nov 2026
+- Concepto: festival de bienestar premium con identidad patagónica. Conexión naturaleza-cuerpo-comunidad.
+- Público: 25–45 años, intereses en mindfulness, alimentación consciente, sustentabilidad, música indie/folk/electrónica suave, emprendedores, profesionales
+- Aforo: 20.000 personas/día
+- Escenarios disponibles: Escenario principal (capacidad 8.000 pax), Escenario 2 / charlas (400 pax), Domo de meditación (sesiones de hasta 150 pax)
+- Presupuesto estimado de artistas: <em>[% del presupuesto total o monto aproximado]</em>
+
+Generá el plan artístico completo:
+
+1. ESTRATEGIA DE LINEUP:
+   - Qué mix de artistas necesita este festival para ser coherente con su identidad (géneros musicales, tipos de artistas, perfil de speakers)
+   - Cómo se estructura el lineup por día: qué energía tiene el viernes, el sábado, el domingo
+   - Qué rol juega el headliner vs los artistas secundarios vs los artistas locales
+   - Criterios de selección: qué tipo de artistas NO encajan aunque sean populares
+
+2. LONGLIST DE CANDIDATOS (sin comprometer disponibilidad ni cachet):
+   Para cada categoría listá 5–8 nombres de referencia:
+   - Headliners nacionales: artistas con 200k+ seguidores, música folk/indie/electrónica suave/pop consciente
+   - Artistas nacionales mid-level: compatibles con el concepto, 50k–200k seguidores
+   - Artistas patagónicos / neuquinos: visibilidad local, integración territorial
+   - DJs / productores para sets ambient o sunset: nombres compatibles con wellness
+   - Speakers / coaches wellness nacionales: referentes de mindfulness, nutrición, movimiento, yoga
+   - Artistas emergentes: 1–2 por día para descubrir nuevos talentos regionales
+
+3. GRILLA HORARIA (3 días × 3 escenarios):
+   Diseñá la grilla hora por hora para los 3 días en formato tabla:
+   - Escenario Principal (12:00–22:00)
+   - Escenario 2 / Charlas (12:00–20:00)
+   - Domo de Meditación (sesiones a horarios fijos con descanso entre cada una)
+   Para cada slot indicá: categoría de artista, duración, tipo de acto, nombre placeholder si aplica.
+   Lógica de energía: la grilla debe arrancar suave (tarde), crecer (tarde-noche), llegar al pico (headliner) y cerrar (ambient/chill).
+
+4. PROCESO DE BOOKING:
+   - Cómo contactar a artistas: vía manager, agencia, Instagram DM (cuándo usar cada canal)
+   - Qué información incluir en el primer contacto
+   - Plazos recomendados: cuánto antes confirmar headliner, mid-level, artistas locales
+   - Qué pasa si un artista cancela 30 días antes (plan B)
+
+5. BRIEF DE HOSPITALITY:
+   Qué ofrecés a los artistas como estándar:
+   - Traslado (aéreo o terrestre)
+   - Alojamiento: qué tipo y dónde en Neuquén
+   - Catering: considerando que es un festival wellness
+   - Camerinos: estándar mínimo y plus para headliners
+   - Acreditaciones para el crew
+
+Incluí una nota de alerta si algún candidato o categoría puede generar conflicto con la identidad del festival.</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Estrategia de lineup con perfil de artista ideal, longlist por categoría, grilla horaria de 3 días y proceso de booking. Con esto podés empezar a contactar artistas y construir el programa que se comunica en marketing.</div>
+    </div>
+
+    <!-- GAP 04: TICKETING -->
+    <div class="dept" id="dept-4">
+      <div class="dept-header">
+        <div class="dept-num">04</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-comunicacion">🟠 Crítico — el motor de ingresos del evento</div>
+          <div class="dept-title">Ticketing y Estrategia de Ventas</div>
+          <div class="dept-desc">Tu plan de marketing menciona "abrir Early Bird" pero no tenés definida la plataforma de ticketing, las categorías de entrada, los precios, ni cómo manejar la reventa. Sin esto, el lanzamiento no puede ocurrir.</div>
+        </div>
+      </div>
+
+      <div class="status-badge gap">✗ Ausente — mencionado en marketing pero nunca desarrollado</div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Elección de plataforma de ticketing (AllTickets, PassLine, Eventbrite, propia)</li>
+          <li>Categorías de entrada con descripción de beneficios de cada una</li>
+          <li>Estructura de precios (Early Bird / 1ª tanda / 2ª tanda / puerta)</li>
+          <li>Capacidad máxima por día y cómo se controla el aforo con los tickets</li>
+          <li>Política anti-reventa y verificación de identidad</li>
+          <li>Pulseras RFID o código QR: qué sistema usás y cómo se integra al control de acceso</li>
+          <li>Cómo manejar entradas para speakers, staff, prensa y artistas</li>
+          <li>Política de devolución y cambio de fecha</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (estrategia y pricing)</span>
+        <span class="tool-chip secondary">AllTickets / PassLine (Argentina)</span>
+        <span class="tool-chip secondary">Eventbrite (internacional)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí la <strong>estrategia de ticketing completa</strong>: categorías, precios, fases de venta y lógica de urgencia para maximizar la conversión.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Acción real</div><div class="step-text">Contactá a <strong>AllTickets o PassLine</strong> (las plataformas líderes en Argentina para festivales). Pediles propuesta con fees, funcionalidades de control de acceso y tiempos de acreditación.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Diseñá la <strong>experiencia de compra</strong>: qué ve el comprador en cada paso, qué email recibe, cómo funciona la descarga del ticket y el acceso el día del evento.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Estrategia completa de ticketing</div>
+      <div class="prompt-box bg-comunicacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#60a5fa"></span> Claude</div>
+        <div class="prompt-text">Actuá como director de ventas y revenue manager de festivales con experiencia en el mercado argentino.
+
+Evento: Bio & Wellness Festival Patagonia · Neuquén · 28, 29 y 30 nov 2026
+Aforo: 20.000 personas/día (60.000 en flujo total)
+Concepto: festival premium de bienestar y cultura patagónica
+Público: 25–45 años, poder adquisitivo medio-alto, interés en experiencias premium
+Inicio de campaña de ventas: 9 de septiembre de 2026
+
+Diseñá la estrategia completa de ticketing:
+
+1. CATEGORÍAS DE ENTRADA (con descripción de beneficios exclusivos de cada una):
+   Diseñá mínimo 4 categorías. Para cada una indicá:
+   - Nombre (que sea coherente con la identidad bio/patagónica del festival)
+   - Precio en pesos argentinos (noviembre 2026 — ajustar por inflación; si querés dolarizar, indicá USD también)
+   - Beneficios incluidos: acceso qué días, acceso VIP, consumiciones, merchandise, acceso anticipado
+   - Cantidad disponible de cada categoría
+   - A qué buyer persona le conviene cada una
+
+2. FASES DE VENTA Y PRECIOS:
+   Diseñá la escalera de precios:
+   - Early Bird (cuándo empieza, cuánto dura, cuántas entradas, descuento)
+   - Primera tanda, segunda tanda, tercera tanda
+   - Precio de puerta (si se vende en el evento)
+   - Recomendación: ¿ofrecer abono 3 días vs. entrada por día?
+
+3. LÓGICA PSICOLÓGICA DE VENTAS:
+   - Cómo crear urgencia real (no falsa): herramientas y mensajes
+   - Cómo manejar el FOMO (fear of missing out) para acelerar ventas
+   - Cómo comunicar las fases de precio para maximizar la conversión en cada etapa
+
+4. CONTROL DE ACCESO:
+   - Pulseras RFID vs. QR en app vs. entrada papel: pros y contras para este evento
+   - Cuántos torniquetes o puntos de control necesitás para 20.000 personas/día con apertura de 12:00 (flujo de entrada entre 12:00 y 15:00)
+   - Cómo manejar filas y tiempos de espera en el ingreso
+   - Sistema de acreditación para staff, prensa, artistas y sponsors
+
+5. CATEGORÍAS ESPECIALES:
+   - Entradas prensa: cuántas, qué acceso, quién las autoriza
+   - Entradas staff: cómo se gestionan, qué días y horarios
+   - Entradas artistas + crew: protocolo para entregárselas
+   - Cortesías para sponsors: cuántas por categoría de sponsor
+
+6. POLÍTICA DE DEVOLUCIÓN Y CAMBIO:
+   - Condiciones de devolución (hasta cuándo, qué % se devuelve)
+   - Qué pasa si el evento se suspende por mal tiempo (Neuquén en noviembre: riesgo viento/tormenta eléctrica)
+   - Política de transferencia de entradas a nombre de otra persona
+
+7. REVENUE PROYECTADO:
+   Con las categorías y precios que definiste, calculá el revenue total si se vende:
+   - 40% del aforo disponible
+   - 65% del aforo disponible
+   - 90% del aforo disponible
+
+Recomendá la plataforma de ticketing más adecuada para Argentina (AllTickets, PassLine, Eventbrite, solución propia) con pros y contras de cada una para este tipo de evento.</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Estrategia de ticketing completa lista para configurar en la plataforma elegida. Categorías, precios, fases y proyección de revenue. Esto alimenta directamente el modelo financiero del Gap 02.</div>
+    </div>
+
+    <!-- GAP 05: SPONSORS -->
+    <div class="dept" id="dept-5">
+      <div class="dept-header">
+        <div class="dept-num">05</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-financiero">🟠 Crítico — ingresos clave para el P&L</div>
+          <div class="dept-title">Plan de Sponsors y Comercial</div>
+          <div class="dept-desc">Mencionás sponsors en varios documentos pero no tenés un deck de sponsorship, una propuesta de valor para empresas, ni las categorías y precios definidos. Sin esto no podés salir a buscar sponsors.</div>
+        </div>
+      </div>
+
+      <div class="status-badge gap">✗ Ausente — mencionado pero nunca desarrollado</div>
+
+      <div class="have-box">
+        <div class="have-box-title">Lo que sí tenés</div>
+        <ul class="have-list">
+          <li>Plan de activaciones de sponsors por categoría (bebidas, banco, indumentaria, etc.)</li>
+          <li>Mecánicas de activación por tipo de sponsor bien desarrolladas</li>
+          <li>Métricas que puede reportar el sponsor (plan de activaciones)</li>
+        </ul>
+      </div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Deck de sponsorship (presentación visual para enviar a empresas)</li>
+          <li>Categorías de sponsor con precios y beneficios por nivel</li>
+          <li>Propuesta de valor para el sponsor: por qué este festival, no otro</li>
+          <li>Mapa de visibilidad de marca (qué exposición tiene en cada zona del predio)</li>
+          <li>Proceso de prospección y pipeline de sponsors</li>
+          <li>Contrato tipo de sponsorship con cláusulas de exclusividad y entregables</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (estrategia y contenido del deck)</span>
+        <span class="tool-chip secondary">Canva (diseño del deck)</span>
+        <span class="tool-chip secondary">LinkedIn (prospección)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>contenido completo del deck de sponsorship</strong>: estructura, argumentos, categorías y beneficios. Luego lo pasás a Canva para diseñarlo.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí las <strong>categorías de sponsor</strong>: Sponsor Principal, Co-sponsor, Sponsor de Categoría, Auspiciante. Con precios sugeridos y beneficios diferenciados.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>lista de prospects</strong> por categoría: qué empresas encajan con el perfil bio/wellness para cada nivel de sponsorship.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Escribí el <strong>email de primer contacto</strong> para las empresas target. Corto, con propuesta de valor clara y call to action específico.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Deck de sponsorship completo</div>
+      <div class="prompt-box bg-financiero">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#fbbf24"></span> Claude</div>
+        <div class="prompt-text">Actuá como director comercial especializado en patrocinios de festivales y eventos culturales en Argentina.
+
+Evento: Bio & Wellness Festival Patagonia · Neuquén · 28, 29 y 30 nov 2026
+Aforo: 60.000 personas en flujo total · 8.000 pico simultáneo
+Perfil del asistente: 25–45 años, poder adquisitivo medio-alto, intereses en bienestar, alimentación consciente, sustentabilidad, emprendimientos, naturaleza
+Concepto: primer festival bio de gran escala en la Patagonia argentina
+Identidad: patagónica, premium, consciente, comunitaria
+
+Generá el contenido completo del deck de sponsorship:
+
+1. PROPUESTA DE VALOR PARA EL SPONSOR (por qué este festival):
+   - El mercado bio/wellness en Argentina: tamaño, crecimiento, tendencia
+   - Por qué este público es valioso para marcas premium
+   - Qué hace diferente a este festival vs. otros festivales de la región
+   - Cómo el sponsor se asocia a los valores del festival (no es publicidad, es identificación)
+   - Proyección de alcance: asistentes directos + impresiones en RRSS + cobertura mediática
+
+2. CATEGORÍAS DE SPONSORSHIP (diseñá 4 niveles):
+   Para cada nivel indicá:
+   - Nombre (en línea con la identidad del festival, ej: "Guardián", "Raíz", "Brote", "Semilla")
+   - Inversión en USD o pesos
+   - Beneficios de visibilidad: logo en qué piezas (escenario, señalética, app, redes, credenciales, pulseras, etc.)
+   - Activación incluida: qué puede hacer la marca en el predio
+   - Entradas y acreditaciones incluidas
+   - Contenido de marca: menciones en escenario, redes del festival, prensa
+   - Reportes y métricas que recibe el sponsor al cierre
+
+3. MAPA DE VISIBILIDAD DE MARCA:
+   Listar todos los puntos de contacto visuales del festival y qué nivel de sponsor tiene presencia en cada uno:
+   - Escenario principal (backdrop, banner lateral, mención conductor)
+   - Señalética del predio
+   - Pulseras de acceso
+   - Pasaportes de gamificación
+   - Redes sociales (stories, feed, hashtag)
+   - Email a base de datos
+   - Prensa y notas
+   - Streaming / registro audiovisual
+   - Bolsa o kit de bienvenida
+
+4. CATEGORÍAS DE INDUSTRIA SUGERIDAS:
+   Para cada categoría indicá qué nivel de sponsor encaja mejor y por qué:
+   - Bebidas (agua, jugos naturales, cerveza artesanal, kombucha)
+   - Alimentación bio / suplementos / nutrición
+   - Indumentaria sustentable / outdoor
+   - Banca / fintech / pagos digitales
+   - Automotriz / movilidad eléctrica
+   - Tecnología / wearables / salud digital
+   - Cosmética natural / cuidado personal
+   - Inmobiliaria / construcción sustentable
+   - Medios de comunicación (prensa, radio, podcast)
+   - Marcas regionales patagónicas
+
+5. PROCESO DE ACTIVACIÓN (para incluir en el deck):
+   Explicá en 3 pasos cómo funciona ser sponsor: firma del contrato → qué entrega la marca → qué produce el festival → qué reporta el festival post-evento
+
+6. PRIMERAS MARCAS TARGET (longlist):
+   Para cada categoría de industria, sugerí 3–5 marcas nacionales o regionales que encajan con el perfil del festival. Priorizá marcas con identidad sustentable o consciencia ambiental.
+
+7. ESTRUCTURA DEL DECK (slide por slide):
+   Describí exactamente qué contenido va en cada slide (total 12–15 slides). Esto sirve para armarlo en Canva.</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Contenido completo del deck de sponsorship listo para ser diseñado en Canva. Categorías con precios y beneficios. Lista de prospects por industria. Esto te permite salir a buscar sponsors con una propuesta profesional.</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>Los sponsors de un festival wellness no compran "un banner". Compran acceso a un público específico en un estado de apertura emocional. El deck tiene que vender eso, no metros cuadrados de visibilidad. La sección "quién es tu asistente" es la más importante del deck: datos demográficos, psicográficos y de consumo del público bio.</span>
+      </div>
+    </div>
+
+    <!-- GAP 06: RRHH -->
+    <div class="dept" id="dept-6">
+      <div class="dept-header">
+        <div class="dept-num">06</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-operaciones">🟡 Importante — el equipo que ejecuta todo</div>
+          <div class="dept-title">RRHH y Estructura del Equipo</div>
+          <div class="dept-desc">Tenés el runbook con "coordinadores de área" y "jefes de departamento" pero no tenés definido quiénes son, cuántos necesitás, qué funciones tienen ni cómo los contratás. El evento lo ejecutan personas, no documentos.</div>
+        </div>
+      </div>
+
+      <div class="status-badge partial">⚠ Roles mencionados en runbook, nunca desarrollados</div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Organigrama del equipo de producción (con nombres o roles vacantes)</li>
+          <li>Job descriptions para cada rol clave (director técnico, coord. feria, etc.)</li>
+          <li>Plan de staffing total: cuántas personas por área y por día</li>
+          <li>Brief de staff voluntario vs. personal rentado</li>
+          <li>Plan de capacitación del staff (briefing previo al evento)</li>
+          <li>Sistemas de acreditación y control de acceso del staff</li>
+          <li>Política de uniformes, identificación y comunicación interna</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (organigrama y job descriptions)</span>
+        <span class="tool-chip secondary">Notion / Google Sheets (seguimiento)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>organigrama completo</strong> del evento: desde el director de producción ejecutivo hasta el último staff de campo. Con líneas de reporte y responsabilidades.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Creá las <strong>job descriptions</strong> de los 8–10 roles clave. Con tareas específicas, a quién reporta, qué necesita saber y cuántos días de trabajo implica.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Diseñá el <strong>brief de staff</strong>: el documento que recibe cada persona del equipo antes del evento. Qué hace, qué NO hace, cómo se comunica, qué usa.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Organigrama y plan de staffing completo</div>
+      <div class="prompt-box bg-operaciones">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Claude</div>
+        <div class="prompt-text">Actuá como director de recursos humanos para eventos masivos.
+
+Evento: Bio & Wellness Festival Patagonia · Neuquén · 28, 29 y 30 nov 2026
+Formato: festival al aire libre 3 días, 19.500 m², 8.000 pico simultáneo
+Zonas: escenario principal, escenario 2, domo meditación, feria de emprendedores, gastronomía, bienestar, accesos, backstage
+Montaje: 11 días previos (17–27 noviembre)
+Desmontaje: 3 días posteriores
+
+Generá el plan completo de recursos humanos:
+
+1. ORGANIGRAMA DEL EVENTO:
+   Estructura jerárquica completa con:
+   - Dirección General / Producción Ejecutiva (nivel 1)
+   - Jefes de área (nivel 2): técnico, seguridad, gastronomía, feria, bienestar, comunicación, logística
+   - Coordinadores (nivel 3): responsables de sub-áreas
+   - Staff operativo (nivel 4): personal de campo
+   Para cada nivel indicá: nombre del rol, a quién reporta, cantidad de personas en ese rol
+
+2. JOB DESCRIPTIONS (para los 8 roles clave):
+   - Director de Producción Ejecutivo
+   - Jefe Técnico de Escenario
+   - Coordinador de Seguridad y Accesos
+   - Coordinador de Feria de Emprendedores
+   - Coordinador Gastronómico
+   - Coordinador de Bienestar
+   - Coordinador de Comunicación e RRSS en Sitio
+   - Stage Manager
+   Para cada uno: función principal, tareas específicas el día del evento, qué NO es su responsabilidad, canal de comunicación asignado (radio / WhatsApp / Slack), perfil requerido
+
+3. TABLA DE STAFFING TOTAL:
+   Área | Día montaje (prom) | Día del evento | Día desmontaje | Total personas-día | Rentado/Voluntario
+   
+4. PLAN DE BRIEFING DEL STAFF:
+   - Cuándo se hace el briefing general (recomendación: 72h antes)
+   - Qué información recibe cada persona: mapa del evento, posición asignada, protocolo de incidentes, canal de radio, quién es su supervisor
+   - Cómo se identifica el staff (credencial, color de remera, pechera)
+   - Protocolo de llegada del staff el día del evento (qué hora, dónde se concentra, cómo recibe instrucciones)
+
+5. POLÍTICA DE VOLUNTARIOS:
+   - Cuántos voluntarios tiene sentido incorporar y en qué roles
+   - Qué reciben a cambio (entrada, remera, comida)
+   - Qué NO se delega a voluntarios (seguridad, medical, técnico)
+   - Cómo se los convoca y selecciona</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Organigrama completo, job descriptions de roles clave, tabla de staffing y plan de briefing. Con esto podés empezar a reclutar el equipo y cada persona sabe exactamente qué hace.</div>
+    </div>
+
+    <!-- GAP 07: SUSTENTABILIDAD -->
+    <div class="dept" id="dept-7">
+      <div class="dept-header">
+        <div class="dept-num">07</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-operaciones">🟡 Importante — es parte del ADN del festival</div>
+          <div class="dept-title">Plan de Sustentabilidad</div>
+          <div class="dept-desc">El festival se llama "Bio & Wellness", tiene restricciones de packaging plástico en gastronomía y menciona puntos ECO en el mapa, pero no existe un plan real de gestión de residuos ni de impacto ambiental. Para un festival con esta identidad, esto es parte del producto.</div>
+        </div>
+      </div>
+
+      <div class="status-badge partial">⚠ Mencionado en 3 docs pero nunca desarrollado</div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Plan integral de gestión de residuos (clasificación, recolección, disposición)</li>
+          <li>Política de envases: qué se permite y qué no, y cómo se hace cumplir</li>
+          <li>Sistema de puntos ECO operativo (cuántos, dónde, cómo funcionan)</li>
+          <li>Cálculo de huella de carbono del evento y plan de compensación</li>
+          <li>Proveedores sustentables: criterios y lista de proveedores certificados</li>
+          <li>Comunicación de sustentabilidad al asistente (cómo contar lo que hacés)</li>
+          <li>Métricas de sustentabilidad para el informe post-evento</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (plan y comunicación)</span>
+        <span class="tool-chip secondary">ISO 20121 (referencia)</span>
+        <span class="tool-chip secondary">ONG local de reciclaje</span>
+      </div>
+
+      <div class="prompt-label">Prompt — Plan de sustentabilidad para festival bio</div>
+      <div class="prompt-box bg-operaciones">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Claude</div>
+        <div class="prompt-text">Actuá como consultor de sustentabilidad en eventos con experiencia en la norma ISO 20121 y festivales de bienestar latinoamericanos.
+
+Festival: Bio & Wellness Festival Patagonia · Neuquén · 60.000 asistentes en 3 días · chacra privada al aire libre
+
+El festival tiene una identidad profundamente ligada a lo bio, lo natural y lo consciente. La sustentabilidad no es un "add-on": es parte de la propuesta de valor. Si el festival genera toneladas de residuos sin gestión, arruina su propia promesa de marca.
+
+Generá el plan de sustentabilidad completo:
+
+1. DIAGNÓSTICO DE IMPACTO:
+   - Principales fuentes de residuos en un festival de este tipo (envases gastro, material de feria, logística, sanitarios, decoración)
+   - Estimación de kilos de residuos generados por asistente/día (parámetros de referencia internacional)
+   - Principales fuentes de emisiones de CO2 (transporte de asistentes, energía, logística, alimentación)
+
+2. PLAN DE GESTIÓN DE RESIDUOS:
+   - Sistema de clasificación: cuántas corrientes (orgánicos / reciclables / no reciclables mínimo)
+   - Diseño de los puntos ECO: cómo se ven, qué incluyen, cuántos necesitás para 8.000 pax simultáneos
+   - Proceso de recolección: frecuencia, quién lo hace, cómo se almacena y dispone
+   - Articulación con el municipio de Neuquén o empresa de reciclaje local
+   - Meta: % de residuos desviados de vertedero (define uno realista y uno aspiracional)
+
+3. POLÍTICA DE ENVASES Y MATERIALES:
+   - Qué materiales están PROHIBIDOS en el predio (lista clara)
+   - Qué alternativas ofrecés (vasos reutilizables, envases compostables)
+   - Cómo lo hacés cumplir en gastronomía y feria (control, penalidades para stands)
+   - Sistema de vaso reutilizable: depósito, intercambio, logística
+
+4. ENERGÍA:
+   - Cómo minimizar el consumo de grupos electrógenos (qué hacer en horarios de baja actividad)
+   - Posibilidad de complementar con energía solar/renovable en zonas de bienestar o feria
+   - Plan de apagado progresivo nocturno
+
+5. COMPENSACIÓN DE HUELLA DE CARBONO:
+   - Cómo calcular (aunque sea estimado) la huella del evento
+   - Opciones de compensación viables en Argentina (reforestación patagónica, bonos de carbono locales)
+   - Cómo comunicarlo: "este festival compensó X toneladas de CO2"
+
+6. COMUNICACIÓN DE SUSTENTABILIDAD AL ASISTENTE:
+   - Cómo explicarle al asistente qué hace el festival (señalética, email previo, redes)
+   - Cómo invitarlo a participar (traé tu botella, separación de residuos, transporte compartido)
+   - Cómo reportar los resultados al cierre ("este festival generó X kg de residuos, el Y% fue reciclado")
+
+7. MÉTRICAS E INFORME:
+   - Qué datos medir durante el evento (kilos reciclados, % de stands con envase correcto)
+   - Cómo generar el informe de sustentabilidad post-evento para mostrar a sponsors y prensa</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Plan de sustentabilidad operativo con sistema de residuos, política de envases, métricas y comunicación. Es uno de los diferenciadores del festival frente al público y los sponsors con agenda ESG.</div>
+    </div>
+
+    <!-- GAP 08: PROGRAMA -->
+    <div class="dept" id="dept-8">
+      <div class="dept-header">
+        <div class="dept-num">08</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-comunicacion">🔵 Completar — necesita el lineup primero</div>
+          <div class="dept-title">Programa y Agenda Pública</div>
+          <div class="dept-desc">Tenés la grilla horaria diseñada conceptualmente en el plan espacial y bienestar, pero no hay un programa publicable. El asistente que compra una entrada necesita saber qué va a pasar, cuándo y dónde.</div>
+        </div>
+      </div>
+
+      <div class="status-badge partial">⚠ Estructura existe, contenido vacío</div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Programa completo hora a hora de los 3 días (los 3 escenarios y zonas de actividad)</li>
+          <li>Versión publicable para redes y web (cards de Instagram, grilla visual)</li>
+          <li>Descripciones de cada actividad para el asistente</li>
+          <li>Mapa del festival con ubicaciones nombradas para comunicar</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (contenido del programa)</span>
+        <span class="tool-chip secondary">Canva (diseño de grilla visual)</span>
+      </div>
+
+      <div class="prompt-label">Prompt — Programa público del festival</div>
+      <div class="prompt-box bg-comunicacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#60a5fa"></span> Claude</div>
+        <div class="prompt-text">Actuá como director de contenido de un festival de bienestar.
+
+Una vez que tengás el lineup confirmado (artistas, speakers, talleres), usá este prompt:
+
+Contexto del festival: Bio & Wellness Festival Patagonia · 3 días · Neuquén
+Escenarios/zonas activos: Escenario Principal · Escenario 2 / Charlas · Domo de Meditación · Zona de Bienestar · Feria (sin horario fijo)
+Horario operativo: 12:00–22:00 cada día
+
+Lineup confirmado:
+<em>[PEGÁ AQUÍ EL LINEUP COMPLETO CON HORARIOS]</em>
+
+Generá el programa completo del festival con:
+
+1. GRILLA HORA A HORA (formato tabla):
+   Día 1 (viernes 28) / Día 2 (sábado 29) / Día 3 (domingo 30)
+   Columnas: Horario | Escenario Principal | Escenario 2 | Domo/Bienestar
+   Incluí los tiempos de cambio de set y armado de escenario
+
+2. DESCRIPCIONES PARA COMUNICACIÓN:
+   Para cada actividad/artista/taller, escribí una descripción de 2–3 líneas en tono del festival (cálido, poético, cercano). Esta descripción va en la web, la app y los posts.
+
+3. HIGHLIGHTS POR DÍA (para marketing):
+   El "titular" de cada día: qué es lo más importante que pasa y cómo se comunica en 1 línea
+
+4. GRILLA VISUAL PARA REDES (descripción):
+   Describí cómo debería verse visualmente la grilla para Instagram: colores, tipografía, iconos, formato (carrusel, una imagen, stories)
+
+5. VERSIÓN SIMPLIFICADA PARA PULSERA / FLYER:
+   Los 5 momentos más importantes del festival que caben en un flyer pequeño o en el reverso de la pulsera</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Programa completo en texto, grilla visual para Canva, descripciones para web y cards para redes. Depende de que primero cierres el lineup (Gap 03).</div>
+    </div>
+
+    <!-- GAP 09: GUIA DEL ASISTENTE -->
+    <div class="dept" id="dept-9">
+      <div class="dept-header">
+        <div class="dept-num">09</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-comunicacion">🔵 Completar — mejora la experiencia</div>
+          <div class="dept-title">Guía del Asistente y Comunicación en Sitio</div>
+          <div class="dept-desc">Tu plan de marketing menciona "email logístico completo" para la semana del evento pero no tenés el contenido de ese email ni una guía del asistente. Esto reduce fricciones el día del evento y baja las consultas al staff.</div>
+        </div>
+      </div>
+
+      <div class="status-badge partial">⚠ Mencionado en marketing, contenido ausente</div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Guía del asistente (PDF o landing page): cómo llegar, qué traer, qué no traer, FAQ</li>
+          <li>Email logístico pre-evento (enviar 7 días y 24h antes)</li>
+          <li>Señalética del festival: textos exactos de cada cartel</li>
+          <li>FAQ para redes sociales y atención al cliente pre-evento</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (contenido completo)</span>
+        <span class="tool-chip secondary">Canva (diseño PDF)</span>
+        <span class="tool-chip secondary">Mailchimp / Email platform</span>
+      </div>
+
+      <div class="prompt-label">Prompt — Guía completa del asistente</div>
+      <div class="prompt-box bg-comunicacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#60a5fa"></span> Claude</div>
+        <div class="prompt-text">Actuá como coordinador de comunicación de un festival wellness.
+
+Festival: Bio & Wellness Festival Patagonia · 28, 29 y 30 nov 2026 · Neuquén
+Predio: Chacra privada · Ruta Int. Pedro Linares
+Acceso: <em>[CÓMO LLEGAR: GPS, transporte público, shuttles si aplica]</em>
+Aforo: 20.000 personas/día
+
+Generá la guía completa del asistente con:
+
+1. GUÍA DEL ASISTENTE (para PDF o landing page):
+   Secciones:
+   - Bienvenida (2–3 líneas en tono del festival)
+   - Cómo llegar: auto, transporte público, estacionamiento, shuttles
+   - Horarios: apertura de puertas, cierre, últimas entradas
+   - Qué traer: lista de recomendaciones (ropa abrigada para la noche en noviembre, protector solar, zapatillas, etc.)
+   - Qué NO traer: lista de objetos prohibidos
+   - Sobre las entradas: cómo presentarla, pulseras, reingreso
+   - Mapa del festival: descripción de las zonas y cómo orientarse
+   - El sistema de gamificación: explicación simple del pasaporte patagónico
+   - Gastronomía: qué tipo de comida hay, hay opciones veganas/sin TACC
+   - Sustentabilidad: cómo participar (trae tu botella, puntos ECO)
+   - Medidas de seguridad y emergencias: dónde están los primeros auxilios, qué hacer si perdés algo
+   - Contacto y atención en sitio
+
+2. EMAIL PRE-EVENTO (2 versiones):
+   Versión 1: 7 días antes del evento (énfasis en logística + anticipación emocional)
+   Versión 2: 24 horas antes (recordatorio práctico, condiciones climáticas, qué llevar)
+   Tono: cálido, como si te escribiera un amigo que organizó algo épico
+
+3. FAQ PARA REDES SOCIALES (25 preguntas):
+   Las 25 preguntas más frecuentes antes de un festival de este tipo, con respuestas cortas para responder en los comentarios o en mensajes directos. Incluí preguntas sobre:
+   - Entradas y precios
+   - Cómo llegar y estacionar
+   - Clima y qué ropa llevar
+   - Accesibilidad
+   - Animales de compañía
+   - Política de ingreso con comida propia
+   - Zonas para niños
+   - Fotos y cámaras profesionales
+
+4. TEXTOS DE SEÑALÉTICA INTERNA:
+   Escribí los textos de los 15 carteles más importantes del evento:
+   - Cartel de bienvenida en entrada
+   - Carteles de cada zona (Feria, Gastronomía, Bienestar, Escenario, etc.)
+   - Carteles de sustentabilidad (puntos ECO, política de envases)
+   - Cartel de normas generales del evento
+   - Carteles de emergencia (primeros auxilios, salida de emergencia)
+   Para cada cartel indicá: texto principal (máx. 5 palabras), texto secundario (1 línea explicativa) y si necesita ícono</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Guía del asistente lista para diseño, 2 emails listos para enviar, FAQ para redes y textos de señalética. Todo esto reduce la presión sobre el staff el día del evento y mejora la experiencia del asistente.</div>
+    </div>
+
+    <!-- GAP 10: POST-EVENTO -->
+    <div class="dept" id="dept-10">
+      <div class="dept-header">
+        <div class="dept-num">10</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-postevent">⚪ Cierre — el evento no termina el 30 de noviembre</div>
+          <div class="dept-title">Post-Evento, Métricas y Segunda Edición</div>
+          <div class="dept-desc">No tenés ningún documento de cierre. El post-evento es donde se construye la próxima edición, se retienen sponsors, se cierra con proveedores y se convierte la experiencia en comunidad. Es tan importante como el pre-evento.</div>
+        </div>
+      </div>
+
+      <div class="status-badge gap">✗ Ausente completamente</div>
+
+      <div class="missing-box">
+        <div class="missing-box-title">Lo que falta</div>
+        <ul class="missing-list">
+          <li>Encuesta de satisfacción del asistente (qué preguntar y cuándo enviar)</li>
+          <li>Encuesta a expositores y stands (feria y gastronomía)</li>
+          <li>Informe de resultados para sponsors (métricas de cumplimiento)</li>
+          <li>Informe financiero de cierre del evento</li>
+          <li>Reunión de debrief del equipo de producción</li>
+          <li>Estrategia de retención y comunidad (cómo mantener la base hasta la próxima edición)</li>
+          <li>Informe de sustentabilidad para publicar</li>
+        </ul>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (informes y encuestas)</span>
+        <span class="tool-chip secondary">Typeform / Google Forms</span>
+        <span class="tool-chip secondary">Canva (informe visual)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude — 24h post-evento</div><div class="step-text">Enviá la <strong>encuesta de satisfacción</strong> al asistente mientras el recuerdo está fresco. El mejor momento es el día siguiente al último día del festival.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude — 72h post-evento</div><div class="step-text">Cerrá el <strong>informe financiero</strong> con los números reales vs. proyectados. Identificá dónde se fue más plata de lo previsto y qué fue más rentable.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude — 1 semana post</div><div class="step-text">Generá el <strong>informe para sponsors</strong> con las métricas reales: asistentes, fotos con hashtag, menciones en prensa, activaciones completadas.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude — 2 semanas post</div><div class="step-text">Diseñá la <strong>estrategia de comunidad</strong> post-evento: cómo mantenés el vínculo con los asistentes hasta la próxima edición y cómo convertís el festival en plataforma permanente.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Plan completo de cierre post-evento</div>
+      <div class="prompt-box bg-postevent">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#5c5a70"></span> Claude</div>
+        <div class="prompt-text">Actuá como director de operaciones de una productora de festivales con foco en retención de comunidad y mejora continua.
+
+Festival: Bio & Wellness Festival Patagonia · Edición 2026
+El evento terminó hace 48 horas. Ahora empieza el cierre.
+
+Generá el plan completo de post-evento:
+
+1. ENCUESTA DE SATISFACCIÓN DEL ASISTENTE:
+   - 15 preguntas (mix de escala 1–5 y preguntas abiertas)
+   - Cubrir: experiencia general, gastronomía, feria, programa artístico, bienestar, logística/acceso, sustentabilidad percibida, intención de repetir, NPS (¿recomendarías?)
+   - Cuándo enviar: 24h después del último día
+   - Incentivo para completarla: acceso anticipado a Early Bird de la próxima edición
+   - Cómo analizarla: qué métricas exportar y qué decisiones tomar según los resultados
+
+2. ENCUESTA A EXPOSITORES (feria + gastronomía):
+   - 10 preguntas: ventas vs. expectativas, atención del equipo del festival, infraestructura, ¿volvería?
+   - Cuándo: 48–72h post-evento
+   - Cómo usar los resultados para mejorar la convocatoria de la próxima edición
+
+3. INFORME DE RESULTADOS PARA SPONSORS:
+   Estructura del informe que entregás a cada sponsor:
+   - Asistencia real (total + por día)
+   - Alcance en RRSS (impresiones del hashtag, menciones de marca)
+   - Resultados de la activación (participantes, fotos generadas, QR escaneados)
+   - Cobertura en medios (notas, entrevistas, apariciones)
+   - Testimonios del público sobre la activación
+   - Comparación con los entregables prometidos en el contrato
+   - Propuesta para la próxima edición (mejora de la activación)
+
+4. INFORME FINANCIERO DE CIERRE:
+   Columnas: Rubro | Presupuestado | Real | Desvío | % desvío | Causa del desvío
+   Análisis: ¿cuáles fueron los 3 mayores gastos imprevistos? ¿qué ingreso superó expectativas?
+   Conclusión financiera: ¿el evento fue rentable? ¿cuánto?
+
+5. REUNIÓN DE DEBRIEF DEL EQUIPO:
+   Agenda tipo para la reunión (máx. 2 horas, dentro de los 7 días post-evento):
+   - Qué funcionó bien en cada área (15 min)
+   - Qué falló o fue difícil (15 min por área)
+   - 3 mejoras concretas que se implementan en la próxima edición (30 min)
+   - Reconocimiento del equipo (10 min)
+   Plantilla de acta de debrief para documentar las decisiones
+
+6. ESTRATEGIA DE COMUNIDAD POST-EVENTO:
+   - Email de agradecimiento a los asistentes: qué decir, cuándo enviarlo, cómo conectar emocionalmente
+   - Contenido de RRSS de cierre: qué publicar en los 7 días post-evento
+   - Lanzamiento de lista de espera para la edición 2027: cuándo y cómo
+   - Comunidad permanente: ¿grupo de WhatsApp? ¿newsletter mensual? ¿comunidad online?
+   - Cómo capitalizar el UGC generado durante el evento para seguir publicando durante 30–60 días</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Encuestas listas para enviar, estructura del informe de sponsors, plan de debrief del equipo y estrategia de comunidad post-evento. Esto convierte la primera edición en la plataforma de lanzamiento de la segunda.</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>El mayor error de los organizadores de primera edición es creer que el evento termina cuando cierra el último día. El post-evento es donde se construye la comunidad que va a llenar el festival de la próxima edición sin gastar en publicidad. Un buen seguimiento post-evento puede reducir el costo de adquisición de asistentes en un 40% para la segunda edición.</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function showDept(n) {
+  document.querySelectorAll('.dept').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('dept-' + n).classList.add('active');
+  document.querySelector('[data-dept="' + n + '"]').classList.add('active');
+  const total = 10;
+  document.getElementById('progress').style.width = (n / total * 100) + '%';
+  document.querySelector('.main').scrollTop = 0;
+}
+
+function copyPrompt(btn) {
+  const box = btn.closest('.prompt-box');
+  const text = box.querySelector('.prompt-text').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

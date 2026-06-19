@@ -78,10 +78,7 @@ export const TICKETS = [
   {
     id: "raices-early",
     name: "Raíces",
-    precio: "$ 18.250",
-    precioOrig: "$ 25.000",
-    precioNum: 18250,
-    descuento: "−27%",
+    precio: "A Confirmar",
     unidad: "por día",
     badge: "Raíces · Early Bird",
     color: "ocre",
@@ -96,10 +93,7 @@ export const TICKETS = [
   {
     id: "bosque-early",
     name: "Bosque",
-    precio: "$ 58.400",
-    precioOrig: "$ 80.000",
-    precioNum: 58400,
-    descuento: "−27%",
+    precio: "A Confirmar",
     unidad: "por día",
     badge: "Bosque · Early Bird",
     color: "tierra",
@@ -114,8 +108,7 @@ export const TICKETS = [
   {
     id: "raices",
     name: "Raíces",
-    precio: "$ 25.000",
-    precioNum: 25000,
+    precio: "A Confirmar",
     unidad: "por día",
     badge: "Raíces · General",
     color: "verde",
@@ -130,8 +123,7 @@ export const TICKETS = [
   {
     id: "bosque",
     name: "Bosque",
-    precio: "$ 80.000",
-    precioNum: 80000,
+    precio: "A Confirmar",
     unidad: "por día",
     badge: "Bosque · VIP",
     color: "tierra",

@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Acción — Bio & Wellness Festival Patagonia 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bosque: #1A3D1F;
+    --tierra: #C8B87A;
+    --brote: #EAF3DE;
+    --llama: #C96B3A;
+    --hueso: #F5F0E8;
+    --corteza: #8B6F47;
+    --carbon: #1C1C1A;
+    --rojo: #C0392B;
+    --naranja: #D4680A;
+    --amarillo: #B8860B;
+    --azul: #1A5276;
+    --gris: #6B7280;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--hueso);
+    color: var(--carbon);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--bosque);
+    color: var(--hueso);
+    padding: 56px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border: 1px solid rgba(200,184,122,0.15);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 30%;
+    width: 200px; height: 200px;
+    border: 1px solid rgba(200,184,122,0.1);
+    border-radius: 50%;
+  }
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--tierra);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--hueso);
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--tierra);
+  }
+  .header-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+  .header-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+  .pill-red { background: rgba(192,57,43,0.25); color: #E8A090; border: 1px solid rgba(192,57,43,0.3); }
+  .pill-orange { background: rgba(201,107,58,0.25); color: #F0B890; border: 1px solid rgba(201,107,58,0.3); }
+  .pill-yellow { background: rgba(184,134,11,0.25); color: #E8D080; border: 1px solid rgba(184,134,11,0.3); }
+  .pill-green { background: rgba(26,93,31,0.4); color: #90C890; border: 1px solid rgba(90,180,90,0.3); }
+
+  /* STATUS PANEL */
+  .status-panel {
+    background: white;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 32px 48px;
+  }
+  .status-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 24px;
+  }
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .status-ok { background: #F0FFF4; color: #276749; }
+  .status-ok::before { content: '✓'; font-weight: 700; color: #38A169; }
+  .status-fix { background: #FFF5F5; color: #9B2C2C; }
+  .status-fix::before { content: '✗'; font-weight: 700; color: #E53E3E; }
+  .status-warn { background: #FFFBEB; color: #744210; }
+  .status-warn::before { content: '⚠'; color: #D69E2E; }
+
+  /* CORRECTIONS BLOCK */
+  .corrections-block {
+    background: #FFF5F0;
+    border-left: 4px solid var(--llama);
+    margin: 32px 48px;
+    padding: 28px 32px;
+    border-radius: 0 12px 12px 0;
+  }
+  .corrections-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--llama);
+    margin-bottom: 8px;
+  }
+  .corrections-block p {
+    font-size: 13px;
+    color: #7A4020;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .correction-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(201,107,58,0.2);
+  }
+  .correction-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .correction-before {
+    background: #FEE2E2;
+    padding: 14px 16px;
+  }
+  .correction-before .correction-label { color: #991B1B; }
+  .correction-before p { font-size: 13px; color: #7F1D1D; margin: 0; }
+  .correction-after {
+    background: #F0FFF4;
+    padding: 14px 16px;
+    border-left: 1px solid rgba(201,107,58,0.15);
+  }
+  .correction-after .correction-label { color: #1A4731; }
+  .correction-after p { font-size: 13px; color: #14532D; margin: 0; }
+
+  /* MAIN CONTENT */
+  .main { max-width: 960px; margin: 0 auto; padding: 0 48px 80px; }
+
+  /* SECTION HEADER */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 56px 0 32px;
+  }
+  .section-divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+  }
+  .section-divider-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gris);
+    white-space: nowrap;
+  }
+
+  /* PRIORITY BADGE */
+  .priority-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .priority-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 5px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-red { background: #FEE2E2; color: #991B1B; border: 1px solid rgba(153,27,27,0.2); }
+  .badge-orange { background: #FEF3C7; color: #92400E; border: 1px solid rgba(146,64,14,0.2); }
+  .badge-yellow { background: #FEF9C3; color: #854D0E; border: 1px solid rgba(133,77,14,0.2); }
+  .badge-blue { background: #EFF6FF; color: #1E40AF; border: 1px solid rgba(30,64,175,0.2); }
+  .badge-gray { background: #F3F4F6; color: #374151; border: 1px solid rgba(55,65,81,0.15); }
+  .priority-desc {
+    font-size: 13px;
+    color: var(--gris);
+    font-style: italic;
+  }
+
+  /* GAP CARD */
+  .gap-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .gap-card-header {
+    padding: 28px 32px 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .gap-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1;
+    color: rgba(0,0,0,0.08);
+    min-width: 48px;
+    margin-top: -4px;
+  }
+  .gap-card-title-group { flex: 1; }
+  .gap-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--carbon);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .gap-card-desc {
+    font-size: 14px;
+    color: var(--gris);
+    line-height: 1.6;
+    max-width: 580px;
+  }
+  .gap-status-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .tag-missing { background: #FEE2E2; color: #991B1B; }
+  .tag-partial { background: #FEF3C7; color: #92400E; }
+  .tag-urgent { background: #FEE2E2; color: #991B1B; font-weight: 600; }
+
+  .gap-card-body {
+    padding: 28px 32px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .info-block {
+    background: var(--hueso);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .info-block h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 12px;
+  }
+  .info-block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .info-block ul li {
+    font-size: 13px;
+    color: var(--carbon);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .info-block ul li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--corteza);
+    font-weight: 300;
+  }
+
+  .alert-box {
+    background: #FFF7ED;
+    border: 1px solid rgba(201,107,58,0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #7A4020;
+    line-height: 1.6;
+  }
+  .alert-box strong { color: var(--llama); }
+
+  /* STEPS */
+  .steps-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin-bottom: 16px;
+  }
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--hueso);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    background: var(--bosque);
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content { flex: 1; }
+  .step-when {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tierra);
+    margin-bottom: 3px;
+    display: block;
+  }
+  .step-text {
+    font-size: 13px;
+    color: var(--carbon);
+    line-height: 1.5;
+  }
+  .step-text strong { color: var(--bosque); }
+  .step-tools {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .tool-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: var(--gris);
+    background: white;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  /* PROMPT BOX */
+  .prompt-block {
+    margin-top: 20px;
+    border: 1px solid rgba(26,61,31,0.15);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .prompt-header {
+    background: var(--bosque);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .prompt-header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--tierra);
+    letter-spacing: 0.1em;
+  }
+  .prompt-copy-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    background: rgba(200,184,122,0.2);
+    color: var(--tierra);
+    border: 1px solid rgba(200,184,122,0.3);
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+  }
+  .prompt-copy-btn:hover { background: rgba(200,184,122,0.35); }
+  .prompt-body {
+    background: #F8F9FA;
+    padding: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #2D3748;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: none;
+  }
+  .prompt-toggle {
+    background: #F8F9FA;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--gris);
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .prompt-toggle:hover { background: #EDF2F7; }
+  .prompt-arrow { transition: transform 0.2s; display: inline-block; }
+  .prompt-toggle.open .prompt-arrow { transform: rotate(180deg); }
+
+  /* TIP BOX */
+  .tip-box {
+    background: #F0FFF4;
+    border: 1px solid rgba(56,161,105,0.25);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #1A4731;
+    line-height: 1.6;
+  }
+  .tip-box::before { content: '💡 '; }
+
+  /* DELIVERABLE TAG */
+  .deliverable {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #EFF6FF;
+    border: 1px solid rgba(30,64,175,0.15);
+    color: #1E40AF;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* TIMELINE BADGE */
+  .timeline-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: rgba(26,61,31,0.08);
+    color: var(--bosque);
+    border: 1px solid rgba(26,61,31,0.15);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  .timeline-tag.urgent { background: #FEE2E2; color: #991B1B; border-color: rgba(153,27,27,0.2); }
+
+  /* FOOTER */
+  .footer {
+    background: var(--bosque);
+    color: rgba(245,240,232,0.5);
+    padding: 40px 48px;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .footer strong { color: var(--tierra); display: block; font-size: 14px; margin-bottom: 8px; font-family: 'Cormorant Garamond', serif; font-weight: 400; letter-spacing: 0; }
+
+  @media (max-width: 768px) {
+    .header, .status-panel, .corrections-block { padding: 32px 24px; }
+    .main { padding: 0 24px 60px; }
+    .two-col { grid-template-columns: 1fr; }
+    .gap-card-header { flex-direction: column; gap: 12px; }
+    .gap-number { font-size: 32px; }
+    .correction-item { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">Bio & Wellness Festival Patagonia · Neuquén · 28 nov 2026</div>
+  <h1>Guía de acción<br><em>lo que queda por hacer</em></h1>
+  <div class="header-sub">14 tareas pendientes priorizadas, correcciones de inconsistencia entre documentos y prompts listos para usar. Todo ordenado por urgencia a partir de hoy, 27 de mayo de 2026.</div>
+  <div class="header-pills">
+    <span class="pill pill-red">🔴 4 bloqueantes urgentes</span>
+    <span class="pill pill-orange">🟠 4 críticos — próximas 2 semanas</span>
+    <span class="pill pill-yellow">🟡 3 importantes — próximo mes</span>
+    <span class="pill pill-green">🔵 3 para completar</span>
+  </div>
+</div>
+
+<!-- STATUS PANEL -->
+<div class="status-panel">
+  <div class="status-title">Estado actual de la documentación</div>
+  <div class="status-grid">
+    <div class="status-item status-ok">Rider técnico</div>
+    <div class="status-item status-ok">Plan espacial / zonificación</div>
+    <div class="status-item status-ok">Plan de montaje</div>
+    <div class="status-item status-ok">Plan de seguridad</div>
+    <div class="status-item status-ok">Identidad de marca</div>
+    <div class="status-item status-ok">Plan de marketing</div>
+    <div class="status-item status-ok">Gastronomía integral</div>
+    <div class="status-item status-ok">Feria de emprendedores</div>
+    <div class="status-item status-ok">Activaciones y gamificación</div>
+    <div class="status-item status-ok">Runbook operacional</div>
+    <div class="status-item status-ok">Plan de bienestar</div>
+    <div class="status-item status-ok">Proveedores (pliego y criterios)</div>
+    <div class="status-item status-ok">Plan artístico / lineup</div>
+    <div class="status-item status-ok">Modelo financiero</div>
+    <div class="status-item status-ok">Plan RRHH completo</div>
+    <div class="status-item status-ok">Plan de sustentabilidad</div>
+    <div class="status-item status-ok">Kit comunicación asistente</div>
+    <div class="status-item status-ok">Cronograma producción inverso</div>
+    <div class="status-item status-ok">Plan maestro del evento</div>
+    <div class="status-item status-fix">Contrato del predio</div>
+    <div class="status-item status-fix">Estructura legal / razón social</div>
+    <div class="status-item status-fix">Gestor de permisos contratado</div>
+    <div class="status-item status-fix">Plataforma de ticketing elegida</div>
+    <div class="status-item status-fix">Contratos artísticos headliners</div>
+    <div class="status-item status-fix">Registro de marca INPI</div>
+    <div class="status-item status-fix">Contratos tipo redactados</div>
+    <div class="status-item status-fix">App del festival</div>
+    <div class="status-item status-fix">Sistema cashless RFID</div>
+    <div class="status-item status-fix">Plan de financiamiento inicial</div>
+    <div class="status-item status-fix">Plan post-evento</div>
+    <div class="status-item status-warn">Fechas — 3 versiones distintas</div>
+    <div class="status-item status-warn">Nombre — FLOREAL vs Bio & Wellness</div>
+    <div class="status-item status-warn">Aforo — cifras sin unificar</div>
+    <div class="status-item status-warn">Superficie predio — inconsistente</div>
+    <div class="status-item status-warn">Transporte / shuttles sin contrato</div>
+    <div class="status-item status-warn">Hospitalidad artistas sin plan</div>
+  </div>
+</div>
+
+<!-- CORRECTIONS BLOCK -->
+<div class="corrections-block">
+  <h2>🔧 Correcciones de consistencia — resolver antes de cualquier comunicación</h2>
+  <p>Estos errores existen ahora mismo entre tus documentos. No es necesario reescribir nada: alcanza con tomar la decisión y propagarla. Pero mientras no se resuelvan, ningún contrato, permiso ni comunicación pública puede avanzar.</p>
+
+  <div class="correction-item">
+    <div class="correction-before">
+      <div class="correction-label">❌ Problema</div>
+      <p><strong>Fecha del evento: 3 versiones.</strong> Marketing dice 14–16 nov. Kit de asistente dice 13–15 nov. Cronograma y plan maestro dicen 28 nov. Es imposible avanzar con dos fechas distintas circulando.</p>
+    </div>
+    <div class="correction-after">
+      <div class="correction-label">✅ Decisión a tomar</div>
+      <p>Elegir UNA fecha y propagar a todos los documentos. El cronograma de producción fue construido sobre el 28 de noviembre — esa parece ser la fecha más elaborada. Si cambia, el cronograma entero se mueve.</p>
+    </div>
+  </div>
+
+  <div class="correction-item">
+    <div class="correction-before">
+      <div class="correction-label">❌ Problema</div>
+      <p><strong>Nombre del festival sin decidir.</strong> Los documentos usan "Bio & Wellness Festival Patagonia", "FLOREAL", y "BioRaíz" de forma mezclada. La identidad de marca recomienda FLOREAL pero ningún otro documento lo adoptó.</p>
+    </div>
+    <div class="correction-after">
+      <div class="correction-label">✅ Decisión a tomar</div>
+      <p>Decidir el nombre definitivo antes de iniciar trámites legales (el INPI registra el nombre) y antes de cualquier comunicación pública. Una vez decidido, actualizar todos los documentos de una vez.</p>
+    </div>
+  </div>
+
+  <div class="correction-item">
+    <div class="correction-before">
+      <div class="correction-label">❌ Problema</div>
+      <p><strong>Duración: 3 días vs 4 días.</strong> Algunos documentos dicen 3 días (13–15 nov), otros dicen 3–4 días, el plan artístico trabaja con 3 escenarios para 3 días. La grilla horaria del plan artístico es para 3 días.</p>
+    </div>
+    <div class="correction-after">
+      <div class="correction-label">✅ Decisión a tomar</div>
+      <p>Definir si el festival es de 3 o 4 días. El modelo financiero, el rider, el plan de seguridad y el cronograma de montaje trabajan con 3 días. Agregar un cuarto día cambia el presupuesto y la logística significativamente.</p>
+    </div>
+  </div>
+
+  <div class="correction-item">
+    <div class="correction-before">
+      <div class="correction-label">❌ Problema</div>
+      <p><strong>Superficie del predio sin unificar.</strong> El plano del village dice 19.500 m², el plan espacial dice 17.500 m² programables, la zonificación dice 19.500 m², otros documentos dicen "19.000 m²".</p>
+    </div>
+    <div class="correction-after">
+      <div class="correction-label">✅ Decisión a tomar</div>
+      <p>Confirmar con el plano real del predio y usar una sola cifra en todos los documentos. La superficie afecta el cálculo de densidad de público, la cantidad de sanitarios requeridos y el aforo legal habilitado.</p>
+    </div>
+  </div>
+
+  <div class="correction-item">
+    <div class="correction-before">
+      <div class="correction-label">❌ Problema</div>
+      <p><strong>Aforo: cifras sin aclarar relación.</strong> El marketing habla de "50.000 personas". El modelo financiero trabaja con 20.000/día = 60.000 flujo total. La seguridad trabaja con 8.000 pico simultáneo. Son compatibles pero nunca se explica la relación en un solo documento.</p>
+    </div>
+    <div class="correction-after">
+      <div class="correction-label">✅ Solución</div>
+      <p>Agregar un párrafo aclaratorio en el plan maestro: "El festival tiene capacidad para 20.000 asistentes por día (60.000 en flujo total a lo largo de 3 días), con un pico simultáneo estimado de 8.000 personas. El aforo legal a habilitar es de 8.000 personas simultáneas."</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- PHASE 0 -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">🔴 Urgente — bloquea todo lo demás</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- GAP 01 -->
+  <div class="priority-row">
+    <span class="priority-badge badge-red">🔴 Bloqueante absoluto</span>
+    <span class="priority-desc">Sin esto el evento no puede existir legalmente</span>
+    <span class="timeline-tag urgent">Esta semana</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">01</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Contrato del predio y estructura legal</div>
+        <div class="gap-card-desc">Es el hito más urgente del cronograma (Semana 2, antes del 8 de junio). Todo lo demás —plano, seguridad, montaje, permisos— depende de este papel firmado. Sin predio ni razón social, no se puede firmar ningún contrato con nadie.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ Completamente ausente</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Lo que falta — predio</h4>
+          <ul>
+            <li>Contrato de locación firmado con el dueño de la chacra</li>
+            <li>Condiciones de uso, fechas de montaje y desmontaje</li>
+            <li>Cláusula de fuerza mayor y cancelación</li>
+            <li>Autorización para instalar estructuras temporales</li>
+            <li>Autorización expresa para obtener permisos municipales</li>
+            <li>Quién se hace cargo de daños al suelo y vegetación</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Lo que falta — legal</h4>
+          <ul>
+            <li>Razón social activa (SRL, SA, unipersonal) para firmar contratos</li>
+            <li>CUIT del organizador activo ante AFIP</li>
+            <li>Habilitación como productor de espectáculos públicos</li>
+            <li>Inscripción en Ingresos Brutos de Neuquén</li>
+            <li>Cuenta bancaria de la empresa para recibir pagos de tickets y sponsors</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert-box"><strong>⚠ Alerta crítica:</strong> El cronograma marca el contrato del predio como el bloqueante de la Semana 2 (antes del 8 de junio). Hoy es 27 de mayo. Faltan menos de 12 días. Si el contrato no está firmado el 9 de junio, hay que activar el plan B de predio alternativo. No hay margen.</div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Hoy mismo</span>
+            <div class="step-text">Usá el prompt de abajo para generar la <strong>minuta del contrato de locación</strong>. Llevála a un abogado neuquino en la primera reunión — él la revisa y adapta, no la redacta desde cero.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span><span class="tool-tag">Abogado local</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Verificá que la <strong>razón social</strong> esté activa y habilitada para facturar venta de entradas. Si todavía no existe, iniciar constitución urgente — puede llevar semanas.</div>
+            <div class="step-tools"><span class="tool-tag">Contador</span><span class="tool-tag">AFIP</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Generá el <strong>mapa de trámites legales completo</strong> con el prompt de abajo. Es la lista priorizada de todo lo que hay que tramitar, en qué orden y con qué plazo.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span><span class="tool-tag">Abogado</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Mapa legal completo + minuta contrato de predio</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Actuá como abogado especializado en espectáculos públicos y eventos masivos en Argentina, con experiencia en la provincia de Neuquén.
+
+Contexto del evento:
+- Nombre: [NOMBRE DEFINITIVO DEL FESTIVAL]
+- Fecha: [FECHA DEFINITIVA] de noviembre de 2026
+- Lugar: Chacra privada, Neuquén capital o alrededores
+- Aforo: 60.000 personas en flujo total, ~8.000 pico simultáneo
+- Formato: evento al aire libre con escenario, feria, gastronomía y bienestar
+- Productora: [RAZÓN SOCIAL O NOMBRE DEL ORGANIZADOR]
+- El predio es una chacra privada, habilitación de uso eventual necesaria
+
+TAREA 1 — MAPA DE TRÁMITES LEGALES:
+Generá una tabla con: Trámite | Organismo | Documentación requerida | Plazo mínimo antes del evento | Estado (hacer, iniciado, ok). Ordenada por urgencia. Marcá con ⚠ los bloqueantes. Incluir al menos: habilitación municipal evento masivo, Defensa Civil provincial, SADAIC, AADI-CAPIF, seguro RC organizador, seguro cancelación, permiso Policía Neuquén, habilitación bromatológica, inscripción AFIP como productor de espectáculos.
+
+TAREA 2 — MINUTA CONTRATO DE LOCACIÓN DE PREDIO:
+Redactá una minuta de contrato de locación para evento masivo bajo el CCyC vigente.
+Partes: Locador: [PROPIETARIO] — Locatario: [TU EMPRESA]
+Incluí: objeto del contrato (uso para evento de hasta 60.000 asistentes en flujo total, 3 días), período de uso (montaje desde 11 días antes del evento, desmontaje 3 días después), canon y forma de pago, obligaciones del locatario (seguros, permisos, estado de devolución del predio), responsabilidad por daños al suelo e infraestructura, cláusula de fuerza mayor y caso fortuito, cláusula de cancelación con penalidades para cada parte, autorización expresa para instalar estructuras temporales y modificar el terreno de forma reversible, autorización para obtener permisos municipales con consentimiento del propietario, jurisdicción Neuquén.
+
+Nota: este documento es una minuta de uso interno para revisión por abogado.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 02 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-red">🔴 Bloqueante absoluto</span>
+    <span class="priority-desc">Sin esto ningún contrato, permiso ni comunicación avanza</span>
+    <span class="timeline-tag urgent">Semana 1 — antes del 3 de junio</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">02</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Decisión de fechas y nombre definitivos</div>
+        <div class="gap-card-desc">Hay 3 fechas distintas y 2 nombres circulando en los documentos. Mientras esto no se resuelva, es imposible firmar ningún contrato (llevan la fecha del evento), tramitar ningún permiso (idem), ni comunicar nada al público.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-urgent">⚠ Decisión ejecutiva urgente</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Opciones de fecha</h4>
+          <ul>
+            <li><strong>28–30 nov 2026</strong> — fecha del cronograma de producción y plan maestro. La más elaborada. 27 semanas desde hoy.</li>
+            <li><strong>13–15 nov 2026</strong> — fecha del plan artístico y runbook. 24 semanas desde hoy. Menos tiempo de montaje.</li>
+            <li><strong>14–16 nov 2026</strong> — fecha del plan de marketing. Semana similar a la anterior.</li>
+            <li>El cronograma de producción fue construido para el 28/11, eso sugiere que es la fecha operativamente más viable.</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Opciones de nombre</h4>
+          <ul>
+            <li><strong>FLOREAL</strong> — recomendado por la identidad de marca. Original, registrable, independiente de BioRaíz. Desventaja: no comunica directamente el concepto.</li>
+            <li><strong>Bio & Wellness Festival Patagonia</strong> — usado en la mayoría de los documentos. Claro y directo. Menos diferenciador como marca propia.</li>
+            <li>Si la estrategia es potenciar BioRaíz como plataforma, usar "Raíz Viva" o mantener Bio & Wellness bajo el paraguas BioRaíz.</li>
+            <li>Una vez decidido, hay que iniciar el trámite de registro en el INPI esta misma semana.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Hoy — decisión ejecutiva</span>
+            <div class="step-text">Reunión de 30 minutos entre los decisores del proyecto. Definir: fecha, nombre, cantidad de días. Documentarlo por escrito.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Propagar la decisión: actualizar el encabezado de todos los documentos clave con la fecha y el nombre definitivos. No es necesario reescribirlos — solo el header.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Iniciar el <strong>trámite de registro de marca</strong> en el INPI. El trámite tarda meses — cuanto antes se inicia, mejor. Claude puede preparar el brief para el abogado marcario.</div>
+            <div class="step-tools"><span class="tool-tag">INPI</span><span class="tool-tag">Abogado marcario</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Actualización de documentos con datos definitivos</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Tengo múltiples documentos del Bio & Wellness Festival Patagonia con datos inconsistentes. Las decisiones definitivas son:
+
+- Nombre del festival: [NOMBRE DEFINITIVO]
+- Fecha: [DÍA INICIO] al [DÍA FIN] de noviembre de 2026
+- Duración: [3 ó 4] días
+- Aforo: 20.000 personas por día / [TOTAL] en flujo total / 8.000 pico simultáneo
+- Superficie del predio: [M² CONFIRMADOS]
+- Razón social del organizador: [RAZÓN SOCIAL]
+
+Ayudame a redactar:
+1. Un párrafo de "datos del evento" estandarizado que voy a usar en todos los documentos como encabezado único.
+2. Una nota de versión para agregar al pie de cada documento: "Actualizado [FECHA]. Fechas y nombre definitivos: [DATOS]."
+3. Una checklist de los 8 documentos que más urgente necesitan ser actualizados, ordenada por impacto.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 03 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-red">🔴 Bloqueante</span>
+    <span class="priority-desc">Los permisos tienen tiempos del Estado que no se recuperan</span>
+    <span class="timeline-tag urgent">Antes del 6 de julio — S06 del cronograma</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">03</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Gestor de permisos y trámites ante el municipio</div>
+        <div class="gap-card-desc">El cronograma marca como bloqueante presentar el expediente ante la Municipalidad de Neuquén antes del 6 de julio. El plan maestro dice explícitamente "no gestionarlo internamente". No hay ningún documento que certifique que este gestor existe o fue contratado.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ No existe</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="info-block" style="margin-bottom:20px;">
+        <h4>Trámites que requieren un gestor local (no se pueden hacer a distancia)</h4>
+        <ul>
+          <li>Habilitación de espectáculo público masivo — Municipalidad de Neuquén</li>
+          <li>Defensa Civil provincial — plazo mínimo 30 días hábiles antes del evento</li>
+          <li>Habilitación del predio para uso eventual (de chacra a lugar de evento)</li>
+          <li>Autorización Policía de Neuquén para eventos +5.000 personas</li>
+          <li>Habilitación bromatológica de la zona gastronómica</li>
+          <li>Posible Evaluación de Impacto Ambiental (consultar con gestor)</li>
+        </ul>
+      </div>
+      <div class="alert-box"><strong>⚠ Alerta de plazo:</strong> La Defensa Civil de Neuquén exige la presentación del Plan de Seguridad con firma de profesional matriculado <strong>mínimo 30 días hábiles antes del evento</strong>. Para el 28 de noviembre, eso es el 17 de octubre. El PSE ya existe y es sólido, pero necesita la firma de un Licenciado en Seguridad e Higiene local y ser presentado formalmente. Sin número de expediente asignado, el evento no puede abrir.</div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text"><strong>Contratá un gestor de permisos local</strong> con experiencia en eventos masivos en Neuquén. Preguntale explícitamente si ya gestionó eventos de +5.000 personas en Neuquén Capital y pedí referencias.</div>
+            <div class="step-tools"><span class="tool-tag">Contacto local</span><span class="tool-tag">LinkedIn</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Semana del 2 de junio</span>
+            <div class="step-text">Presentar <strong>nota formal al municipio</strong> con descripción del evento, fechas y capacidad proyectada. Objetivo: conseguir número de expediente asignado.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Antes del 17 de octubre</span>
+            <div class="step-text">Presentar el <strong>Plan de Seguridad ante Defensa Civil</strong> con firma de profesional matriculado. El PSE ya existe — hay que conseguir la firma y presentarlo. Este es el deadline más duro de todo el proyecto.</div>
+            <div class="step-tools"><span class="tool-tag">PSE existente</span><span class="tool-tag">Lic. Seguridad e Higiene</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box">En Neuquén, el trámite ante Defensa Civil Provincial se inicia en la Dirección General de Defensa Civil, Casa de Gobierno. Buscá el formulario de "Habilitación de espectáculos públicos masivos". El error más común de organizadores de primera edición es enterarse de este plazo dos semanas antes. El PSE del evento es excelente — solo falta la firma y la presentación formal.</div>
+    </div>
+  </div>
+
+  <!-- GAP 04 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-red">🔴 Bloqueante</span>
+    <span class="priority-desc">El lanzamiento de ventas de julio depende de esto</span>
+    <span class="timeline-tag urgent">Antes del 21 de julio — S09 del cronograma</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">04</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Plataforma de ticketing + sistema cashless RFID</div>
+        <div class="gap-card-desc">La estrategia de ticketing existe y es sólida, pero no hay ninguna plataforma elegida ni contratada. La apertura de ventas está programada para el 21 de julio. El proceso de configuración, pruebas e integración con RFID lleva 4–6 semanas. Hay que decidir ahora.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ Decisión pendiente</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Lo que falta — ticketing</h4>
+          <ul>
+            <li>Plataforma elegida y contratada (AllTickets, PassLine, etc.)</li>
+            <li>Fee por ticket definido y presupuestado</li>
+            <li>Categorías cargadas con descripción y precio</li>
+            <li>Integración con el control de acceso en puerta</li>
+            <li>Sistema de acreditaciones para staff, prensa y artistas</li>
+            <li>Política de devolución configurada en la plataforma</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Lo que falta — cashless RFID</h4>
+          <ul>
+            <li>Proveedor de sistema RFID elegido (pulseras con chip NFC)</li>
+            <li>Integración entre pulsera → acceso → consumo gastronómico</li>
+            <li>Puntos de carga de crédito en el predio definidos</li>
+            <li>Protocolo de devolución de saldo no utilizado post-evento</li>
+            <li>Prueba técnica en predio antes del evento (necesita tiempo)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert-box"><strong>⚠ Decisión sobre la app:</strong> La app del festival aparece mencionada en casi todos los documentos como una herramienta central (mapas, agenda, cashless, gamificación). Desarrollar una app nativa para noviembre desde cero es inviable en el tiempo disponible. Opciones reales: (1) web progresiva (PWA) que se comporta como app pero es una web, (2) página web bien diseñada con todas las funciones, (3) app white-label de un proveedor existente. Hay que tomar esta decisión esta semana y ajustar todos los documentos que la mencionan.</div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Contactar <strong>AllTickets y PassLine</strong> (las dos plataformas líderes en Argentina para festivales). Pedirles propuesta con fees, funcionalidades de RFID y tiempos de implementación.</div>
+            <div class="step-tools"><span class="tool-tag">AllTickets</span><span class="tool-tag">PassLine</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Semana del 9 de junio</span>
+            <div class="step-text">Usá el prompt de abajo para generar la <strong>configuración completa de la plataforma</strong>: categorías, precios definitivos, textos de descripción, política de devolución.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Antes del 21 de julio</span>
+            <div class="step-text">Plataforma activa, todas las categorías cargadas y testeadas, link de compra funcionando. <strong>El launch de ventas no puede retrasarse</strong> — el flujo de caja depende de los ingresos de julio y agosto.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Configuración completa de la plataforma de ticketing</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Tengo la estrategia de ticketing ya definida para el [NOMBRE FESTIVAL]. Necesito preparar todo el contenido para cargar en la plataforma de ticketing (AllTickets / PassLine).
+
+Datos del evento:
+- Nombre: [NOMBRE DEFINITIVO]
+- Fecha: [FECHAS DEFINITIVAS]
+- Aforo máximo: 20.000 personas por día
+- Apertura de ventas: 21 de julio de 2026
+
+Las categorías de entrada definidas son:
+1. RAÍCES (1 día, precio ~$38.000 ARS primera tanda) — 8.000 por día
+2. BOSQUE (abono 3 días, ~$88.000 ARS primera tanda) — 5.000 abonos
+3. CUMBRE (VIP 3 días, ~$195.000 ARS) — 1.500 abonos
+4. GLACIAR (Ultra VIP 3 días, ~$490.000 ARS) — 200 abonos
+
+Para cada categoría generame:
+1. Nombre definitivo de la categoría (coherente con identidad bio/patagónica)
+2. Descripción de la categoría (máx. 3 líneas, tono del festival, énfasis en los beneficios)
+3. Lista de beneficios incluidos (ítems concretos)
+4. Precio en ARS para cada fase: Early Bird (21 jul - 31 ago) / 1ª tanda (1 sep - 30 sep) / 2ª tanda (1 oct - 10 nov) / precio de puerta
+5. Texto de la política de devolución (máx. 2 párrafos)
+6. FAQ de las 5 preguntas más frecuentes sobre las entradas con sus respuestas
+
+Además:
+- Descripción del evento para la página de venta (máx. 200 palabras, tono aspiracional)
+- Texto del email de confirmación de compra (máx. 150 palabras)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE CRITICA -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">🟠 Crítico — próximas 2 semanas</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- GAP 05 -->
+  <div class="priority-row">
+    <span class="priority-badge badge-orange">🟠 Crítico</span>
+    <span class="priority-desc">Los headliners mueven las ventas del primer día</span>
+    <span class="timeline-tag">S03 — antes del 15 de junio</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">05</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Contratos artísticos — headliners confirmados</div>
+        <div class="gap-card-desc">El cronograma marca mínimo 2 headliners con contrato firmado y seña pagada antes del 15 de junio. El plan artístico tiene un longlist excelente y una grilla horaria bien pensada, pero ningún artista tiene contrato. Sin al menos un headliner confirmado, la apertura de ventas de julio no tiene sustento.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ Cero contratos firmados</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Longlist ya definido (plan artístico)</h4>
+          <ul>
+            <li>Headliner viernes: Conociendo Rusia (folk/acústico)</li>
+            <li>Headliner sábado: Él Mató / Francisca y los Exploradores</li>
+            <li>Headliner domingo: Boom Boom Kid / Las Ligas Menores</li>
+            <li>Mid-level: Zoe Gotusso, Bandalos Chinos, La Yegros</li>
+            <li>DJ premium: Hernán Cattáneo (set ambient)</li>
+            <li>Speakers: Narda Lepes, Dr. Pedro Bazán, Iván Ivanoff</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Lo que falta</h4>
+          <ul>
+            <li>Contacto inicial con managers de headliners prioritarios</li>
+            <li>Definir caché máximo disponible por headliner</li>
+            <li>Template de contrato artístico con rider técnico y hospitality</li>
+            <li>Plan B para cada headliner (si rechaza o cancela)</li>
+            <li>Acuerdo de hospitalidad: vuelos, alojamiento, catering wellness</li>
+            <li>Cronograma de confirmaciones públicas para el plan de marketing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Generá con el prompt de abajo el <strong>template de contrato artístico</strong> y el brief de hospitalidad. Llevalo al abogado para validación.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span><span class="tool-tag">Abogado</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Semana del 2 de junio</span>
+            <div class="step-text">Primer contacto formal con managers de los 3 headliners prioritarios. Si no bajás al presupuesto, pasar al siguiente de la lista <strong>sin demora</strong>.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Antes del 15 de junio</span>
+            <div class="step-text">Mínimo <strong>2 headliners con contrato y seña pagada</strong>. Sin esto, el plan de marketing no puede lanzar la campaña de reveal con artistas en septiembre.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Template de contrato artístico + brief de hospitalidad</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Actuá como director artístico y productor ejecutivo de un festival de bienestar en Argentina.
+
+Festival: [NOMBRE DEFINITIVO] · Neuquén · [FECHAS]
+
+TAREA 1 — TEMPLATE DE CONTRATO ARTÍSTICO:
+Redactá una minuta de contrato de actuación para artistas nacionales argentinos. Incluir:
+1. Objeto: actuación en el festival en fecha, horario y escenario a definir
+2. Caché: monto, forma de pago (% a la firma / % previo al evento), modalidad (transferencia, efectivo)
+3. Rider técnico: cómo se incorpora como anexo del contrato
+4. Hospitalidad: lo que el festival provee (vuelos, alojamiento, catering)
+5. Exclusividad territorial (el artista no actúa en Neuquén 15 días antes ni 15 días después)
+6. Cláusula de cancelación por cada parte (con penalidades)
+7. Fuerza mayor: condiciones climáticas extremas patagónicas como causa justificada
+8. Derecho de imagen: el festival puede usar fotos y videos de la actuación con fines comunicacionales
+9. Jurisdicción: Ciudad de Neuquén
+
+TAREA 2 — BRIEF DE HOSPITALIDAD POR CATEGORÍA:
+Diseñá el paquete de hospitalidad estándar y el premium (headliners):
+- Traslado: vuelo BUE-NQN-BUE (clase, quién coordina)
+- Alojamiento: categoría de hotel, cuántas noches, quién paga
+- Catering: qué se ofrece en camerino (coherente con el concepto wellness del festival)
+- Acreditaciones para el crew (cuántas)
+- Transfer aeropuerto–hotel–predio
+- Qué diferencia al paquete headliner del paquete estándar</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 06 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-orange">🟠 Crítico</span>
+    <span class="priority-desc">Sin contratos tipo firmados el pliego no tiene valor legal</span>
+    <span class="timeline-tag">Antes del 30 de junio</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">06</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Contratos tipo para proveedores, sponsors y feriantes</div>
+        <div class="gap-card-desc">Tenés el pliego de proveedores (excelente) y el reglamento de feria, pero no hay contratos redactados. El pliego define qué pedir; el contrato es el instrumento que lo hace vinculante. Sin contratos tipo, la firma de proveedores técnicos en julio (S07 del cronograma) no puede ocurrir.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ Ausente</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="info-block" style="margin-bottom:20px;">
+        <h4>Contratos tipo que necesitás</h4>
+        <ul>
+          <li><strong>Contrato de servicios técnicos</strong> — para audio, iluminación, video, generadores. Incluir las penalidades del pliego ya definido.</li>
+          <li><strong>Contrato de sponsorship</strong> — para cada categoría (Guardián, Raíz, Brote, Semilla). Con entregables, exclusividad, visibilidad y penalidades.</li>
+          <li><strong>Contrato de stand de feria</strong> — para emprendedores. Incluir el reglamento ya existente como anexo.</li>
+          <li><strong>Contrato de stand gastronómico</strong> — variante del anterior, con el checklist sanitario como anexo obligatorio.</li>
+        </ul>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Generá con el prompt de abajo los 4 contratos tipo como minuta. Todos los contratos son documentos internos para revisión legal — no definitivos.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Semana del 9 de junio</span>
+            <div class="step-text">Llevar las minutas al <strong>abogado</strong> para revisión y validación. Ajustar según su recomendación. El objetivo es tener los contratos listos para firmar en julio.</div>
+            <div class="step-tools"><span class="tool-tag">Abogado local</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — 4 contratos tipo como minutas legales</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Actuá como abogado especializado en contratos comerciales y espectáculos públicos en Argentina.
+
+Festival: [NOMBRE DEFINITIVO] · [FECHAS] · Neuquén
+Organizador: [RAZÓN SOCIAL]
+
+Redactá minutas de los siguientes contratos bajo el Código Civil y Comercial vigente. Todos son documentos internos para revisión legal, no versiones finales.
+
+CONTRATO 1 — SERVICIOS TÉCNICOS (audio/iluminación/video/generadores):
+Incluir: objeto, precio y forma de pago (30% firma / 40% a 30 días del evento / 30% a 7 días post-evento con conformidad), especificación técnica como anexo, tabla de penalidades del pliego (retraso 5% por día, falla sin resolución en 2hs 20%, retiro de equipos 100%), garantía de cumplimiento 10%, cláusula de reemplazo de técnico, protocolo viento patagónico, fuerza mayor, jurisdicción Neuquén.
+
+CONTRATO 2 — SPONSORSHIP:
+Incluir: nivel de sponsor (con espacio para completar), vigencia (firma hasta 7 días post-evento), entregables del festival (tabla de beneficios como anexo), entregables del sponsor (qué aporta: dinero, productos, servicios), exclusividad de categoría, política de uso de imagen, penalidad por no cumplimiento de entregables del festival, jurisdicción Neuquén.
+
+CONTRATO 3 — STAND DE FERIA:
+Incluir: descripción del stand asignado (número, sector, m²), arancel y forma de pago (50% al confirmar, 50% 30 días antes), lo que incluye el stand, lo que no incluye, reglamento como Anexo A obligatorio, cláusula de no reembolso por desistimiento a partir del 15 de octubre, uso de imagen, penalidades por incumplimiento del reglamento.
+
+CONTRATO 4 — STAND GASTRONÓMICO:
+Igual al contrato 3 pero agregar: obligatoriedad de documentación sanitaria (listada en checklist como Anexo B), royalty sobre ventas si aplica, declaración jurada de que los productos no contienen ingredientes prohibidos por el festival, responsabilidad civil por intoxicaciones alimentarias causadas por el stand.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 07 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-orange">🟠 Crítico</span>
+    <span class="priority-desc">Sin esto los sponsors no pueden ser contactados formalmente</span>
+    <span class="timeline-tag">Antes del 30 de junio</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">07</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Deck de sponsorship listo para enviar</div>
+        <div class="gap-card-desc">El deck de sponsorship existe y tiene contenido sólido (categorías, niveles, visibilidad, activaciones). El problema es que los datos del evento en ese documento tienen la fecha y el nombre sin confirmar. Una vez resueltos los gaps 01 y 02, el deck necesita una revisión rápida antes de poder enviarse a empresas.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-partial">⚠ Existe pero desactualizado</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Lo que ya existe (bien)</h4>
+          <ul>
+            <li>4 categorías: Guardián, Raíz, Brote, Semilla con precios y beneficios</li>
+            <li>Mapa de visibilidad de marca por punto de contacto</li>
+            <li>Propuesta de valor para el sponsor bien argumentada</li>
+            <li>Activaciones por categoría de industria diseñadas</li>
+            <li>Política de exclusividad por categoría</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Lo que falta / corregir</h4>
+          <ul>
+            <li>Actualizar fechas y nombre del evento (post gap 01 y 02)</li>
+            <li>Agregar datos de aforo definitivos y cifras de marketing</li>
+            <li>Lista de prospects por categoría de industria</li>
+            <li>Email de primer contacto para cada tipo de empresa</li>
+            <li>Versión en Canva para enviar visualmente (ahora es solo HTML)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Una vez resueltos gaps 01 y 02</span>
+            <div class="step-text">Actualizar las <strong>fechas, nombre y datos definitivos</strong> del deck existente. Solo el header y los datos clave — el contenido está bien.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Semana del 16 de junio</span>
+            <div class="step-text">Generá el <strong>email de primer contacto</strong> para cada categoría de industria. Corto, con propuesta de valor clara y CTA a una reunión de 30 minutos.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Antes del 30 de junio</span>
+            <div class="step-text">Comenzar la <strong>prospección activa</strong>. Priorizar categorías con mayor afinidad: bebidas saludables, suplementos/nutrición, indumentaria sustentable, movilidad.</div>
+            <div class="step-tools"><span class="tool-tag">LinkedIn</span><span class="tool-tag">Email</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Lista de prospects + email de primer contacto</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Actuá como director comercial especializado en patrocinios de festivales en Argentina.
+
+Festival: [NOMBRE DEFINITIVO] · [FECHAS] · Neuquén
+Aforo: 60.000 asistentes en flujo total · Público 25–45 años · Nivel AB/C1 · Intereses: bienestar, alimentación consciente, sustentabilidad
+
+TAREA 1 — LISTA DE PROSPECTS POR CATEGORÍA:
+Para cada categoría de industria listá 5 marcas nacionales o regionales que encajan con el perfil del festival. Priorizá marcas con identidad sustentable o agenda ESG.
+Categorías: bebidas saludables / suplementos y nutrición / indumentaria sustentable / automotriz / banca-fintech / cosmética natural / tecnología / medios y prensa / marcas patagónicas regionales.
+Para cada marca indicá: nombre, por qué encaja con el festival, nivel de sponsor sugerido (Guardián/Raíz/Brote/Semilla), contacto comercial recomendado (LinkedIn o email genérico si existe).
+
+TAREA 2 — EMAIL DE PRIMER CONTACTO:
+Redactá 3 versiones del email de primer contacto según el nivel de sponsor:
+- Versión Guardián (USD 25.000): tono de invitación exclusiva, 1 cupo disponible por categoría
+- Versión Raíz (USD 12.000): tono de oportunidad de posicionamiento, máximo 6 marcas
+- Versión Brote (USD 5.500): tono de participación en el ecosistema, más directo y breve
+Cada email: máx. 150 palabras, asunto poderoso, propuesta de valor en 2 líneas, CTA a reunión de 30 min, sin attachment en el primer contacto (el deck se envía solo si hay interés).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 08 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-orange">🟠 Crítico</span>
+    <span class="priority-desc">Sin capital inicial documentado el plan financiero tiene un hueco</span>
+    <span class="timeline-tag">Antes del 16 de junio — S04</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">08</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Plan de financiamiento inicial</div>
+        <div class="gap-card-desc">El modelo financiero proyecta ingresos desde la venta de entradas, pero la empresa tiene gastos desde ya: equipo, dominio, legal, depósito del predio, señas a artistas. El flujo de caja del modelo muestra superávit desde junio, pero eso asume que las ventas ya arrancaron. ¿Con qué dinero se operó hasta ese punto?</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ No documentado</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="info-block" style="margin-bottom:20px;">
+        <h4>Gastos que existen ahora mismo (antes de la primera venta)</h4>
+        <ul>
+          <li>Abogado y gestor de permisos — USD 2.000–5.000</li>
+          <li>Depósito / seña del predio — variable</li>
+          <li>Señas de headliners (50% del caché) — USD 15.000–25.000</li>
+          <li>Registro de marca INPI — ~$50.000 ARS</li>
+          <li>Diseño web y dominio — USD 500–2.000</li>
+          <li>Sueldo del equipo fundador (meses jun–sep) — variable</li>
+          <li>Señas a proveedores técnicos (30% del contrato) — USD 15.000–25.000</li>
+        </ul>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Usá el prompt de abajo para generar el <strong>análisis de capital inicial</strong>: cuánto dinero necesitás tener disponible antes de que arranquen las ventas.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span><span class="tool-tag">Contador</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Semana del 16 de junio</span>
+            <div class="step-text">Definir la fuente de ese capital: <strong>capital propio, inversores, línea de crédito, sponsors anticipados</strong>. Este es el hito financiero bloqueante de la Semana 4.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Análisis de capital inicial y plan de financiamiento</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Actuá como CFO de una productora de eventos masivos en Argentina.
+
+Tengo el modelo financiero del [NOMBRE FESTIVAL] que muestra superávit acumulado desde junio, pero ese modelo asume que las ventas ya arrancaron. Necesito entender el "valle de liquidez" previo al inicio de ventas.
+
+Costos que existen antes de la primera venta (estimados):
+- Abogado + gestor de permisos: USD [X]
+- Seña del predio: USD [X]
+- Señas de headliners (2 artistas × 50% del caché): USD [X]
+- Sueldo equipo fundador (jun–jul): USD [X/mes] × 2 meses
+- Registro de marca INPI: ARS [X]
+- Web, dominio, emails: USD [X]
+- Marketing pre-lanzamiento (teaser): USD [X]
+
+1. Calculá el CAPITAL INICIAL MÍNIMO necesario (suma de todos los gastos previos a la primera venta).
+2. Indicá cuándo exactamente entra la primera plata (primera venta de Early Bird = 21 de julio) y cuánto llega en las primeras 4 semanas.
+3. Diseñá 3 estrategias de financiamiento para cubrir el gap: (A) capital propio, (B) inversores/socios, (C) sponsors anticipados con pago temprano. Para cada una: pros, contras, condiciones típicas en Argentina.
+4. Redactá un mini one-pager para presentar a un potencial inversor: en qué se usa el capital, cuándo se recupera, qué retorno espera, qué garantía se ofrece.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE IMPORTANTE -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">🟡 Importante — próximo mes</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- GAP 09 -->
+  <div class="priority-row">
+    <span class="priority-badge badge-yellow">🟡 Importante</span>
+    <span class="priority-desc">Mencionado en todos los documentos, no existe como proyecto</span>
+    <span class="timeline-tag">Decisión antes del 30 de junio</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">09</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">App / plataforma digital del festival</div>
+        <div class="gap-card-desc">La app aparece mencionada en casi todos los documentos como herramienta central: mapas interactivos, agenda en tiempo real, cashless, gamificación, reserva de shuttles. No existe ningún plan de desarrollo ni contrato con un proveedor tecnológico. Desarrollar una app nativa para noviembre desde cero es inviable en el tiempo disponible.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ No existe — decisión urgente sobre el approach</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Opciones viables (en el tiempo disponible)</h4>
+          <ul>
+            <li><strong>PWA (Web App Progresiva)</strong> — se comporta como app, funciona offline, sin descarga en tienda. Es la opción más realista para este plazo.</li>
+            <li><strong>Web responsive bien diseñada</strong> — con todas las funciones: mapa, agenda, FAQ. Sin instalación, acceso por link.</li>
+            <li><strong>App white-label de proveedor</strong> — empresas como Eventbase, Whova o Spotme. Se configura, no se desarrolla. Más rápido, menor personalización.</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Funciones imprescindibles a garantizar</h4>
+          <ul>
+            <li>Mapa del predio interactivo con zonas</li>
+            <li>Agenda actualizable (shows, charlas, talleres)</li>
+            <li>Información logística (cómo llegar, horarios, FAQ)</li>
+            <li>Integración con ticketing (mostrar QR de entrada)</li>
+            <li>Pasaporte de gamificación (puede ser un QR estático)</li>
+            <li>Cashless (puede ser un sistema independiente de la app)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana — decisión ejecutiva</span>
+            <div class="step-text">Definir el <strong>approach tecnológico</strong>: PWA, web, o app white-label. Una vez decidido, ajustar todos los documentos que la mencionan.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Semana del 9 de junio</span>
+            <div class="step-text">Generar el <strong>brief tecnológico</strong> con el prompt de abajo y cotizar con 2–3 desarrolladores web o agencias.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span><span class="tool-tag">Desarrollador web</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Antes del 7 de julio</span>
+            <div class="step-text">Proveedor tecnológico contratado. La plataforma digital necesita estar lista para testear <strong>mínimo 4 semanas antes del evento</strong>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Brief tecnológico para plataforma digital del festival</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Actuá como product manager y arquitecto de soluciones digitales para eventos masivos.
+
+Festival: [NOMBRE DEFINITIVO] · [FECHAS] · Neuquén · 20.000 personas/día
+
+La plataforma digital del festival necesita estar lista para el [FECHA - 4 SEMANAS]. Desarrollar una app nativa es inviable en el tiempo disponible. Necesito el brief para contratar un desarrollador web o agencia.
+
+FUNCIONES REQUERIDAS:
+1. Mapa interactivo del predio (zonas, escenarios, servicios)
+2. Agenda actualizable (grilla de shows y actividades, los 3 días)
+3. Información logística: cómo llegar, horarios, qué traer, FAQ
+4. Integración con el sistema de ticketing (mostrar QR de entrada)
+5. Sistema de gamificación: el pasaporte digital con las 5 zonas
+6. Alertas push (opcional: si se elige PWA)
+7. Funcionamiento offline básico (mapa y agenda sin internet)
+
+Generame:
+1. COMPARATIVA DE OPCIONES TECNOLÓGICAS: PWA vs web responsive vs app white-label. Para cada una: pros, contras, costo estimado, tiempo de desarrollo, nivel de personalización, si funciona offline.
+2. RECOMENDACIÓN con justificación para este caso específico.
+3. BRIEF PARA EL DESARROLLADOR: descripción funcional de cada pantalla / sección. Stack tecnológico recomendado. Integraciones requeridas. Criterios de aceptación para cada función.
+4. TIMELINE DE DESARROLLO: si empezamos el [FECHA], ¿cuándo estaría lista para testear? ¿Cuándo en producción? ¿Cuánto cuesta?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 10 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-yellow">🟡 Importante</span>
+    <span class="priority-desc">Sin transporte el festival pierde entre 20% y 40% del público</span>
+    <span class="timeline-tag">Antes del 21 de septiembre — S17</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">10</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Plan de transporte y movilidad contratado</div>
+        <div class="gap-card-desc">El kit del asistente menciona shuttles con frecuencias y puntos de salida como si fuera un hecho, pero no hay ningún contrato con empresa de transporte ni acuerdo con el municipio para colectivos especiales. Para un evento en chacra privada a 35 minutos del centro de Neuquén, el transporte no es un detalle: es un factor de asistencia efectiva.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ Mencionado pero sin contrato</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="info-block" style="margin-bottom:20px;">
+        <h4>Lo que hay que resolver</h4>
+        <ul>
+          <li>Empresa de ómnibus / micro para shuttles desde Terminal de Neuquén y Plazoleta Confluencia</li>
+          <li>Frecuencias, horarios y capacidad de cada corrida (ya están en el kit del asistente — hay que conseguir que sean reales)</li>
+          <li>Acuerdo con Neuquén Bus o empresa de transporte urbano para líneas especiales</li>
+          <li>Señalización vial perimetral — quién la diseña, quién la instala, quién la autoriza</li>
+          <li>Coordinación con la Municipalidad para plan de tráfico en la ruta de acceso</li>
+          <li>Plan de estacionamiento: cómo se organiza, quién lo gestiona, capacidad</li>
+        </ul>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Julio 2026</span>
+            <div class="step-text">Contactar empresas de transporte de Neuquén para cotizar <strong>servicio de shuttles</strong> los 3 días del festival. Definir frecuencias reales según la capacidad de cada empresa.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Antes del 21 de septiembre</span>
+            <div class="step-text"><strong>Plan de tráfico aprobado por el municipio</strong> (hito S17, bloqueante). El cronograma ya lo marca — solo falta ejecutar la gestión.</div>
+            <div class="step-tools"><span class="tool-tag">Municipio Neuquén</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 11 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-yellow">🟡 Importante</span>
+    <span class="priority-desc">Sin esto la convocatoria de feria y gastronomía no puede lanzarse</span>
+    <span class="timeline-tag">Antes del 1 de agosto</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">11</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Lanzamiento de convocatorias de feria y gastronomía</div>
+        <div class="gap-card-desc">Las convocatorias de feria y gastronomía están perfectamente diseñadas, con formularios, criterios de evaluación y reglamento. Pero tienen fechas internas que ya pasaron o están muy cerca: la convocatoria de feria dice "apertura 1 de junio", la gastronómica "apertura 1 de agosto". Necesitás actualizar las fechas y lanzarlas.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-partial">⚠ Listo para lanzar — fechas desactualizadas</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Feria de emprendedores</h4>
+          <ul>
+            <li>Convocatoria, formulario y reglamento: ✓ listos</li>
+            <li>Actualizar fechas: la apertura decía 1/6, está vencida</li>
+            <li>Nueva fecha sugerida: apertura 15 de junio, cierre 31 de agosto</li>
+            <li>Early bird del 15% hasta el 15 de julio</li>
+            <li>Publicar en redes, grupos de emprendedores y cámaras de comercio de Neuquén</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Gastronomía</h4>
+          <ul>
+            <li>Convocatoria, checklist sanitario y bases: ✓ listos</li>
+            <li>Nueva fecha sugerida: apertura 1 de agosto, cierre 31 de agosto</li>
+            <li>Notificación a seleccionados: 10 de septiembre</li>
+            <li>Publicar en grupos de gastronomía bio y ferias naturales de Patagonia</li>
+            <li>Contactar directamente a productores patagónicos conocidos</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Esta semana</span>
+            <div class="step-text">Actualizar las fechas de ambas convocatorias con el prompt de abajo. Crear los formularios de Google Forms o Typeform.</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span><span class="tool-tag">Google Forms</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">15 de junio</span>
+            <div class="step-text">Publicar la convocatoria de feria en redes oficiales, grupos de Facebook de emprendedores patagónicos y newsletters sectoriales.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Actualización de fechas y publicación de convocatorias</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Tengo las convocatorias de feria de emprendedores y gastronomía del [NOMBRE FESTIVAL] ya redactadas y completas, pero con fechas desactualizadas. El festival es el [FECHAS DEFINITIVAS] en Neuquén.
+
+Actualizá las fechas clave de ambas convocatorias tomando como referencia las siguientes restricciones:
+- El festival es el [FECHAS]
+- El montaje empieza 11 días antes
+- La selección de stands necesita estar cerrada mínimo 6 semanas antes del evento
+- El pago final de los seleccionados debe ser 30 días antes del evento
+
+PARA LA FERIA DE EMPRENDEDORES:
+1. Nuevas fechas: apertura, early bird, cierre de convocatoria, notificación de seleccionados, firma de contratos, pago final, armado de feria.
+2. Versión short de la convocatoria para publicar en Instagram (máx. 150 palabras).
+3. Texto para email a base de datos de emprendedores (máx. 200 palabras).
+
+PARA LA GASTRONOMÍA:
+1. Nuevas fechas: apertura, cierre, notificación, firma, inspección previa, armado.
+2. Post de Instagram para publicar (máx. 150 palabras).
+3. Lista de 10 grupos/comunidades/canales de Neuquén y Patagonia donde publicar la convocatoria.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE COMPLETAR -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">🔵 Para completar — dependen de otros gaps</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- GAP 12 -->
+  <div class="priority-row">
+    <span class="priority-badge badge-blue">🔵 Completar</span>
+    <span class="priority-desc">Depende de tener el lineup confirmado (gap 05)</span>
+    <span class="timeline-tag">Septiembre 2026</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">12</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Programa público y grilla comunicable</div>
+        <div class="gap-card-desc">La grilla horaria existe conceptualmente (plan artístico), pero no hay un programa publicable con artistas, speakers y actividades confirmados. El marketing necesita revelaciones semanales a partir de septiembre — esas revelaciones requieren tener el contenido cerrado.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-partial">⚠ Estructura lista, contenido vacío</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Una vez confirmados los headliners (junio–julio)</span>
+            <div class="step-text">Completar la grilla con los artistas reales. La estructura de 3 días × 3 escenarios ya existe en el plan artístico.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">Agosto 2026</span>
+            <div class="step-text">Generar las <strong>descripciones de cada actividad</strong> para web, app y comunicación. Diseñar la grilla visual para Instagram (carrusel).</div>
+            <div class="step-tools"><span class="tool-tag">Claude</span><span class="tool-tag">Canva</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">Antes del 25 de agosto — S14</span>
+            <div class="step-text"><strong>Grilla 100% publicada</strong>: hito bloqueante del cronograma. A partir de esa fecha, ningún cambio en la grilla.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP 13 -->
+  <div class="priority-row" style="margin-top:40px;">
+    <span class="priority-badge badge-blue">🔵 Completar</span>
+    <span class="priority-desc">Depende de tener el sistema de transporte cerrado (gap 10)</span>
+    <span class="timeline-tag">Octubre 2026</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">13</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Actualización del kit del asistente con datos reales</div>
+        <div class="gap-card-desc">El kit del asistente es excelente: guía, emails, FAQ y señalética ya están redactados. El problema es que tiene datos de transporte y logística que son placeholders ("+54 9 299 XXX-XXXX", coordenadas GPS reales pero shuttles sin confirmar). Una vez cerrado el transporte y la plataforma digital, hay que actualizar el kit con datos reales.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-partial">⚠ Listo pero con placeholders</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="info-block" style="margin-bottom:20px;">
+        <h4>Datos que necesitan confirmarse para actualizar el kit</h4>
+        <ul>
+          <li>Teléfonos de contacto reales (WhatsApp, atención al cliente)</li>
+          <li>Empresa y horarios de shuttles confirmados</li>
+          <li>Link de la app / web del festival</li>
+          <li>Programación completa (artistas confirmados)</li>
+          <li>Número de radio interno del festival (299-FEST-911 ya está en el doc)</li>
+          <li>Hospital de referencia con dirección y teléfono real</li>
+        </ul>
+      </div>
+      <div class="tip-box">El kit del asistente ya es uno de los documentos más completos y mejor redactados del proyecto. Solo necesita una ronda de "relleno de datos reales" cuando los contratos estén cerrados. No hay que reescribir nada — solo completar los campos en blanco.</div>
+    </div>
+  </div>
+
+  <!-- GAP 14 — POST EVENTO -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">⚪ Cierre — el evento no termina el último día</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="priority-row">
+    <span class="priority-badge badge-gray">⚪ Post-evento</span>
+    <span class="priority-desc">Construye la segunda edición mientras cierra la primera</span>
+    <span class="timeline-tag">Diciembre 2026</span>
+  </div>
+
+  <div class="gap-card">
+    <div class="gap-card-header">
+      <div class="gap-number">14</div>
+      <div class="gap-card-title-group">
+        <div class="gap-card-title">Plan de cierre post-evento y segunda edición</div>
+        <div class="gap-card-desc">No hay ningún documento de cierre. El post-evento es donde se retienen sponsors, se cierra con proveedores, se convierte la asistencia en comunidad y se lanza la segunda edición. Un buen post-evento puede reducir el costo de adquisición de asistentes en la edición siguiente en hasta un 40%.</div>
+        <div style="margin-top:10px;">
+          <span class="gap-status-tag tag-missing">✗ Ausente completamente</span>
+        </div>
+      </div>
+    </div>
+    <div class="gap-card-body">
+      <div class="two-col">
+        <div class="info-block">
+          <h4>Lo que falta — primeros 7 días post-evento</h4>
+          <ul>
+            <li>Encuesta de satisfacción al asistente (24h post-evento)</li>
+            <li>Encuesta a expositores y feriantes (48–72h)</li>
+            <li>Informe financiero real vs. proyectado</li>
+            <li>Reunión de debrief del equipo de producción</li>
+            <li>Early Bird de la edición 2027 (48h post-evento)</li>
+          </ul>
+        </div>
+        <div class="info-block">
+          <h4>Lo que falta — mes post-evento</h4>
+          <ul>
+            <li>Informe de resultados para sponsors (con métricas reales)</li>
+            <li>Aftermovie oficial + galería de fotos</li>
+            <li>Informe de sustentabilidad para publicar</li>
+            <li>Estrategia de comunidad 2027 (newsletter, grupo)</li>
+            <li>Decisión formal sobre la segunda edición</li>
+          </ul>
+        </div>
+      </div>
+      <div class="steps-title">Paso a paso (a preparar con tiempo, ejecutar en diciembre)</div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-when">Preparar en octubre — ejecutar 24h post-evento</span>
+            <div class="step-text">Encuesta de satisfacción al asistente. Mientras el recuerdo está fresco. Incluir NPS y pregunta de Early Bird 2027.</div>
+            <div class="step-tools"><span class="tool-tag">Typeform</span><span class="tool-tag">Claude</span></div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-when">72h post-evento</span>
+            <div class="step-text">Cerrar el informe financiero real vs. proyectado. Identificar los 3 mayores desvíos positivos y negativos.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-when">1 semana post-evento</span>
+            <div class="step-text">Entregar el informe de resultados a cada sponsor. Proponer la activación para la edición 2027 en el mismo documento.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-header-label">Prompt — Plan completo de cierre post-evento</span>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        </div>
+        <div class="prompt-toggle" onclick="togglePrompt(this)">
+          Ver prompt completo <span class="prompt-arrow">▼</span>
+        </div>
+        <div class="prompt-body">Actuá como director de operaciones de una productora de festivales con foco en retención de comunidad y mejora continua.
+
+Festival: [NOMBRE DEFINITIVO] · Edición 2026 · Neuquén
+El evento terminó. Ahora empieza el cierre.
+
+Generame el plan completo de post-evento:
+
+1. ENCUESTA DE SATISFACCIÓN DEL ASISTENTE (enviar 24h post):
+   - 15 preguntas mix de escala 1–5 y preguntas abiertas
+   - Cubrir: experiencia general, gastronomía, feria, programa, logística/acceso, sustentabilidad percibida, intención de repetir, NPS
+   - Incentivo para completarla: acceso anticipado al Early Bird 2027
+   - Qué métricas exportar y qué decisiones tomar según los resultados
+
+2. ENCUESTA A EXPOSITORES (enviar 48h post):
+   - 10 preguntas: ventas vs. expectativas, infraestructura, atención del equipo, ¿volvería?
+
+3. INFORME PARA SPONSORS (estructura del documento):
+   - Asistencia real vs. proyectada
+   - Alcance en RRSS (impresiones del hashtag, menciones de marca)
+   - Resultados de la activación (participantes, QR escaneados)
+   - Cobertura en medios
+   - Propuesta para la edición 2027
+
+4. INFORME FINANCIERO DE CIERRE:
+   Tabla: Rubro | Presupuestado | Real | Desvío | Causa
+   Conclusión: ¿el evento fue rentable?
+
+5. DEBRIEF DEL EQUIPO:
+   Agenda de 2 horas: qué funcionó, qué falló, 3 mejoras para 2027, reconocimiento del equipo
+
+6. ESTRATEGIA DE COMUNIDAD POST-EVENTO:
+   - Email de agradecimiento: qué decir, cuándo enviar
+   - Contenido de RRSS los 7 días post-evento
+   - Lanzamiento lista de espera 2027: cuándo y cómo
+   - Cómo capitalizar el UGC generado para seguir publicando 30–60 días</div>
+      </div>
+
+      <div class="tip-box">El mayor error de los organizadores de primera edición es creer que el evento termina cuando cierra el último día. El post-evento es donde se construye la comunidad que va a llenar el festival de la próxima edición sin gastar en publicidad. La encuesta enviada a las 24h tiene tasas de respuesta 3× más altas que la enviada a la semana.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>Bio & Wellness Festival Patagonia · Guía de Acción</strong>
+  Generada el 27 de mayo de 2026 · 14 tareas pendientes · 5 correcciones de consistencia<br>
+  Documento de uso interno del equipo de producción
+</div>
+
+<script>
+function togglePrompt(btn) {
+  const block = btn.closest('.prompt-block');
+  const body = block.querySelector('.prompt-body');
+  const isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  btn.classList.toggle('open', !isOpen);
+  btn.querySelector('.prompt-arrow').textContent = isOpen ? '▼' : '▲';
+  btn.childNodes[0].textContent = isOpen ? 'Ver prompt completo ' : 'Ocultar prompt ';
+}
+
+function copyPrompt(btn) {
+  const block = btn.closest('.prompt-block');
+  const body = block.querySelector('.prompt-body');
+  const text = body.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = orig, 1800);
+  });
+}
+</script>
+</body>
+</html>

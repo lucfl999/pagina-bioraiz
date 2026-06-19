@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía IA por Departamento — Evento 100k</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e6f0;
+    --text2: #9390a8;
+    --text3: #5c5a70;
+    --accent: #7c6fff;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --amber: #fbbf24;
+    --coral: #f87171;
+    --teal: #2dd4bf;
+    --blue: #60a5fa;
+
+    --c1: #7c6fff;
+    --c2: #2dd4bf;
+    --c3: #f87171;
+    --c4: #fbbf24;
+    --c5: #60a5fa;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 56px 40px 40px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(124,111,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(124,111,255,0.12);
+    border: 1px solid rgba(124,111,255,0.25);
+    color: var(--accent2);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 700px;
+    margin-bottom: 14px;
+  }
+  .header h1 span { color: var(--accent2); }
+  .header p {
+    color: var(--text2);
+    max-width: 560px;
+    font-size: 15px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .meta-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+  }
+
+  /* NAV SIDEBAR */
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 200px);
+  }
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 28px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 0 20px 12px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 2px solid transparent;
+    user-select: none;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.04); }
+  .nav-item.active {
+    background: rgba(124,111,255,0.08);
+    border-left-color: var(--accent);
+  }
+  .nav-item.active .nav-title { color: var(--accent2); }
+  .nav-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text3);
+    min-width: 18px;
+  }
+  .nav-title {
+    font-size: 13px;
+    color: var(--text2);
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .nav-phase {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 16px 20px 6px;
+    margin-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-phase:first-child { margin-top: 0; border-top: none; }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 0;
+  }
+
+  /* DEPARTMENT CARD */
+  .dept {
+    display: none;
+    padding: 40px 48px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 0.25s ease;
+  }
+  .dept.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dept-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dept-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--border2);
+    min-width: 56px;
+  }
+  .dept-info { flex: 1; }
+  .dept-phase-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .dept-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .dept-desc { color: var(--text2); font-size: 14px; max-width: 580px; }
+
+  .dept-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+  .tool-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+  .tool-chip.primary {
+    background: rgba(124,111,255,0.1);
+    border-color: rgba(124,111,255,0.3);
+    color: var(--accent2);
+  }
+  .tool-chip.secondary {
+    background: rgba(255,255,255,0.04);
+    border-color: var(--border2);
+    color: var(--text2);
+  }
+
+  /* STEPS */
+  .steps-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 16px;
+  }
+  .steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: var(--border2); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(124,111,255,0.1);
+    border-radius: 4px;
+    min-width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-tool {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 3px;
+  }
+  .step-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .step-text strong { color: var(--text); font-weight: 500; }
+
+  /* PROMPT BOX */
+  .prompt-section { margin-bottom: 20px; }
+  .prompt-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .prompt-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .prompt-box {
+    position: relative;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 20px 16px;
+    margin-bottom: 12px;
+  }
+  .prompt-box:hover { border-color: var(--border2); }
+  .prompt-tool-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tool-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+  .prompt-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+  .prompt-text em { color: var(--amber); font-style: normal; }
+  .copy-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text2);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .copy-btn:hover { background: rgba(124,111,255,0.15); color: var(--accent2); border-color: rgba(124,111,255,0.3); }
+  .copy-btn.copied { color: var(--green); border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.08); }
+
+  .output-box {
+    background: rgba(52,211,153,0.05);
+    border: 1px solid rgba(52,211,153,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 8px;
+  }
+  .output-box strong { color: var(--green); font-weight: 500; }
+
+  .tip-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .tip-icon { color: var(--amber); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  .divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+  /* MOBILE */
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .dept { padding: 28px 20px; }
+    .header { padding: 36px 20px 28px; }
+    .dept-header { flex-direction: column; gap: 12px; }
+    .dept-num { font-size: 32px; }
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    transition: width 0.3s ease;
+  }
+
+  /* Phase colors */
+  .phase-estrategia { color: #a78bfa; }
+  .phase-planificacion { color: var(--teal); }
+  .phase-contenido { color: var(--coral); }
+  .phase-seguridad { color: var(--amber); }
+  .phase-ejecucion { color: var(--blue); }
+  .phase-cierre { color: var(--text3); }
+
+  .bg-estrategia { background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); }
+  .bg-planificacion { background: rgba(45,212,191,0.08); border-color: rgba(45,212,191,0.2); }
+  .bg-contenido { background: rgba(248,113,113,0.08); border-color: rgba(248,113,113,0.2); }
+  .bg-seguridad { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.2); }
+  .bg-ejecucion { background: rgba(96,165,250,0.08); border-color: rgba(96,165,250,0.2); }
+  .bg-cierre { background: rgba(255,255,255,0.04); border-color: var(--border2); }
+
+  .nav-item[data-phase="estrategia"].active { border-left-color: #a78bfa; background: rgba(167,139,250,0.08); }
+  .nav-item[data-phase="estrategia"].active .nav-title { color: #a78bfa; }
+  .nav-item[data-phase="planificacion"].active { border-left-color: var(--teal); background: rgba(45,212,191,0.08); }
+  .nav-item[data-phase="planificacion"].active .nav-title { color: var(--teal); }
+  .nav-item[data-phase="contenido"].active { border-left-color: var(--coral); background: rgba(248,113,113,0.08); }
+  .nav-item[data-phase="contenido"].active .nav-title { color: var(--coral); }
+  .nav-item[data-phase="seguridad"].active { border-left-color: var(--amber); background: rgba(251,191,36,0.08); }
+  .nav-item[data-phase="seguridad"].active .nav-title { color: var(--amber); }
+  .nav-item[data-phase="ejecucion"].active { border-left-color: var(--blue); background: rgba(96,165,250,0.08); }
+  .nav-item[data-phase="ejecucion"].active .nav-title { color: var(--blue); }
+  .nav-item[data-phase="cierre"].active { border-left-color: var(--text2); background: rgba(255,255,255,0.04); }
+  .nav-item[data-phase="cierre"].active .nav-title { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:9%"></div></div>
+
+<div class="header">
+  <div class="header-tag">🎯 Guía operativa</div>
+  <h1>Prompts y pasos por<br><span>departamento</span></h1>
+  <p>Stack completo de IAs para desarrollar un evento de primer nivel para +100k personas. Copiá el prompt, seguí los pasos, pasá al siguiente departamento.</p>
+  <div class="header-meta">
+    <div class="meta-pill"><div class="meta-dot"></div> 13 departamentos</div>
+    <div class="meta-pill"><div class="meta-dot" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></div> 5 fases</div>
+    <div class="meta-pill"><div class="meta-dot" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div> 8 herramientas de IA</div>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-label">Departamentos</div>
+
+    <div class="nav-phase">Fase 1 — Estrategia</div>
+    <div class="nav-item active" data-dept="1" data-phase="estrategia" onclick="showDept(1)">
+      <span class="nav-num">01</span>
+      <span class="nav-title">Dirección general</span>
+    </div>
+
+    <div class="nav-phase">Fase 2 — Planificación</div>
+    <div class="nav-item" data-dept="2" data-phase="planificacion" onclick="showDept(2)">
+      <span class="nav-num">02</span>
+      <span class="nav-title">Producción y operaciones</span>
+    </div>
+    <div class="nav-item" data-dept="3" data-phase="planificacion" onclick="showDept(3)">
+      <span class="nav-num">03</span>
+      <span class="nav-title">Diseño de experiencia</span>
+    </div>
+    <div class="nav-item" data-dept="4" data-phase="planificacion" onclick="showDept(4)">
+      <span class="nav-num">04</span>
+      <span class="nav-title">Marca e identidad visual</span>
+    </div>
+
+    <div class="nav-item" data-dept="12" data-phase="planificacion" onclick="showDept(12)">
+      <span class="nav-num">12</span>
+      <span class="nav-title">Espacialidad y diseño de stands</span>
+    </div>
+
+    <div class="nav-phase">Fase 3 — Contenido</div>
+    <div class="nav-item" data-dept="5" data-phase="contenido" onclick="showDept(5)">
+      <span class="nav-num">05</span>
+      <span class="nav-title">Gastronomía</span>
+    </div>
+    <div class="nav-item" data-dept="6" data-phase="contenido" onclick="showDept(6)">
+      <span class="nav-num">06</span>
+      <span class="nav-title">Feria y stands</span>
+    </div>
+    <div class="nav-item" data-dept="7" data-phase="contenido" onclick="showDept(7)">
+      <span class="nav-num">07</span>
+      <span class="nav-title">Marketing y comunicación</span>
+    </div>
+    <div class="nav-item" data-dept="13" data-phase="contenido" onclick="showDept(13)">
+      <span class="nav-num">13</span>
+      <span class="nav-title">Activaciones de marca y experiencia</span>
+    </div>
+
+    <div class="nav-phase">Fase 4 — Seguridad</div>
+    <div class="nav-item" data-dept="8" data-phase="seguridad" onclick="showDept(8)">
+      <span class="nav-num">08</span>
+      <span class="nav-title">Seguridad y accesos</span>
+    </div>
+    <div class="nav-item" data-dept="9" data-phase="seguridad" onclick="showDept(9)">
+      <span class="nav-num">09</span>
+      <span class="nav-title">Bienestar y descanso</span>
+    </div>
+
+    <div class="nav-phase">Fase 5 — Ejecución</div>
+    <div class="nav-item" data-dept="10" data-phase="ejecucion" onclick="showDept(10)">
+      <span class="nav-num">10</span>
+      <span class="nav-title">Coordinación en sitio</span>
+    </div>
+
+    <div class="nav-phase">Fase 6 — Cierre</div>
+    <div class="nav-item" data-dept="11" data-phase="cierre" onclick="showDept(11)">
+      <span class="nav-num">11</span>
+      <span class="nav-title">Cierre y post-evento</span>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- DEP 1 -->
+    <div class="dept active" id="dept-1">
+      <div class="dept-header">
+        <div class="dept-num">01</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-estrategia">Fase 1 — Estrategia y visión</div>
+          <div class="dept-title">Dirección General</div>
+          <div class="dept-desc">El punto de partida. Todo el trabajo de los demás departamentos nace de lo que se defina acá. Objetivo: tener un documento maestro del evento antes de hablar con cualquier proveedor.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (principal)</span>
+        <span class="tool-chip secondary">ChatGPT</span>
+        <span class="tool-chip secondary">Notion (documentar)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-tool">Claude</div>
+            <div class="step-text">Usá el Prompt Maestro de abajo para generar el documento base del evento. Este prompt define visión, público, objetivos, presupuesto estimado y factores de riesgo.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-tool">Claude</div>
+            <div class="step-text">Pedile que genere un <strong>cronograma de producción inverso</strong>: desde la fecha del evento hacia atrás, con hitos por semana y qué departamento es responsable de cada uno.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-tool">Claude</div>
+            <div class="step-text">Pedile un <strong>presupuesto maestro estimado</strong> por departamento. Usarlo como techo de referencia, no como cifra exacta.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-tool">Notion</div>
+            <div class="step-text">Copiá todo lo generado en una base de datos Notion. Creá una página por departamento. Este documento se va a ir actualizando durante todo el proceso.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-tool">Claude</div>
+            <div class="step-text">Pedile un análisis de riesgos: qué puede salir mal en un evento de 100k personas y qué plan de contingencia mínimo necesitás para cada escenario.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prompt-label">Prompt maestro de inicio</div>
+
+      <div class="prompt-box bg-estrategia">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#a78bfa"></span> Claude / ChatGPT</div>
+        <div class="prompt-text">Actuá como director de producción de eventos masivos con 15 años de experiencia en eventos de más de 100.000 personas.
+
+Voy a desarrollar un evento que tiene las siguientes características:
+- <em>[DESCRIBÍ TU EVENTO: tipo, propósito, fecha tentativa, locación, duración]</em>
+- Va a haber puestos de comida, áreas de relajación y una feria de emprendimientos (tipo mercado/feria)
+- Capacidad objetivo: +100.000 personas
+
+Necesito que generes un documento maestro de planificación que incluya:
+
+1. VISIÓN Y PROPÓSITO: definición clara del evento en 3 líneas, propuesta de valor única, qué experiencia quiero que se lleve cada asistente
+
+2. PÚBLICO OBJETIVO: perfil demográfico y psicográfico detallado, segmentación por tipo de asistente (familias, jóvenes, emprendedores, etc.)
+
+3. ESTRUCTURA DE DEPARTAMENTOS: lista de los 11 departamentos necesarios con su función principal y el nombre de su entregable clave
+
+4. CRONOGRAMA INVERSO: desde la fecha del evento hacia atrás, semana a semana, qué debe estar listo en cada hito crítico
+
+5. PRESUPUESTO ESTIMADO: desglose porcentual por departamento (sin cifras exactas, en % del total)
+
+6. TOP 10 RIESGOS: los 10 riesgos más críticos para un evento de esta escala y el plan de contingencia mínimo para cada uno
+
+7. FACTORES DE ÉXITO: los 5 indicadores que van a determinar si el evento fue exitoso o no
+
+Formateá todo con headers claros, listas y estructura. Usá lenguaje profesional pero directo.</div>
+      </div>
+
+      <div class="output-box">
+        <strong>Output esperado:</strong> Documento maestro de 3–5 páginas que sirve como biblia del evento. Todos los departamentos posteriores van a referenciarlo.
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="prompt-label">Prompt — Cronograma inverso detallado</div>
+      <div class="prompt-box bg-estrategia">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#a78bfa"></span> Claude / ChatGPT</div>
+        <div class="prompt-text">Basándote en el documento maestro que generaste, creá un cronograma de producción inverso semana a semana.
+
+El evento es el <em>[FECHA]</em>. Hoy es <em>[FECHA HOY]</em>. Tengo <em>[X semanas]</em> de producción.
+
+Para cada semana indicá:
+- Semana N (fecha): título de la semana
+- Qué departamentos están activos
+- Qué entregable crítico debe estar aprobado antes de avanzar
+- Qué decisiones no se pueden postergar
+- Señal de alerta: qué indicaría que esa semana está atrasada
+
+Marcá con 🔴 los hitos bloqueantes (si no están listos, bloquean todo lo siguiente) y con 🟡 los que tienen margen de una semana.</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>Guardá estos documentos en Notion desde el día 1. Todo lo que genere la IA en los siguientes departamentos va a necesitar el contexto de este documento maestro. Adjuntalo o pegalo al inicio de cada nueva conversación.</span>
+      </div>
+    </div>
+
+    <!-- DEP 2 -->
+    <div class="dept" id="dept-2">
+      <div class="dept-header">
+        <div class="dept-num">02</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-planificacion">Fase 2 — Planificación operativa</div>
+          <div class="dept-title">Producción y Operaciones</div>
+          <div class="dept-desc">Convierte la visión en infraestructura real. Escenarios, sonido, iluminación, energía, montaje y logística de proveedores.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (planificación)</span>
+        <span class="tool-chip secondary">ChatGPT</span>
+        <span class="tool-chip secondary">Notion (seguimiento)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el listado técnico completo de infraestructura necesaria para el evento con el Prompt de Rider Técnico.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Pedile que genere un <strong>pliego de condiciones para proveedores</strong>: qué debe incluir cada cotización y qué criterios usar para comparar.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>plan de montaje y desmontaje</strong>: cuántos días antes y cuántas horas después del evento se necesita acceso al predio.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Notion</div><div class="step-text">Creá una tabla de proveedores con columnas: categoría, empresa, contacto, estado de cotización, monto, estado de contrato.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Rider técnico completo</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Claude / ChatGPT</div>
+        <div class="prompt-text">Actuá como director técnico de producción de eventos masivos.
+
+Contexto del evento: <em>[PEGÁ AQUÍ EL RESUMEN DEL DOCUMENTO MAESTRO DEL DEP. 1]</em>
+
+Generá el rider técnico completo de producción, organizado por categorías:
+
+1. ESCENARIO PRINCIPAL: dimensiones recomendadas, estructura, materiales, altura mínima, backstage necesario
+
+2. AUDIO: equipamiento de PA para <em>[X]</em> personas en espacio abierto/cerrado, monitoreo, sistema de comunicación interna, zonas de cobertura
+
+3. ILUMINACIÓN: rig de luces escenario principal, iluminación de circulación y seguridad, generadores de backup
+
+4. VIDEO: pantallas LED (tamaño y cantidad según distancias), sistema de transmisión en vivo si aplica, cámaras
+
+5. ENERGÍA: cálculo estimado de KW necesarios, cantidad de grupos electrógenos, punto de conexión a red
+
+6. CONECTIVIDAD: WiFi para staff y prensa, sistema de comunicación por radio (cantidad de equipos por departamento)
+
+7. SANITARIOS: cantidad según norma internacional para 100.000 personas, distribución recomendada
+
+8. LOGÍSTICA: accesos para proveedores, depósitos, estacionamiento de producción, grúas y maquinaria
+
+Para cada ítem indicá: especificación técnica mínima, especificación recomendada para evento de primer nivel, y observación de riesgo si se subcontrata mal.</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Documento técnico que vas a usar para pedir cotizaciones a empresas de producción. Con esto podés comparar propuestas de forma objetiva.</div>
+
+      <div class="divider"></div>
+      <div class="prompt-label">Prompt — Plan de montaje y logística</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Claude</div>
+        <div class="prompt-text">Basándote en el rider técnico, generá el plan de montaje y desmontaje del evento.
+
+Fecha del evento: <em>[FECHA]</em>
+Tipo de predio: <em>[abierto/cerrado/mixto]</em>
+Superficie total: <em>[m²]</em>
+
+Necesito:
+1. TIMELINE DE MONTAJE: día a día desde el primer acceso hasta hora 0 del evento
+2. PERSONAL TÉCNICO: perfiles necesarios por área y cantidad estimada
+3. ORDEN DE MONTAJE: qué va primero y por qué (qué bloquea a qué)
+4. CHECKLIST DE APERTURA: los 20 puntos que deben estar OK antes de abrir puertas
+5. PLAN DE DESMONTAJE: horas estimadas por área y orden de salida de proveedores</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>Este departamento es el que más dinero mueve. Pedile a Claude que genere una matriz de comparación de proveedores para cada categoría: audio, iluminación, escenario, etc. Nunca contrates sin tener al menos 3 cotizaciones.</span>
+      </div>
+    </div>
+
+    <!-- DEP 3 -->
+    <div class="dept" id="dept-3">
+      <div class="dept-header">
+        <div class="dept-num">03</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-planificacion">Fase 2 — Planificación operativa</div>
+          <div class="dept-title">Diseño de Experiencia y Distribución del Espacio</div>
+          <div class="dept-desc">Define cómo se mueven 100k personas sin colapsar. Mapa del evento, zonas, flujos de circulación, señalética. La distribución bien hecha salva vidas y crea experiencias memorables.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (estrategia y texto)</span>
+        <span class="tool-chip primary">★ ChatGPT + Code Interpreter (planos básicos)</span>
+        <span class="tool-chip secondary">Spline (3D web, gratis)</span>
+        <span class="tool-chip secondary">Canva (mapa visual del evento)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>estrategia de zonificación</strong>: qué zonas existen, qué porcentaje del espacio ocupa cada una, cómo se relacionan entre sí.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">ChatGPT + Code Interpreter</div><div class="step-text">Pedile que genere un plano esquemático básico en Python/matplotlib con las zonas del evento. No es el plano final, es el borrador para discutir con el arquitecto o diseñador.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>plan de flujos de circulación</strong>: cómo entra la gente, cómo se distribuye, cómo sale en emergencia, puntos de embotellamiento potencial.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Canva</div><div class="step-text">Con el borrador del plano, creá el mapa visual del evento en Canva usando el prompt de diseño de marca (Dep. 4) para que sea coherente. Este mapa va en la app, en la web y en señalética.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-tool">Spline.design</div><div class="step-text">Si querés un modelo 3D del espacio para presentaciones, Spline permite crear ambientes 3D en el browser. Ideal para mostrarle la distribución a sponsors o inversores.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Estrategia de zonificación</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Claude</div>
+        <div class="prompt-text">Actuá como arquitecto de experiencias y experto en diseño de eventos masivos.
+
+Contexto: <em>[PEGÁ EL RESUMEN DEL DOCUMENTO MAESTRO]</em>
+Superficie del predio: <em>[m²]</em>
+Forma del predio: <em>[rectangular/irregular/al aire libre en parque/etc]</em>
+
+Diseñá la estrategia completa de zonificación para 100.000 personas que incluya:
+
+1. MAPA DE ZONAS: listado de todas las zonas con nombre, función y % de superficie asignado
+   - Escenario principal + área de público
+   - Zona gastronómica (puestos de comida)
+   - Feria de emprendimientos (stands)
+   - Áreas de relajación y descanso
+   - Zona de servicios (sanitarios, primeros auxilios, info)
+   - Circulación y pasillos
+   - Backstage y producción (no público)
+   - Estacionamiento / accesos
+
+2. FLUJOS DE CIRCULACIÓN: cómo se mueve la gente entre zonas, qué anchos mínimos necesitan los pasillos para 100k personas, puntos de congestión potencial y cómo evitarlos
+
+3. ACCESOS: cantidad de puertas de entrada recomendadas, distribución según zonas de estacionamiento, protocolo de apertura progresiva
+
+4. SEÑALÉTICA: tipos de señales necesarias, dónde ubicarlas, altura y tamaño mínimo para que sean visibles en multitud
+
+5. ZONAS DE EMERGENCIA: salidas de emergencia, puntos de encuentro, corredor exclusivo para ambulancias
+
+Incluí las normas internacionales de densidad de personas por m² para cada tipo de zona.</div>
+      </div>
+
+      <div class="prompt-label">Prompt — Plano esquemático (ChatGPT con Code Interpreter)</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> ChatGPT + Code Interpreter</div>
+        <div class="prompt-text">Generá un plano esquemático en Python usando matplotlib para un evento de 100.000 personas.
+
+Predio: rectángulo de <em>[ancho]</em> x <em>[largo]</em> metros (o ajustá proporciones si es diferente)
+
+Zonas a incluir con colores diferenciados:
+- Escenario principal (arriba al centro) — color azul
+- Área de público del escenario — color celeste claro
+- Zona gastronómica (derecha) — color naranja
+- Feria de emprendimientos (izquierda) — color verde
+- Áreas de relajación (distribuidas) — color verde suave
+- Sanitarios (distribuidos en 4 puntos) — color gris
+- Primeros auxilios (2 puntos) — color rojo
+- Accesos principales (abajo) — color amarillo
+- Pasillos de circulación — blanco / sin relleno
+
+El plano debe tener:
+- Leyenda de colores
+- Escala aproximada en metros
+- Flechas indicando flujos principales de entrada y salida
+- Título: "Mapa del evento — Distribución de zonas"
+
+Exportalo como imagen PNG de alta resolución.</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>La regla de oro: los baños tienen que estar visibles desde cualquier punto del evento. Los puestos de comida no deben quedar en los flujos principales de circulación, sino en zonas laterales para no bloquear el tránsito. Las áreas de relajación funcionan mejor alejadas del escenario.</span>
+      </div>
+    </div>
+
+    <!-- DEP 4 -->
+    <div class="dept" id="dept-4">
+      <div class="dept-header">
+        <div class="dept-num">04</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-planificacion">Fase 2 — Planificación operativa</div>
+          <div class="dept-title">Marca e Identidad Visual</div>
+          <div class="dept-desc">El alma visual del evento. Nombre, logo, paleta, tipografía, renders 3D, piezas de comunicación. Todo lo que la gente ve antes, durante y después.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (naming y estrategia)</span>
+        <span class="tool-chip primary">★ Midjourney (concept art y renders)</span>
+        <span class="tool-chip primary">★ Looka / Brandmark (logo IA)</span>
+        <span class="tool-chip secondary">Canva (aplicaciones gráficas)</span>
+        <span class="tool-chip secondary">Adobe Firefly (variaciones)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>estrategia de marca</strong>: nombre, concepto, personalidad, tono de comunicación, paleta de colores y tipografías recomendadas.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Midjourney</div><div class="step-text">Generá el <strong>mood board visual</strong> del evento: 4–6 imágenes que capturen la estética. Usá el prompt de Midjourney de abajo.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Looka.com o Brandmark.io</div><div class="step-text">Con el concepto de marca definido, ingresá a Looka o Brandmark y generá opciones de logo con IA. Seleccioná la dirección que más respeta la estrategia.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Midjourney</div><div class="step-text">Generá <strong>renders 3D del evento</strong>: cómo va a verse el escenario, la feria, las áreas de relajación. Estos renders sirven para mostrarle a sponsors y en comunicación.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-tool">Canva</div><div class="step-text">Creá el kit de marca en Canva: flyer de anuncio, stories, banner web, credencial de staff. Usá los colores y tipografías definidas.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Estrategia de marca</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Claude</div>
+        <div class="prompt-text">Actuá como director creativo y brand strategist con experiencia en eventos culturales masivos.
+
+Contexto del evento: <em>[PEGÁ EL RESUMEN DEL DOCUMENTO MAESTRO]</em>
+
+Desarrollá la identidad de marca completa del evento:
+
+1. NAMING: propone 5 nombres para el evento con su concepto detrás. Cada nombre debe ser memorable, pronunciable, único y que represente la esencia del evento
+
+2. CONCEPTO CREATIVO: en 2–3 líneas, el concepto central que guía toda la comunicación visual y verbal
+
+3. PERSONALIDAD DE MARCA: 5 adjetivos que describen cómo debe sentirse la marca (ej: audaz, cálida, inclusiva, contemporánea, argentina)
+
+4. PALETA DE COLORES: color principal + 2 colores secundarios + 1 color de acento. Con código HEX, justificación semántica de cada color y cómo se combinan
+
+5. TIPOGRAFÍA: fuente para títulos (display) + fuente para textos + fuente alternativa gratuita de Google Fonts para cada una
+
+6. TONO DE COMUNICACIÓN: cómo habla la marca en redes, en comunicados, en señalética. 3 ejemplos de titulares con el tono correcto y 3 con el tono incorrecto
+
+7. APLICACIONES CLAVE: cómo se ve la marca en escenario, en pulsera de acceso, en señalética, en redes sociales y en el mapa del evento
+
+8. REFERENCIAS VISUALES: 3 eventos internacionales cuya estética debería inspirar (y qué elemento específico tomar de cada uno)</div>
+      </div>
+
+      <div class="prompt-label">Prompt — Renders del evento (Midjourney)</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Midjourney</div>
+        <div class="prompt-text">Prompt para render del escenario principal:
+massive outdoor festival main stage at golden hour, <em>[ESTÉTICA DE TU EVENTO: ej. "modern latin culture", "nature and music", "urban art"</em>], 100.000 people crowd, LED screens, professional lighting rig, aerial view, photorealistic, 8k, editorial photography style, --ar 16:9 --v 6
+
+Prompt para render de la feria de emprendimientos:
+artisan market and entrepreneurship fair at a massive festival, wooden stands with branded canopies, warm afternoon light, people browsing, latin american aesthetic, vibrant colors, documentary photography, 8k --ar 16:9 --v 6
+
+Prompt para render del área de relajación:
+chill out zone at massive outdoor festival, hammocks, bean bags, natural shade structures, green plants, soft lighting, people relaxing, cozy festival aesthetic, golden hour, drone shot, --ar 16:9 --v 6
+
+Prompt para mood board:
+festival brand identity moodboard, <em>[PALETA DE COLORES DEL EVENTO]</em>, <em>[ESTÉTICA: ej. bold geometric, organic, minimal]</em>, logo placement on merchandise, wristband, poster, stage backdrop, flat lay, editorial style, --ar 3:2 --v 6</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Manual de marca básico (en Notion o PDF), 4–8 renders del evento, opciones de logo, paleta de colores definida. Con esto trabajás todos los demás departamentos de forma coherente.</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>El logo que genere Looka o Brandmark probablemente necesite refinamiento de un diseñador humano. Usálo como brief visual: "quiero algo en esta dirección". Fiverr y 99designs son buenas opciones para refinar el concepto generado por IA a bajo costo.</span>
+      </div>
+    </div>
+
+    <!-- DEP 5 -->
+    <div class="dept" id="dept-5">
+      <div class="dept-header">
+        <div class="dept-num">05</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-contenido">Fase 3 — Contenido y comercial</div>
+          <div class="dept-title">Gastronomía</div>
+          <div class="dept-desc">100.000 personas necesitan comer. Este departamento define qué oferta gastronómica habrá, cómo se selecciona, dónde se ubica y cómo cumple con normativas sanitarias.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (toda la planificación)</span>
+        <span class="tool-chip secondary">Notion (base de datos de gastronómicos)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí la estrategia gastronómica: qué tipos de puestos, cuántos, qué variedad de oferta, rangos de precio.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>convocatoria para puestos de comida</strong>: bases y condiciones, requisitos sanitarios, aranceles, criterios de selección.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>checklist de habilitaciones sanitarias</strong> que debe tener cada puesto según normativa argentina.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Notion</div><div class="step-text">Base de datos de proveedores gastronómicos: nombre, tipo de cocina, contacto, estado de selección, espacio asignado, m² del puesto.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Estrategia gastronómica + convocatoria</div>
+      <div class="prompt-box bg-contenido">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Claude</div>
+        <div class="prompt-text">Actuá como coordinador gastronómico de eventos masivos con experiencia en festivales de más de 50.000 personas.
+
+Evento: <em>[RESUMEN DEL EVENTO]</em>
+Zona gastronómica: <em>[m² disponibles, ubicación en el predio]</em>
+Público objetivo: <em>[perfil del asistente]</em>
+Duración del evento: <em>[horas/días]</em>
+
+Necesito que generes:
+
+1. ESTRATEGIA GASTRONÓMICA:
+   - Cantidad de puestos recomendada (con fórmula: X puestos cada Y personas)
+   - Mix de oferta: % de cada tipo (comida rápida, opciones saludables, vegano/vegetariano, bebidas, snacks, postres)
+   - Rango de precios sugerido por ítem
+   - Restricciones: qué tipos de comida NO se recomiendan por logística o seguridad alimentaria
+
+2. DISTRIBUCIÓN DE PUESTOS:
+   - Cómo organizar los puestos en el espacio
+   - Distancia mínima entre puestos
+   - Dónde ubicar las zonas de carga y descarga de insumos
+   - Puntos de agua y desagüe necesarios
+
+3. CONVOCATORIA OFICIAL para puestos de comida:
+   - Título y bajada
+   - Requisitos obligatorios (documentación, habilitaciones)
+   - Lo que ofrece el evento (espacio, servicios incluidos)
+   - Lo que debe aportar el gastronómico (equipamiento propio)
+   - Arancel de participación y forma de pago
+   - Criterios de selección
+   - Fechas clave del proceso
+   - Contacto y forma de postularse
+
+4. CHECKLIST SANITARIO: los 15 requisitos mínimos que debe cumplir cada puesto según normativa de Neuquén / Argentina</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>Para 100k personas, la regla es al menos 1 puesto de comida cada 500 asistentes y 1 puesto de bebidas cada 300. Distribuílos en al menos 3 zonas separadas del predio para evitar concentración.</span>
+      </div>
+    </div>
+
+    <!-- DEP 6 -->
+    <div class="dept" id="dept-6">
+      <div class="dept-header">
+        <div class="dept-num">06</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-contenido">Fase 3 — Contenido y comercial</div>
+          <div class="dept-title">Feria de Emprendimientos y Stands</div>
+          <div class="dept-desc">El corazón comercial del evento. Convoca, selecciona y organiza la feria de emprendedores de forma que genere valor para los asistentes y sea coherente con la marca del evento.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (toda la planificación)</span>
+        <span class="tool-chip secondary">Notion / Google Forms (postulaciones)</span>
+        <span class="tool-chip secondary">Canva (kit de comunicación para feriantes)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí la estrategia de la feria: categorías de emprendimientos, cantidad de stands, criterios de curación.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá las <strong>bases y condiciones de participación</strong> y el texto de la convocatoria pública.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Google Forms + Notion</div><div class="step-text">Creá el formulario de postulación y volcá las respuestas a Notion para gestionarlas. Claude puede ayudarte a definir las preguntas del formulario.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>reglamento de feria</strong> y el <strong>kit de bienvenida</strong> para emprendedores seleccionados.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Convocatoria y bases de la feria</div>
+      <div class="prompt-box bg-contenido">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Claude</div>
+        <div class="prompt-text">Actuá como coordinador de ferias y mercados de emprendimientos con experiencia en eventos masivos.
+
+Evento: <em>[RESUMEN]</em>
+Zona de feria: <em>[m² disponibles]</em>
+Perfil de asistentes: <em>[descripción]</em>
+Identidad de marca del evento: <em>[paleta, concepto del Dep. 4]</em>
+
+Generá:
+
+1. ESTRATEGIA DE LA FERIA:
+   - Categorías de emprendimientos que se buscan (ej: diseño, gastronomía artesanal, tecnología, arte, sustentabilidad)
+   - Cantidad ideal de stands y mixtura entre categorías
+   - Tamaños de stands disponibles (en m²) y precio de cada uno
+   - Perfil del emprendedor ideal: qué hace que un emprendimiento sea seleccionado
+
+2. CONVOCATORIA PÚBLICA (texto completo para publicar en redes y web):
+   - Título impactante
+   - Descripción del evento y la oportunidad
+   - A quién va dirigida
+   - Qué incluye el stand (m², mesa, silla, energía eléctrica, identificación)
+   - Requisitos para postularse
+   - Criterios de selección
+   - Aranceles y fechas
+   - CTA y link de postulación
+
+3. FORMULARIO DE POSTULACIÓN: listado de las 12 preguntas clave que debe responder cada emprendedor al postularse
+
+4. CRITERIOS DE EVALUACIÓN: matriz de puntuación para seleccionar entre postulantes (puntaje 1–5 por categoría)
+
+5. REGLAMENTO DE FERIA: 15 reglas claras de participación (horarios, restricciones, responsabilidades del feriante)
+
+6. KIT DE BIENVENIDA (email o documento para seleccionados): qué información necesitan saber antes del evento</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>Establecé un arancel de stand que cubra al menos el costo de la infraestructura de la feria. Un stand bien ubicado en un evento de 100k personas tiene un valor enorme para el emprendedor: comunicalo en la convocatoria para justificar el precio.</span>
+      </div>
+    </div>
+
+    <!-- DEP 7 -->
+    <div class="dept" id="dept-7">
+      <div class="dept-header">
+        <div class="dept-num">07</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-contenido">Fase 3 — Contenido y comercial</div>
+          <div class="dept-title">Marketing y Comunicación</div>
+          <div class="dept-desc">El departamento que llena el evento. Estrategia de comunicación, contenido para redes, relación con prensa, gestión de entradas y campaña de difusión.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (estrategia y copy)</span>
+        <span class="tool-chip primary">★ Metricool (planificación y publicación)</span>
+        <span class="tool-chip secondary">Canva (piezas visuales)</span>
+        <span class="tool-chip secondary">Sora / Runway (video con IA)</span>
+        <span class="tool-chip secondary">Mailchimp (email marketing)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>estrategia de comunicación</strong>: fases de campaña, mensajes clave por fase, canales prioritarios.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>calendario de contenidos</strong> para redes: qué publicar cada semana, en qué plataformas, con qué formato.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>kit de prensa</strong>: gacetilla oficial, datos del evento, citas para medios, imágenes de referencia.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Canva + Metricool</div><div class="step-text">Creá las piezas visuales en Canva y programalas directamente desde Metricool.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-tool">Sora / Runway</div><div class="step-text">Generá un video teaser del evento con IA para la campaña de lanzamiento. Usá los renders del Dep. 4 como base.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Estrategia de comunicación completa</div>
+      <div class="prompt-box bg-contenido">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Claude</div>
+        <div class="prompt-text">Actuá como director de marketing de eventos masivos y festivales.
+
+Evento: <em>[RESUMEN DEL DOCUMENTO MAESTRO]</em>
+Fecha del evento: <em>[FECHA]</em>
+Fecha de inicio de campaña: <em>[FECHA]</em>
+Semanas de campaña disponibles: <em>[N semanas]</em>
+Presupuesto de marketing: <em>[% del total o cifra aproximada]</em>
+Canales disponibles: Instagram, TikTok, Facebook, email, prensa local/nacional
+
+Generá:
+
+1. ESTRATEGIA POR FASES:
+   - Fase 1 "Expectativa" (semanas -8 a -6): qué comunicar, tono, objetivo
+   - Fase 2 "Lanzamiento" (semanas -6 a -4): apertura de entradas, mensaje principal
+   - Fase 3 "Activación" (semanas -4 a -2): urgencia, últimas entradas, experiencia
+   - Fase 4 "Cuenta regresiva" (última semana): contenido diario, logística para asistentes
+   - Fase 5 "Post-evento": agradecimiento, contenido generado, próxima edición
+
+2. CALENDARIO DE CONTENIDOS: semana a semana, qué publicar en cada plataforma con formato específico (reel, story, carrusel, post estático)
+
+3. COPY PARA LANZAMIENTO: 3 versiones del texto de anuncio del evento para Instagram (corto, medio y largo)
+
+4. GACETILLA DE PRENSA: comunicado oficial para medios, con todos los datos del evento, citas del organizador y ángulo periodístico
+
+5. ESTRATEGIA DE INFLUENCERS: perfil del influencer ideal, qué pedirle, qué ofrecerle, cómo medir su impacto
+
+6. EMAILS CLAVE: asunto + cuerpo para: anuncio del evento, apertura de entradas, semana previa, día anterior, post-evento</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>Para generar video con Sora (OpenAI) o Runway: usá los renders del Dep. 4 como imagen inicial y pedile que anime la escena. Describí el movimiento de cámara deseado y el mood. Un video de 15–30 segundos bien hecho vale más que 10 posts estáticos.</span>
+      </div>
+    </div>
+
+    <!-- DEP 8 -->
+    <div class="dept" id="dept-8">
+      <div class="dept-header">
+        <div class="dept-num">08</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-seguridad">Fase 4 — Seguridad y bienestar</div>
+          <div class="dept-title">Seguridad y Control de Accesos</div>
+          <div class="dept-desc">El departamento que más se nota cuando falla. Define el plan integral de seguridad: accesos, control de multitud, emergencias y protocolo de evacuación para 100k personas.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (documentación y planificación)</span>
+        <span class="tool-chip secondary">Profesional de seguridad certificado (obligatorio)</span>
+        <span class="tool-chip secondary">Eventbrite / TicketHoy (ticketing + control de accesos)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>plan integral de seguridad</strong> como documento base para trabajar con el profesional de seguridad que se contrate.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>protocolo de emergencias</strong>: incendio, heridos, pánico masivo, corte de luz, persona perdida, amenaza de bomba.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>plan de control de accesos</strong>: cantidad de puertas, personal necesario, tipo de ticket (QR/RFID), flujo de validación.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Profesional certificado</div><div class="step-text">CRÍTICO: llevá todo lo generado a un profesional de seguridad habilitado para eventos masivos. La IA genera el marco, el profesional lo valida y firma.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Plan integral de seguridad</div>
+      <div class="prompt-box bg-seguridad">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#fbbf24"></span> Claude</div>
+        <div class="prompt-text">Actuá como consultor de seguridad en eventos masivos con experiencia en festivales de más de 50.000 personas en Argentina.
+
+Evento: <em>[RESUMEN]</em>
+Predio: <em>[descripción, m², tipo: abierto/cerrado/mixto]</em>
+Distribución de zonas: <em>[resumen del Dep. 3]</em>
+Duración: <em>[horas/días]</em>
+
+Generá el plan integral de seguridad que incluya:
+
+1. ANÁLISIS DE RIESGO: niveles de riesgo por zona del evento y por momento del día
+
+2. CONTROL DE ACCESOS:
+   - Cantidad de puertas de entrada según normativa (personas/hora por punto de acceso)
+   - Personal de seguridad necesario por zona
+   - Sistema de ticketing recomendado (QR, RFID, pulsera)
+   - Protocolo de revisión de bolsos y personas
+
+3. GESTIÓN DE MULTITUD:
+   - Densidad máxima permitida por zona (personas/m²)
+   - Sistema de monitoreo de densidad en tiempo real
+   - Protocolo de apertura progresiva de accesos
+   - Señales de alerta de sobrecapacidad y cómo actuar
+
+4. PLAN DE EMERGENCIAS: protocolo detallado para cada escenario:
+   - Persona con crisis médica
+   - Pánico masivo o estampida
+   - Incendio
+   - Corte de energía total
+   - Tormenta eléctrica (si es al aire libre)
+   - Amenaza de seguridad
+
+5. EVACUACIÓN: mapa de salidas de emergencia (zonas), tiempo estimado de evacuación total, puntos de reunión externos, coordinación con bomberos y SAME
+
+6. COMUNICACIONES: sistema de radios, quién habla con quién, código de comunicación de emergencias
+
+7. PERSONAL REQUERIDO: cantidad por rol (supervisores, porteros, vigilancia, paramédicos) para cada fase del evento
+
+Aclará qué partes requieren validación y firma de un profesional de seguridad habilitado.</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>⚠️ Este departamento NO puede depender solo de IA. El plan generado es un excelente punto de partida y brief para el profesional de seguridad, pero para un evento de 100k personas necesitás un plan de seguridad firmado por un profesional habilitado. Es un requisito legal en Argentina para eventos de esta escala.</span>
+      </div>
+    </div>
+
+    <!-- DEP 9 -->
+    <div class="dept" id="dept-9">
+      <div class="dept-header">
+        <div class="dept-num">09</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-seguridad">Fase 4 — Seguridad y bienestar</div>
+          <div class="dept-title">Bienestar y Áreas de Descanso</div>
+          <div class="dept-desc">Las zonas chill, de relajación y los espacios de recuperación que convierten un evento masivo en una experiencia humana y memorable. También incluye atención médica y accesibilidad.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (planificación y diseño)</span>
+        <span class="tool-chip primary">★ Midjourney (renders de zonas de descanso)</span>
+        <span class="tool-chip secondary">Canva (señalética de zonas)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí el plan de áreas de bienestar: cuántas zonas, dónde, qué ofrece cada una y quién las opera.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Midjourney</div><div class="step-text">Generá renders de cada tipo de zona de descanso para presentar en el evento y a sponsors.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el plan de accesibilidad: cómo garantizar que el evento sea inclusivo para personas con movilidad reducida, adultos mayores y familias con niños.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí el plan de atención médica: cantidad de puestos, perfil del personal, equipamiento mínimo, protocolo de derivación.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Plan de bienestar y áreas de descanso</div>
+      <div class="prompt-box bg-seguridad">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#fbbf24"></span> Claude</div>
+        <div class="prompt-text">Actuá como diseñador de experiencias y coordinador de bienestar en eventos masivos.
+
+Evento: <em>[RESUMEN]</em>
+Público: <em>[perfil: familias, jóvenes, mixto]</em>
+Duración: <em>[horas, si es de día/noche]</em>
+Zona disponible para bienestar: <em>[m²]</em>
+
+Diseñá el plan completo de bienestar que incluya:
+
+1. ZONAS DE DESCANSO Y RELAJACIÓN:
+   - Cantidad de zonas según superficie disponible y flujo de personas
+   - Tipos de zona: chill out, sombra y hamacas, zona familiar, zona silenciosa
+   - Equipamiento de cada zona (mobiliario, iluminación, ambientación sonora)
+   - Quién opera cada zona y cómo se mantiene durante el evento
+
+2. HIDRATACIÓN:
+   - Puntos de agua potable gratuita (cantidad según norma: 1 cada X personas)
+   - Señalética y visibilidad
+   - Sistema de recarga de botellas vs. distribución de vasos
+
+3. ATENCIÓN MÉDICA:
+   - Cantidad de puestos de primeros auxilios y ubicación
+   - Personal mínimo requerido: médicos, enfermeros, paramédicos
+   - Equipamiento esencial por puesto
+   - Protocolo de escalada: cuándo derivar y a qué hospital
+
+4. ACCESIBILIDAD E INCLUSIÓN:
+   - Acceso para personas con movilidad reducida (rampas, superficies, señalética)
+   - Zona preferencial en el escenario principal
+   - Baños accesibles: cantidad y ubicación
+   - Acompañante gratuito para persona con discapacidad
+
+5. ZONA FAMILIAR:
+   - Área para familias con niños: qué incluye
+   - Punto de encuentro para personas perdidas
+   - Protocolo de niño perdido
+
+6. SEÑALÉTICA DE BIENESTAR: qué señales necesita cada zona, qué colores y símbolos usar para que sean universalmente comprensibles</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>Las zonas de descanso bien diseñadas no son un gasto: son una experiencia premium que podés monetizar con sponsors (una marca de agua patrocina los puntos de hidratación, una marca de colchones patrocina la zona chill). Pedile a Claude que genere la propuesta de sponsoreo de cada zona.</span>
+      </div>
+    </div>
+
+    <!-- DEP 10 -->
+    <div class="dept" id="dept-10">
+      <div class="dept-header">
+        <div class="dept-num">10</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-ejecucion">Fase 5 — Ejecución</div>
+          <div class="dept-title">Coordinación en Sitio — Día del Evento</div>
+          <div class="dept-desc">El cerebro en tiempo real. Gestiona todo lo que pasa desde que se abre el primer acceso hasta que se cierra el último. Toma decisiones en segundos con información de todos los departamentos.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (runbooks y checklists)</span>
+        <span class="tool-chip secondary">Notion (centro de comando digital)</span>
+        <span class="tool-chip secondary">Slack / WhatsApp Business (comunicación de equipo)</span>
+        <span class="tool-chip secondary">Google Sheets (tracking en vivo)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>runbook del día del evento</strong>: minuto a minuto desde el ingreso de producción hasta el cierre del último acceso.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>organigrama de comunicación</strong>: quién reporta a quién, qué canal usa cada departamento, códigos de radio.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Notion</div><div class="step-text">Montá el centro de comando en Notion: tablero con estado de cada departamento, incidentes abiertos, contactos de emergencia.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>checklist de apertura</strong>: los 30 puntos que deben estar OK antes de abrir puertas al público.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Runbook del día del evento</div>
+      <div class="prompt-box bg-ejecucion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#60a5fa"></span> Claude</div>
+        <div class="prompt-text">Actuá como director de producción ejecutivo en el día de un evento masivo de 100.000 personas.
+
+Evento: <em>[RESUMEN]</em>
+Apertura de puertas: <em>[HORA]</em>
+Inicio del programa principal: <em>[HORA]</em>
+Cierre del evento: <em>[HORA]</em>
+Departamentos activos el día del evento: producción, seguridad, gastronomía, feria, bienestar, comunicación, coordinación
+
+Generá:
+
+1. RUNBOOK HORA A HORA:
+   Para cada bloque horario (desde -6h hasta +2h del evento) indicá:
+   - Actividades en curso
+   - Responsable de cada actividad
+   - Canal de comunicación (radio, Slack, WhatsApp)
+   - Semáforo: qué está OK, qué necesita atención, qué es crítico
+
+2. CHECKLIST DE APERTURA (los 30 puntos de Go/No-Go antes de abrir puertas):
+   - Por categoría: seguridad, técnico, gastronomía, feria, bienestar, comunicación
+   - Quién valida cada punto
+   - Qué pasa si algún punto falla
+
+3. ÁRBOL DE COMUNICACIÓN:
+   - Organigrama de quién reporta a quién el día del evento
+   - Canal de comunicación por departamento
+   - Código de alertas de radio (ej: "Código Verde = todo OK", "Código Rojo = emergencia")
+
+4. PROTOCOLO DE INCIDENTES:
+   - Cómo se reporta un problema
+   - Quién toma la decisión
+   - Cómo se comunica al equipo y al público si aplica
+
+5. CIERRE Y DESALOJO:
+   - Protocolo de comunicación de cierre al público
+   - Orden de cierre de zonas
+   - Tiempo estimado de desalojo seguro para 100k personas</div>
+      </div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>El día del evento, imprimí el runbook en físico. Los sistemas fallan. Las radios se quedan sin batería. Tener el runbook en papel como backup salvó más de un evento. Distribuílo a todos los jefes de departamento la noche anterior.</span>
+      </div>
+    </div>
+
+    <!-- DEP 11 -->
+    <div class="dept" id="dept-11">
+      <div class="dept-header">
+        <div class="dept-num">11</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-cierre">Fase 6 — Cierre</div>
+          <div class="dept-title">Cierre y Post-evento</div>
+          <div class="dept-desc">El trabajo que nadie ve pero que define si el evento va a repetirse. Desmontaje, pagos, análisis de resultados, feedback y planificación de la próxima edición.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (informes y análisis)</span>
+        <span class="tool-chip secondary">Google Forms (encuesta de satisfacción)</span>
+        <span class="tool-chip secondary">Notion (informe final)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá la <strong>encuesta de satisfacción</strong> para asistentes, feriantes y gastronómicos. Lanzarla dentro de las 24h del evento.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Con los datos recopilados, generá el <strong>informe de resultados</strong>: KPIs alcanzados, análisis de lo que funcionó y lo que falló.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>informe para sponsors</strong>: alcance del evento, métricas de visibilidad, ROI estimado, propuesta para próxima edición.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>plan de mejoras</strong> para la próxima edición basado en el feedback recibido.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Informe de resultados y aprendizajes</div>
+      <div class="prompt-box bg-cierre">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#9390a8"></span> Claude</div>
+        <div class="prompt-text">Actuá como consultor de eventos post-producción. Ayudame a generar el informe final del evento.
+
+Datos del evento realizado:
+- Asistentes totales: <em>[NÚMERO]</em>
+- Ingresos totales: <em>[CIFRA O % vs objetivo]</em>
+- Gastos totales: <em>[CIFRA O % vs presupuesto]</em>
+- Stands de feria: <em>[cantidad / ocupación %]</em>
+- Puestos de comida: <em>[cantidad / performance]</em>
+- Incidentes de seguridad: <em>[descripción]</em>
+- Feedback principal recibido: <em>[comentarios]</em>
+
+Generá:
+
+1. INFORME EJECUTIVO (1 página): resumen del evento, resultados vs objetivos, conclusión general
+
+2. ANÁLISIS POR DEPARTAMENTO: qué funcionó bien y qué falló en cada uno de los 11 departamentos
+
+3. TOP 10 APRENDIZAJES: las 10 cosas más importantes que aprendimos y cómo aplicarlas en la próxima edición
+
+4. INFORME PARA SPONSORS: documento profesional con alcance del evento, métricas de visibilidad, fotos/videos sugeridos, propuesta de continuidad
+
+5. ENCUESTA DE SATISFACCIÓN: 15 preguntas para enviar a los asistentes dentro de las 24h post-evento (mix de NPS, escala y respuesta abierta)
+
+6. PLAN DE MEJORAS: los 5 cambios más importantes para implementar en la próxima edición, con responsable y fecha límite de decisión</div>
+      </div>
+
+      <div class="output-box"><strong>Output final:</strong> Documento maestro de post-producción que sirve como base para la próxima edición. El ciclo se cierra acá y vuelve a empezar desde el Dep. 1 con mucho más contexto.</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>El post-evento bien documentado vale oro si querés repetir el evento o venderlo como producto a otra ciudad. Un informe profesional de resultados con métricas reales puede atraer a sponsors mucho más grandes para la próxima edición.</span>
+      </div>
+    </div>
+
+    <!-- DEP 12 -->
+    <div class="dept" id="dept-12">
+      <div class="dept-header">
+        <div class="dept-num">12</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-planificacion">Fase 2 — Planificación operativa</div>
+          <div class="dept-title">Espacialidad y Diseño de Stands</div>
+          <div class="dept-desc">El evento en el suelo. Cómo se distribuyen físicamente los stands de feria, puestos gastronómicos y zonas de bienestar: dimensiones, orientación, señalética interna y brief para expositores. La diferencia entre un evento improvisado y uno profesional está en este departamento.</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (dimensionamiento y briefs)</span>
+        <span class="tool-chip secondary">ChatGPT + Code Interpreter (planos por zona)</span>
+        <span class="tool-chip secondary">Canva / Figma (guías visuales)</span>
+        <span class="tool-chip secondary">Notion (reglamento de expositores)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Definí la <strong>tipología de stands</strong>: cuántos tipos hay (feria emprendedora, gastronomía, sponsor, bienestar) y qué dimensiones y condiciones tiene cada uno. Este es el catálogo de espacios que vas a ofrecer.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>dimensionamiento interno de cada zona</strong>: cuántos stands entran, con qué separación entre ellos, anchos de pasillo según flujo esperado, y dónde van los accesos de servicio (para reposición de stock sin cruzar el público).</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">ChatGPT + Code Interpreter</div><div class="step-text">Generá el <strong>plano de distribución interno de cada zona</strong> con matplotlib: feria, gastronomía y bienestar como sub-planos. Cada uno con numeración de puesto, pasillos y accesos.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Canva / Figma</div><div class="step-text">Diseñá la <strong>guía visual del stand</strong>: qué incluye cada tipo (carpa, mesa, luz, conexión eléctrica), qué está permitido personalizar y qué es estándar del evento. Esto lo recibe cada expositor antes del montaje.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>reglamento de feriantes y gastronómicos</strong>: horarios de montaje, política de descarga, normas de higiene, qué pasa si no cumplen, protocolo de cierre de puesto.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Dimensionamiento y distribución de stands por zona</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> Claude</div>
+        <div class="prompt-text">Actuá como arquitecto de eventos y especialista en diseño de espacios para ferias masivas.
+
+Contexto del evento: <em>[PEGÁ EL RESUMEN DEL DOCUMENTO MAESTRO]</em>
+Superficie total disponible para stands: <em>[m² de zona feria]</em> / <em>[m² zona gastronómica]</em> / <em>[m² zona bienestar]</em>
+Cantidad estimada de expositores feria: <em>[número]</em>
+Cantidad estimada de puestos gastronómicos: <em>[número]</em>
+Asistencia esperada: 100.000 personas
+Horario del evento: <em>[apertura - cierre]</em>
+
+Generá el plan completo de espacialidad dividido en tres zonas:
+
+1. ZONA FERIA DE EMPRENDEDORES:
+   - Tipología de stands: tamaños disponibles (básico / estándar / premium) con dimensiones exactas en metros
+   - Cantidad de stands por tipo que entran en la superficie disponible
+   - Ancho de pasillos principales (mínimo recomendado para flujo de 100k personas) y secundarios
+   - Orientación de los stands: qué tipo de layout es mejor (lineal, en U, en isla, en grilla) y por qué
+   - Accesos de servicio: dónde se ubican para reposición sin cruzar al público
+   - Qué incluye cada tipo de stand: estructura, mobiliario, electricidad, iluminación
+   - Precio de referencia internacional por m² de stand en evento de esta escala
+
+2. ZONA GASTRONÓMICA:
+   - Tipos de puestos: food truck / módulo fijo / barra / carrito
+   - Dimensiones de cada tipo y espacio mínimo de operación (incluyendo área de trabajo trasera)
+   - Distancia mínima entre puestos de comida (norma sanitaria y operativa)
+   - Zona de colas: cuánto espacio necesita cada puesto para la fila sin bloquear circulación
+   - Área de mesas y sillas: m² necesarios según % de asistentes que comen sentados
+   - Punto de descarga de insumos: acceso separado al público, horario y protocolo
+   - Gestión de residuos: contenedores por zona, frecuencia de vaciado para 100k personas
+
+3. ZONA DE BIENESTAR Y DESCANSO:
+   - Sub-zonas: chill out, sombra, zona silenciosa, zona familiar con niños
+   - Mobiliario por sub-zona: cantidad y tipo (reposeras, puffs, hamacas, bancos)
+   - Separación entre zonas de descanso: cuántas y a qué distancia para que sean accesibles desde cualquier punto
+   - Iluminación y ambientación: qué tipo de luz y sonido tiene cada sub-zona
+   - Quién opera y mantiene cada zona durante el evento
+
+4. SEÑALÉTICA DE ORIENTACIÓN ENTRE ZONAS:
+   - Tipos de señal necesarios: pórticos de entrada, totems direccionales, señales de piso
+   - Altura mínima y tamaño de letra para que sean legibles en multitud
+   - Puntos de ubicación: cada cuántos metros debe haber una señal en pasillos principales
+   - Contenido de cada tipo de señal (qué dice, qué icono usa)
+
+5. BRIEF PARA EXPOSITORES (documento de una página que recibe cada stand confirmado):
+   - Número y ubicación de su stand en el plano
+   - Dimensiones exactas de su espacio
+   - Qué está incluido y qué debe traer
+   - Horarios de acceso para montaje (con horario de corte)
+   - Normas obligatorias (seguridad eléctrica, residuos, ruido)
+   - Contacto del coordinador de zona el día del evento</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="prompt-label">Prompt — Plano interno de zonas (ChatGPT Code Interpreter)</div>
+      <div class="prompt-box bg-planificacion">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#2dd4bf"></span> ChatGPT + Code Interpreter</div>
+        <div class="prompt-text">Generá en Python con matplotlib un plano detallado de la zona de feria de emprendedores.
+
+Superficie de la zona: <em>[ancho]</em> x <em>[largo]</em> metros
+Tipos de stand a incluir:
+- Stands básicos: <em>[ancho]</em> x <em>[largo]</em> m — color verde claro
+- Stands estándar: <em>[ancho]</em> x <em>[largo]</em> m — color verde medio
+- Stands premium: <em>[ancho]</em> x <em>[largo]</em> m — color verde oscuro
+- Stands de sponsors: <em>[ancho]</em> x <em>[largo]</em> m — color dorado
+
+El plano debe incluir:
+- Numeración de cada stand (S-001, S-002...)
+- Pasillos principales de <em>[X]</em> metros de ancho (en blanco)
+- Pasillos secundarios de <em>[X]</em> metros de ancho (en gris claro)
+- Accesos peatonales (flechas verdes, mínimo 2)
+- Acceso de servicio / descarga (flecha roja, por detrás)
+- Punto de información / coordinador de zona (estrella amarilla)
+- Baños más cercanos (indicador azul)
+- Leyenda de colores y escala en metros
+- Título: "Zona Feria de Emprendedores — Plano de distribución"
+
+Exportá como PNG de alta resolución.
+Repetí el mismo proceso para la Zona Gastronómica usando los colores: naranja claro (carrito), naranja (módulo fijo), naranja oscuro (food truck), con área de mesas en amarillo muy claro.</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Catálogo de tipos de stand con precios y dimensiones, planos internos de cada zona con numeración, guía visual de equipamiento para feriantes y brief listo para enviar a cada expositor confirmado.</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>El número de stand importa. Asignalo estratégicamente: los stands premium van en el cruce de los dos pasillos principales (máximo tráfico). Los de gastronomía nunca al fondo — la gente no llega hambrienta hasta allá. Y siempre dejá un 10% de espacio libre para imprevistos: un expositor que necesita más espacio del que pidió, una zona de emergencia improvisada, o simplemente para que el evento no se vea "apretado".</span>
+      </div>
+    </div>
+
+    <!-- DEP 13 -->
+    <div class="dept" id="dept-13">
+      <div class="dept-header">
+        <div class="dept-num">13</div>
+        <div class="dept-info">
+          <div class="dept-phase-tag phase-contenido">Fase 3 — Contenido</div>
+          <div class="dept-title">Activaciones de Marca y Experiencias</div>
+          <div class="dept-desc">Lo que convierte un evento en un recuerdo. Juegos, momentos instagrammeables, activaciones de sponsors, merchandise y experiencias digitales que la gente comparte, comenta y recuerda. La diferencia entre "fui a un evento" y "tuve una experiencia".</div>
+        </div>
+      </div>
+
+      <div class="dept-tools">
+        <span class="tool-chip primary">★ Claude (estrategia de activaciones)</span>
+        <span class="tool-chip primary">★ Midjourney (renders de experiencias)</span>
+        <span class="tool-chip secondary">Canva (diseño de piezas)</span>
+        <span class="tool-chip secondary">ChatGPT (mecánicas de juego)</span>
+        <span class="tool-chip secondary">QR Code Generator (experiencias digitales)</span>
+      </div>
+
+      <div class="steps-title">Paso a paso</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Generá el <strong>mapa de momentos del evento</strong>: identificá los 10–15 puntos de contacto donde la persona interactúa con el evento (llegada, ingreso, primer paso dentro, zona de comida, etc.) y diseñá qué pasa en cada uno para sorprenderla.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Diseñá las <strong>activaciones de marca propias del evento</strong>: las 5–8 instalaciones, juegos o experiencias que llevan el nombre del evento y que la gente fotografía y comparte orgánicamente.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Desarrollá el <strong>programa de activaciones para sponsors</strong>: qué tipo de activación puede hacer cada categoría de sponsor (marca de bebidas, banco, marca de ropa, etc.) y cómo integrarlo sin que parezca publicidad.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-tool">Claude + Canva</div><div class="step-text">Desarrollá el <strong>plan de merchandise</strong>: qué productos tienen sentido para este evento, cómo se distribuyen (venta, regalo por nivel de entrada, premio en juego) y cómo se diseña para que la gente los quiera usar después del evento.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-tool">Claude</div><div class="step-text">Diseñá la <strong>estrategia de contenido generado por usuarios (UGC)</strong>: cómo incentivás que la gente saque fotos, use el hashtag, suba stories y genere contenido orgánico masivo durante y después del evento.</div></div></div>
+      </div>
+
+      <div class="prompt-label">Prompt — Plan completo de activaciones de marca</div>
+      <div class="prompt-box bg-contenido">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Claude</div>
+        <div class="prompt-text">Actuá como director creativo de experiencias y especialista en event marketing con foco en activaciones experienciales para eventos masivos latinoamericanos.
+
+Contexto del evento: <em>[PEGÁ EL RESUMEN DEL DOCUMENTO MAESTRO]</em>
+Perfil del asistente: <em>[edad, intereses, estilo de vida]</em>
+Identidad de marca del evento: <em>[PEGÁ EL OUTPUT DEL DEP. 4]</em>
+Sponsors confirmados o categorías de sponsor buscadas: <em>[lista]</em>
+Presupuesto aproximado para activaciones: <em>[rango]</em>
+
+Generá el plan completo de activaciones dividido en 5 bloques:
+
+1. MAPA DE MOMENTOS DEL EVENTO (Customer Journey):
+   Para cada etapa del recorrido del asistente — llegada al predio / fila de ingreso / primer paso adentro / zona de escenario / zona de feria / zona de comida / zona de descanso / salida — diseñá:
+   - Qué estímulo (visual, sonoro, táctil) recibe la persona
+   - Qué emoción queremos que sienta
+   - Qué acción espontánea queremos que haga (foto, comentario, interacción)
+   - Qué elemento de marca del evento está presente en ese punto
+
+2. INSTALACIONES Y ACTIVACIONES PROPIAS DEL EVENTO (5 ideas mínimo):
+   Para cada activación indicá:
+   - Nombre de la instalación o juego
+   - Descripción física: cómo se ve, cuánto espacio ocupa, materiales necesarios
+   - Mecánica: cómo participa la persona, qué tiene que hacer, cuánto tiempo dura
+   - Factor instagrammeable: por qué van a querer sacarse una foto ahí
+   - Operación: cuántas personas necesita para funcionar, costos estimados
+   - Vínculo con la identidad del evento: cómo refuerza el concepto de marca
+   Las activaciones deben ser variadas: al menos una interactiva-grupal, una visual-fotográfica, una gamificada con premio, una sensorial y una digital.
+
+3. ACTIVACIONES DE SPONSORS (por categoría):
+   Para cada categoría de sponsor (bebidas / indumentaria / tecnología / banco / alimentación / automotriz) diseñá:
+   - Nombre de la activación (no "stand de X marca", sino una experiencia con identidad)
+   - Mecánica de participación del asistente
+   - Cómo se integra naturalmente al evento sin interrumpir la experiencia
+   - Qué le lleva el asistente (muestra, descuento, objeto, foto, premio)
+   - Métricas que puede reportar el sponsor (participantes, fotos, scans de QR)
+
+4. PLAN DE MERCHANDISE:
+   Diseñá una línea de 8–12 productos de merchandise para el evento:
+   - Para cada producto: nombre, descripción, precio de venta sugerido, costo de producción estimado, canal de distribución (venta / regalo / premio)
+   - Clasifocalos por categoría: wearables (remera, gorra, pulsera), coleccionables (poster, pin, sticker), funcionales (bolsa, vaso, mate), digitales (filtro AR, wallpaper)
+   - Estrategia de edición limitada: qué 2–3 productos hacen que la gente quiera tenerlos antes de que se agoten
+   - Cómo usar el merchandise para generar ingresos adicionales: venta online antes del evento, packs de entrada + merch, corner de merch en el evento
+
+5. ESTRATEGIA DE UGC (Contenido Generado por Usuarios):
+   - Hashtag principal y hashtags secundarios: cuáles usar, cómo comunicarlos dentro del evento
+   - Los 5 "photo moments" obligatorios: puntos diseñados específicamente para ser fotografiados (qué son, dónde se ubican, cómo se señalizan)
+   - Sistema de incentivos para compartir: cómo premiás a quien use el hashtag (concurso, sorpresa, reconocimiento en pantalla gigante)
+   - Wall de contenido en vivo: cómo mostrar en pantallas del evento las fotos que la gente sube en tiempo real
+   - Plan de moderación: quién filtra el contenido antes de que aparezca en pantalla</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="prompt-label">Prompt — Mecánicas de juego y gamificación del evento</div>
+      <div class="prompt-box bg-contenido">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Claude / ChatGPT</div>
+        <div class="prompt-text">Actuá como game designer especializado en experiencias presenciales y gamificación de eventos masivos.
+
+Evento: <em>[DESCRIPCIÓN CORTA]</em>
+Público: <em>[perfil del asistente]</em>
+Zonas del evento: escenario principal, zona de feria, zona gastronómica, zona de bienestar, accesos
+Duración del evento: <em>[horas]</em>
+Presupuesto para mecánicas de juego: <em>[rango]</em>
+
+Diseñá un sistema de gamificación completo para el evento con los siguientes componentes:
+
+1. MECÁNICA CENTRAL (el "juego del evento"):
+   Un sistema de participación que dure todo el día, que recorra distintas zonas y que tenga un premio final. Puede ser: rally de sellos, misiones por zonas, bingo del evento, sistema de puntos con app, o similar.
+   - Descripción completa de cómo funciona
+   - Cómo se explica en 30 segundos a un asistente que no sabe nada
+   - Qué necesita para ejecutarse (físico vs digital, personas involucradas)
+   - Premios: qué gana quien completa, y qué gana quien llega más lejos
+
+2. JUEGOS POR ZONA (1 juego específico para cada zona):
+   Para cada zona diseñá un juego o dinámica que:
+   - No necesite más de 5 minutos para participar
+   - Funcione tanto para 1 persona como para grupos
+   - Tenga un resultado inmediato (el asistente se lleva algo: un premio, una foto, una experiencia)
+   - Sea operado por 1–2 personas del staff
+   Zonas: zona de feria / zona gastronómica / zona de bienestar / acceso/ingreso / zona de escenario (pre-show)
+
+3. DINÁMICAS GRUPALES EN ESCENARIO:
+   - 3 momentos durante el evento donde el conductor/artista activa al público con una dinámica
+   - Descripción de cada dinámica: qué hace el conductor, qué hace el público, qué pasa en pantalla
+   - Cómo se integra con el sistema de gamificación general
+
+4. TABLA DE PREMIOS:
+   - Por categoría: premios individuales, premios grupales, gran premio del evento
+   - Mix de: merchandise del evento, vouchers de sponsors, experiencias (meet & greet, acceso backstage), premios en efectivo o gift cards
+   - Presupuesto de premios recomendado como % del presupuesto total de activaciones
+
+5. OPERACIÓN DEL SISTEMA:
+   - Cuántas personas necesitás para operar la gamificación todo el día
+   - Cómo se evita el fraude o trampa en el sistema
+   - Plan B si algo falla tecnológicamente</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="prompt-label">Prompt — Renders de activaciones e instalaciones (Midjourney)</div>
+      <div class="prompt-box bg-contenido">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+        <div class="prompt-tool-tag"><span class="tool-dot" style="background:#f87171"></span> Midjourney</div>
+        <div class="prompt-text">Prompt para photo moment / instalación central:
+large scale festival art installation, <em>[CONCEPTO DE TU EVENTO: ej. "neon lights and latin culture", "nature and music fusion"]</em>, interactive structure people can walk through, instagram worthy, crowd of people photographing, golden hour lighting, wide shot, photorealistic, 8k --ar 16:9 --v 6
+
+Prompt para pared o mural instagrammeable:
+massive mural wall at outdoor festival, vibrant colors, <em>[PALETA DE COLORES DEL EVENTO]</em>, latin american street art style, people taking photos in front, full height, wide angle, --ar 16:9 --v 6
+
+Prompt para stand de juego / activación:
+festival game activation booth, branded pop-up, <em>[COLORES DEL EVENTO]</em>, people playing and laughing, modern design, staff in branded uniforms, prizes displayed, festival atmosphere, documentary photography style --ar 16:9 --v 6
+
+Prompt para merchandise corner:
+festival merchandise store at outdoor event, <em>[NOMBRE O ESTÉTICA DEL EVENTO]</em>, t-shirts, hats, accessories on display, warm lighting, people browsing, branded signage, modern retail design --ar 16:9 --v 6</div>
+      </div>
+
+      <div class="output-box"><strong>Output esperado:</strong> Plan de activaciones con 5+ instalaciones propias, mecánica central de gamificación, juegos por zona, plan de merchandise con 10+ productos y estrategia de UGC. Con esto podés presentarle a los sponsors una propuesta de activaciones con nombre y mecánica definida, no solo "espacio de stand".</div>
+
+      <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span>La regla de las activaciones: si no está diseñada para ser fotografiada, no existe. Cada instalación, juego o momento tiene que tener un ángulo de foto pensado, una iluminación apropiada y un cartel con el hashtag del evento. El contenido que genera el público en el evento es publicidad gratuita que llega a personas que no fueron y que podrían ir a la próxima edición. Calculá cuántas impresiones orgánicas necesitás y trabajá hacia atrás para diseñar cuántos photo moments necesitás.</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function showDept(n) {
+  document.querySelectorAll('.dept').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('dept-' + n).classList.add('active');
+  document.querySelector('[data-dept="' + n + '"]').classList.add('active');
+  document.getElementById('progress').style.width = (n / 13 * 100) + '%';
+  document.querySelector('.main').scrollTop = 0;
+}
+
+function copyPrompt(btn) {
+  const box = btn.closest('.prompt-box');
+  const text = box.querySelector('.prompt-text').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

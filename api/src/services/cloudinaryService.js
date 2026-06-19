@@ -25,8 +25,9 @@ export const getCloudinarySignature = async () => {
 };
 
 export const validateCloudinaryUrl = (url) => {
-  // Valida que la URL sea de Cloudinary
-  return url && url.includes('res.cloudinary.com') && url.includes(process.env.CLOUDINARY_CLOUD_NAME);
+  // Valida que la URL sea de Cloudinary y pertenezca a nuestra cuenta
+  if (!url || typeof url !== 'string') return false;
+  return url.includes('res.cloudinary.com') && url.includes(process.env.CLOUDINARY_CLOUD_NAME);
 };
 
 export default cloudinary;
