@@ -242,8 +242,6 @@ function ParticipaForm({ tab }) {
 
   const sending = status === "sending";
 
-  const sending = status === "sending";
-
   return (
     <form onSubmit={handleSubmit}>
       <input type="hidden" name="tipo_participacion" value={tab.label} />
