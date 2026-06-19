@@ -142,7 +142,9 @@ function PurchaseModal({ ticket, onClose }) {
   const [errors, setErrors] = useState({});
   const fotoInputRef = useRef(null);
 
-  const precio = dias === '3' ? ticket.precioNum * 2 : ticket.precioNum;
+  const precio = typeof ticket.precioNum === 'number' 
+    ? (dias === '3' ? ticket.precioNum * 2 : ticket.precioNum)
+    : 'A Confirmar';
 
   const isFormValid =
     nombre.trim().length >= 3 &&
@@ -151,7 +153,8 @@ function PurchaseModal({ ticket, onClose }) {
     dni.trim().length >= 7 &&
     foto !== null &&
     (dias === '3' || diaEspecifico !== '') &&
-    terminos;
+    terminos &&
+    typeof ticket.precioNum === 'number';
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -242,8 +245,8 @@ function PurchaseModal({ ticket, onClose }) {
     marginBottom: 6,
   };
 
-  const dias3precio = fmtARS(ticket.precioNum * 2);
-  const dias1precio = fmtARS(ticket.precioNum);
+  const dias3precio = typeof ticket.precioNum === 'number' ? fmtARS(ticket.precioNum * 2) : 'A Confirmar';
+  const dias1precio = typeof ticket.precioNum === 'number' ? fmtARS(ticket.precioNum) : 'A Confirmar';
 
   return (
     <>
@@ -294,7 +297,7 @@ function PurchaseModal({ ticket, onClose }) {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                 {[
                   { val: '1', label: '1 día', sub: dias1precio },
-                  { val: '3', label: '3 días · Promo 3×2', sub: dias3precio, tag: 'Ahorrás ' + fmtARS(ticket.precioNum) },
+                  { val: '3', label: '3 días · Promo 3×2', sub: dias3precio, tag: typeof ticket.precioNum === 'number' ? 'Ahorrás ' + fmtARS(ticket.precioNum) : null },
                 ].map(opt => (
                   <button
                     key={opt.val}
@@ -483,8 +486,10 @@ function PurchaseModal({ ticket, onClose }) {
             <div style={{ padding: '16px', background: 'rgba(200,166,71,0.08)', border: '1px solid rgba(200,166,71,0.25)', borderRadius: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <div style={{ fontSize: 11, color: '#7A9E5A', fontFamily: 'var(--bz-font-mono)', letterSpacing: '0.12em', marginBottom: 4 }}>TOTAL A PAGAR</div>
-                <div style={{ fontSize: 22, fontWeight: 700, color: '#C8A647' }}>{fmtARS(precio)}</div>
-                {dias === '3' && <div style={{ fontSize: 11, color: '#7A9E5A', marginTop: 2 }}>Promo 3×2 · 3 días por el precio de 2</div>}
+                <div style={{ fontSize: 22, fontWeight: 700, color: typeof precio === 'number' ? '#C8A647' : '#7A9E5A' }}>
+                  {typeof precio === 'number' ? fmtARS(precio) : precio}
+                </div>
+                {dias === '3' && typeof precio === 'number' && <div style={{ fontSize: 11, color: '#7A9E5A', marginTop: 2 }}>Promo 3×2 · 3 días por el precio de 2</div>}
               </div>
               <div style={{ fontSize: 11, color: '#6E9050', textAlign: 'right', fontFamily: 'var(--bz-font-mono)' }}>
                 Pagás con<br />Mercado Pago
@@ -590,7 +595,7 @@ function TicketCard({ ticket, index, onComprar }) {
 
   const p = PALETA[ticket.id] || PALETA['bosque'];
   const featured = ticket.destacado;
-  const precio3 = ticket.precioNum * 2;
+  const precio3 = typeof ticket.precioNum === 'number' ? ticket.precioNum * 2 : null;
 
   const [notify, setNotify] = useState(false);
   const [notifyEmail, setNotifyEmail] = useState('');
@@ -674,6 +679,7 @@ function TicketCard({ ticket, index, onComprar }) {
         </ul>
 
         {/* Promo 3×2 */}
+        {precio3 !== null && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', borderRadius: 10, background: p.promoBg, border: `1px solid ${p.promoBorder}`, marginBottom: 16 }}>
           <div style={{ fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--bz-font-mono)', opacity: 0.65 }}>3 días · 3×2</div>
           <div style={{ fontSize: 15, fontWeight: 700, color: p.accent }}>
@@ -681,6 +687,7 @@ function TicketCard({ ticket, index, onComprar }) {
             <span style={{ fontSize: 11, fontWeight: 400, opacity: 0.7, marginLeft: 5 }}>pagás 2</span>
           </div>
         </div>
+        )}
 
         {/* CTA */}
         {VENTA_ACTIVA ? (
