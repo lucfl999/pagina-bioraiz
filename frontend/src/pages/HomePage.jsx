@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useReveal, Counter, SectionHead, Placeholder, LeafShape, CircleShape, CategoriaCard } from '../components/shared.jsx';
+import InstagramReels from '../components/InstagramReels.jsx';
 import { NUMEROS, CATEGORIAS_STANDS, DIA_BLOQUES } from '../data.js';
 import { subscribeNewsletter } from '../services/api.js';
 
@@ -12,6 +13,7 @@ export default function HomePage({ setPage }) {
       <NumbersSection />
       <ExpositoresScroll setPage={setPage} />
       <AgendaPreview setPage={setPage} />
+      <InstagramReels />
       <Gallery />
       <NewsletterBlock />
     </div>

@@ -9,6 +9,7 @@ import formRoutes from './routes/forms.js';
 import subscriberRoutes from './routes/subscribers.js';
 import ticketRoutes from './routes/tickets.js';
 import adminRoutes from './routes/admin.js';
+import instagramRoutes from './routes/instagram.js';
 
 dotenv.config();
 
@@ -59,6 +60,7 @@ app.use('/api/emails', emailRoutes);
 app.use('/api/forms', formRoutes);
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/instagram', instagramRoutes);
 app.use('/admin', adminRoutes);
 
 // Error handler
