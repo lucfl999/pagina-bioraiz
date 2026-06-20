@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { LeafShape, IconInstagram } from './shared.jsx';
+import api from '../services/api.js';
 
 // Fallback con datos de ejemplo si Instagram API falla
 const FALLBACK_REELS = [
@@ -35,13 +36,8 @@ export default function InstagramReels() {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('/api/instagram/reels');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const data = await response.json();
+        const response = await api.get('/instagram/reels');
+        const data = response.data;
         
         // Verificar que hay datos
         if (data.data && Array.isArray(data.data) && data.data.length > 0) {
