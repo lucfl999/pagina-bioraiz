@@ -16,10 +16,12 @@ if (!INSTAGRAM_ACCESS_TOKEN) {
 // Cache en memoria
 let cachedReels = null;
 let cacheTimestamp = null;
+let cachedStories = null;
+let storiesCacheTimestamp = null;
 
 /**
  * GET /api/instagram/reels
- * Obtiene los últimos 3 posts de Instagram con caché de 1 hora
+ * Obtiene los últimos 3 posts de Instagram con caché de 1 minuto
  */
 router.get('/reels', async (req, res) => {
   try {
@@ -35,43 +37,61 @@ router.get('/reels', async (req, res) => {
       });
     }
 
+    // Validar token
+    if (!INSTAGRAM_ACCESS_TOKEN) {
+      console.warn('⚠️ Token no configurado');
+      return res.status(200).json({
+        status: 'ok',
+        source: 'fallback',
+        data: [],
+        message: 'Instagram token not configured'
+      });
+    }
+
     // Fetch desde Instagram Graph API
     console.log('🔄 Fetching Instagram Reels...');
     const instagramUrl = `https://graph.instagram.com/${INSTAGRAM_ACCOUNT_ID}/media?fields=id,caption,media_type,media_url,timestamp,permalink,thumbnail_url&access_token=${INSTAGRAM_ACCESS_TOKEN}`;
 
-    const response = await axios.get(instagramUrl);
+    const response = await axios.get(instagramUrl, { timeout: 8000 });
     const instagramData = response.data;
 
-    if (!instagramData.data) {
-      throw new Error('No data from Instagram API');
+    if (!instagramData.data || !Array.isArray(instagramData.data)) {
+      console.warn('⚠️ No data returned from Instagram API');
+      return res.status(200).json({
+        status: 'ok',
+        source: 'empty',
+        data: [],
+        message: 'No posts found'
+      });
     }
 
     // Procesar y formatear los últimos 3 posts
     const reels = instagramData.data
       .slice(0, 3)
       .map(post => {
-        let thumbnail = '';
-        
-        // Para videos, intentar usar thumbnail_url; si no funciona, usar un placeholder
-        // Para carousels e imágenes, usar media_url
-        if (post.media_type === 'VIDEO' || post.media_type === 'REELS') {
-          // Para videos, el thumbnail_url debería ser una imagen
-          thumbnail = post.thumbnail_url || 
-                     'https://via.placeholder.com/400x500/1A2812/BEIGE?text=Video+Preview';
-        } else {
-          // Para imágenes y carousels, usar la URL directa
-          thumbnail = post.media_url || '';
+        try {
+          let thumbnail = '';
+          
+          if (post.media_type === 'VIDEO' || post.media_type === 'REELS') {
+            thumbnail = post.thumbnail_url || post.media_url || '';
+          } else {
+            thumbnail = post.media_url || '';
+          }
+          
+          return {
+            id: post.id,
+            thumbnail: thumbnail,
+            permalink: post.permalink || `https://instagram.com/p/${post.id}`,
+            caption: post.caption || '',
+            timestamp: post.timestamp,
+            media_type: post.media_type
+          };
+        } catch (e) {
+          console.error('Error mapping post:', e.message);
+          return null;
         }
-        
-        return {
-          id: post.id,
-          thumbnail: thumbnail,
-          permalink: post.permalink || `https://instagram.com/p/${post.id}`,
-          caption: post.caption || '',
-          timestamp: post.timestamp,
-          media_type: post.media_type
-        };
-      });
+      })
+      .filter(p => p !== null);
 
     // Guardar en caché
     cachedReels = reels;
@@ -87,21 +107,76 @@ router.get('/reels', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error fetching Instagram reels:', error.message);
+    console.error('Error fetching Instagram reels:', {
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data
+    });
 
     // Si falla totalmente, retornar caché si existe
-    if (cachedReels) {
+    if (cachedReels && cachedReels.length > 0) {
       return res.status(200).json({
-        status: 'error_with_cache',
-        message: error.message,
+        status: 'ok',
+        source: 'cache_fallback',
+        message: 'Using cached data due to API error',
         data: cachedReels,
         cached_at: new Date(cacheTimestamp).toISOString()
       });
     }
 
-    res.status(500).json({
+    // Retornar error pero con status 200 para evitar que el frontend rompa
+    res.status(200).json({
+      status: 'error',
       error: 'Failed to fetch Instagram reels',
-      message: error.message
+      message: error.message,
+      data: [],
+      tip: 'Check Instagram API token and permissions'
+    });
+  }
+});
+
+/**
+ * GET /api/instagram/stories
+ * Endpoint para historias de Instagram (puede no tener datos según permisos de Graph API)
+ */
+router.get('/stories', async (req, res) => {
+  try {
+    const now = Date.now();
+    
+    // Retornar caché si existe y es reciente
+    if (cachedStories && storiesCacheTimestamp && (now - storiesCacheTimestamp) < (CACHE_DURATION * 1000)) {
+      console.log('✅ Instagram Stories desde caché');
+      return res.json({
+        status: 'ok',
+        source: 'cache',
+        data: cachedStories,
+        cached_at: new Date(storiesCacheTimestamp).toISOString()
+      });
+    }
+
+    // Instagram Graph API NO soporta historias directamente
+    // Las historias requieren acceso especial y solo están disponibles via Instagram Basic Display API
+    // Por ahora, retornamos array vacío pero con status OK
+    console.log('ℹ️ Instagram Stories no disponibles via Graph API (limitación de Instagram)');
+    
+    cachedStories = [];
+    storiesCacheTimestamp = now;
+
+    res.json({
+      status: 'ok',
+      source: 'api',
+      data: [],
+      message: 'Instagram Stories are not available via Graph API. Use Instagram app or web directly.',
+      cached_until: new Date(now + CACHE_DURATION * 1000).toISOString()
+    });
+
+  } catch (error) {
+    console.error('Error with Instagram stories:', error.message);
+    res.status(200).json({
+      status: 'ok',
+      data: [],
+      message: 'Stories endpoint is read-only and uses Graph API limitations'
     });
   }
 });

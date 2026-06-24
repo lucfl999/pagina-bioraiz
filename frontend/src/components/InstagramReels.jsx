@@ -48,8 +48,13 @@ export default function InstagramReels() {
           setReels(FALLBACK_REELS);
         }
       } catch (err) {
-        console.error('Error fetching Instagram reels:', err);
-        setError(err.message);
+        console.error('Error fetching Instagram reels:', {
+          message: err.message,
+          status: err.response?.status,
+          data: err.response?.data
+        });
+        // No mostrar error al usuario, solo usar fallback
+        console.warn('Usando fallback por error en API de Instagram');
         setReels(FALLBACK_REELS);
       } finally {
         setLoading(false);
