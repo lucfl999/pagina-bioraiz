@@ -58,8 +58,8 @@ export default function InstagramReels() {
 
     fetchReels();
     
-    // Revalidar cada 5 minutos (casi tiempo real)
-    const interval = setInterval(fetchReels, 5 * 60 * 1000);
+    // Revalidar cada 1 minuto (tiempo real)
+    const interval = setInterval(fetchReels, 1 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
