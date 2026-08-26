@@ -1,6 +1,6 @@
 # BIORAIZ Website — Production Ready
 
-Feria sustentable de la Patagonia | 13-15 nov 2026 | Las Cortaderas, Neuquén
+Feria sustentable de la Patagonia | 13-15 nov 2026 | Neuquen Capital, Neuquén
 
 ## 🚀 Stack Tecnológico
 
@@ -96,7 +96,7 @@ proyecto React real con build (Vite o Next.js).
   (ubicación, precios de entradas, FAQ, datos de contacto y formularios EmailJS al día).
 - `src/*.jsx` → los mismos componentes en **forma modular** (más fáciles de leer), pero
   algunos datos están **desactualizados** respecto del HTML (p. ej. ubicación "Parque
-  Centenario" vs. la correcta "Las Cortaderas", y los planes de entrada viejos). Usalos
+  Centenario" vs. la correcta "Neuquen Capital", y los planes de entrada viejos). Usalos
   para entender la estructura, **pero los valores correctos viven en el HTML**.
 - `BIORAIZ - completo (standalone).html` → versión auto-contenida (todo inline, para abrir
   offline). No hace falta portarla; está incluida solo por completitud.

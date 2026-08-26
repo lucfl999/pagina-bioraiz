@@ -5,7 +5,7 @@
 ### Información Base
 - **Evento**: BIORAIZ - La feria sustentable de la Patagonia
 - **Fecha**: 13, 14, 15 de noviembre 2026
-- **Lugar**: Las Cortaderas, Neuquén, Argentina
+- **Lugar**: Neuquen Capital, Neuquén, Argentina
 - **Asistentes estimados**: 15,000-17,000 personas/día
 - **Stands disponibles**: 200+ feriantes
 
@@ -960,7 +960,7 @@ src/
 |--------|---------|
 | **Evento** | BIORAIZ - Feria Sustentable Patagonia |
 | **Fechas** | 13-15 Nov 2026 |
-| **Lugar** | Las Cortaderas, Neuquén |
+| **Lugar** | Neuquen Capital, Neuquén |
 | **Páginas** | 6 páginas principales + formularios |
 | **Expositores** | 22 (ficticios coherentes) |
 | **Actividades** | 30+ actividades por fin de semana |

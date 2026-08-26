@@ -64,13 +64,6 @@ export default function Header({ page, setPage, transparent = false }) {
 
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <button
-            onClick={() => setPage("entradas")}
-            className="btn btn-ocre btn-sm bz-cta-desktop"
-            style={{ padding: "9px 18px", fontSize: 12 }}
-          >
-            Entradas
-          </button>
-          <button
             className="bz-burger"
             onClick={() => setMobileOpen(v => !v)}
             aria-label="Menú"

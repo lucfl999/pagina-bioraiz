@@ -265,14 +265,13 @@ export function CTABanner({ setPage }) {
           <div style={{ position: "relative", zIndex: 1 }}>
             <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>13 · 14 · 15 nov 2026</div>
             <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05, marginBottom: 18 }}>
-              Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>Las Cortaderas.</em>
+              Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>Neuquén Capital.</em>
             </h2>
             <p style={{ fontSize: 17, color: "var(--bz-verde-claro)", maxWidth: 460, lineHeight: 1.55 }}>
-              Las entradas salen a la venta en septiembre. Dejanos tu mail y te avisamos apenas estén disponibles.
+              Tres días para encontrarnos, compartir y celebrar lo que nace en nuestra región.
             </p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12, position: "relative", zIndex: 1 }} className="bz-cta-actions">
-            <button onClick={() => setPage("entradas")} className="btn btn-ocre" style={{ width: "100%", justifyContent: "center" }}>Ver entradas</button>
             <button onClick={() => setPage("programa")} className="btn" style={{ width: "100%", justifyContent: "center", background: "transparent", color: "var(--bz-beige-hueso)", border: "1.5px solid rgba(250, 246, 237, 0.3)" }}>Ver programa</button>
           </div>
         </div>
