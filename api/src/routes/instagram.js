@@ -3,14 +3,14 @@ import axios from 'axios';
 
 const router = express.Router();
 
-// Configuración desde variables de entorno con fallback seguro para producción
+// La credencial debe existir únicamente en las variables de entorno.
 const INSTAGRAM_ACCOUNT_ID = process.env.INSTAGRAM_ACCOUNT_ID || '17841435479434425';
-const INSTAGRAM_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN || process.env.INSTAGRAM_TOKEN || 'IGAAjSqVbaKZBhBZAFpYZAVl1RVAxMHFPWjFQUlpnRFdPampVVTlaLVhyUDN5VUN0ekg1UV9kRTU4aW55dGV6cGNuenRIejUyUlRlZA2hxUDR1endTU0NzZAWRmWTE3amdyUUpYbjNUZAlNFRHJsQkdMQVdGcWdUTHlsNmpOSGFsd0x6TQZDZD';
+const INSTAGRAM_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN || process.env.INSTAGRAM_TOKEN;
 const CACHE_DURATION = 300; // 5 minutos en segundos (casi tiempo real)
 
 // Validar que el token esté disponible
-if (!process.env.INSTAGRAM_ACCESS_TOKEN && !process.env.INSTAGRAM_TOKEN) {
-  console.warn('⚠️  INSTAGRAM_ACCESS_TOKEN no está configurado; usando fallback temporal para producción.');
+if (!INSTAGRAM_ACCESS_TOKEN) {
+  console.warn('⚠️ INSTAGRAM_ACCESS_TOKEN no está configurado; Instagram usará el fallback visual.');
 }
 
 // Cache en memoria
