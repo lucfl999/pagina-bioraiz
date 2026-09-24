@@ -12,8 +12,8 @@
     "dev": "concurrently \"npm run dev -w frontend\" \"npm run dev -w api\"",
     "build": "npm run build -w frontend && npm run build -w api && npm run build -w workers",
     "start": "npm run start -w api",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "type-check": "tsc --noEmit"
+    "lint": "npm run lint -w frontend",
+    "type-check": "tsc -p frontend/tsconfig.json --noEmit"
   },
   "devDependencies": {
     "concurrently": "^9.0.0",

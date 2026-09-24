@@ -29,7 +29,7 @@ export default function FeriaPage({ setPage }) {
               </div>
               <div className="reveal reveal-delay-2" style={{ marginTop: 48, padding: "24px 28px", background: "var(--bz-verde-pasto)", borderLeft: "3px solid var(--bz-verde-musgo)", borderRadius: "0 var(--bz-radius-md) var(--bz-radius-md) 0" }}>
                 <p style={{ fontFamily: "var(--bz-font-display)", fontStyle: "italic", fontSize: 19, color: "var(--bz-verde-profundo)", lineHeight: 1.5 }}>
-                  "Cuando lo que comprás tiene origen, todo cambia."
+                  &quot;Cuando lo que comprás tiene origen, todo cambia.&quot;
                 </p>
                 <p style={{ fontSize: 12, color: "var(--bz-verde-bosque)", marginTop: 12, fontFamily: "var(--bz-font-mono)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
                   Equipo BIORAIZ

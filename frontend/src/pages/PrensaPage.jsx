@@ -130,7 +130,7 @@ export default function PrensaPage({ setPage }) {
                   <div style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>{nota.fecha}</div>
                 </div>
                 <h4 style={{ fontFamily: "var(--bz-font-display)", fontSize: 22, color: "var(--bz-texto-primario)", lineHeight: 1.25, marginTop: 4 }}>
-                  "{nota.title}"
+                  &quot;{nota.title}&quot;
                 </h4>
                 <div style={{ marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--bz-verde-bosque)", fontFamily: "var(--bz-font-mono)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
                   Leer nota
