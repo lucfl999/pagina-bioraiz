@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const BREVO_API_KEY = process.env.BREVO_API_KEY;
+const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.SENDINBLUE_API_KEY;
 const ADMIN_EMAIL   = process.env.ADMIN_EMAIL || 'hola@bioraiz.net';
 const FROM          = { name: 'BIORAIZ', email: 'noreply@bioraiz.net' };
 

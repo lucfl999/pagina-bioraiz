@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
 import fs from 'fs';
@@ -20,33 +19,6 @@ const port = process.env.PORT || 3000;
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
-
-// CORS: soporta múltiples orígenes separados por coma en CORS_ORIGIN y también los dominios comunes de producción
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173,https://empathetic-courage-production.up.railway.app')
-  .split(',').map(o => o.trim()).filter(Boolean);
-
-const isAllowedOrigin = (origin) => {
-  if (!origin) return true;
-  if (allowedOrigins.includes(origin)) return true;
-  try {
-    const hostname = new URL(origin).hostname;
-    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.local') || hostname.endsWith('.pages.dev') || hostname.endsWith('.railway.app') || hostname.endsWith('.vercel.app') || hostname.endsWith('.netlify.app');
-  } catch {
-    return false;
-  }
-};
-
-app.use(cors({
-  origin: (origin, cb) => {
-    if (isAllowedOrigin(origin)) {
-      return cb(null, origin || true);
-    }
-    cb(null, true);
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
 
 // Webhook de MP necesita body raw para validar firma, pero parseamos JSON para el resto
 app.use('/api/tickets/webhook', express.raw({ type: 'application/json' }), (req, res, next) => {
