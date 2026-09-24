@@ -109,7 +109,7 @@ async function initDB() {
   }
 }
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`BIORAIZ API running on port ${port}`);
   initDB();
 });
