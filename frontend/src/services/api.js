@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const configuredApiUrl = import.meta.env.VITE_API_URL || '/api';
+const configuredApiUrl = import.meta.env.VITE_API_URL || 'https://pagina-bioraiz-production.up.railway.app/api';
 const API_URL = configuredApiUrl.replace(/\/$/, '').endsWith('/api')
   ? configuredApiUrl.replace(/\/$/, '')
   : `${configuredApiUrl.replace(/\/$/, '')}/api`;
