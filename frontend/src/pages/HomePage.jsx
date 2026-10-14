@@ -72,7 +72,7 @@ function Hero({ setPage }) {
             <div style={{ border: "1px solid rgba(230, 203, 122, 0.4)", borderRadius: "var(--bz-radius-lg)", padding: "20px 24px", background: "rgba(42, 61, 36, 0.4)", backdropFilter: "blur(8px)", minWidth: 240 }}>
               <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 12 }}>fecha · lugar</div>
               <div style={{ fontFamily: "var(--bz-font-display)", fontSize: 32, color: "var(--bz-beige-hueso)", lineHeight: 1.1, marginBottom: 8 }}>
-                13 · 14 · 15<br />nov 2026
+                6 · 7 · 8<br />nov 2026
               </div>
               <div style={{ fontSize: 13, color: "var(--bz-verde-claro)", lineHeight: 1.5, marginTop: 12, paddingTop: 12, borderTop: "0.5px solid rgba(230, 203, 122, 0.2)" }}>
                 Neuquén Capital<br />Neuquén · Patagonia

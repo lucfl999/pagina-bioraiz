@@ -47,7 +47,7 @@ export default function ProgramaPage({ setPage }) {
       <SubPageHeader
         eyebrow="Programa · 3 días"
         title={<>Programa.</>}
-        sub="Tres días con las mismas familias de actividades. Lo que cambia es el énfasis de cada jornada."
+        sub="6, 7 y 8 de noviembre · Viernes de 16:00 a 23:00 · Sábado y domingo de 12:00 a 23:00."
       />
 
       <section style={{ padding: "48px 0 0", background: "var(--bz-fondo-base)" }}>

@@ -263,7 +263,7 @@ export function CTABanner({ setPage }) {
             <LeafShape size={240} color="var(--bz-ocre-calido)" rotate={45} />
           </div>
           <div style={{ position: "relative", zIndex: 1 }}>
-            <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>13 · 14 · 15 nov 2026</div>
+            <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>6 · 7 · 8 nov 2026</div>
             <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05, marginBottom: 18 }}>
               Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>Neuquén Capital.</em>
             </h2>

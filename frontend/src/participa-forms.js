@@ -297,7 +297,7 @@ export const FORM_SCHEMAS = {
         items: [
           { name: "tipo_cobertura", label: "Tipo de cobertura planificada", type: "checkbox", required: true, options: ["Nota de prensa escrita (digital o impresa)", "Fotografía editorial", "Video / reels para redes o YouTube", "Transmisión en vivo (streaming)", "Podcast o audio", "Stories / contenido efímero en Instagram o TikTok"] },
           { name: "angulo", label: "Ángulo editorial o enfoque de la cobertura", type: "textarea", rows: 3, placeholder: "Ej: 'Vamos a hacer una nota sobre el impacto económico del festival en la región'.", hint: "Cuanto más específico, mejor podemos preparar los accesos y facilitarte entrevistas relevantes." },
-          { name: "dias", label: "Días que vas a cubrir", type: "checkbox", required: true, options: ["Viernes 13 de noviembre", "Sábado 14 de noviembre", "Domingo 15 de noviembre"] },
+          { name: "dias", label: "Días que vas a cubrir", type: "checkbox", required: true, options: ["Viernes 6 de noviembre", "Sábado 7 de noviembre", "Domingo 8 de noviembre"] },
         ],
       },
     ],

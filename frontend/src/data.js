@@ -1,8 +1,8 @@
 // Cambiá a true cuando las entradas estén disponibles para la venta
 export const VENTA_ACTIVA = false;
 
-export const BZ_DATE = "13 · 14 · 15 nov 2026";
-export const BZ_DATE_FULL = "13, 14 y 15 de noviembre, 2026";
+export const BZ_DATE = "6 · 7 · 8 nov 2026";
+export const BZ_DATE_FULL = "6, 7 y 8 de noviembre, 2026";
 export const BZ_LOCATION = "Neuquén Capital · Neuquén";
 export const BZ_EMAIL = "hola@bioraiz.net";
 export const BZ_WHATSAPP_LABEL = "+54 9 2995781006";
@@ -35,9 +35,9 @@ export const CATEGORIAS_STANDS = [
 ];
 
 export const DIA_BLOQUES = [
-  { num: "13", dia: "Viernes", sub: "Apertura",          tags: ["Apertura", "Mercado", "Charla inaugural", "Música en vivo"] },
-  { num: "14", dia: "Sábado",  sub: "Día completo",      tags: ["Talleres", "Cocina abierta", "Zona Brotes", "Conversatorio", "Escenario Principal"] },
-  { num: "15", dia: "Domingo", sub: "Cierre y cosecha",  tags: ["Bienestar", "Infantil", "Mesa redonda", "Cierre musical"] },
+  { num: "6", dia: "Viernes", sub: "Apertura · 16 a 23 h", tags: ["Apertura", "Mercado", "Charla inaugural", "Música en vivo"] },
+  { num: "7", dia: "Sábado",  sub: "12 a 23 h",           tags: ["Talleres", "Cocina abierta", "Zona Brotes", "Conversatorio", "Escenario Principal"] },
+  { num: "8", dia: "Domingo", sub: "Cierre · 12 a 23 h",  tags: ["Bienestar", "Infantil", "Mesa redonda", "Cierre musical"] },
 ];
 
 export const TIPOS_ACTIVIDAD = [
@@ -68,9 +68,9 @@ export const CATEGORIES = [
 ];
 
 export const DIAS = [
-  { id: "viernes", label: "Viernes", num: "13", subtitulo: "Apertura", fecha: "13 nov" },
-  { id: "sabado",  label: "Sábado",  num: "14", subtitulo: "Día completo", fecha: "14 nov" },
-  { id: "domingo", label: "Domingo", num: "15", subtitulo: "Cierre y cosecha", fecha: "15 nov" },
+  { id: "viernes", label: "Viernes", num: "6", subtitulo: "Apertura · 16 a 23 h", fecha: "6 nov" },
+  { id: "sabado",  label: "Sábado",  num: "7", subtitulo: "12 a 23 h", fecha: "7 nov" },
+  { id: "domingo", label: "Domingo", num: "8", subtitulo: "Cierre · 12 a 23 h", fecha: "8 nov" },
 ];
 
 export const TICKETS = [
@@ -84,7 +84,7 @@ export const TICKETS = [
     earlyBird: true,
     incluye: [
       "Acceso general 1 día a elección (viernes, sábado o domingo)",
-      "Ingreso desde apertura de puertas (12:00 hs)",
+      "Ingreso el viernes desde las 16:00 hs; sábado y domingo desde las 12:00 hs",
       "Acceso a todos los escenarios principales y feria de emprendimientos",
       "Zona wellness: acceso libre",
     ],
@@ -114,7 +114,7 @@ export const TICKETS = [
     destacado: true,
     incluye: [
       "Acceso general 1 día a elección (viernes, sábado o domingo)",
-      "Ingreso desde apertura de puertas (12:00 hs)",
+      "Ingreso el viernes desde las 16:00 hs; sábado y domingo desde las 12:00 hs",
       "Acceso a todos los escenarios principales y feria de emprendimientos",
       "Zona wellness: acceso libre",
     ],

@@ -58,13 +58,13 @@ export const sendSubscriberWelcome = async (email, source = 'newsletter') => {
   const html = `
     <div style="font-family:'Georgia',serif;max-width:520px;margin:0 auto;color:#1A2012;">
       <div style="padding:32px 0 16px;border-bottom:1px solid #EDE4CF;">
-        <p style="margin:0;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · 13 · 14 · 15 NOV 2026</p>
+        <p style="margin:0;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · 6 · 7 · 8 NOV 2026</p>
       </div>
       <div style="padding:32px 0;">
         <h1 style="font-size:28px;font-weight:400;line-height:1.2;color:#2A3D24;margin:0 0 20px;">${content.title}</h1>
         <p style="font-size:16px;line-height:1.7;color:#4A5C3A;margin:0 0 20px;">${content.body}</p>
         <p style="font-size:15px;line-height:1.7;color:#4A5C3A;margin:0;">
-          <strong>13 · 14 · 15 de noviembre, 2026</strong><br/>
+          <strong>6 · 7 · 8 de noviembre, 2026</strong><br/>
           Neuquén Capital · Neuquén, Patagonia
         </p>
       </div>
@@ -97,7 +97,7 @@ const PARTICIPATION_CONFIRMATIONS = {
     replyTo: 'contact@bioraiz.net',
     body: (name) => `
       <p style="margin:0 0 16px;">Hola ${name},</p>
-      <p style="margin:0 0 16px;">Recibimos tu postulación para participar como feriante en BIORAIZ — Bio & Wellness Festival Patagonia, 13 al 15 de noviembre de 2026 en Neuquén Capital.</p>
+      <p style="margin:0 0 16px;">Recibimos tu postulación para participar como feriante en BIORAIZ — Bio & Wellness Festival Patagonia, 6 al 8 de noviembre de 2026 en Neuquén Capital.</p>
       <p style="margin:0 0 16px;">El equipo de curaduría revisa todas las postulaciones y se comunica con los seleccionados. El proceso toma algo de tiempo.</p>
       <p style="margin:0 0 16px;">Si tenés alguna consulta mientras tanto, respondé este email y te llegamos.</p>
       <p style="margin:0 0 16px;">Gracias por querer ser parte.</p>
@@ -109,7 +109,7 @@ const PARTICIPATION_CONFIRMATIONS = {
     replyTo: 'contact@bioraiz.net',
     body: (name) => `
       <p style="margin:0 0 16px;">Hola ${name},</p>
-      <p style="margin:0 0 16px;">Tu postulación para la zona gastronómica de BIORAIZ llegó bien. Tres días, 13 al 15 de noviembre de 2026, Neuquén Capital.</p>
+      <p style="margin:0 0 16px;">Tu postulación para la zona gastronómica de BIORAIZ llegó bien. Tres días, 6 al 8 de noviembre de 2026, Neuquén Capital.</p>
       <p style="margin:0 0 16px;">Estamos cerrando la selección de puestos y nos comunicamos con los confirmados en las próximas semanas. El criterio es curatorial — buscamos diversidad de propuestas y coherencia con los valores del festival.</p>
       <p style="margin:0 0 16px;">Cualquier consulta, respondé este email.</p>
       <p style="margin:0;">Coordinación Gastronómica · BIORAIZ<br/>contact@bioraiz.net</p>
@@ -142,7 +142,7 @@ const PARTICIPATION_CONFIRMATIONS = {
     replyTo: 'contact@bioraiz.net',
     body: (name) => `
       <p style="margin:0 0 16px;">Hola ${name},</p>
-      <p style="margin:0 0 16px;">Recibimos tu postulación para la convocatoria de artistas emergentes de BIORAIZ. Tres escenarios, tres días, Neuquén Capital — 13 al 15 de noviembre de 2026.</p>
+      <p style="margin:0 0 16px;">Recibimos tu postulación para la convocatoria de artistas emergentes de BIORAIZ. Tres escenarios, tres días, Neuquén Capital — 6 al 8 de noviembre de 2026.</p>
       <p style="margin:0 0 16px;">El equipo de booking revisa todas las postulaciones y contacta a los seleccionados lo antes posible. Si no recibís respuesta dentro de un plazo razonable, podés consultarnos respondiendo este email.</p>
       <p style="margin:0 0 16px;">Gracias por postularte.</p>
       <p style="margin:0;">Booking · BIORAIZ<br/>contact@bioraiz.net</p>
@@ -153,7 +153,7 @@ const PARTICIPATION_CONFIRMATIONS = {
     replyTo: 'contact@bioraiz.net',
     body: (name) => `
       <p style="margin:0 0 16px;">Hola ${name},</p>
-      <p style="margin:0 0 16px;">Recibimos tu solicitud para ser sponsor o aliada de BIORAIZ 2026 — Bio & Wellness Festival Patagonia, 13 al 15 de noviembre en Neuquén Capital.</p>
+      <p style="margin:0 0 16px;">Recibimos tu solicitud para ser sponsor o aliada de BIORAIZ 2026 — Bio & Wellness Festival Patagonia, 6 al 8 de noviembre en Neuquén Capital.</p>
       <p style="margin:0 0 16px;">El equipo de alianzas revisa todas las propuestas y se comunica con los interesados en las próximas semanas. Buscamos partners que compartan nuestros valores de sostenibilidad y conciencia.</p>
       <p style="margin:0 0 16px;">Si tenés consultas mientras tanto, respondé este email y te llegamos.</p>
       <p style="margin:0;">Alianzas y Sponsors · BIORAIZ<br/>contact@bioraiz.net</p>
@@ -164,7 +164,7 @@ const PARTICIPATION_CONFIRMATIONS = {
     replyTo: 'prensa@bioraiz.net',
     body: (name) => `
       <p style="margin:0 0 16px;">Hola ${name},</p>
-      <p style="margin:0 0 16px;">Recibimos tu solicitud de acreditación de prensa para BIORAIZ — 13 al 15 de noviembre de 2026, Neuquén Capital.</p>
+      <p style="margin:0 0 16px;">Recibimos tu solicitud de acreditación de prensa para BIORAIZ — 6 al 8 de noviembre de 2026, Neuquén Capital.</p>
       <p style="margin:0 0 16px;">Confirmamos acreditaciones lo antes que podamos. Te llegará la confirmación con todos los detalles operativos: accesos, zonas habilitadas y protocolo de prensa.</p>
       <p style="margin:0 0 16px;">Si necesitás material antes de esa fecha (kit de prensa, datos del festival, imágenes), respondé este email y te lo enviamos.</p>
       <p style="margin:0;">Prensa & Comunicación · BIORAIZ<br/>prensa@bioraiz.net</p>
@@ -175,7 +175,7 @@ const PARTICIPATION_CONFIRMATIONS = {
 const buildConfirmationHtml = (body) => `
   <div style="font-family:'Georgia',serif;max-width:520px;margin:0 auto;color:#1A2012;">
     <div style="padding:32px 0 16px;border-bottom:1px solid #EDE4CF;">
-      <p style="margin:0;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · 13 · 14 · 15 NOV 2026</p>
+      <p style="margin:0;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · 6 · 7 · 8 NOV 2026</p>
     </div>
     <div style="padding:32px 0;font-size:15px;line-height:1.7;color:#4A5C3A;">
       ${body}

@@ -148,7 +148,7 @@ export default function PrensaPage({ setPage }) {
           <div style={{ marginTop: 56, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
             {[
               { label: "Edición",          value: "4ª" },
-              { label: "Fecha 2026",        value: "13–15 nov" },
+              { label: "Fecha 2026",        value: "6–8 nov" },
               { label: "Lugar",             value: "Neuquén Capital" },
               { label: "Expositores",       value: "80+" },
               { label: "Asistencia 2025",   value: "24.000" },

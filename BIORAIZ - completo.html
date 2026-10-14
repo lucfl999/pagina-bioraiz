@@ -173,8 +173,8 @@
 // ─── BIORAIZ — Data ───────────────────────────────────────────────
 // Expositores, agenda, speakers, FAQ, prensa. Todo ficticio coherente.
 
-const BZ_DATE = "13 · 14 · 15 nov 2026";
-const BZ_DATE_FULL = "13, 14 y 15 de noviembre, 2026";
+const BZ_DATE = "6 · 7 · 8 nov 2026";
+const BZ_DATE_FULL = "6, 7 y 8 de noviembre, 2026";
 const BZ_LOCATION = "Neuquen Capital · Neuquén";
 
 // ── Datos de contacto / redes ───────────────────────────────────
@@ -196,9 +196,9 @@ const CATEGORIAS_STANDS = [
 
 // ── Bloques por día (preview de programa) ───────────────────────
 const DIA_BLOQUES = [
-  { num: "13", dia: "Viernes", sub: "Apertura",          tags: ["Apertura", "Mercado", "Charla inaugural", "Música en vivo"] },
-  { num: "14", dia: "Sábado",  sub: "Día completo",      tags: ["Talleres", "Cocina abierta", "Zona Brotes", "Conversatorio", "Escenario Principal"] },
-  { num: "15", dia: "Domingo", sub: "Cierre y cosecha",  tags: ["Bienestar", "Infantil", "Mesa redonda", "Cierre musical"] },
+  { num: "6", dia: "Viernes", sub: "Apertura · 16 a 23 h", tags: ["Apertura", "Mercado", "Charla inaugural", "Música en vivo"] },
+  { num: "7", dia: "Sábado",  sub: "12 a 23 h",           tags: ["Talleres", "Cocina abierta", "Zona Brotes", "Conversatorio", "Escenario Principal"] },
+  { num: "8", dia: "Domingo", sub: "Cierre · 12 a 23 h",  tags: ["Bienestar", "Infantil", "Mesa redonda", "Cierre musical"] },
 ];
 
 // ── Tipos de actividad (programa completo) ──────────────────────
@@ -258,42 +258,42 @@ const EXPOSITORES = [
 
 // ── Programa ─────────────────────────────────────────────────────
 const DIAS = [
-  { id: "viernes", label: "Viernes", num: "13", subtitulo: "Apertura", fecha: "13 nov" },
-  { id: "sabado",  label: "Sábado",  num: "14", subtitulo: "Día completo", fecha: "14 nov" },
-  { id: "domingo", label: "Domingo", num: "15", subtitulo: "Cierre y cosecha", fecha: "15 nov" },
+  { id: "viernes", label: "Viernes", num: "6", subtitulo: "Apertura · 16 a 23 h", fecha: "6 nov" },
+  { id: "sabado",  label: "Sábado",  num: "7", subtitulo: "12 a 23 h", fecha: "7 nov" },
+  { id: "domingo", label: "Domingo", num: "8", subtitulo: "Cierre · 12 a 23 h", fecha: "8 nov" },
 ];
 
 const ACTIVIDADES = {
   viernes: [
-    { hora: "15:00", title: "Apertura oficial",                lugar: "Escenario Principal",    speaker: "Equipo BIORAIZ",          tipo: "Ceremonia" },
+    { hora: "16:00", title: "Apertura oficial",                lugar: "Escenario Principal",    speaker: "Equipo BIORAIZ",          tipo: "Ceremonia" },
     { hora: "16:00", title: "Inauguración del mercado",         lugar: "Pasillo Central",        speaker: "Todos los expositores",   tipo: "Mercado" },
     { hora: "17:00", title: "Charla: Agroecología y futuro",    lugar: "Carpa Sur",              speaker: "Valeria Soto",            tipo: "Charla", destacado: true },
     { hora: "18:00", title: "Taller: Pan de masa madre",        lugar: "Cocina Abierta",         speaker: "Pan de Piedra",           tipo: "Taller" },
     { hora: "19:00", title: "Música en vivo: Pampa Trío",       lugar: "Escenario Principal",    speaker: "Pampa Trío",              tipo: "Música" },
-    { hora: "20:00", title: "Cierre del día — degustaciones",   lugar: "Patio de Comidas",       speaker: "Productores invitados",   tipo: "Encuentro" },
+    { hora: "23:00", title: "Cierre del día — degustaciones",   lugar: "Patio de Comidas",       speaker: "Productores invitados",   tipo: "Encuentro" },
   ],
   sabado: [
-    { hora: "10:00", title: "Apertura · Café y comunidad",      lugar: "Patio de Entrada",       speaker: "BIORAIZ",                 tipo: "Encuentro" },
-    { hora: "10:30", title: "Yoga al sol",                      lugar: "Pradera Norte",          speaker: "Sentidos Yoga",           tipo: "Bienestar" },
-    { hora: "11:30", title: "Charla: Cocina sin desperdicio",   lugar: "Cocina Abierta",         speaker: "Marina Ré",               tipo: "Charla", destacado: true },
-    { hora: "12:30", title: "Taller infantil: Pinturas de la tierra", lugar: "Zona Brotes",     speaker: "Pequeños Granos",         tipo: "Infantil" },
-    { hora: "13:00", title: "Almuerzo · Mercado abierto",       lugar: "Patio de Comidas",       speaker: "Expositores",             tipo: "Mercado" },
-    { hora: "15:00", title: "Conversatorio: Ser productor hoy", lugar: "Carpa Sur",              speaker: "5 expositores",           tipo: "Charla" },
-    { hora: "16:00", title: "Cata de cervezas patagónicas",     lugar: "Patio Lúpulo",           speaker: "Lúpulo Hermano",          tipo: "Cata" },
-    { hora: "17:00", title: "Taller: Fermentos vivos",          lugar: "Cocina Abierta",         speaker: "Raíz Fermentados",        tipo: "Taller", destacado: true },
-    { hora: "18:00", title: "Charla: Diseño y materia prima",   lugar: "Carpa Norte",            speaker: "Casa Tierra · Hueco",     tipo: "Charla" },
-    { hora: "19:00", title: "Música en vivo: Las Hermanas",     lugar: "Escenario Principal",    speaker: "Las Hermanas",            tipo: "Música" },
-    { hora: "20:30", title: "Fogón de cierre",                  lugar: "Pradera Norte",          speaker: "Comunidad BIORAIZ",       tipo: "Encuentro" },
+    { hora: "12:00", title: "Apertura · Café y comunidad",      lugar: "Patio de Entrada",       speaker: "BIORAIZ",                 tipo: "Encuentro" },
+    { hora: "12:30", title: "Yoga al sol",                      lugar: "Pradera Norte",          speaker: "Sentidos Yoga",           tipo: "Bienestar" },
+    { hora: "13:30", title: "Charla: Cocina sin desperdicio",   lugar: "Cocina Abierta",         speaker: "Marina Ré",               tipo: "Charla", destacado: true },
+    { hora: "14:30", title: "Taller infantil: Pinturas de la tierra", lugar: "Zona Brotes",     speaker: "Pequeños Granos",         tipo: "Infantil" },
+    { hora: "15:00", title: "Almuerzo · Mercado abierto",       lugar: "Patio de Comidas",       speaker: "Expositores",             tipo: "Mercado" },
+    { hora: "17:00", title: "Conversatorio: Ser productor hoy", lugar: "Carpa Sur",              speaker: "5 expositores",           tipo: "Charla" },
+    { hora: "18:00", title: "Cata de cervezas patagónicas",     lugar: "Patio Lúpulo",           speaker: "Lúpulo Hermano",          tipo: "Cata" },
+    { hora: "19:00", title: "Taller: Fermentos vivos",          lugar: "Cocina Abierta",         speaker: "Raíz Fermentados",        tipo: "Taller", destacado: true },
+    { hora: "20:00", title: "Charla: Diseño y materia prima",   lugar: "Carpa Norte",            speaker: "Casa Tierra · Hueco",     tipo: "Charla" },
+    { hora: "21:00", title: "Música en vivo: Las Hermanas",     lugar: "Escenario Principal",    speaker: "Las Hermanas",            tipo: "Música" },
+    { hora: "23:00", title: "Fogón de cierre",                  lugar: "Pradera Norte",          speaker: "Comunidad BIORAIZ",       tipo: "Encuentro" },
   ],
   domingo: [
-    { hora: "10:00", title: "Meditación + caminata",            lugar: "Pradera Norte",          speaker: "Verde Quieto",            tipo: "Bienestar" },
-    { hora: "11:00", title: "Cuentos para sembrar",             lugar: "Zona Brotes",            speaker: "Pequeños Granos",         tipo: "Infantil" },
-    { hora: "12:00", title: "Taller: Tinción natural de telas", lugar: "Carpa Oeste",            speaker: "Telas Vivas",             tipo: "Taller" },
-    { hora: "13:00", title: "Almuerzo de cosecha",              lugar: "Patio de Comidas",       speaker: "Cocina del Valle",        tipo: "Mercado", destacado: true },
-    { hora: "15:00", title: "Charla: Comunidad y propósito",    lugar: "Carpa Sur",              speaker: "Diego Marín",             tipo: "Charla" },
-    { hora: "16:30", title: "Mesa redonda: ¿Qué viene?",        lugar: "Escenario Principal",    speaker: "Productores + público",   tipo: "Charla" },
-    { hora: "18:00", title: "Música en vivo: Coro del Limay",   lugar: "Escenario Principal",    speaker: "Coro del Limay",          tipo: "Música" },
-    { hora: "19:30", title: "Cierre: agradecimiento + brindis", lugar: "Pradera Norte",          speaker: "Equipo BIORAIZ",          tipo: "Ceremonia", destacado: true },
+    { hora: "12:00", title: "Meditación + caminata",            lugar: "Pradera Norte",          speaker: "Verde Quieto",            tipo: "Bienestar" },
+    { hora: "13:00", title: "Cuentos para sembrar",             lugar: "Zona Brotes",            speaker: "Pequeños Granos",         tipo: "Infantil" },
+    { hora: "14:00", title: "Taller: Tinción natural de telas", lugar: "Carpa Oeste",            speaker: "Telas Vivas",             tipo: "Taller" },
+    { hora: "15:00", title: "Almuerzo de cosecha",              lugar: "Patio de Comidas",       speaker: "Cocina del Valle",        tipo: "Mercado", destacado: true },
+    { hora: "16:00", title: "Charla: Comunidad y propósito",    lugar: "Carpa Sur",              speaker: "Diego Marín",             tipo: "Charla" },
+    { hora: "17:30", title: "Mesa redonda: ¿Qué viene?",        lugar: "Escenario Principal",    speaker: "Productores + público",   tipo: "Charla" },
+    { hora: "19:00", title: "Música en vivo: Coro del Limay",   lugar: "Escenario Principal",    speaker: "Coro del Limay",          tipo: "Música" },
+    { hora: "23:00", title: "Cierre: agradecimiento + brindis", lugar: "Pradera Norte",          speaker: "Equipo BIORAIZ",          tipo: "Ceremonia", destacado: true },
   ],
 };
 
@@ -1004,7 +1004,7 @@ function Hero({ setPage }) {
             }}>
               <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 12 }}>fecha · lugar</div>
               <div style={{ fontFamily: "var(--bz-font-display)", fontSize: 32, color: "var(--bz-beige-hueso)", lineHeight: 1.1, marginBottom: 8 }}>
-                13 · 14 · 15<br />nov 2026
+                6 · 7 · 8<br />nov 2026
               </div>
               <div style={{ fontSize: 13, color: "var(--bz-verde-claro)", lineHeight: 1.5, marginTop: 12, paddingTop: 12, borderTop: "0.5px solid rgba(230, 203, 122, 0.2)" }}>
                 Neuquen Capital<br />Neuquén · Patagonia
@@ -1558,7 +1558,7 @@ function CTABanner({ setPage }) {
             <LeafShape size={240} color="var(--bz-ocre-calido)" rotate={45} />
           </div>
           <div style={{ position: "relative", zIndex: 1 }}>
-            <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>13 · 14 · 15 nov 2026</div>
+            <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 18 }}>6 · 7 · 8 nov 2026</div>
             <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05, marginBottom: 18 }}>
               Nos vemos en <em style={{ color: "var(--bz-ocre-calido)" }}>Neuquen Capital.</em>
             </h2>
@@ -1743,7 +1743,7 @@ function PagePrograma({ setPage }) {
       <SubPageHeader
         eyebrow="Programa · 3 días"
         title={<>Programa.</>}
-        sub="Tres días con las mismas familias de actividades. Lo que cambia es el énfasis de cada jornada."
+        sub="6, 7 y 8 de noviembre · Viernes de 16:00 a 23:00 · Sábado y domingo de 12:00 a 23:00."
       />
 
       {/* Day tabs */}

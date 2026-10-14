@@ -335,7 +335,7 @@ async function enviarTicketPorMail({ nombre, email, idQr, tipo_entrada, dia_asis
   const html = `
     <div style="font-family:'Georgia',serif;max-width:560px;margin:0 auto;color:#1A2012;background:#FAF6ED;padding:0;">
       <div style="background:#1E3320;padding:32px 40px 24px;text-align:center;">
-        <p style="margin:0 0 6px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · 13 · 14 · 15 NOV 2026</p>
+        <p style="margin:0 0 6px;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#6E9050;font-family:monospace;">BIORAIZ · 6 · 7 · 8 NOV 2026</p>
         <h1 style="margin:0;font-size:32px;font-weight:400;color:#C8A647;font-family:Georgia,serif;">BIORAIZ</h1>
       </div>
       <div style="padding:36px 40px;">

@@ -208,7 +208,7 @@ function PurchaseModal({ ticket, onClose }) {
         telefono: telefono.trim(),
         dni: dni.replace(/\D/g, ''),
         tipo_entrada: ticket.id,
-        dia_asistencia: dias === '3' ? 'Viernes 13, Sábado 14 y Domingo 15 Nov' : diaEspecifico,
+        dia_asistencia: dias === '3' ? 'Viernes 6, Sábado 7 y Domingo 8 Nov' : diaEspecifico,
         dias_seleccionados: parseInt(dias),
         foto_base64: foto,
       });
@@ -331,9 +331,9 @@ function PurchaseModal({ ticket, onClose }) {
                   style={{ ...inputStyle(false), appearance: 'none', backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\' viewBox=\'0 0 12 8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%239DC99F\' stroke-width=\'1.5\' fill=\'none\'/%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 14px center', paddingRight: 40 }}
                 >
                   <option value="">Seleccioná un día</option>
-                  <option value="Viernes 13 Nov">Viernes 13 Nov — Apertura</option>
-                  <option value="Sábado 14 Nov">Sábado 14 Nov — Día completo</option>
-                  <option value="Domingo 15 Nov">Domingo 15 Nov — Cierre y cosecha</option>
+                  <option value="Viernes 6 Nov">Viernes 6 Nov — Apertura desde las 16:00</option>
+                  <option value="Sábado 7 Nov">Sábado 7 Nov — 12:00 a 23:00</option>
+                  <option value="Domingo 8 Nov">Domingo 8 Nov — Cierre, 12:00 a 23:00</option>
                 </select>
               </div>
             )}
