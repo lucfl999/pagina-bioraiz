@@ -60,13 +60,10 @@ jobs:
         run: npm run build -w frontend
       
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: \${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: \${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: bioraiz-website
-          directory: frontend/dist
-          productionBranch: main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm exec --workspace=workers -- wrangler pages deploy ../frontend/dist --project-name bioraiz-website --branch main
 
   build-api:
     needs: test
