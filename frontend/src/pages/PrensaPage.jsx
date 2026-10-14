@@ -149,7 +149,7 @@ export default function PrensaPage({ setPage }) {
             {[
               { label: "Edición",          value: "4ª" },
               { label: "Fecha 2026",        value: "6–8 nov" },
-              { label: "Lugar",             value: "Neuquén Capital" },
+              { label: "Lugar",             value: "Isla 132 · Neuquén Capital" },
               { label: "Expositores",       value: "80+" },
               { label: "Asistencia 2025",   value: "24.000" },
               { label: "Provincias",        value: "5" },

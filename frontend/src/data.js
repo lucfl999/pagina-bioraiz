@@ -3,7 +3,7 @@ export const VENTA_ACTIVA = false;
 
 export const BZ_DATE = "6 · 7 · 8 nov 2026";
 export const BZ_DATE_FULL = "6, 7 y 8 de noviembre, 2026";
-export const BZ_LOCATION = "Neuquén Capital · Neuquén";
+export const BZ_LOCATION = "Isla 132 · Neuquén Capital";
 export const BZ_EMAIL = "hola@bioraiz.net";
 export const BZ_WHATSAPP_LABEL = "+54 9 2995781006";
 export const BZ_WHATSAPP_LINK = "https://wa.me/5492995781006";
