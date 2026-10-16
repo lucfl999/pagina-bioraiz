@@ -150,12 +150,43 @@ export function ExpositorCard({ exp, compact = false }) {
     onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "var(--bz-shadow-md)"; }}
     onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
     >
-      <Placeholder label={`retrato · ${exp.name}`} ratio={compact ? "5/4" : "4/3"} style={{ borderRadius: 0 }} />
-      <div style={{ padding: compact ? "16px 18px" : "20px 22px" }}>
+      {exp.foto ? (
+        <div style={{ position: "relative", aspectRatio: compact ? "5/4" : "4/3", background: "var(--bz-fondo-alt)" }}>
+          <img
+            src={exp.foto}
+            alt={exp.name}
+            loading="lazy"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+          />
+          {exp.logo && (
+            <img
+              src={exp.logo}
+              alt={`Logo ${exp.name}`}
+              loading="lazy"
+              style={{
+                position: "absolute",
+                zIndex: 1,
+                left: 16,
+                bottom: -28,
+                width: 64,
+                height: 64,
+                borderRadius: "50%",
+                objectFit: "contain",
+                background: "#fff",
+                border: "3px solid var(--bz-beige-hueso)",
+                boxShadow: "var(--bz-shadow-sm)",
+              }}
+            />
+          )}
+        </div>
+      ) : (
+        <Placeholder label={`retrato · ${exp.name}`} ratio={compact ? "5/4" : "4/3"} style={{ borderRadius: 0 }} />
+      )}
+      <div style={{ padding: compact ? "16px 18px" : "20px 22px", paddingTop: exp.logo ? 40 : undefined }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
           <span style={{ background: "transparent", color: cat?.color, padding: 0, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", fontFamily: "var(--bz-font-mono)" }}>{cat?.label}</span>
-          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "var(--bz-borde-suave)" }} />
-          <span style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>{exp.origen}</span>
+          {exp.origen && <span style={{ width: 3, height: 3, borderRadius: "50%", background: "var(--bz-borde-suave)" }} />}
+          {exp.origen && <span style={{ fontSize: 11, color: "var(--bz-texto-terciario)", fontFamily: "var(--bz-font-mono)" }}>{exp.origen}</span>}
         </div>
         <h3 style={{ fontFamily: "var(--bz-font-display)", fontSize: compact ? 20 : 22, color: "var(--bz-texto-primario)", marginBottom: 8, lineHeight: 1.15 }}>{exp.name}</h3>
         {!compact && <p style={{ fontSize: 13, color: "var(--bz-texto-secundario)", lineHeight: 1.6 }}>{exp.desc}</p>}

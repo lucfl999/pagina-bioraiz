@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useReveal, Counter, SectionHead, Placeholder, LeafShape, CircleShape, CategoriaCard } from '../components/shared.jsx';
 import InstagramReels from '../components/InstagramReels.jsx';
-import { NUMEROS, CATEGORIAS_STANDS, DIA_BLOQUES } from '../data.js';
+import { NUMEROS, CATEGORIAS_STANDS, DIA_BLOQUES, SPONSOR_TIERS } from '../data.js';
 import { subscribeNewsletter } from '../services/api.js';
 
 export default function HomePage({ setPage }) {
@@ -15,6 +15,7 @@ export default function HomePage({ setPage }) {
       <AgendaPreview setPage={setPage} />
       <InstagramReels />
       <Gallery />
+      <SponsorsSection />
       <NewsletterBlock />
     </div>
   );
@@ -263,6 +264,127 @@ function Gallery() {
           </figcaption>
         </figure>
       </div>
+    </section>
+  );
+}
+
+function SponsorCard({ sponsor, height, padding }) {
+  return (
+    <div
+      title={sponsor.nombre}
+      style={{
+        height,
+        background: sponsor.bg || "#fff",
+        borderRadius: "var(--bz-radius-md)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: sponsor.full ? 0 : padding,
+        overflow: "hidden",
+      }}
+    >
+      {sponsor.logo ? (
+        <img
+          src={sponsor.logo}
+          alt={sponsor.nombre}
+          loading="lazy"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            filter: sponsor.filter || "none",
+            display: "block",
+          }}
+        />
+      ) : (
+        <span style={{
+          fontFamily: "var(--bz-font-display)",
+          fontSize: height > 120 ? 34 : 18,
+          color: "var(--bz-fondo-dark)",
+          letterSpacing: "0.04em",
+        }}>{sponsor.nombre}</span>
+      )}
+    </div>
+  );
+}
+
+function SponsorsSection() {
+  const bannerTierIds = ["raiz-eterna"];
+  const bannerTiers = SPONSOR_TIERS.filter(tier => bannerTierIds.includes(tier.id) && tier.sponsors.length > 0);
+  const logoSponsors = SPONSOR_TIERS
+    .filter(tier => !bannerTierIds.includes(tier.id) && tier.sponsors.length > 0)
+    .flatMap(tier => tier.sponsors);
+
+  if (bannerTiers.length === 0 && logoSponsors.length === 0) return null;
+
+  return (
+    <section style={{
+      padding: "100px 0",
+      background: "var(--bz-fondo-dark)",
+      color: "var(--bz-beige-hueso)",
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      <div style={{ position: "absolute", top: "-6%", right: "-3%", opacity: 0.08, pointerEvents: "none" }}>
+        <LeafShape size={260} color="var(--bz-ocre-calido)" rotate={30} />
+      </div>
+      <div style={{ position: "absolute", bottom: "-8%", left: "-4%", opacity: 0.07, pointerEvents: "none" }}>
+        <LeafShape size={300} color="var(--bz-verde-claro)" rotate={-140} />
+      </div>
+
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <div className="reveal" style={{ textAlign: "center", marginBottom: 72 }}>
+          <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 16 }}>Sponsors 2026</div>
+          <h2 className="display" style={{ fontSize: "clamp(30px, 4.5vw, 52px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05 }}>
+            Quiénes hacen posible <em style={{ color: "var(--bz-ocre-calido)" }}>este sueño.</em>
+          </h2>
+        </div>
+
+        {bannerTiers.map(tier => (
+          <div key={tier.id} className="reveal bz-sponsor-featured-grid">
+            {tier.sponsors.map(sponsor => (
+              <SponsorCard key={sponsor.nombre} sponsor={sponsor} height={180} padding="32px 44px" />
+            ))}
+          </div>
+        ))}
+
+        {bannerTiers.length > 0 && logoSponsors.length > 0 && (
+          <div aria-hidden="true" style={{ height: "0.5px", background: "rgba(250,246,237,0.1)", margin: "56px auto", maxWidth: 960 }} />
+        )}
+
+        {logoSponsors.length > 0 && (
+          <div className="reveal bz-sponsor-grid">
+            {logoSponsors.map(sponsor => (
+              <SponsorCard key={sponsor.nombre} sponsor={sponsor} height={100} padding="16px 20px" />
+            ))}
+          </div>
+        )}
+      </div>
+      <style>{`
+        .bz-sponsor-featured-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 20px;
+          max-width: 960px;
+          margin: 0 auto;
+        }
+        .bz-sponsor-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px;
+          max-width: 960px;
+          margin: 0 auto;
+        }
+        @media (min-width: 560px) {
+          .bz-sponsor-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        @media (min-width: 900px) {
+          .bz-sponsor-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+        }
+        @media (max-width: 560px) {
+          .bz-sponsor-featured-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
     </section>
   );
 }

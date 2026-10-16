@@ -67,6 +67,25 @@ export const CATEGORIES = [
   { id: "gastro",     label: "Gastronomía",   color: "var(--bz-verde-profundo)" },
 ];
 
+export const EXPOSITORES = [
+  { id: 1, name: "La Copería", cat: "gastro", origen: "", desc: "Vinos servidos por copa.", foto: "/expositores/la-coperia.jpg", logo: "/expositores/la-coperia-logo.jpg" },
+  { id: 2, name: "Bodega Moschini", cat: "gastro", origen: "", desc: "Bodega & viñedos. Vinos de la Patagonia argentina.", foto: "/expositores/moschini.jpg", logo: "/expositores/moschini-logo.jpg" },
+  { id: 3, name: "Cocina Antigua", cat: "alimentos", origen: "", desc: "Conservas y dulces en frasco, como el strudel de manzana.", foto: "/expositores/cocina-antigua.jpg", logo: "/expositores/cocina-antigua-logo.jpg" },
+  { id: 4, name: "Lily Maurizio", cat: "alimentos", origen: "", desc: "Chocolates artesanales.", foto: "/expositores/lily-maurizio.jpg", logo: "/expositores/lily-maurizio-logo.jpg" },
+  { id: 5, name: "Aconquija", cat: "alimentos", origen: "", desc: "Aceite natural de nuez, hecho con nueces de Catamarca.", foto: "/expositores/aconquija.jpg", logo: "/expositores/aconquija-logo.jpg" },
+  { id: 6, name: "La Despensa del Sur", cat: "alimentos", origen: "", desc: "Aceite de oliva virgen extra Aimoliva, de Finca Carbonell.", foto: "/expositores/despensa-del-sur.jpg", logo: "/expositores/despensa-del-sur-logo.jpg" },
+  { id: 7, name: "Lina Natural", cat: "cosmetica", origen: "", desc: "Cosmética natural. Crema de rosa mosqueta.", foto: "/expositores/lina-natural.jpg", logo: "/expositores/lina-natural-logo.jpg" },
+  { id: 8, name: "KIKA", cat: "bienestar", origen: "", desc: "Velas de ritual de cera de soja, 100% natural.", foto: "/expositores/kika.jpg", logo: null },
+  { id: 9, name: "Aromas NM", cat: "bienestar", origen: "", desc: "Ramos de flores secas y aromas.", foto: "/expositores/aromas-nm.jpg", logo: "/expositores/aromas-nm-logo.jpg" },
+  { id: 10, name: "Chilca", cat: "diseno", origen: "", desc: "Envoltorios ecológicos.", foto: "/expositores/chilca.jpg", logo: "/expositores/chilca-logo.jpg" },
+  { id: 11, name: "Teionna Joyas", cat: "diseno", origen: "", desc: "Joyería artesanal.", foto: "/expositores/teionna.jpg", logo: "/expositores/teionna-logo.jpg" },
+  { id: 12, name: "Pintura y Papel", cat: "diseno", origen: "", desc: "Cartapesta & bijouterie.", foto: "/expositores/pintura-y-papel.jpg", logo: "/expositores/pintura-y-papel-logo.jpg" },
+  { id: 13, name: "Arte con Pasión", cat: "diseno", origen: "", desc: "Piezas de arte en resina.", foto: "/expositores/arte-con-pasion.jpg", logo: "/expositores/arte-con-pasion-logo.jpg" },
+  { id: 14, name: "Lunaria Creative Studio", cat: "diseno", origen: "", desc: "Libretas y encuadernación artesanal.", foto: "/expositores/lunaria.jpg", logo: "/expositores/lunaria-logo.jpg" },
+  { id: 15, name: "Luz del Alma", cat: "diseno", origen: "", desc: "Deco & estilo. Cestos de yute y cuerda.", foto: "/expositores/luz-del-alma.jpg", logo: "/expositores/luz-del-alma-logo.jpg" },
+  { id: 16, name: "K", cat: "diseno", origen: "", desc: "Mobiliario de cartón.", foto: "/expositores/k-carton.jpg", logo: "/expositores/k-carton-logo.jpg" },
+];
+
 export const DIAS = [
   { id: "viernes", label: "Viernes", num: "6", subtitulo: "Apertura · 16 a 23 h", fecha: "6 nov" },
   { id: "sabado",  label: "Sábado",  num: "7", subtitulo: "12 a 23 h", fecha: "7 nov" },
@@ -173,4 +192,29 @@ export const PRENSA_NOTAS = [
   { medio: "Página/12",      fecha: "Agosto 2025",  title: "Productores patagónicos arman comunidad en Neuquén",    url: "#" },
   { medio: "La Nación",      fecha: "Mayo 2025",    title: "Una feria sustentable que no es solo mercado",          url: "#" },
   { medio: "Clarín Rural",   fecha: "Marzo 2025",   title: "BIORAIZ planifica su edición más ambiciosa",            url: "#" },
+];
+
+export const SPONSOR_TIERS = [
+  {
+    id: "raiz-eterna",
+    nombre: "Raíz Eterna",
+    verbo: "Co-crean BIORAIZ",
+    sponsors: [
+      { nombre: "Bosquear", logo: null },
+      { nombre: "Nissan AIKA Neuquén - Río Negro", logo: "/sponsors/nissan.png" },
+    ],
+  },
+  {
+    id: "raiz",
+    nombre: "Raíz",
+    verbo: "Acompañan BIORAIZ",
+    sponsors: [
+      { nombre: "Gobierno de la Provincia del Neuquén", logo: "/sponsors/gobierno.png", filter: "brightness(0.32)" },
+      { nombre: "Neuquén Capital", logo: "/sponsors/muni.png" },
+      { nombre: "Ferracioli", logo: "/sponsors/ferracioli.png" },
+      { nombre: "Sagrada Madre Incense", logo: "/sponsors/sagrada.png" },
+      { nombre: "Deco Klart", logo: "/sponsors/decoklart.png" },
+      { nombre: "Liberbox Logística", logo: "/sponsors/liberbox.png", full: true, bg: "#FF8A2B" },
+    ],
+  },
 ];
