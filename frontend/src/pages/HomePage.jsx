@@ -118,7 +118,7 @@ function NumbersSection() {
   return (
     <section style={{ padding: "60px 0 100px", background: "var(--bz-fondo-base)" }}>
       <div className="container">
-        <div className="bz-numbers-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
+        <div className="bz-numbers-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: "var(--bz-borde-suave)", border: "0.5px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden" }}>
           {NUMEROS.map((n, i) => (
             <div key={i} className="reveal" style={{ background: "var(--bz-beige-hueso)", padding: "44px 32px", textAlign: "center", transitionDelay: `${i * 80}ms` }}>
               <div className="display" style={{ fontSize: "clamp(48px, 7vw, 84px)", color: "var(--bz-verde-profundo)", lineHeight: 1, marginBottom: 12 }}>
@@ -156,7 +156,7 @@ function ExpositoresScroll({ setPage }) {
       <div className="container" style={{ marginBottom: 48 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 24, flexWrap: "wrap" }}>
           <SectionHead
-            eyebrow="200+ stands disponibles"
+            eyebrow="Stands disponibles"
             title={<>Hecho con amor <em>y consciencia.</em></>}
             sub="Seis categorías, un mismo criterio: origen verificable, proceso consciente, producto con historia."
           />

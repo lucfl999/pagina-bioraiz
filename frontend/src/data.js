@@ -26,12 +26,12 @@ export const ECO_PHRASES = [
 ];
 
 export const CATEGORIAS_STANDS = [
-  { id: "alimentos", label: "Alimentación", stands: 43, desc: "Productores de alimentos con origen verificable." },
-  { id: "cosmetica", label: "Cosmética",    stands: 32, desc: "Cosmética natural y cuidado consciente." },
-  { id: "diseno",    label: "Diseño",       stands: 40, desc: "Objetos y textiles hechos a mano." },
-  { id: "bienestar", label: "Bienestar",    stands: 35, desc: "Prácticas, tisanas y herramientas para frenar." },
-  { id: "infantil",  label: "Infantil",     stands: 28, desc: "Juego, tierra y aprendizaje para los más chicos." },
-  { id: "gastro",    label: "Gastronomía",  stands: 42, desc: "Cocina de estación, fermentos y dulces con historia." },
+  { id: "alimentos", label: "Alimentación", desc: "Productores de alimentos con origen verificable." },
+  { id: "cosmetica", label: "Cosmética",    desc: "Cosmética natural y cuidado consciente." },
+  { id: "diseno",    label: "Diseño",       desc: "Objetos y textiles hechos a mano." },
+  { id: "bienestar", label: "Bienestar",    desc: "Prácticas, tisanas y herramientas para frenar." },
+  { id: "infantil",  label: "Infantil",     desc: "Juego, tierra y aprendizaje para los más chicos." },
+  { id: "gastro",    label: "Gastronomía",  desc: "Cocina de estación, fermentos y dulces con historia." },
 ];
 
 export const DIA_BLOQUES = [
@@ -173,7 +173,6 @@ export const VALORES = [
 export const NUMEROS = [
   { value: 3,   suffix: "",  label: "días de feria" },
   { value: 5,   suffix: "",  label: "zonas experienciales" },
-  { value: 200, suffix: "+", label: "stands disponibles" },
   { value: 11,  suffix: "h", label: "de actividades por día" },
 ];
 

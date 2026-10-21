@@ -1,9 +1,7 @@
 export const FORM_SCHEMAS = {
 
   feriantes: {
-    pills: ["200–220 stands disponibles", "50.000 asistentes", "8 categorías", "Cierre 1 ago"],
-    note: "**Antes de completar:** Hay entre 200 y 220 stands disponibles, seleccionados por curaduría. Se prioriza origen patagónico o regional. Las postulaciones cierran el **1 de agosto de 2026** y los seleccionados son notificados el **18 de agosto**. El pago confirma el lugar solo tras la notificación oficial.",
-    submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones con una matriz de puntuación y notificamos a los seleccionados antes del 18 de agosto de 2026. Las postulaciones cierran el 1 de agosto. El pago confirma el lugar solo tras la notificación oficial — no antes.",
+    pills: ["Stands disponibles", "50.000 asistentes", "8 categorías", "Cierre 1 ago"],
     sections: [
       {
         num: "01", label: "Datos del emprendimiento", title: "¿Quiénes son?",
@@ -63,9 +61,7 @@ export const FORM_SCHEMAS = {
   },
 
   gastronomicos: {
-    pills: ["38–45 puestos", "0% comisión", "50.000 asistentes", "Cierre 1 ago"],
-    note: "**Antes de completar:** El cupo es limitado a 38–45 puestos seleccionados por curaduría. Se acepta máximo 1 puesto por sub-rubro. Las postulaciones cierran el **1 de agosto de 2026** y los seleccionados son notificados el 18 de agosto.",
-    submitNote: "**¿Qué pasa después?** Revisamos tu postulación y te avisamos antes del 18 de agosto de 2026. Las postulaciones cierran el 1 de agosto.",
+    pills: ["Puestos disponibles", "0% comisión", "50.000 asistentes", "Cierre 1 ago"],
     sections: [
       {
         num: "01", label: "Datos del emprendimiento", title: "¿Quiénes son?",
@@ -105,8 +101,6 @@ export const FORM_SCHEMAS = {
 
   artistas: {
     pills: ["3 escenarios", "Slots reservados", "Prioritario regional", "Cierre 31 ago"],
-    note: "**Esta convocatoria prioriza artistas locales y emergentes patagónicos.** Si tu proyecto es de otra región de Argentina y creés que encajás, podés postularte igual — se evalúa caso a caso. Notificamos antes del **18 de agosto**.",
-    submitNote: "**¿Qué pasa después?** Evaluamos todas las postulaciones y avisamos antes del 18 de agosto de 2026.",
     sections: [
       {
         num: "01", label: "Datos del proyecto artístico", title: "¿Quiénes son?",
@@ -155,8 +149,6 @@ export const FORM_SCHEMAS = {
 
   speakers: {
     pills: ["6–8 charlas/día", "400 personas/charla", "45–60 min/slot", "Cierre 31 ago"],
-    note: "**Antes de completar:** BIORAIZ no convoca speakers con posiciones pseudocientíficas verificadas. El proceso de selección valora formación real, propuesta con base sólida y coherencia con el espíritu del festival. Notificamos antes del **18 de agosto**.",
-    submitNote: "**¿Qué pasa después?** Evaluamos la propuesta y te contactamos antes del 18 de agosto.",
     sections: [
       {
         num: "01", label: "Datos del speaker", title: "¿Quién sos?",
@@ -200,8 +192,6 @@ export const FORM_SCHEMAS = {
 
   facilitadores: {
     pills: ["4–6 sesiones/día", "3 espacios", "150 personas/sesión", "Cierre 31 ago"],
-    note: "**Antes de completar:** BIORAIZ exige formación acreditada y verificable en la disciplina propuesta. Notificamos antes del **18 de agosto**.",
-    submitNote: "**¿Qué pasa después?** Revisamos tu postulación y te contactamos antes del 18 de agosto.",
     sections: [
       {
         num: "01", label: "Datos del facilitador/a", title: "¿Quién sos?",
@@ -241,8 +231,6 @@ export const FORM_SCHEMAS = {
 
   sponsors: {
     pills: ["Sponsors", "Canjes", "Institucionales"],
-    note: "**Contanos sobre tu propuesta de alianza.** Te contactamos en los próximos días para conversar los detalles.",
-    submitNote: "**¿Qué pasa después?** Te contacta el equipo comercial para conversar la alianza.",
     sections: [
       {
         num: "01", label: "Tu organización", title: "Contanos quiénes son",
@@ -267,8 +255,6 @@ export const FORM_SCHEMAS = {
 
   prensa: {
     pills: ["Acceso completo", "Zona de prensa", "Backstage coordinado", "Cierre 25 oct"],
-    note: "**Antes de completar:** Las acreditaciones son nominales con foto. Se confirman por email antes del **31 de octubre de 2026**. El plazo máximo de solicitud es el 25 de octubre.",
-    submitNote: "**¿Qué pasa después?** Confirmamos la acreditación por email antes del 31 de octubre de 2026.",
     sections: [
       {
         num: "01", label: "Datos del medio", title: "¿Qué medio representás?",

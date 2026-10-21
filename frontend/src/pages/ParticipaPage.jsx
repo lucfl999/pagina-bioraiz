@@ -208,22 +208,11 @@ function ParticipaForm({ tab }) {
   return (
     <form onSubmit={handleSubmit}>
       <input type="hidden" name="tipo_participacion" value={tab.label} />
-      {schema.note && (
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "18px 22px", marginBottom: 44, background: "rgba(122,158,90,0.08)", borderRadius: "var(--bz-radius-md)", border: "1px solid rgba(122,158,90,0.22)" }}>
-          <div style={{ flexShrink: 0, marginTop: 1 }}><LeafShape size={26} color={PZ.borde} rotate={-6} /></div>
-          <p style={{ fontSize: 14, color: "rgba(245,240,232,0.78)", lineHeight: 1.6 }}>{richText(schema.note)}</p>
-        </div>
-      )}
       <fieldset disabled={sending} style={{ border: "none", margin: 0, padding: 0, minInlineSize: "auto" }}>
         {schema.sections.map((s, i) => (
           <ParticipaSection key={i} section={s} last={i === schema.sections.length - 1} />
         ))}
       </fieldset>
-      {schema.submitNote && (
-        <p style={{ marginTop: 44, padding: "16px 20px", background: "rgba(245,240,232,0.04)", borderRadius: "var(--bz-radius-md)", fontSize: 13.5, color: "rgba(245,240,232,0.62)", lineHeight: 1.6 }}>
-          {richText(schema.submitNote)}
-        </p>
-      )}
       <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
         <button type="submit" disabled={sending} style={{
           display: "inline-flex", alignItems: "center", gap: 11, padding: "15px 32px",
