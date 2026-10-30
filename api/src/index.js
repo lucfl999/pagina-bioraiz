@@ -111,6 +111,7 @@ async function initDB() {
         id                 SERIAL PRIMARY KEY,
         order_code         UUID UNIQUE NOT NULL,
         nombre             VARCHAR(120) NOT NULL,
+        dni                VARCHAR(8) NOT NULL,
         email              VARCHAR(254) NOT NULL,
         whatsapp           VARCHAR(40) NOT NULL,
         items              JSONB NOT NULL,
@@ -126,6 +127,7 @@ async function initDB() {
         updated_at         TIMESTAMP NOT NULL DEFAULT NOW()
       )
     `);
+    await pool.query('ALTER TABLE store_orders ADD COLUMN IF NOT EXISTS dni VARCHAR(8)');
     await pool.query('CREATE INDEX IF NOT EXISTS store_orders_fecha_compra_idx ON store_orders (fecha_compra DESC)');
     await pool.query('CREATE INDEX IF NOT EXISTS store_orders_mp_payment_id_idx ON store_orders (mp_payment_id)');
     console.log('✅ Tabla store_orders lista');

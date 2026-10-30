@@ -34,6 +34,7 @@ const getMPClient = () => new MercadoPagoConfig({
 function validateOrder(data) {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
   if (typeof data.nombre !== 'string' || data.nombre.trim().length < 2 || data.nombre.trim().length > 120) return null;
+  if (typeof data.dni !== 'string' || !/^\d{7,8}$/.test(data.dni.trim())) return null;
   if (typeof data.email !== 'string' || data.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return null;
   if (typeof data.whatsapp !== 'string' || data.whatsapp.length > 40 || (data.whatsapp.match(/\d/g) || []).length < 8) return null;
   if (!Array.isArray(data.items) || data.items.length === 0 || data.items.length > Object.keys(PRODUCTS).length) return null;
@@ -61,6 +62,7 @@ function validateOrder(data) {
   const total = items.reduce((sum, item) => sum + item.total, 0);
   return {
     nombre: data.nombre.trim(),
+    dni: data.dni.trim(),
     email: data.email.trim(),
     whatsapp: data.whatsapp.trim(),
     items,
@@ -70,7 +72,7 @@ function validateOrder(data) {
   };
 }
 
-function buildOrderEmail(order) {
+function buildOrderEmail(order, includeDni = false) {
   const rows = order.items.map((item) => `
     <tr>
       <td style="padding:8px 12px;border-bottom:1px solid #EDE4CF;">${escapeHtml(item.nombre)} (${escapeHtml(item.medida)})</td>
@@ -81,8 +83,9 @@ function buildOrderEmail(order) {
     <div style="font-family:Arial,sans-serif;max-width:620px;color:#1A2012;">
       <h2 style="color:#2A3D24;">Pedido de tienda BIORAIZ · ${escapeHtml(order.order_code)}</h2>
       <p><strong>Nombre:</strong> ${escapeHtml(order.nombre)}<br/>
+      ${includeDni ? `<strong>DNI:</strong> ${escapeHtml(order.dni)}<br/>` : ''}
       <strong>Email:</strong> ${escapeHtml(order.email)}<br/>
-      <strong>WhatsApp:</strong> ${escapeHtml(order.whatsapp)}</p>
+      <strong>Teléfono / WhatsApp:</strong> ${escapeHtml(order.whatsapp)}</p>
       <table style="width:100%;border-collapse:collapse;">
         <thead><tr><th style="text-align:left;padding:8px 12px;">Producto</th><th>Cantidad</th><th style="text-align:right;">Importe</th></tr></thead>
         <tbody>${rows}</tbody>
@@ -96,22 +99,24 @@ function buildOrderEmail(order) {
     </div>`;
 }
 
-async function sendOrderNotifications(order) {
-  const html = buildOrderEmail(order);
-  const text = [
+function buildOrderText(order, includeDni = false) {
+  return [
     `Pedido de tienda BIORAIZ: ${order.order_code}`,
     `Nombre: ${order.nombre}`,
+    ...(includeDni ? [`DNI: ${order.dni}`] : []),
     `Email: ${order.email}`,
-    `WhatsApp: ${order.whatsapp}`,
+    `Teléfono / WhatsApp: ${order.whatsapp}`,
     ...order.items.map((item) => `${item.quantity} x ${item.nombre} (${item.medida}) — ${formatPrice(item.total)}`),
     `Subtotal: ${formatPrice(order.subtotal)}`,
     `Descuento web: -${formatPrice(order.descuento)}`,
     `Total pagado: ${formatPrice(order.total)}`,
     'Entrega: retiro en la feria.',
   ].join('\n');
+}
 
+async function sendOrderNotifications(order) {
   const notifications = [
-    { column: 'admin_email_sent', email: ADMIN_EMAIL, subject: `Pedido pagado en tienda BIORAIZ · ${order.order_code}` },
+    { column: 'admin_email_sent', email: ADMIN_EMAIL, subject: `Pedido pagado en tienda BIORAIZ · ${order.order_code}`, includeDni: true },
     { column: 'buyer_email_sent', email: order.email, subject: 'Confirmación de compra · Tienda BIORAIZ' },
   ];
 
@@ -123,7 +128,12 @@ async function sendOrderNotifications(order) {
         [order.order_code]
       );
       if (!rows.length) continue;
-      await sendEmail(notification.email, notification.subject, html, text);
+      await sendEmail(
+        notification.email,
+        notification.subject,
+        buildOrderEmail(order, notification.includeDni),
+        buildOrderText(order, notification.includeDni)
+      );
       order[notification.column] = true;
     } catch (error) {
       try {
@@ -152,9 +162,9 @@ router.post('/create-preference', async (req, res) => {
   try {
     await pool.query(
       `INSERT INTO store_orders
-        (order_code, nombre, email, whatsapp, items, subtotal, descuento, total, estado)
-       VALUES ($1,$2,$3,$4,$5::jsonb,$6,$7,$8,'pending')`,
-      [orderCode, order.nombre, order.email, order.whatsapp, JSON.stringify(order.items), order.subtotal, order.descuento, order.total]
+        (order_code, nombre, dni, email, whatsapp, items, subtotal, descuento, total, estado)
+       VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7,$8,$9,'pending')`,
+      [orderCode, order.nombre, order.dni, order.email, order.whatsapp, JSON.stringify(order.items), order.subtotal, order.descuento, order.total]
     );
 
     const preference = new Preference(getMPClient());

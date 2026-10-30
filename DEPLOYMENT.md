@@ -124,6 +124,8 @@ si no se define, los avisos de pedidos pagados se envían a `hola@bioraiz.net`.
 `MP_TEST_MODE=true` se usa únicamente al ejecutar la API localmente con credenciales
 de prueba: selecciona el enlace de checkout sandbox y desactiva el webhook público.
 No configures esta variable en producción.
+Los pedidos solicitan DNI, nombre, email y teléfono. El DNI se almacena con el pedido
+y se incluye solo en el aviso enviado al email de BIORAIZ, no en la confirmación al comprador.
 
 #### 2.4 Configurar railway.json
 

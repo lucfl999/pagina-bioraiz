@@ -37,7 +37,7 @@ function QuantityControl({ name, value, onChange }) {
 function ProductCard({ product, quantity, onQuantityChange }) {
   return (
     <article style={{ background: "var(--bz-beige-hueso)", borderRadius: "var(--bz-radius-lg)", overflow: "hidden", border: "0.5px solid var(--bz-borde-suave)", display: "flex", flexDirection: "column" }}>
-      <div style={{ position: "relative", aspectRatio: "4 / 3", background: product.fondo }}>
+      <div style={{ position: "relative", aspectRatio: product.contain ? "3 / 2" : "4 / 3", background: product.fondo }}>
         <img
           src={product.foto}
           alt={`Vaso ${product.nombre}`}
@@ -72,6 +72,7 @@ export default function TiendaPage() {
   useReveal();
   const [cart, setCart] = useState({});
   const [nombre, setNombre] = useState("");
+  const [dni, setDni] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [error, setError] = useState("");
@@ -146,6 +147,10 @@ export default function TiendaPage() {
       setError("Escribí tu nombre y apellido.");
       return;
     }
+    if (!/^\d{7,8}$/.test(dni.trim())) {
+      setError("Ingresá un DNI válido, solo con números (7 u 8 dígitos).");
+      return;
+    }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       setError("Ingresá un email válido para recibir la confirmación de compra.");
       return;
@@ -160,6 +165,7 @@ export default function TiendaPage() {
     try {
       const { init_point } = await createStorePreference({
         nombre: nombre.trim(),
+        dni: dni.trim(),
         email: email.trim(),
         whatsapp: whatsapp.trim(),
         items: items.map(item => ({ id: item.id, quantity: item.quantity })),
@@ -235,6 +241,18 @@ export default function TiendaPage() {
               />
             </label>
             <label style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,232,0.6)" }}>DNI</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                maxLength={8}
+                value={dni}
+                onChange={event => setDni(event.target.value.replace(/\D/g, ""))}
+                style={{ background: "rgba(245,240,232,0.06)", border: "1px solid rgba(245,240,232,0.25)", borderRadius: "var(--bz-radius-md)", padding: "12px 14px", fontSize: 15, color: "var(--bz-beige-hueso)", fontFamily: "var(--bz-font-body)", outline: "none" }}
+              />
+            </label>
+            <label style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,232,0.6)" }}>Email</span>
               <input
                 type="email"
@@ -245,7 +263,7 @@ export default function TiendaPage() {
               />
             </label>
             <label style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,232,0.6)" }}>WhatsApp</span>
+              <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,232,0.6)" }}>Teléfono / WhatsApp</span>
               <input
                 type="tel"
                 autoComplete="tel"
@@ -254,7 +272,7 @@ export default function TiendaPage() {
                 style={{ background: "rgba(245,240,232,0.06)", border: "1px solid rgba(245,240,232,0.25)", borderRadius: "var(--bz-radius-md)", padding: "12px 14px", fontSize: 15, color: "var(--bz-beige-hueso)", fontFamily: "var(--bz-font-body)", outline: "none" }}
               />
             </label>
-            <div style={{ fontSize: 13.5, color: "rgba(245,240,232,0.75)", lineHeight: 1.5 }}>Retiro en la feria · {BZ_DATE}. Te enviaremos la confirmación de pago por email y podremos coordinar el retiro por WhatsApp.</div>
+            <div style={{ fontSize: 13.5, color: "rgba(245,240,232,0.75)", lineHeight: 1.5 }}>Retiro en la feria · {BZ_DATE}. Te enviaremos la confirmación de pago por email; el DNI solo se comparte con el equipo de BIORAIZ para gestionar tu compra.</div>
             {error && <div role="alert" style={{ fontSize: 13.5, color: "var(--bz-ocre-calido)" }}>{error}</div>}
             <button type="button" className="btn" onClick={sendOrder} disabled={checkoutState.kind === "creating"} style={{ background: "var(--bz-ocre-calido)", color: "var(--bz-fondo-dark)", justifyContent: "center", width: "100%", opacity: checkoutState.kind === "creating" ? 0.65 : 1 }}>
               {checkoutState.kind === "creating" ? "Preparando el pago…" : "Pagar con Mercado Pago"}
