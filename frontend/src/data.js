@@ -23,16 +23,16 @@ export const ACTIVITIES_SCHEDULE = [
   {
     day: "Viernes 6",
     activities: [
-      { time: "19:00", name: "Yoga & stretching" },
+      { time: "19:00", name: "Stretching" },
     ],
   },
   {
     day: "Sábado 7",
     activities: [
-      { time: "16:00", name: "Yoga & stretching" },
+      { time: "16:00", name: "Yoga" },
       { time: "16:30 a 17:30", name: "Biodanza" },
       { time: "17:00", name: "Pilates" },
-      { time: "18:00", name: "Yoga & stretching" },
+      { time: "18:00", name: "Yoga" },
       { time: "18:15", name: "Terapia de sonido" },
     ],
   },

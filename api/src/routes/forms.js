@@ -8,11 +8,11 @@ const router = express.Router();
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'hola@bioraiz.net';
 const ACTIVITY_CHANNELS = ['Instagram', 'Un amigo', 'Un sponsor', 'Radio o prensa', 'Otro'];
 const ACTIVITY_OPTIONS = new Set([
-  'Viernes 6 · 19:00 · Yoga & stretching',
-  'Sábado 7 · 16:00 · Yoga & stretching',
+  'Viernes 6 · 19:00 · Stretching',
+  'Sábado 7 · 16:00 · Yoga',
   'Sábado 7 · 16:30 a 17:30 · Biodanza',
   'Sábado 7 · 17:00 · Pilates',
-  'Sábado 7 · 18:00 · Yoga & stretching',
+  'Sábado 7 · 18:00 · Yoga',
   'Sábado 7 · 18:15 · Terapia de sonido',
   'Domingo 8 · 15:00 · Oráculo Vivo',
   'Domingo 8 · 15:00 · Pilates',
