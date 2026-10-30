@@ -67,10 +67,45 @@ export const CATEGORIAS_STANDS = [
 ];
 
 export const DIA_BLOQUES = [
-  { num: "6", dia: "Viernes", sub: "Apertura · 16 a 23 h", tags: ["Apertura", "Mercado", "Charla inaugural", "Música en vivo"] },
-  { num: "7", dia: "Sábado",  sub: "12 a 23 h",           tags: ["Talleres", "Cocina abierta", "Zona Brotes", "Conversatorio", "Escenario Principal"] },
-  { num: "8", dia: "Domingo", sub: "Cierre · 12 a 23 h",  tags: ["Bienestar", "Infantil", "Mesa redonda", "Cierre musical"] },
+  { num: "6", dia: "Viernes", sub: "Apertura",     tags: ["Charlas", "Stretching"] },
+  { num: "7", dia: "Sábado",  sub: "Día completo", tags: ["Charlas", "Terapias", "Yoga", "Biodanza", "Pilates", "Terapia de sonido", "Música"] },
+  { num: "8", dia: "Domingo", sub: "Cierre",       tags: ["Charlas", "Oráculo Vivo", "Pilates", "Yoga & stretching", "Biodanza", "Jam", "Música"] },
 ];
+
+export const ACTIVIDADES = {
+  viernes: [
+    { hora: "18:00", title: "Charla", lugar: "Domo", speaker: "Carolina Gastaldi", tipo: "Charla" },
+    { hora: "18:30", title: "Charla", lugar: "Escenario principal", speaker: "Romina Cuadrillero", tipo: "Charla" },
+    { hora: "19:00", title: "Stretching", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
+  ],
+  sabado: [
+    { hora: "15:00", title: "Terapia: Puja de Tameana", lugar: "Domo", speaker: "Nati Keheler", tipo: "Bienestar" },
+    { hora: "16:00", title: "Charla", lugar: "Escenario principal", speaker: "Francine Rostan", tipo: "Charla" },
+    { hora: "16:00", title: "Yoga", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
+    { hora: "16:30 a 17:30", title: "Biodanza", lugar: "Domo", speaker: "Romina Cuadrillero", tipo: "Bienestar" },
+    { hora: "17:00", title: "Pilates", lugar: "Aire libre", speaker: "Nati Keheler", tipo: "Bienestar" },
+    { hora: "18:00", title: "Charla", lugar: "Escenario principal", speaker: "Maya Tobares", tipo: "Charla" },
+    { hora: "18:00", title: "Yoga", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
+    { hora: "18:15", title: "Terapia de sonido", lugar: "Domo", speaker: "Franco Martínez (Nolugar)", tipo: "Bienestar" },
+    { hora: "19:00", title: "Charla", lugar: "Escenario principal", speaker: "Hernán Libkind", tipo: "Charla" },
+    { hora: "20:00", title: "Música: “Flores flores”", lugar: "Escenario principal", speaker: "Florencia Cabaña", tipo: "Música" },
+  ],
+  domingo: [
+    { hora: "14:00", title: "Charla", lugar: "Escenario principal", speaker: "Leticia Fattore", tipo: "Charla" },
+    { hora: "15:00", title: "Oráculo Vivo (+16 años)", lugar: "Domo", speaker: "Camila Cammarota", tipo: "Bienestar" },
+    { hora: "15:00", title: "Pilates", lugar: "Aire libre", speaker: "Nati Keheler", tipo: "Bienestar" },
+    { hora: "16:00", title: "Charla", lugar: "Escenario principal", speaker: "Bibiana Beatriz Sagripanti", tipo: "Charla" },
+    { hora: "16:00", title: "Yoga & stretching", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
+    { hora: "16:30 a 17:30", title: "Biodanza", lugar: "Domo", speaker: "Romina Cuadrillero", tipo: "Bienestar" },
+    { hora: "17:00 a 18:00", title: "Experiencia práctica grupal", lugar: "Aire libre", speaker: "Leticia Fattore", tipo: "Taller" },
+    { hora: "17:30", title: "Charla", lugar: "Escenario principal", speaker: "Carolina Gastaldi", tipo: "Charla" },
+    { hora: "18:00", title: "Yoga & stretching", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
+    { hora: "18:15", title: "Terapia de sonido", lugar: "Domo", speaker: "Franco Martínez (Nolugar)", tipo: "Bienestar" },
+    { hora: "18:30", title: "Jam", lugar: "Aire libre", speaker: "Carolina Gastaldi", tipo: "Música" },
+    { hora: "20:00", title: "Música", lugar: "Escenario principal", speaker: "María Julia", tipo: "Música" },
+    { hora: "21:30 al cierre", title: "Música", lugar: "Escenario principal", speaker: "Magma", tipo: "Música" },
+  ],
+};
 
 export const TIPOS_ACTIVIDAD = [
   { tipo: "Mercado",     desc: "Recorrer los stands y conversar con quien hizo lo que comprás." },
@@ -119,9 +154,9 @@ export const EXPOSITORES = [
 ];
 
 export const DIAS = [
-  { id: "viernes", label: "Viernes", num: "6", subtitulo: "Apertura · 16 a 23 h", fecha: "6 nov" },
-  { id: "sabado",  label: "Sábado",  num: "7", subtitulo: "12 a 23 h", fecha: "7 nov" },
-  { id: "domingo", label: "Domingo", num: "8", subtitulo: "Cierre · 12 a 23 h", fecha: "8 nov" },
+  { id: "viernes", label: "Viernes", num: "6", subtitulo: "Apertura", fecha: "6 nov" },
+  { id: "sabado",  label: "Sábado",  num: "7", subtitulo: "Día completo", fecha: "7 nov" },
+  { id: "domingo", label: "Domingo", num: "8", subtitulo: "Cierre", fecha: "8 nov" },
 ];
 
 export const TICKETS = [

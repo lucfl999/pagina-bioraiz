@@ -229,7 +229,7 @@ function AgendaPreview({ setPage }) {
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {d.tags.map(t => (
-                    <span key={t} className="tag tag-outline">{t}</span>
+                    <span key={t} className="tag tag-outline" style={{ whiteSpace: "nowrap" }}>{t}</span>
                   ))}
                 </div>
               </div>

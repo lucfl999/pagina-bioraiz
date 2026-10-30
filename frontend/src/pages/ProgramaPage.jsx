@@ -1,34 +1,6 @@
 import { useState } from 'react';
 import { useReveal, SubPageHeader, CTABanner } from '../components/shared.jsx';
-import { DIAS, TIPOS_ACTIVIDAD } from '../data.js';
-import { subscribeNewsletter } from '../services/api.js';
-
-function GrillaSubscribe() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    try { await subscribeNewsletter(email, 'grilla'); } catch (_) {}
-    setSent(true);
-  };
-  return (
-    <div style={{ marginTop: 44, padding: "24px 26px", background: "var(--bz-verde-pasto)", borderRadius: "var(--bz-radius-md)" }}>
-      <p style={{ fontSize: 13, color: "var(--bz-verde-bosque)", fontFamily: "var(--bz-font-mono)", lineHeight: 1.6, letterSpacing: "0.02em", marginBottom: 16 }}>
-        Grilla completa disponible a partir de septiembre 2026. Suscribite para recibirla primero.
-      </p>
-      {sent ? (
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, fontSize: 14, color: "var(--bz-verde-bosque)" }}>
-          <span>✓</span> <span>Listo, te enviamos la grilla a <strong style={{ wordBreak: "break-all" }}>{email}</strong> apenas salga.</span>
-        </div>
-      ) : (
-        <form onSubmit={onSubmit} style={{ display: "flex", gap: 8, maxWidth: 460, flexWrap: "wrap" }}>
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="tu@correo.com" required style={{ flex: 1, minWidth: 200, padding: "13px 18px", fontSize: 14, fontFamily: "var(--bz-font-body)", border: "1px solid var(--bz-verde-musgo)", borderRadius: "var(--bz-radius-pill)", background: "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", outline: "none" }} />
-          <button type="submit" className="btn btn-primary">Suscribirme</button>
-        </form>
-      )}
-    </div>
-  );
-}
+import { ACTIVIDADES, DIAS } from '../data.js';
 
 export default function ProgramaPage({ setPage }) {
   useReveal();
@@ -37,9 +9,9 @@ export default function ProgramaPage({ setPage }) {
   const dia = DIAS.find(d => d.id === activeDia);
 
   const enfasis = {
-    viernes: "El día de apertura: se inaugura el mercado, suena la primera charla y la música estrena el escenario.",
-    sabado:  "El día más completo: todo abierto a la vez, de la cocina a los talleres, de la mañana a la noche.",
-    domingo: "El cierre y la cosecha: bienestar, espacio para los más chicos y el último fogón antes de despedirnos.",
+    viernes: "Charlas en el Domo y el Escenario principal, y stretching al aire libre.",
+    sabado:  "Terapias, charlas, yoga, biodanza, pilates, terapia de sonido y música.",
+    domingo: "Charlas, Oráculo Vivo, pilates, yoga, biodanza, jam y música hasta el cierre.",
   };
 
   return (
@@ -47,15 +19,19 @@ export default function ProgramaPage({ setPage }) {
       <SubPageHeader
         eyebrow="Programa · 3 días"
         title={<>Programa.</>}
-        sub="6, 7 y 8 de noviembre · Viernes de 16:00 a 23:00 · Sábado y domingo de 12:00 a 23:00."
+        sub="Tres días con las mismas familias de actividades. Lo que cambia es el énfasis de cada jornada."
       />
 
       <section style={{ padding: "48px 0 0", background: "var(--bz-fondo-base)" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, background: "var(--bz-beige-base)", padding: 6, borderRadius: "var(--bz-radius-lg)", maxWidth: 720, margin: "0 auto 48px" }}>
+          <div role="tablist" aria-label="Días del programa" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, background: "var(--bz-beige-base)", padding: 6, borderRadius: "var(--bz-radius-lg)", maxWidth: 720, margin: "0 auto 48px" }}>
             {DIAS.map(d => (
               <button
                 key={d.id}
+                type="button"
+                role="tab"
+                aria-selected={activeDia === d.id}
+                aria-controls="programa-del-dia"
                 onClick={() => setActiveDia(d.id)}
                 style={{
                   padding: "16px 20px",
@@ -75,7 +51,7 @@ export default function ProgramaPage({ setPage }) {
         </div>
       </section>
 
-      <section key={activeDia} style={{ padding: "8px 0 90px", background: "var(--bz-fondo-base)", animation: "bz-fade-in 400ms var(--bz-ease) both" }}>
+      <section id="programa-del-dia" key={activeDia} role="tabpanel" style={{ padding: "8px 0 90px", background: "var(--bz-fondo-base)", animation: "bz-fade-in 400ms var(--bz-ease) both" }}>
         <div className="container" style={{ maxWidth: 980 }}>
           <div className="reveal" style={{ display: "flex", gap: 20, alignItems: "baseline", marginBottom: 40, paddingBottom: 28, borderBottom: "0.5px solid var(--bz-borde-suave)", flexWrap: "wrap" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
@@ -85,25 +61,36 @@ export default function ProgramaPage({ setPage }) {
             <p style={{ flex: 1, minWidth: 280, fontSize: 15, color: "var(--bz-texto-secundario)", lineHeight: 1.6 }}>{enfasis[activeDia]}</p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 20 }}>
-            {TIPOS_ACTIVIDAD.map((t, i) => (
-              <article key={t.tipo} className="reveal" style={{
-                background: "var(--bz-beige-hueso)",
-                border: "0.5px solid var(--bz-borde-ligero)",
-                borderRadius: "var(--bz-radius-lg)",
-                padding: "26px 26px",
-                transition: "transform 250ms var(--bz-ease), box-shadow 250ms var(--bz-ease)",
-                transitionDelay: `${(i % 3) * 60}ms`,
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "var(--bz-shadow-md)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
-                <span className="tag tag-ocre" style={{ marginBottom: 14 }}>{t.tipo}</span>
-                <p style={{ fontFamily: "var(--bz-font-display)", fontSize: 19, color: "var(--bz-texto-primario)", lineHeight: 1.4, marginTop: 4 }}>{t.desc}</p>
-              </article>
+          <div className="bz-grilla" role="table" aria-label={`Programa ${dia.label}`}>
+            <div className="bz-grilla-row bz-grilla-head" role="row">
+              <span role="columnheader">Hora</span>
+              <span role="columnheader">Actividad</span>
+              <span role="columnheader">Quién</span>
+              <span role="columnheader">Espacio</span>
+            </div>
+            {(ACTIVIDADES[activeDia] || []).map((activity) => (
+              <div key={`${activity.hora}-${activity.title}-${activity.speaker}`} className="bz-grilla-row" role="row">
+                <span role="cell" className="bz-g-hora">{activity.hora}</span>
+                <span role="cell" className="bz-g-title">{activity.title}</span>
+                <span role="cell" className="bz-g-quien">{activity.speaker}</span>
+                <span role="cell" className="bz-g-lugar">{activity.lugar}</span>
+              </div>
             ))}
           </div>
 
-          <GrillaSubscribe />
+          <style>{`
+            .bz-grilla { border-top: 0.5px solid var(--bz-borde-suave); }
+            .bz-grilla-row { display: grid; grid-template-columns: 130px minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 20px; padding: 18px 4px; border-bottom: 0.5px solid var(--bz-borde-suave); align-items: baseline; }
+            .bz-grilla-head { padding: 12px 4px; font-family: var(--bz-font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bz-texto-terciario); }
+            .bz-g-hora { font-family: var(--bz-font-mono); font-size: 14px; color: var(--bz-verde-musgo); }
+            .bz-g-title { font-family: var(--bz-font-display); font-size: 20px; color: var(--bz-texto-primario); line-height: 1.3; }
+            .bz-g-quien, .bz-g-lugar { font-size: 14px; color: var(--bz-texto-secundario); }
+            @media (max-width: 720px) {
+              .bz-grilla-head { display: none; }
+              .bz-grilla-row { grid-template-columns: 96px minmax(0, 1fr); gap: 4px 16px; }
+              .bz-g-quien, .bz-g-lugar { grid-column: 2; }
+            }
+          `}</style>
         </div>
       </section>
 
