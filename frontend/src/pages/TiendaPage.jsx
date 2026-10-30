@@ -5,9 +5,9 @@ import { createStorePreference, getStoreOrderStatus } from '../services/api.js';
 
 const DESCUENTO = 0.15;
 const PRODUCTOS = [
-  { id: "banderas", nombre: "Plaza de las Banderas", medida: "500 ml", precio: 4000, foto: "/tienda/vaso-banderas.jpg", fondo: "#efebe4" },
-  { id: "san-martin", nombre: "Monumento San Martín", medida: "500 ml", precio: 4000, foto: "/tienda/vaso-san-martin.jpg", fondo: "#e4e4e2", contain: true },
-  { id: "confluencia", nombre: "La Confluencia", medida: "500 ml", precio: 4000, foto: "/tienda/vaso-confluencia.jpg", fondo: "#efebe4" },
+  { id: "banderas", nombre: "Plaza de las Banderas", medida: "500 ml", precio: 4000, foto: "/tienda/vaso-banderas.jpg?v=2", fondo: "#efebe4" },
+  { id: "san-martin", nombre: "Monumento San Martín", medida: "500 ml", precio: 4000, foto: "/tienda/vaso-san-martin.jpg?v=2", fondo: "#e4e4e2", contain: true },
+  { id: "confluencia", nombre: "La Confluencia", medida: "500 ml", precio: 4000, foto: "/tienda/vaso-confluencia.jpg?v=2", fondo: "#efebe4" },
 ];
 
 const precio = (valor) => `$${valor.toLocaleString("es-AR")}`;
