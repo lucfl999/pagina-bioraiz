@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useReveal, Counter, SectionHead, Placeholder, LeafShape, CircleShape, CategoriaCard } from '../components/shared.jsx';
 import InstagramReels from '../components/InstagramReels.jsx';
+import ArtistasSection from '../components/ArtistasSection.jsx';
 import { NUMEROS, CATEGORIAS_STANDS, DIA_BLOQUES, SPONSOR_TIERS } from '../data.js';
 import { subscribeNewsletter } from '../services/api.js';
 
@@ -13,8 +14,8 @@ export default function HomePage({ setPage }) {
       <NumbersSection />
       <ExpositoresScroll setPage={setPage} />
       <AgendaPreview setPage={setPage} />
+      <ArtistasSection setPage={setPage} />
       <InstagramReels />
-      <Gallery />
       <SponsorsSection />
       <NewsletterBlock />
     </div>
@@ -246,24 +247,6 @@ function AgendaPreview({ setPage }) {
           .bz-agenda-grid > div:last-child > div { grid-template-columns: 64px 1fr !important; gap: 18px !important; }
         }
       `}</style>
-    </section>
-  );
-}
-
-function Gallery() {
-  return (
-    <section style={{ padding: "120px 0", background: "var(--bz-fondo-alt)" }}>
-      <div className="container">
-        <div style={{ marginBottom: 48 }}>
-          <SectionHead eyebrow="El espacio" title={<>Un predio que <em>respira.</em></>} />
-        </div>
-        <figure className="reveal" style={{ margin: 0 }}>
-          <img src="/foto-evento.png" alt="BIORAIZ · predio del festival al atardecer" style={{ width: "100%", aspectRatio: "1808 / 854", objectFit: "cover", borderRadius: "var(--bz-radius-lg)", display: "block" }} />
-          <figcaption style={{ marginTop: 16, fontFamily: "var(--bz-font-mono)", fontSize: 12, letterSpacing: "0.04em", color: "var(--bz-texto-terciario)" }}>
-            El predio de BIORAIZ al atardecer · Patagonia, nov 2026
-          </figcaption>
-        </figure>
-      </div>
     </section>
   );
 }

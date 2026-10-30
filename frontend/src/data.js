@@ -16,6 +16,7 @@ export const NAV_LINKS = [
   { id: "expositores", label: "Expositores" },
   { id: "programa",    label: "Programa" },
   { id: "actividades", label: "Actividades" },
+  { id: "tienda",      label: "Tienda" },
   { id: "participa",   label: "Participá" },
 ];
 

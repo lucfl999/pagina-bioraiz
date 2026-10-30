@@ -108,7 +108,7 @@ export default function Header({ page, setPage, transparent = false }) {
       )}
 
       <style>{`
-        @media (max-width: 880px) {
+        @media (max-width: 1100px) {
           .bz-nav-desktop { display: none !important; }
           .bz-cta-desktop { display: none !important; }
           .bz-burger { display: flex !important; }
