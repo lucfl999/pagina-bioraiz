@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useReveal, SubPageHeader, CTABanner } from '../components/shared.jsx';
-import { ACTIVIDADES, DIAS } from '../data.js';
+import { ACTIVIDADES, ACTIVIDADES_TODOS_LOS_DIAS, DIAS } from '../data.js';
 
 export default function ProgramaPage({ setPage }) {
   useReveal();
@@ -60,6 +60,11 @@ export default function ProgramaPage({ setPage }) {
             </div>
             <p style={{ flex: 1, minWidth: 280, fontSize: 15, color: "var(--bz-texto-secundario)", lineHeight: 1.6 }}>{enfasis[activeDia]}</p>
           </div>
+
+          <aside aria-label="Actividades todos los días" style={{ marginBottom: 28, padding: "18px 20px", background: "var(--bz-beige-base)", borderRadius: "var(--bz-radius-md)" }}>
+            <div style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--bz-texto-terciario)", marginBottom: 8 }}>Todos los días</div>
+            <p style={{ fontSize: 15, color: "var(--bz-texto-secundario)", lineHeight: 1.6 }}>{ACTIVIDADES_TODOS_LOS_DIAS.join(" · ")}</p>
+          </aside>
 
           <div className="bz-grilla" role="table" aria-label={`Programa ${dia.label}`}>
             <div className="bz-grilla-row bz-grilla-head" role="row">

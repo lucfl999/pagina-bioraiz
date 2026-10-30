@@ -72,25 +72,39 @@ export const DIA_BLOQUES = [
   { num: "8", dia: "Domingo", sub: "Cierre",       tags: ["Charlas", "Oráculo Vivo", "Pilates", "Yoga & stretching", "Biodanza", "Jam", "Música"] },
 ];
 
+export const ACTIVIDADES_TODOS_LOS_DIAS = [
+  "Paseo de emprendedores y productores",
+  "Gastronomía",
+  "Zona drinks",
+  "DJ en vivo",
+];
+
 export const ACTIVIDADES = {
   viernes: [
+    { hora: "16:00", title: "Apertura del festival", lugar: "—", speaker: "—", tipo: "Apertura" },
     { hora: "18:00", title: "Charla", lugar: "Domo", speaker: "Carolina Gastaldi", tipo: "Charla" },
     { hora: "18:30", title: "Charla", lugar: "Escenario principal", speaker: "Romina Cuadrillero", tipo: "Charla" },
     { hora: "19:00", title: "Stretching", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
+    { hora: "20:00", title: "DJ en vivo", lugar: "Escenario El Monte", speaker: "—", tipo: "Música" },
+    { hora: "23:00", title: "Cierre", lugar: "—", speaker: "—", tipo: "Cierre" },
   ],
   sabado: [
+    { hora: "12:00", title: "Apertura del festival", lugar: "—", speaker: "—", tipo: "Apertura" },
     { hora: "15:00", title: "Terapia: Puja de Tameana", lugar: "Domo", speaker: "Nati Keheler", tipo: "Bienestar" },
     { hora: "16:00", title: "Charla", lugar: "Escenario principal", speaker: "Francine Rostan", tipo: "Charla" },
     { hora: "16:00", title: "Yoga", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
     { hora: "16:30 a 17:30", title: "Biodanza", lugar: "Domo", speaker: "Romina Cuadrillero", tipo: "Bienestar" },
     { hora: "17:00", title: "Pilates", lugar: "Aire libre", speaker: "Nati Keheler", tipo: "Bienestar" },
+    { hora: "17:00", title: "DJ en vivo", lugar: "Escenario El Monte", speaker: "—", tipo: "Música" },
     { hora: "18:00", title: "Charla", lugar: "Escenario principal", speaker: "Maya Tobares", tipo: "Charla" },
     { hora: "18:00", title: "Yoga", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
     { hora: "18:15", title: "Terapia de sonido", lugar: "Domo", speaker: "Franco Martínez (Nolugar)", tipo: "Bienestar" },
     { hora: "19:00", title: "Charla", lugar: "Escenario principal", speaker: "Hernán Libkind", tipo: "Charla" },
-    { hora: "20:00", title: "Música: “Flores flores”", lugar: "Escenario principal", speaker: "Florencia Cabaña", tipo: "Música" },
+    { hora: "20:00", title: "Música: “Flores flores”", lugar: "A definir", speaker: "Florencia Cabaña", tipo: "Música" },
+    { hora: "23:00", title: "Cierre", lugar: "—", speaker: "—", tipo: "Cierre" },
   ],
   domingo: [
+    { hora: "12:00", title: "Apertura del festival", lugar: "—", speaker: "—", tipo: "Apertura" },
     { hora: "14:00", title: "Charla", lugar: "Escenario principal", speaker: "Leticia Fattore", tipo: "Charla" },
     { hora: "15:00", title: "Oráculo Vivo (+16 años)", lugar: "Domo", speaker: "Camila Cammarota", tipo: "Bienestar" },
     { hora: "15:00", title: "Pilates", lugar: "Aire libre", speaker: "Nati Keheler", tipo: "Bienestar" },
@@ -98,12 +112,14 @@ export const ACTIVIDADES = {
     { hora: "16:00", title: "Yoga & stretching", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
     { hora: "16:30 a 17:30", title: "Biodanza", lugar: "Domo", speaker: "Romina Cuadrillero", tipo: "Bienestar" },
     { hora: "17:00 a 18:00", title: "Experiencia práctica grupal", lugar: "Aire libre", speaker: "Leticia Fattore", tipo: "Taller" },
+    { hora: "17:00", title: "DJ en vivo", lugar: "Escenario El Monte", speaker: "—", tipo: "Música" },
     { hora: "17:30", title: "Charla", lugar: "Escenario principal", speaker: "Carolina Gastaldi", tipo: "Charla" },
     { hora: "18:00", title: "Yoga & stretching", lugar: "Aire libre", speaker: "Paula", tipo: "Bienestar" },
     { hora: "18:15", title: "Terapia de sonido", lugar: "Domo", speaker: "Franco Martínez (Nolugar)", tipo: "Bienestar" },
     { hora: "18:30", title: "Jam", lugar: "Aire libre", speaker: "Carolina Gastaldi", tipo: "Música" },
     { hora: "20:00", title: "Música", lugar: "Escenario principal", speaker: "María Julia", tipo: "Música" },
     { hora: "21:30 al cierre", title: "Música", lugar: "Escenario principal", speaker: "Magma", tipo: "Música" },
+    { hora: "23:00", title: "Cierre", lugar: "—", speaker: "—", tipo: "Cierre" },
   ],
 };
 
@@ -293,6 +309,7 @@ export const SPONSOR_TIERS = [
       { nombre: "Atlantis", logo: "/sponsors/atlantis.png" },
       { nombre: "Yelmo", logo: "/sponsors/yelmo.png" },
       { nombre: "Eco Town", logo: "/sponsors/ecotown.png", full: true, bg: "#202020" },
+      { nombre: "Río Negro", logo: "/sponsors/rio-negro.png", full: true, bg: "#fff" },
     ],
   },
 ];
