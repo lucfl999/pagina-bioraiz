@@ -21,6 +21,10 @@ export const submitParticipationForm = async (data) => {
   return api.post('/forms/participa', data);
 };
 
+export const submitActivityRegistration = async (data) => {
+  return api.post('/forms/actividades', data);
+};
+
 export const submitPressKitForm = async (data) => {
   return api.post('/forms/press-kit', data);
 };

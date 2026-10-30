@@ -7,9 +7,10 @@ import HomePage from './pages/HomePage';
 import FeriaPage from './pages/FeriaPage';
 import ExpositorPage from './pages/ExpositorPage';
 import ProgramaPage from './pages/ProgramaPage';
+import ActividadesPage from './pages/ActividadesPage';
 import ParticipaPage from './pages/ParticipaPage';
 
-const VALID_PAGES = ["home", "feria", "expositores", "programa", "participa"];
+const VALID_PAGES = ["home", "feria", "expositores", "programa", "actividades", "participa"];
 
 function App() {
   const [page, setPage] = useState(() => {
@@ -36,6 +37,7 @@ function App() {
     feria: FeriaPage,
     expositores: ExpositorPage,
     programa: ProgramaPage,
+    actividades: ActividadesPage,
     participa: ParticipaPage,
   };
 

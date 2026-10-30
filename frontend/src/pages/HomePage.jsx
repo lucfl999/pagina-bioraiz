@@ -334,7 +334,7 @@ function SponsorsSection() {
 
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="reveal" style={{ textAlign: "center", marginBottom: 72 }}>
-          <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 16 }}>Sponsors 2026</div>
+          <div className="eyebrow" style={{ color: "var(--bz-ocre-calido)", marginBottom: 16 }}>Sponsors y aliados 2026</div>
           <h2 className="display" style={{ fontSize: "clamp(30px, 4.5vw, 52px)", color: "var(--bz-beige-hueso)", lineHeight: 1.05 }}>
             Quiénes hacen posible <em style={{ color: "var(--bz-ocre-calido)" }}>este sueño.</em>
           </h2>

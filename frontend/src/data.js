@@ -15,7 +15,39 @@ export const NAV_LINKS = [
   { id: "feria",       label: "La Feria" },
   { id: "expositores", label: "Expositores" },
   { id: "programa",    label: "Programa" },
+  { id: "actividades", label: "Actividades" },
   { id: "participa",   label: "Participá" },
+];
+
+export const ACTIVITIES_SCHEDULE = [
+  {
+    day: "Viernes 6",
+    activities: [
+      { time: "19:00", name: "Yoga & stretching" },
+    ],
+  },
+  {
+    day: "Sábado 7",
+    activities: [
+      { time: "16:00", name: "Yoga & stretching" },
+      { time: "16:30 a 17:30", name: "Biodanza" },
+      { time: "17:00", name: "Pilates" },
+      { time: "18:00", name: "Yoga & stretching" },
+      { time: "18:15", name: "Terapia de sonido" },
+    ],
+  },
+  {
+    day: "Domingo 8",
+    activities: [
+      { time: "15:00", name: "Oráculo Vivo" },
+      { time: "15:00", name: "Pilates" },
+      { time: "16:00", name: "Yoga & stretching" },
+      { time: "16:30 a 17:30", name: "Biodanza" },
+      { time: "17:00", name: "Experiencia práctica grupal" },
+      { time: "18:00", name: "Yoga & stretching" },
+      { time: "18:15", name: "Terapia de sonido" },
+    ],
+  },
 ];
 
 export const ECO_PHRASES = [
@@ -214,6 +246,18 @@ export const SPONSOR_TIERS = [
       { nombre: "Sagrada Madre Incense", logo: "/sponsors/sagrada.png" },
       { nombre: "Deco Klart", logo: "/sponsors/decoklart.png" },
       { nombre: "Liberbox Logística", logo: "/sponsors/liberbox.png", full: true, bg: "#FF8A2B" },
+      { nombre: "EVAS Orgánico", logo: "/sponsors/evas-organico.png" },
+      { nombre: "Vaderr", logo: "/sponsors/vaderr.png", full: true, bg: "#242424" },
+      { nombre: "Milu Diseño", logo: "/sponsors/milu-diseno.png" },
+      { nombre: "Masa Pop", logo: "/sponsors/masa-pop.png" },
+      { nombre: "MAPSA", logo: "/sponsors/mapsa.png" },
+      { nombre: "LEDEVIT", logo: "/sponsors/ledevit.png" },
+      { nombre: "TAO Vivero", logo: "/sponsors/tao-vivero.png" },
+      { nombre: "Kumenia", logo: "/sponsors/kumenia.png" },
+      { nombre: "Kumayka BAIC Neuquén - Río Negro", logo: "/sponsors/kumayka-baic.png" },
+      { nombre: "Atlantis", logo: "/sponsors/atlantis.png" },
+      { nombre: "Yelmo", logo: "/sponsors/yelmo.png" },
+      { nombre: "Eco Town", logo: "/sponsors/ecotown.png", full: true, bg: "#202020" },
     ],
   },
 ];
