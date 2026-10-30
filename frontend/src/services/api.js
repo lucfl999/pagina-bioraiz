@@ -49,4 +49,14 @@ export const createTicketPreference = async (data) => {
   return response;
 };
 
+export const createStorePreference = async (data) => {
+  const { data: response } = await api.post('/store/create-preference', data);
+  return response;
+};
+
+export const getStoreOrderStatus = async (orderCode) => {
+  const { data: response } = await api.get(`/store/orders/${encodeURIComponent(orderCode)}`);
+  return response;
+};
+
 export default api;

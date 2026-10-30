@@ -9,6 +9,7 @@ import subscriberRoutes from './routes/subscribers.js';
 import ticketRoutes from './routes/tickets.js';
 import adminRoutes from './routes/admin.js';
 import instagramRoutes from './routes/instagram.js';
+import storeRoutes from './routes/store.js';
 
 dotenv.config();
 
@@ -66,6 +67,7 @@ app.use('/api/emails', emailRoutes);
 app.use('/api/forms', formRoutes);
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/store', storeRoutes);
 app.use('/api/instagram', instagramRoutes);
 app.use('/admin', adminRoutes);
 
@@ -104,12 +106,35 @@ async function initDB() {
       )
     `);
     console.log('✅ Tabla tickets lista');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS store_orders (
+        id                 SERIAL PRIMARY KEY,
+        order_code         UUID UNIQUE NOT NULL,
+        nombre             VARCHAR(120) NOT NULL,
+        email              VARCHAR(254) NOT NULL,
+        whatsapp           VARCHAR(40) NOT NULL,
+        items              JSONB NOT NULL,
+        subtotal           DECIMAL(12,2) NOT NULL,
+        descuento          DECIMAL(12,2) NOT NULL,
+        total              DECIMAL(12,2) NOT NULL,
+        estado             VARCHAR(24) NOT NULL DEFAULT 'pending',
+        mp_preference_id   VARCHAR(64),
+        mp_payment_id      VARCHAR(64),
+        admin_email_sent   BOOLEAN NOT NULL DEFAULT FALSE,
+        buyer_email_sent   BOOLEAN NOT NULL DEFAULT FALSE,
+        fecha_compra       TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at         TIMESTAMP NOT NULL DEFAULT NOW()
+      )
+    `);
+    await pool.query('CREATE INDEX IF NOT EXISTS store_orders_fecha_compra_idx ON store_orders (fecha_compra DESC)');
+    await pool.query('CREATE INDEX IF NOT EXISTS store_orders_mp_payment_id_idx ON store_orders (mp_payment_id)');
+    console.log('✅ Tabla store_orders lista');
   } catch (err) {
     console.error('Error inicializando DB:', err.message);
   }
 }
 
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, process.env.HOST || '0.0.0.0', () => {
   console.log(`BIORAIZ API running on port ${port}`);
   initDB();
 });

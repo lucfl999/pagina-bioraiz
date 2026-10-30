@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubPageHeader, useReveal } from '../components/shared.jsx';
-import { BZ_DATE, BZ_WHATSAPP_LINK } from '../data.js';
+import { BZ_DATE } from '../data.js';
+import { createStorePreference, getStoreOrderStatus } from '../services/api.js';
 
 const DESCUENTO = 0.15;
 const PRODUCTOS = [
@@ -71,7 +72,53 @@ export default function TiendaPage() {
   useReveal();
   const [cart, setCart] = useState({});
   const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
   const [error, setError] = useState("");
+  const [checkoutState, setCheckoutState] = useState({ kind: "idle", message: "" });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paymentResult = params.get("tienda_pago");
+    const orderCode = params.get("pedido");
+    if (!paymentResult || !orderCode) return undefined;
+
+    let cancelled = false;
+    let timeout;
+    let attempts = 0;
+    setCheckoutState({ kind: "checking", message: "Estamos verificando el estado de tu pago con Mercado Pago…" });
+
+    const checkStatus = async () => {
+      try {
+        const order = await getStoreOrderStatus(orderCode);
+        if (cancelled) return;
+        if (order.estado === "approved") {
+          setCheckoutState({ kind: "approved", message: `¡Pago acreditado! Te enviamos la confirmación al email que ingresaste. Número de pedido: ${order.order_code}.` });
+          return;
+        }
+        if (["rejected", "cancelled", "refunded", "charged_back"].includes(order.estado)) {
+          setCheckoutState({ kind: "failed", message: "El pago no se completó. Podés volver a intentarlo con tu pedido." });
+          return;
+        }
+        if (attempts >= 5) {
+          setCheckoutState({ kind: "pending", message: "Mercado Pago todavía está procesando el pago. No vuelvas a pagar; actualizaremos el pedido cuando llegue la confirmación." });
+          return;
+        }
+        attempts += 1;
+        timeout = window.setTimeout(checkStatus, 1500);
+      } catch {
+        if (!cancelled) {
+          setCheckoutState({ kind: "pending", message: "Volviste de Mercado Pago. Estamos esperando la confirmación del pago; no vuelvas a pagar por ahora." });
+        }
+      }
+    };
+
+    checkStatus();
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
+  }, []);
 
   const setQuantity = (id, quantity) => {
     setCart(current => {
@@ -90,7 +137,7 @@ export default function TiendaPage() {
   const savings = subtotal - total;
   const units = items.reduce((sum, item) => sum + item.quantity, 0);
 
-  const sendOrder = () => {
+  const sendOrder = async () => {
     if (!items.length) {
       setError("Agregá al menos un vaso a tu pedido.");
       return;
@@ -99,23 +146,29 @@ export default function TiendaPage() {
       setError("Escribí tu nombre y apellido.");
       return;
     }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setError("Ingresá un email válido para recibir la confirmación de compra.");
+      return;
+    }
+    if ((whatsapp.match(/\d/g) || []).length < 8) {
+      setError("Ingresá un número de WhatsApp válido para coordinar el retiro.");
+      return;
+    }
 
-    const productLines = items
-      .map(item => `• ${item.quantity} × Vaso ${item.nombre} (${item.medida}) — ${precio(item.quantity * precioWeb(item.precio))}`)
-      .join("\n");
-    const message = [
-      "Hola BIORAIZ! Quiero hacer este pedido de la tienda:",
-      "",
-      productLines,
-      "",
-      `Subtotal: ${precio(subtotal)}`,
-      `Descuento web 15%: −${precio(savings)}`,
-      `Total: ${precio(total)}`,
-      `Nombre: ${nombre.trim()}`,
-      `Entrega: retiro en la feria (${BZ_DATE})`,
-    ].join("\n");
-
-    window.open(`${BZ_WHATSAPP_LINK}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    setError("");
+    setCheckoutState({ kind: "creating", message: "" });
+    try {
+      const { init_point } = await createStorePreference({
+        nombre: nombre.trim(),
+        email: email.trim(),
+        whatsapp: whatsapp.trim(),
+        items: items.map(item => ({ id: item.id, quantity: item.quantity })),
+      });
+      window.location.assign(init_point);
+    } catch (requestError) {
+      setCheckoutState({ kind: "idle", message: "" });
+      setError(requestError.response?.data?.error || "No pudimos iniciar el pago. Intentá nuevamente.");
+    }
   };
 
   return (
@@ -123,7 +176,7 @@ export default function TiendaPage() {
       <SubPageHeader
         eyebrow="Tienda"
         title={<>Colección de vasos.</>}
-        sub="Tres diseños de Neuquén. Vaso de 500 ml. Armá tu pedido, envialo por WhatsApp y retiralo en la feria."
+        sub="Tres diseños de Neuquén. Vaso de 500 ml. Armá tu pedido, pagalo con Mercado Pago y retiralo en la feria."
       />
       <section style={{ padding: "56px 0 96px", background: "var(--bz-fondo-base)" }}>
         <div className="container bz-tienda">
@@ -138,6 +191,16 @@ export default function TiendaPage() {
             ))}
           </div>
           <aside className="bz-tienda-cart" aria-label="Resumen del pedido">
+            {checkoutState.message && (
+              <div role="status" aria-live="polite" style={{
+                padding: 14,
+                borderRadius: "var(--bz-radius-md)",
+                background: checkoutState.kind === "approved" ? "rgba(157,201,159,0.16)" : "rgba(230,203,122,0.14)",
+                color: checkoutState.kind === "approved" ? "var(--bz-verde-claro)" : "var(--bz-ocre-calido)",
+                fontSize: 14,
+                lineHeight: 1.5,
+              }}>{checkoutState.message}</div>
+            )}
             <div style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,240,232,0.6)" }}>Tu pedido</div>
             {items.length === 0
               ? <p style={{ fontSize: 15, color: "rgba(245,240,232,0.7)", lineHeight: 1.5, margin: 0 }}>Todavía no agregaste vasos.</p>
@@ -171,9 +234,31 @@ export default function TiendaPage() {
                 style={{ background: "rgba(245,240,232,0.06)", border: "1px solid rgba(245,240,232,0.25)", borderRadius: "var(--bz-radius-md)", padding: "12px 14px", fontSize: 15, color: "var(--bz-beige-hueso)", fontFamily: "var(--bz-font-body)", outline: "none" }}
               />
             </label>
-            <div style={{ fontSize: 13.5, color: "rgba(245,240,232,0.75)", lineHeight: 1.5 }}>Retiro en la feria · {BZ_DATE}. El pago se coordina por WhatsApp.</div>
+            <label style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,232,0.6)" }}>Email</span>
+              <input
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={event => setEmail(event.target.value)}
+                style={{ background: "rgba(245,240,232,0.06)", border: "1px solid rgba(245,240,232,0.25)", borderRadius: "var(--bz-radius-md)", padding: "12px 14px", fontSize: 15, color: "var(--bz-beige-hueso)", fontFamily: "var(--bz-font-body)", outline: "none" }}
+              />
+            </label>
+            <label style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <span style={{ fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(245,240,232,0.6)" }}>WhatsApp</span>
+              <input
+                type="tel"
+                autoComplete="tel"
+                value={whatsapp}
+                onChange={event => setWhatsapp(event.target.value)}
+                style={{ background: "rgba(245,240,232,0.06)", border: "1px solid rgba(245,240,232,0.25)", borderRadius: "var(--bz-radius-md)", padding: "12px 14px", fontSize: 15, color: "var(--bz-beige-hueso)", fontFamily: "var(--bz-font-body)", outline: "none" }}
+              />
+            </label>
+            <div style={{ fontSize: 13.5, color: "rgba(245,240,232,0.75)", lineHeight: 1.5 }}>Retiro en la feria · {BZ_DATE}. Te enviaremos la confirmación de pago por email y podremos coordinar el retiro por WhatsApp.</div>
             {error && <div role="alert" style={{ fontSize: 13.5, color: "var(--bz-ocre-calido)" }}>{error}</div>}
-            <button type="button" className="btn" onClick={sendOrder} style={{ background: "var(--bz-ocre-calido)", color: "var(--bz-fondo-dark)", justifyContent: "center", width: "100%" }}>Enviar pedido por WhatsApp</button>
+            <button type="button" className="btn" onClick={sendOrder} disabled={checkoutState.kind === "creating"} style={{ background: "var(--bz-ocre-calido)", color: "var(--bz-fondo-dark)", justifyContent: "center", width: "100%", opacity: checkoutState.kind === "creating" ? 0.65 : 1 }}>
+              {checkoutState.kind === "creating" ? "Preparando el pago…" : "Pagar con Mercado Pago"}
+            </button>
           </aside>
         </div>
       </section>

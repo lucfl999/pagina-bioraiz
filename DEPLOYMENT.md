@@ -110,7 +110,20 @@ JWT_SECRET=...
 STRIPE_SECRET_KEY=...
 ADMIN_EMAIL=hola@bioraiz.net
 CORS_ORIGIN=https://bioraiz.net
+MP_ACCESS_TOKEN=...
+API_URL=https://pagina-bioraiz-production.up.railway.app
+FRONTEND_URL=https://bioraiz.net
+STORE_ORDERS_EMAIL=hola@bioraiz.net
 ```
+
+`MP_ACCESS_TOKEN` debe ser el token privado de producción de Mercado Pago y quedarse
+solo en las variables del servicio API de Railway. La tienda crea la tabla
+`store_orders` al iniciar la API, registra los pedidos antes del pago y actualiza
+su estado mediante el webhook `/api/store/webhook`. `STORE_ORDERS_EMAIL` es opcional;
+si no se define, los avisos de pedidos pagados se envían a `hola@bioraiz.net`.
+`MP_TEST_MODE=true` se usa únicamente al ejecutar la API localmente con credenciales
+de prueba: selecciona el enlace de checkout sandbox y desactiva el webhook público.
+No configures esta variable en producción.
 
 #### 2.4 Configurar railway.json
 
