@@ -1,57 +1,65 @@
-import { useState, useEffect } from 'react';
-import './App.css';
-import './styles/main.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import FeriaPage from './pages/FeriaPage';
-import ExpositorPage from './pages/ExpositorPage';
-import ProgramaPage from './pages/ProgramaPage';
-import ActividadesPage from './pages/ActividadesPage';
-import ParticipaPage from './pages/ParticipaPage';
-import TiendaPage from './pages/TiendaPage';
+import { useEffect, useState } from 'react';
+import './navidad/styles.css';
+import {
+  BZ_ACT_DEFINIDAS,
+} from './navidad/data.js';
+import { Footer, Header, NAV_LINKS } from './navidad/components.jsx';
+import PageActividades from './navidad/PageActividades.jsx';
+import PageEdicion1 from './navidad/PageEdicion1.jsx';
+import PageExpositores from './navidad/PageExpositores.jsx';
+import PageHome from './navidad/PageHome.jsx';
+import PageParticipa from './navidad/PageParticipa.jsx';
 
-const VALID_PAGES = ["home", "feria", "expositores", "programa", "actividades", "tienda", "participa"];
+const PAGES = {
+  home: PageHome,
+  actividades: PageActividades,
+  edicion1: PageEdicion1,
+  expositores: PageExpositores,
+  participa: PageParticipa,
+};
+
+const VALID_PAGES = NAV_LINKS.map(link => link.id);
 
 function App() {
   const [page, setPage] = useState(() => {
-    const hash = window.location.hash.replace("#", "");
-    return VALID_PAGES.includes(hash) ? hash : "home";
+    const hash = window.location.hash.slice(1);
+    return VALID_PAGES.includes(hash) ? hash : 'home';
   });
+  const [role, setRole] = useState(null);
+
+  const navigate = (nextPage, nextRole) => {
+    if (!PAGES[nextPage]) return;
+    setPage(nextPage);
+    setRole(nextRole || null);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  };
 
   useEffect(() => {
     window.location.hash = page;
-    window.scrollTo({ top: 0, behavior: "auto" });
   }, [page]);
 
   useEffect(() => {
-    const onHash = () => {
-      const h = window.location.hash.replace("#", "");
-      if (h && h !== page && VALID_PAGES.includes(h)) setPage(h);
+    const onHashChange = () => {
+      const nextPage = window.location.hash.slice(1);
+      if (PAGES[nextPage] && nextPage !== page) {
+        setPage(nextPage);
+        setRole(null);
+      }
     };
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
+
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
   }, [page]);
 
-  const pages = {
-    home: HomePage,
-    feria: FeriaPage,
-    expositores: ExpositorPage,
-    programa: ProgramaPage,
-    actividades: ActividadesPage,
-    tienda: TiendaPage,
-    participa: ParticipaPage,
-  };
-
-  const CurrentPage = pages[page] || HomePage;
+  const CurrentPage = PAGES[page] || PageHome;
 
   return (
     <>
-      <Header page={page} setPage={setPage} transparent={page === "home"} />
+      <Header page={page} setPage={navigate} transparent={page === 'home'} />
       <main key={page}>
-        <CurrentPage setPage={setPage} />
+        <CurrentPage setPage={navigate} initialRole={role} definido={BZ_ACT_DEFINIDAS} />
       </main>
-      <Footer setPage={setPage} />
+      <Footer setPage={navigate} />
     </>
   );
 }
