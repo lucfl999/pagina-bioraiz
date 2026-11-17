@@ -2,6 +2,11 @@ import express from 'express';
 import { sendEmail, sendParticipationConfirmation } from '../services/emailService.js';
 import { sendActivityRegistrationConfirmation } from '../services/activityEmailService.js';
 import { buildAdminHtml } from '../services/htmlBuilder.js';
+import {
+  buildActivitySheetsPayload,
+  buildParticipationSheetsPayload,
+  sendToSheetsWebhook,
+} from '../services/sheetsWebhook.js';
 
 const router = express.Router();
 
@@ -101,6 +106,12 @@ router.post('/actividades', async (req, res) => {
       sendActivityRegistrationConfirmation(registration.email, registration.nombre, registration.actividades),
     ]);
 
+    sendToSheetsWebhook(buildActivitySheetsPayload({
+      ...registration,
+      canal: data.canal,
+      consentimiento: data.consentimiento,
+    }));
+
     return res.json({ success: true });
   } catch (error) {
     console.error('Activity registration email error:', error.message);
@@ -141,7 +152,7 @@ router.post('/participa', async (req, res) => {
     const nombre = data.nombre || data.responsable || data.representante || data.name || 'Participante';
     
     const fields = Object.fromEntries(
-      Object.entries(data).filter(([k]) => k !== 'tipo_participacion' && k !== '_subject')
+      Object.entries(data).filter(([k]) => k !== 'tipo_participacion' && k !== '_subject' && k !== '_field_labels')
     );
 
     // Send email to admin
@@ -150,6 +161,13 @@ router.post('/participa', async (req, res) => {
       `[BIORAIZ] Nueva solicitud — ${tipo}`,
       buildAdminHtml(`Solicitud: ${tipo}`, fields)
     );
+
+    const sheetsPayload = buildParticipationSheetsPayload(data);
+    if (sheetsPayload) {
+      sendToSheetsWebhook(sheetsPayload);
+    } else {
+      console.warn(`Google Sheets webhook skipped: unsupported participation type "${tipo}"`);
+    }
 
     // Send confirmation email to participant (fire-and-forget)
     if (email && nombre) {
