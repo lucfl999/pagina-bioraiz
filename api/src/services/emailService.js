@@ -127,11 +127,11 @@ const PARTICIPATION_CONFIRMATIONS = {
     `,
   },
   facilitadores: {
-    subject: 'Recibimos tu propuesta · BIORAIZ 2026 · Talleres & Experiencias',
+    subject: 'Recibimos tu propuesta · Edición Navideña BIORAIZ',
     replyTo: 'contact@bioraiz.net',
     body: (name) => `
       <p style="margin:0 0 16px;">Hola ${name},</p>
-      <p style="margin:0 0 16px;">Tu propuesta para facilitar un taller o experiencia en BIORAIZ está en nuestras manos. Buscamos facilitadores con propuestas sólidas para "El Sol" — experiencias de 60 a 90 minutos con grupos reales, no contenido de relleno.</p>
+      <p style="margin:0 0 16px;">Recibimos tu propuesta para facilitar una práctica en la Edición Navideña de BIORAIZ.</p>
       <p style="margin:0 0 16px;">Revisamos cada propuesta y nos comunicamos con quienes encajen con la programación. El proceso puede tomar algunas semanas.</p>
       <p style="margin:0 0 16px;">Cualquier consulta, estamos acá.</p>
       <p style="margin:0;">Coordinación de Contenidos · BIORAIZ<br/>contact@bioraiz.net</p>
@@ -195,7 +195,7 @@ export const sendParticipationConfirmation = async (email, participationType, pa
     'gastronómicos': 'gastronomicos',
     'artistas / músicos': 'artistas',
     'speakers': 'speakers',
-    'facilitadores': 'facilitadores',
+    'facilitador/a': 'facilitadores',
     'sponsors / alianzas': 'sponsors',
     'prensa / media': 'prensa',
     // Alternative simple IDs

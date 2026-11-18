@@ -43,6 +43,35 @@ test('uses the public participation message heading', () => {
   assert.equal(payload['¿Algo que quieras contarnos?'], 'Avisame la fecha');
 });
 
+test('maps facilitator applications to their sheet form and visible field labels', () => {
+  const payload = buildParticipationSheetsPayload({
+    tipo_participacion: 'Facilitador/a',
+    rol: 'Facilitador/a',
+    nombre: 'Ana',
+    disciplina: 'Yoga',
+    disciplina_sesion: 'Yoga restaurativo',
+    descripcion: 'Una práctica para principiantes.',
+    duracion_sesion: '60 minutos',
+    nivel: 'Apto para todos',
+    formacion: 'Certificación de yoga',
+    experiencia: '3 a 7 años',
+    requerimientos_especiales: 'Mantas',
+  });
+
+  assert.deepEqual(payload, {
+    formulario: 'facilitador',
+    'Nombre y apellido': 'Ana',
+    Disciplina: 'Yoga',
+    'Tipo de sesión que proponés': 'Yoga restaurativo',
+    'Descripción de la sesión': 'Una práctica para principiantes.',
+    'Duración de la sesión': '60 minutos',
+    'Nivel de la práctica': 'Apto para todos',
+    'Formación y certificaciones': 'Certificación de yoga',
+    'Experiencia facilitando grupos': '3 a 7 años',
+    'Requerimientos especiales': 'Mantas',
+  });
+});
+
 test('maps activity registrations and retains additional fields under their visible labels', () => {
   const payload = buildActivitySheetsPayload({
     nombre: 'Ana',

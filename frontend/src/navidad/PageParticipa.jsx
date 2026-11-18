@@ -4,8 +4,6 @@ import { StarShape, useReveal } from './components.jsx';
 import {
   BZ_DATE,
   BZ_EMAIL,
-  BZ_HORARIO,
-  BZ_LOCATION,
   BZ_WHATSAPP_LABEL,
   BZ_WHATSAPP_LINK,
 } from './data.js';
@@ -17,8 +15,9 @@ const { useState: useStatePart, useEffect: useEffectPart } = React;
 const PART_ROLES = [
   { id: "expositor", label: "Expositor/a", titulo: "Tené tu stand", desc: "Productos con origen para el mercado de regalos navideños.", fields: [["emprendimiento", "Nombre del emprendimiento", true], ["rubro", "Rubro · qué vendés", true], ["instagram", "Instagram o web", true]] },
   { id: "tallerista", label: "Tallerista", titulo: "Proponé una actividad", desc: "Talleres, clases o terapias para grandes y chicos.", fields: [["actividad", "Taller, clase o terapia que proponés", true], ["duracion", "Duración aproximada", true], ["requerimientos", "Qué necesitás (espacio, sonido, materiales)", true]] },
+  { id: "facilitador", label: "Facilitador/a", titulo: "Compartí una práctica", desc: "Yoga, meditación, respiración, movimiento, sonido y otras prácticas de bienestar.", fields: [["disciplina", "Disciplina", true], ["disciplina_sesion", "Tipo de sesión que proponés", true], ["descripcion", "Descripción de la sesión", true, true], ["duracion_sesion", "Duración de la sesión", true], ["nivel", "Nivel de la práctica", true], ["formacion", "Formación y certificaciones", true, true], ["experiencia", "Experiencia facilitando grupos", true], ["requerimientos_especiales", "Requerimientos especiales", false, true]] },
   { id: "sponsor", label: "Sponsor", titulo: "Acompañá la edición", desc: "Marcas que quieran sumarse a la Navidad de BIORAIZ.", fields: [["empresa", "Empresa o marca", true], ["cargo", "Tu cargo", true]] },
-  { id: "voluntario", label: "Voluntario/a", titulo: "Sumate al equipo", desc: "Armado, recepción, puntos verdes y acompañamiento.", fields: [["disponibilidad", "Disponibilidad (días y horarios)", true], ["area", "Área que te interesa", true]] },
+  { id: "voluntario", label: "Voluntario/a", titulo: "Sumate al equipo", desc: "Armado, recepción, puntos verdes y acompañamiento.", fields: [["disponibilidad", "Días en los que podrías colaborar", true], ["area", "Área que te interesa", true]] },
   { id: "publico", label: "Público", titulo: "Avisame la fecha", desc: "Te escribimos cuando confirmemos el día y el programa.", fields: [] },
 ];
 
@@ -87,7 +86,7 @@ function PageParticipa({ setPage, initialRole }) {
 
   return (
     <div className="page-enter">
-      <SubPageHeader eyebrow={`Edición Navideña · ${BZ_DATE} · día a confirmar`} title={<>Participá.</>} sub={`Abrimos la convocatoria para la Edición Navideña: ${BZ_HORARIO} en ${BZ_LOCATION}. Elegí cómo querés sumarte y te contactamos.`} />
+      <SubPageHeader eyebrow={`Edición Navideña · ${BZ_DATE} · día a confirmar`} title={<>Participá.</>} sub="Abrimos la convocatoria para la Edición Navideña. Elegí cómo querés sumarte y te contactamos." />
 
       <section style={{ padding: "72px 0 120px", background: "var(--bz-fondo-base)" }} className="trama">
         <div className="container-narrow">
@@ -141,7 +140,7 @@ function PageParticipa({ setPage, initialRole }) {
                   </div>
                 </div>
               )}
-              {r.fields.map(([n, l, req]) => <PartField key={n} name={n} label={role === "expositor" && n === "rubro" && tipo === "gastronomico" ? "Qué comidas o bebidas ofrecés" : l} required={req} />)}
+              {r.fields.map(([n, l, req, textarea]) => <PartField key={n} name={n} label={role === "expositor" && n === "rubro" && tipo === "gastronomico" ? "Qué comidas o bebidas ofrecés" : l} required={req} textarea={textarea} />)}
               {role === "expositor" && (<>
                 {tipo === "gastronomico" && <>
                   <PartField name="carro_medidas" label="Medidas del carro (largo × ancho × alto, en metros)" required />
