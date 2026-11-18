@@ -6,9 +6,9 @@ import { SPONSOR_TIERS } from '../data.js';
 
 // Edición Navideña (fecha estimada, a confirmar)
 const BZ_DATE = "Diciembre 2026";
-const BZ_DATE_FULL = "Diciembre 2026 · día a confirmar";
-const BZ_HORARIO = "16 a 23 h";
-const BZ_LOCATION = "Isla 132 · Neuquén";
+const BZ_DATE_FULL = "Diciembre 2026";
+const BZ_HORARIO = "A confirmar";
+const BZ_LOCATION = "A confirmar";
 const BZ_NAV_TARGET = "2026-12-19T16:00:00-03:00"; // poner el día real
 const BZ_NAV_CONFIRMADA = false; // en true muestra la cuenta regresiva
 // Edición 1
