@@ -5,8 +5,6 @@ import {
   BZ_DATE,
   BZ_EMAIL,
   BZ_LOCATION,
-  BZ_WHATSAPP_LABEL,
-  BZ_WHATSAPP_LINK,
 } from './data.js';
 import { SubPageHeader } from './PageExpositores.jsx';
 import { submitParticipationForm } from '../services/api.js';
@@ -154,8 +152,12 @@ function PageParticipa({ setPage, initialRole }) {
   const [status, setStatus] = useStatePart("idle");
   const [tipo, setTipo] = useStatePart("feriante");
   const [tipoStand, setTipoStand] = useStatePart("");
-  const [docsWa, setDocsWa] = useStatePart(null);
-  const waDocsLink = (nombre) => BZ_WHATSAPP_LINK + "?text=" + encodeURIComponent("Hola BIORAIZ, soy " + (nombre || "") + " (" + (tipo === "gastronomico" ? "Gastronómico" : "Feriante") + "). Les envío la documentación para la Edición Navideña: " + PART_DOCS[tipo].map(d => d[1]).join(", ") + ".");
+  const [docsEmail, setDocsEmail] = useStatePart(null);
+  const docsEmailLink = (emprendimiento) => {
+    const subject = "Documentacion de " + emprendimiento;
+    const body = "Hola BIORAIZ, adjunto la documentación para la Edición Navideña de " + emprendimiento + " (" + (tipo === "gastronomico" ? "Gastronómico" : "Feriante") + "): " + PART_DOCS[tipo].map(d => d[1]).join(", ") + ".";
+    return "mailto:legales@bioraiz.net?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  };
   useEffectPart(() => { if (initialRole) setRole(initialRole); }, [initialRole]);
   const r = PART_ROLES.find(x => x.id === role);
 
@@ -163,7 +165,7 @@ function PageParticipa({ setPage, initialRole }) {
     ev.preventDefault();
     const form = ev.target;
     const get = (n) => (form.elements[n] && form.elements[n].value || "").trim();
-    setDocsWa(role === "expositor" ? waDocsLink(get("nombre")) : null);
+    setDocsEmail(role === "expositor" ? docsEmailLink(get("emprendimiento")) : null);
     setStatus("sending");
     try {
       const fields = {};
@@ -206,9 +208,9 @@ function PageParticipa({ setPage, initialRole }) {
             <div className="reveal in" style={{ background: "var(--bz-beige-hueso)", border: "0.5px solid var(--bz-borde-ligero)", borderRadius: "var(--bz-radius-xl)", padding: "56px 40px", textAlign: "center" }}>
               <StarShape size={36} color="var(--bz-navidad-rojo)" style={{ margin: "0 auto 18px" }} />
               <h3 className="display" style={{ fontSize: "clamp(28px, 4vw, 40px)", marginBottom: 12 }}>¡Gracias! Ya estás en la lista.</h3>
-              <p style={{ color: "var(--bz-texto-secundario)", maxWidth: 460, margin: "0 auto 28px" }}>{docsWa ? <>Último paso: mandanos la documentación por WhatsApp al {BZ_WHATSAPP_LABEL}. Sin ella no podemos confirmar tu puesto.</> : "Te escribimos por WhatsApp o email apenas confirmemos la fecha de la Edición Navideña."}</p>
+              <p style={{ color: "var(--bz-texto-secundario)", maxWidth: 460, margin: "0 auto 28px" }}>{docsEmail ? <>Último paso: enviá la documentación por email a legales@bioraiz.net. Sin ella no podemos confirmar tu puesto.</> : "Te escribimos por WhatsApp o email apenas confirmemos la fecha de la Edición Navideña."}</p>
               <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-                {docsWa && <a href={docsWa} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Enviar documentación por WhatsApp</a>}
+                {docsEmail && <a href={docsEmail} className="btn btn-primary">Enviar documentación por email</a>}
                 <button className="btn btn-secondary" onClick={() => setStatus("idle")}>Enviar otra inscripción</button>
               </div>
             </div>
@@ -323,7 +325,7 @@ function PageParticipa({ setPage, initialRole }) {
                 <div style={{ borderTop: "0.5px solid var(--bz-borde-ligero)", paddingTop: 22, display: "flex", flexDirection: "column", gap: 18 }}>
                   <div>
                     <div className="eyebrow eyebrow-tierra" style={{ marginBottom: 6 }}>Documentación</div>
-                    <p style={{ fontSize: 14, color: "var(--bz-texto-secundario)" }}>{tipo === "gastronomico" ? "Obligatoria para puestos gastronómicos." : "Obligatoria para feriantes."} Después de enviar el formulario, mandala por WhatsApp al <a href={BZ_WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{ color: "var(--bz-verde-profundo)", fontWeight: 600 }}>{BZ_WHATSAPP_LABEL}</a> (foto legible o PDF).</p>
+                    <p style={{ fontSize: 14, color: "var(--bz-texto-secundario)" }}>{tipo === "gastronomico" ? "Obligatoria para puestos gastronómicos." : "Obligatoria para feriantes."} Después de enviar el formulario, mandala por email a <a href="mailto:legales@bioraiz.net" style={{ color: "var(--bz-verde-profundo)", fontWeight: 600 }}>legales@bioraiz.net</a> (foto legible o PDF). En el asunto indicá: Documentacion de [nombre del emprendimiento].</p>
                   </div>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: "10px 24px" }}>
                     {PART_DOCS[tipo].map(([n, l, multi, hint]) => <li key={n} style={{ display: "flex", gap: 10, alignItems: "baseline", fontSize: 15, gridColumn: multi ? "1 / -1" : undefined }}><StarShape size={10} color="var(--bz-navidad-rojo)" style={{ flexShrink: 0 }} /><span>{l}{hint && <span style={{ display: "block", fontSize: 12, color: "var(--bz-texto-terciario)", marginTop: 2 }}>{hint.replace(" Podés subir varios archivos.", "")}</span>}</span></li>)}
