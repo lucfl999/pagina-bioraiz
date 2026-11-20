@@ -45,7 +45,7 @@ test('maps feriante stand selection and staffing fields to their visible labels'
     nombre: 'Ana',
     emprendimiento: 'La Huerta',
     rubro: 'Productos orgánicos',
-    tipo_stand: 'Stand 3x3 · $800.000',
+    tipo_stand: 'Stand 3x3',
     personas_stand: '3',
   });
 
@@ -54,7 +54,7 @@ test('maps feriante stand selection and staffing fields to their visible labels'
     'Nombre y apellido': 'Ana',
     'Nombre del emprendimiento': 'La Huerta',
     'Rubro · qué vendés': 'Productos orgánicos',
-    'Tipo de stand': 'Stand 3x3 · $800.000',
+    'Tipo de stand': 'Stand 3x3',
     '¿Cuántas personas atienden el stand?': '3',
   });
 });
@@ -65,10 +65,60 @@ test('uses the public participation message heading', () => {
     rol: 'Público',
     nombre: 'Ana',
     mensaje: 'Avisame la fecha',
+    canal: 'Instagram',
+    consentimiento_datos: 'Sí',
   });
 
   assert.equal(payload.formulario, 'publico');
   assert.equal(payload['¿Algo que quieras contarnos?'], 'Avisame la fecha');
+  assert.equal(payload['¿Cómo te enteraste?'], 'Instagram');
+  assert.equal(payload['Acepto que BIORAIZ use mis datos para contactarme por esta convocatoria.'], 'Sí');
+});
+
+test('maps workshop audience, schedule, capacity and contact fields', () => {
+  const payload = buildParticipationSheetsPayload({
+    tipo_participacion: 'Tallerista',
+    rol: 'Tallerista',
+    publico_objetivo: 'Todo público',
+    edad_minima: '8',
+    cupo_maximo: '20',
+    dias_disponibles: 'Sábado 12, Domingo 13',
+    franja_horaria: '17 a 19 h',
+    instagram: '@taller',
+    consentimiento_datos: 'Sí',
+  });
+
+  assert.deepEqual(payload, {
+    formulario: 'tallerista',
+    '¿Para quién es?': 'Todo público',
+    'Edad mínima': '8',
+    'Cupo máximo de personas': '20',
+    '¿Qué día podés?': 'Sábado 12, Domingo 13',
+    'Franja horaria preferida': '17 a 19 h',
+    'Instagram o web': '@taller',
+    'Acepto que BIORAIZ use mis datos para contactarme por esta convocatoria.': 'Sí',
+  });
+});
+
+test('maps volunteer availability, shirt size and age confirmation', () => {
+  const payload = buildParticipationSheetsPayload({
+    tipo_participacion: 'Voluntario/a',
+    rol: 'Voluntario/a',
+    disponibilidad: 'Armado, Domingo 13',
+    area: 'Puntos verdes',
+    talle_remera: 'M',
+    mayor_18: 'Sí',
+    consentimiento_datos: 'Sí',
+  });
+
+  assert.deepEqual(payload, {
+    formulario: 'voluntario',
+    '¿Qué días podés?': 'Armado, Domingo 13',
+    'Área que te interesa': 'Puntos verdes',
+    'Talle de remera': 'M',
+    'Soy mayor de 18 años': 'Sí',
+    'Acepto que BIORAIZ use mis datos para contactarme por esta convocatoria.': 'Sí',
+  });
 });
 
 test('maps facilitator applications to their sheet form and visible field labels', () => {
@@ -83,7 +133,12 @@ test('maps facilitator applications to their sheet form and visible field labels
     nivel: 'Apto para todos',
     formacion: 'Certificación de yoga',
     experiencia: '3 a 7 años',
-    requerimientos_especiales: 'Mantas',
+    requerimientos_especiales: 'Mats, sonido, sombra',
+    dias_disponibles: 'Sábado 12',
+    franja_horaria: '16 a 18 h',
+    cupo_maximo: '15',
+    instagram: '@facilitadora',
+    consentimiento_datos: 'Sí',
   });
 
   assert.deepEqual(payload, {
@@ -96,7 +151,12 @@ test('maps facilitator applications to their sheet form and visible field labels
     'Nivel de la práctica': 'Apto para todos',
     'Formación y certificaciones': 'Certificación de yoga',
     'Experiencia facilitando grupos': '3 a 7 años',
-    'Requerimientos especiales': 'Mantas',
+    '¿Qué día podés?': 'Sábado 12',
+    'Franja horaria preferida': '16 a 18 h',
+    'Cupo máximo de personas': '15',
+    '¿Qué traés y qué necesitás de la organización?': 'Mats, sonido, sombra',
+    'Instagram o web': '@facilitadora',
+    'Acepto que BIORAIZ use mis datos para contactarme por esta convocatoria.': 'Sí',
   });
 });
 

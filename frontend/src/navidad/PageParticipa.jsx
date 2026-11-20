@@ -16,21 +16,21 @@ const { useState: useStatePart, useEffect: useEffectPart } = React;
 const PART_ROLES = [
   { id: "expositor", label: "Expositor/a", titulo: "Tené tu stand", desc: "Productos con origen para el mercado de regalos navideños.", fields: [["emprendimiento", "Nombre del emprendimiento", true], ["rubro", "Rubro · qué vendés", true], ["instagram", "Instagram o web", true]] },
   { id: "tallerista", label: "Tallerista", titulo: "Proponé una actividad", desc: "Talleres, clases o terapias para grandes y chicos.", fields: [["actividad", "Taller, clase o terapia que proponés", true], ["duracion", "Duración aproximada", true], ["requerimientos", "Qué necesitás (espacio, sonido, materiales)", true]] },
-  { id: "facilitador", label: "Facilitador/a", titulo: "Compartí una práctica", desc: "Yoga, meditación, respiración, movimiento, sonido y otras prácticas de bienestar.", fields: [["disciplina", "Disciplina", true], ["disciplina_sesion", "Tipo de sesión que proponés", true], ["descripcion", "Descripción de la sesión", true, true], ["duracion_sesion", "Duración de la sesión", true], ["nivel", "Nivel de la práctica", true], ["formacion", "Formación y certificaciones", true, true], ["experiencia", "Experiencia facilitando grupos", true], ["requerimientos_especiales", "Requerimientos especiales", false, true]] },
+  { id: "facilitador", label: "Facilitador/a", titulo: "Compartí una práctica", desc: "Yoga, meditación, respiración, movimiento, sonido y otras prácticas de bienestar.", fields: [["disciplina", "Disciplina", true], ["disciplina_sesion", "Tipo de sesión que proponés", true], ["descripcion", "Descripción de la sesión", true, true], ["duracion_sesion", "Duración de la sesión", true], ["nivel", "Nivel de la práctica", true], ["formacion", "Formación y certificaciones", true, true], ["experiencia", "Experiencia facilitando grupos", true], ["requerimientos_especiales", "¿Qué traés y qué necesitás de la organización?", false, true]] },
   { id: "sponsor", label: "Sponsor", titulo: "Acompañá la edición", desc: "Marcas que quieran sumarse a la Navidad de BIORAIZ.", fields: [["empresa", "Empresa o marca", true], ["cargo", "Tu cargo", true]] },
-  { id: "voluntario", label: "Voluntario/a", titulo: "Sumate al equipo", desc: "Armado, recepción, puntos verdes y acompañamiento.", fields: [["disponibilidad", "Días en los que podrías colaborar", true], ["area", "Área que te interesa", true]] },
-  { id: "publico", label: "Público", titulo: "Avisame la fecha", desc: "Te escribimos cuando confirmemos el día y el programa.", fields: [] },
+  { id: "voluntario", label: "Voluntario/a", titulo: "Sumate al equipo", desc: "Armado, recepción, puntos verdes y acompañamiento.", fields: [["disponibilidad", "¿Qué días podés?", true], ["area", "Área que te interesa", true]] },
+  { id: "publico", label: "Público", titulo: "Avisame la fecha", desc: "Te avisamos cuando esté el programa completo.", fields: [["canal", "¿Cómo te enteraste?", false]] },
 ];
 
 const partLabel = { display: "block", fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--bz-texto-secundario)", marginBottom: 8 };
 const partInput = { width: "100%", padding: "13px 16px", fontSize: 15, fontFamily: "var(--bz-font-body)", border: "1px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-md)", background: "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", outline: "none" };
 
-function PartField({ name, label, required, type = "text", textarea, hint, min, step }) {
+function PartField({ name, label, required, type = "text", textarea, hint, min, step, placeholder }) {
   const Tag = textarea ? "textarea" : "input";
   return (
     <div>
       <label style={partLabel} htmlFor={"p-" + name}>{label}{required && <span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span>}</label>
-      <Tag id={"p-" + name} name={name} type={textarea ? undefined : type} required={required} min={min} step={step} rows={textarea ? 4 : undefined} className="part-input" style={{ ...partInput, resize: textarea ? "vertical" : undefined }} />
+      <Tag id={"p-" + name} name={name} type={textarea ? undefined : type} required={required} min={min} step={step} placeholder={placeholder} rows={textarea ? 4 : undefined} className="part-input" style={{ ...partInput, resize: textarea ? "vertical" : undefined }} />
       {hint && <p style={{ fontSize: 12, color: "var(--bz-texto-terciario)", marginTop: 6 }}>{hint}</p>}
     </div>
   );
@@ -47,7 +47,6 @@ function PartCards({ name, label, options, value, onChange, hint }) {
             <label key={option.value} className="part-card" style={{ position: "relative", textAlign: "left", padding: "12px 14px", borderRadius: "var(--bz-radius-md)", border: selected ? "1.5px solid var(--bz-navidad-rojo)" : "1px solid var(--bz-borde-suave)", background: selected ? "color-mix(in oklch, var(--bz-navidad-rojo) 8%, var(--bz-beige-hueso))" : "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", display: "flex", flexDirection: "column", gap: 2, cursor: "pointer" }}>
               <input type="radio" name={name} value={option.value} required checked={selected} onChange={() => onChange(option.value)} style={{ position: "absolute", width: 1, height: 1, opacity: 0 }} />
               <span style={{ fontFamily: "var(--bz-font-display)", fontSize: 17 }}>{option.title}</span>
-              <span style={{ fontSize: 12, color: "var(--bz-texto-secundario)" }}>{option.price}</span>
             </label>
           );
         })}
@@ -57,7 +56,7 @@ function PartCards({ name, label, options, value, onChange, hint }) {
   );
 }
 
-function PartSelect({ name, label, required, options }) {
+function PartSelect({ name, label, required, options, hint }) {
   return (
     <div>
       <label style={partLabel} htmlFor={"p-" + name}>{label}{required && <span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span>}</label>
@@ -65,6 +64,7 @@ function PartSelect({ name, label, required, options }) {
         <option value="" disabled>Seleccioná una opción</option>
         {options.map(option => <option key={option} value={option}>{option}</option>)}
       </select>
+      {hint && <p style={{ fontSize: 12, color: "var(--bz-texto-terciario)", marginTop: 6 }}>{hint}</p>}
     </div>
   );
 }
@@ -84,6 +84,46 @@ function PartCheckbox({ name, label, required }) {
       <input id={"p-" + name} name={name} type="checkbox" value="Sí" required={required} style={{ width: 18, height: 18, marginTop: 2, accentColor: "var(--bz-verde-profundo)", flexShrink: 0 }} />
       <span>{label}{required && <span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span>}</span>
     </label>
+  );
+}
+
+function PartCheckboxGroup({ name, label, options }) {
+  const [selected, setSelected] = useStatePart([]);
+  const firstOption = React.useRef(null);
+
+  useEffectPart(() => {
+    firstOption.current?.setCustomValidity(selected.length ? "" : "Seleccioná al menos una opción.");
+  }, [selected]);
+
+  return (
+    <fieldset style={{ border: 0, padding: 0, margin: 0 }}>
+      <legend style={partLabel}>{label}<span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span></legend>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap: 10 }}>
+        {options.map((option, index) => {
+          const checked = selected.includes(option);
+          return (
+            <label key={option} className="part-checkbox-option" style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", borderRadius: "var(--bz-radius-md)", border: checked ? "1.5px solid var(--bz-verde-profundo)" : "1px solid var(--bz-borde-suave)", background: checked ? "var(--bz-verde-pasto)" : "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", fontSize: 14, cursor: "pointer" }}>
+              <input
+                ref={index === 0 ? firstOption : undefined}
+                type="checkbox"
+                name={name}
+                value={option}
+                checked={checked}
+                onChange={(event) => {
+                  const next = event.target.checked
+                    ? [...selected, option]
+                    : selected.filter(item => item !== option);
+                  firstOption.current?.setCustomValidity(next.length ? "" : "Seleccioná al menos una opción.");
+                  setSelected(next);
+                }}
+                style={{ width: 18, height: 18, accentColor: "var(--bz-verde-profundo)", flexShrink: 0 }}
+              />
+              <span>{option}</span>
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
   );
 }
 
@@ -126,10 +166,13 @@ function PageParticipa({ setPage, initialRole }) {
     setDocsWa(role === "expositor" ? waDocsLink(get("nombre")) : null);
     setStatus("sending");
     try {
-      const data = { tipo_participacion: r.label, rol: role };
+      const fields = {};
       for (const [name, value] of new FormData(form).entries()) {
-        if (typeof value === "string" && value.trim()) data[name] = value.trim();
+        if (typeof value === "string" && value.trim()) {
+          fields[name] = fields[name] ? `${fields[name]}, ${value.trim()}` : value.trim();
+        }
       }
+      const data = { tipo_participacion: r.label, rol: role, ...fields };
       await submitParticipationForm(data);
       setStatus("sent");
     } catch (error) {
@@ -199,13 +242,44 @@ function PageParticipa({ setPage, initialRole }) {
                   {role === "expositor" && tipo === "gastronomico" && n === "rubro" && (
                     <PartSelect name="tipo_puesto_gastronomico" label="Tipo de puesto gastronómico" required options={["Comida", "Bebidas", "Comida y bebidas"]} />
                   )}
-                  <PartField
-                    name={n}
-                    label={role === "expositor" && n === "rubro" && tipo === "gastronomico" ? "Tu menú" : l}
-                    required={req}
-                    textarea={textarea}
-                    hint={role === "expositor" && n === "rubro" && tipo === "gastronomico" ? "Hasta 3 productos de comida. La organización aprueba el menú para que el patio tenga variedad." : undefined}
-                  />
+                  {role === "facilitador" && n === "requerimientos_especiales" && (
+                    <>
+                      <PartCheckboxGroup name="dias_disponibles" label="¿Qué día podés?" options={["Sábado 12", "Domingo 13"]} />
+                      <PartField name="franja_horaria" label="Franja horaria preferida" hint="Horario del evento: 16 a 23 h." />
+                      <PartField name="cupo_maximo" label="Cupo máximo de personas" type="number" min="1" step="1" required />
+                    </>
+                  )}
+                  {role === "voluntario" && n === "disponibilidad" ? (
+                    <PartCheckboxGroup name="disponibilidad" label="¿Qué días podés?" options={["Armado", "Sábado 12", "Domingo 13", "Desarme"]} />
+                  ) : role === "voluntario" && n === "area" ? (
+                    <PartSelect name="area" label={l} required options={["Armado", "Recepción", "Puntos verdes", "Acompañamiento", "Donde se necesite"]} />
+                  ) : role === "publico" && n === "canal" ? (
+                    <PartSelect name="canal" label={l} options={["Instagram", "Amigos", "Edición anterior", "Otro"]} />
+                  ) : (
+                    <PartField
+                      name={n}
+                      label={role === "expositor" && n === "rubro" && tipo === "gastronomico"
+                        ? "Tu menú"
+                        : l}
+                      required={req}
+                      textarea={textarea}
+                      hint={role === "expositor" && n === "rubro" && tipo === "gastronomico"
+                        ? "Hasta 3 productos de comida. La organización aprueba el menú para que el patio tenga variedad."
+                        : role === "facilitador" && n === "requerimientos_especiales"
+                          ? "Ej.: mats, sonido, sombra."
+                          : undefined}
+                    />
+                  )}
+                  {role === "tallerista" && n === "requerimientos" && (
+                    <>
+                      <PartSelect name="publico_objetivo" label="¿Para quién es?" required options={["Chicos", "Adultos", "Todo público"]} />
+                      <PartField name="edad_minima" label="Edad mínima" type="number" min="0" step="1" />
+                      <PartField name="cupo_maximo" label="Cupo máximo de personas" type="number" min="1" step="1" required />
+                      <PartCheckboxGroup name="dias_disponibles" label="¿Qué día podés?" options={["Sábado 12", "Domingo 13"]} />
+                      <PartField name="franja_horaria" label="Franja horaria preferida" hint="Horario del evento: 16 a 23 h." />
+                      <PartField name="instagram" label="Instagram o web" required />
+                    </>
+                  )}
                   {role === "expositor" && tipo === "feriante" && n === "rubro" && (
                     <>
                       <PartCards
@@ -214,14 +288,23 @@ function PageParticipa({ setPage, initialRole }) {
                         value={tipoStand}
                         onChange={setTipoStand}
                         options={[
-                          { title: "Stand 3x3", price: "$800.000", value: "Stand 3x3 · $800.000" },
-                          { title: "Stand 3x3 destacado", price: "$950.000", value: "Stand 3x3 destacado · $950.000" },
-                          { title: "Stand 1,5x3", price: "$450.000", value: "Stand 1,5x3 · $450.000" },
-                          { title: "Stand 1,5x3 destacado", price: "$600.000", value: "Stand 1,5x3 destacado · $600.000" },
+                          { title: "Stand 3x3", value: "Stand 3x3" },
+                          { title: "Stand 3x3 destacado", value: "Stand 3x3 destacado" },
+                          { title: "Stand 1,5x3", value: "Stand 1,5x3" },
+                          { title: "Stand 1,5x3 destacado", value: "Stand 1,5x3 destacado" },
                         ]}
                         hint="Valores por ambos días. La ubicación final se elige según el mapa del predio, segun disponibilidad."
                       />
                       <PartField name="personas_stand" label="¿Cuántas personas atienden el stand?" type="number" min="1" step="1" required />
+                    </>
+                  )}
+                  {role === "facilitador" && n === "requerimientos_especiales" && (
+                    <PartField name="instagram" label="Instagram o web" required />
+                  )}
+                  {role === "voluntario" && n === "area" && (
+                    <>
+                      <PartSelect name="talle_remera" label="Talle de remera" required options={["S", "M", "L", "XL", "XXL"]} />
+                      <PartCheckbox name="mayor_18" label="Soy mayor de 18 años" required />
                     </>
                   )}
                 </React.Fragment>
@@ -251,6 +334,7 @@ function PageParticipa({ setPage, initialRole }) {
               {role === "expositor" && tipo === "gastronomico" && (
                 <PartCheckbox name="aceptacion_condiciones" label="Leí y acepto las condiciones de vasos, vajilla y menú del evento." required />
               )}
+              <PartCheckbox name="consentimiento_datos" label="Acepto que BIORAIZ use mis datos para contactarme por esta convocatoria." required />
               {role === "expositor" && tipo === "feriante" && (
                 <p style={{ background: "var(--bz-fondo-base)", border: "1px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-md)", padding: "14px 16px", fontSize: 14, color: "var(--bz-texto-secundario)" }}>
                   Si tu inscripción queda confirmada, te enviamos el reglamento y los datos para pagar la seña del 50%.
