@@ -43,7 +43,7 @@ function NavHero({ setPage }) {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 24, animation: "bz-fade-up 800ms var(--bz-ease) both" }}>
               <span className="tag tag-navidad" style={{ fontFamily: "var(--bz-font-mono)", textTransform: "uppercase", letterSpacing: "0.14em" }}>Edición Navideña</span>
-              <span className="eyebrow" style={{ color: "var(--bz-ocre-calido)" }}>Diciembre 2026</span>
+              <span className="eyebrow" style={{ color: "var(--bz-ocre-calido)" }}>{BZ_DATE}</span>
             </div>
             <h1 className="display" style={{ fontSize: "clamp(56px, 11vw, 168px)", color: "var(--bz-beige-hueso)", lineHeight: 0.92, letterSpacing: "-0.02em", marginBottom: 28, animation: "bz-fade-up 1000ms var(--bz-ease) 100ms both" }}>
               BIO<em style={{ color: "var(--bz-ocre-calido)" }}>RAIZ</em>

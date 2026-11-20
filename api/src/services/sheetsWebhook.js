@@ -11,6 +11,11 @@ const FIELD_LABELS = {
   correo: 'Email',
   emprendimiento: 'Nombre del emprendimiento',
   rubro: 'Rubro · qué vendés',
+  tipostand: 'Tipo de stand',
+  personasstand: '¿Cuántas personas atienden el stand?',
+  tipopuestogastronomico: 'Tipo de puesto gastronómico',
+  cafebebidascalientes: '¿Vendés café o bebidas calientes?',
+  aceptacioncondiciones: 'Leí y acepto las condiciones de vasos, vajilla y menú del evento.',
   instagram: 'Instagram o web',
   electricidad: '¿Qué elementos usan electricidad?',
   carromedidas: 'Medidas del carro (largo × ancho × alto, en metros)',
@@ -72,7 +77,7 @@ const getFields = (data, formulario) => {
 
     const label = labels[key]
       || (formulario === 'gastronomico' && normalizedKey === 'rubro'
-        ? 'Qué comidas o bebidas ofrecés'
+        ? 'Tu menú'
         : FIELD_LABELS[normalizedKey] || key);
     if (normalizedKey === 'mensaje' && formulario === 'publico') {
       fields['¿Algo que quieras contarnos?'] = value;

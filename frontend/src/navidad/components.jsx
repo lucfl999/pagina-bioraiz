@@ -3,12 +3,11 @@
 // ─── BIORAIZ — Shared Components & Hooks ──────────────────────────
 import * as React from 'react';
 import {
-  BZ_DATE_FULL,
+  BZ_DATE_SHORT,
   BZ_EMAIL,
   BZ_FACEBOOK,
   BZ_HORARIO,
   BZ_INSTAGRAM,
-  BZ_LOCATION,
   BZ_NAV_CONFIRMADA,
   BZ_NAV_TARGET,
   BZ_WHATSAPP_LABEL,
@@ -257,7 +256,7 @@ function Footer({ setPage }) {
               Donde la tierra<br />florece y la comunidad crece.
             </p>
             <p style={{ marginTop: 24, fontSize: 13, color: "rgba(242, 239, 230, 0.65)", lineHeight: 1.7 }}>
-              Edición Navideña<br />{BZ_DATE_FULL}<br />{BZ_HORARIO} · {BZ_LOCATION}
+              Edición Navideña<br />{BZ_DATE_SHORT} · {BZ_HORARIO}
             </p>
           </div>
 

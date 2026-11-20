@@ -17,6 +17,9 @@ test('maps gastronomic applications to exact sheet headings and omits control fi
     email: 'ana@example.com',
     emprendimiento: 'La Huerta',
     rubro: 'Comidas',
+    tipo_puesto_gastronomico: 'Comida y bebidas',
+    cafe_bebidas_calientes: 'Sí',
+    aceptacion_condiciones: 'Sí',
     carro_medidas: '2 × 1 × 2',
   });
 
@@ -26,8 +29,33 @@ test('maps gastronomic applications to exact sheet headings and omits control fi
     WhatsApp: '2991234567',
     Email: 'ana@example.com',
     'Nombre del emprendimiento': 'La Huerta',
-    'Qué comidas o bebidas ofrecés': 'Comidas',
+    'Tu menú': 'Comidas',
+    'Tipo de puesto gastronómico': 'Comida y bebidas',
+    '¿Vendés café o bebidas calientes?': 'Sí',
+    'Leí y acepto las condiciones de vasos, vajilla y menú del evento.': 'Sí',
     'Medidas del carro (largo × ancho × alto, en metros)': '2 × 1 × 2',
+  });
+});
+
+test('maps feriante stand selection and staffing fields to their visible labels', () => {
+  const payload = buildParticipationSheetsPayload({
+    tipo_participacion: 'Expositor/a',
+    rol: 'Expositor/a',
+    tipo: 'feriante',
+    nombre: 'Ana',
+    emprendimiento: 'La Huerta',
+    rubro: 'Productos orgánicos',
+    tipo_stand: 'Stand 3x3 · $800.000',
+    personas_stand: '3',
+  });
+
+  assert.deepEqual(payload, {
+    formulario: 'feriante',
+    'Nombre y apellido': 'Ana',
+    'Nombre del emprendimiento': 'La Huerta',
+    'Rubro · qué vendés': 'Productos orgánicos',
+    'Tipo de stand': 'Stand 3x3 · $800.000',
+    '¿Cuántas personas atienden el stand?': '3',
   });
 });
 

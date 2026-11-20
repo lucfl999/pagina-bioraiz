@@ -4,12 +4,13 @@ import { SPONSOR_TIERS } from '../data.js';
 // ─── BIORAIZ — Data ───────────────────────────────────────────────
 // Expositores, agenda, speakers, FAQ, prensa. Todo ficticio coherente.
 
-// Edición Navideña (fecha estimada, a confirmar)
-const BZ_DATE = "Diciembre 2026";
-const BZ_DATE_FULL = "Diciembre 2026";
-const BZ_HORARIO = "A confirmar";
-const BZ_LOCATION = "A confirmar";
-const BZ_NAV_TARGET = "2026-12-19T16:00:00-03:00"; // poner el día real
+// Edición Navideña
+const BZ_DATE = "12 y 13 de diciembre 2026";
+const BZ_DATE_FULL = "12 y 13 de diciembre 2026";
+const BZ_DATE_SHORT = "12 y 13 de diciembre";
+const BZ_HORARIO = "16 a 23 h";
+const BZ_LOCATION = "Isla 132, Neuquén";
+const BZ_NAV_TARGET = "2026-12-12T16:00:00-03:00";
 const BZ_NAV_CONFIRMADA = false; // en true muestra la cuenta regresiva
 // Edición 1
 const BZ_ED1_FECHA = "6, 7 y 8 de noviembre, 2026";
@@ -267,7 +268,7 @@ const ARTISTAS = [
 ];
 
 export {
-  BZ_DATE, BZ_DATE_FULL, BZ_LOCATION, BZ_HORARIO, BZ_NAV_TARGET, BZ_NAV_CONFIRMADA, BZ_ED1_FECHA, BZ_ED1_ASISTENTES, BZ_ED1_EXPOSITORES, BZ_ED1_GASTRO, BZ_HERO_VIDEO, BZ_HERO_POSTER, ED1_FOTOS, BZ_ACT_DEFINIDAS, ACT_TIPOS, NAV_ACTIVIDADES,
+  BZ_DATE, BZ_DATE_FULL, BZ_DATE_SHORT, BZ_LOCATION, BZ_HORARIO, BZ_NAV_TARGET, BZ_NAV_CONFIRMADA, BZ_ED1_FECHA, BZ_ED1_ASISTENTES, BZ_ED1_EXPOSITORES, BZ_ED1_GASTRO, BZ_HERO_VIDEO, BZ_HERO_POSTER, ED1_FOTOS, BZ_ACT_DEFINIDAS, ACT_TIPOS, NAV_ACTIVIDADES,
   BZ_EMAIL, BZ_WHATSAPP_LABEL, BZ_WHATSAPP_LINK, BZ_INSTAGRAM, BZ_FACEBOOK,
   CATEGORIES, EXPOSITORES, DIA_BLOQUES, TIPOS_ACTIVIDAD, ZONAS,
   DIAS, ACTIVIDADES, SPEAKERS, ARTISTAS,

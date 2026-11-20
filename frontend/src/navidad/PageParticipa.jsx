@@ -4,6 +4,7 @@ import { StarShape, useReveal } from './components.jsx';
 import {
   BZ_DATE,
   BZ_EMAIL,
+  BZ_LOCATION,
   BZ_WHATSAPP_LABEL,
   BZ_WHATSAPP_LINK,
 } from './data.js';
@@ -24,13 +25,65 @@ const PART_ROLES = [
 const partLabel = { display: "block", fontFamily: "var(--bz-font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--bz-texto-secundario)", marginBottom: 8 };
 const partInput = { width: "100%", padding: "13px 16px", fontSize: 15, fontFamily: "var(--bz-font-body)", border: "1px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-md)", background: "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", outline: "none" };
 
-function PartField({ name, label, required, type = "text", textarea }) {
+function PartField({ name, label, required, type = "text", textarea, hint, min, step }) {
   const Tag = textarea ? "textarea" : "input";
   return (
     <div>
       <label style={partLabel} htmlFor={"p-" + name}>{label}{required && <span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span>}</label>
-      <Tag id={"p-" + name} name={name} type={textarea ? undefined : type} required={required} rows={textarea ? 4 : undefined} className="part-input" style={{ ...partInput, resize: textarea ? "vertical" : undefined }} />
+      <Tag id={"p-" + name} name={name} type={textarea ? undefined : type} required={required} min={min} step={step} rows={textarea ? 4 : undefined} className="part-input" style={{ ...partInput, resize: textarea ? "vertical" : undefined }} />
+      {hint && <p style={{ fontSize: 12, color: "var(--bz-texto-terciario)", marginTop: 6 }}>{hint}</p>}
     </div>
+  );
+}
+
+function PartCards({ name, label, options, value, onChange, hint }) {
+  return (
+    <div>
+      <span style={partLabel}>{label}<span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span></span>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap: 10 }}>
+        {options.map(option => {
+          const selected = value === option.value;
+          return (
+            <label key={option.value} className="part-card" style={{ position: "relative", textAlign: "left", padding: "12px 14px", borderRadius: "var(--bz-radius-md)", border: selected ? "1.5px solid var(--bz-navidad-rojo)" : "1px solid var(--bz-borde-suave)", background: selected ? "color-mix(in oklch, var(--bz-navidad-rojo) 8%, var(--bz-beige-hueso))" : "var(--bz-beige-hueso)", color: "var(--bz-texto-primario)", display: "flex", flexDirection: "column", gap: 2, cursor: "pointer" }}>
+              <input type="radio" name={name} value={option.value} required checked={selected} onChange={() => onChange(option.value)} style={{ position: "absolute", width: 1, height: 1, opacity: 0 }} />
+              <span style={{ fontFamily: "var(--bz-font-display)", fontSize: 17 }}>{option.title}</span>
+              <span style={{ fontSize: 12, color: "var(--bz-texto-secundario)" }}>{option.price}</span>
+            </label>
+          );
+        })}
+      </div>
+      {hint && <p style={{ fontSize: 12, color: "var(--bz-texto-terciario)", marginTop: 6 }}>{hint}</p>}
+    </div>
+  );
+}
+
+function PartSelect({ name, label, required, options }) {
+  return (
+    <div>
+      <label style={partLabel} htmlFor={"p-" + name}>{label}{required && <span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span>}</label>
+      <select id={"p-" + name} name={name} required={required} className="part-input" style={partInput} defaultValue="">
+        <option value="" disabled>Seleccioná una opción</option>
+        {options.map(option => <option key={option} value={option}>{option}</option>)}
+      </select>
+    </div>
+  );
+}
+
+function PartInfo({ title, children }) {
+  return (
+    <div style={{ background: "var(--bz-fondo-base)", border: "1px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-md)", padding: "16px 18px" }}>
+      <div style={partLabel}>{title}</div>
+      <p style={{ fontSize: 14, color: "var(--bz-texto-secundario)" }}>{children}</p>
+    </div>
+  );
+}
+
+function PartCheckbox({ name, label, required }) {
+  return (
+    <label htmlFor={"p-" + name} style={{ display: "flex", alignItems: "flex-start", gap: 10, color: "var(--bz-texto-secundario)", fontSize: 14, cursor: "pointer" }}>
+      <input id={"p-" + name} name={name} type="checkbox" value="Sí" required={required} style={{ width: 18, height: 18, marginTop: 2, accentColor: "var(--bz-verde-profundo)", flexShrink: 0 }} />
+      <span>{label}{required && <span style={{ color: "var(--bz-navidad-rojo)", marginLeft: 4 }}>*</span>}</span>
+    </label>
   );
 }
 
@@ -52,7 +105,7 @@ function PartFile({ name, label, required, multiple, hint }) {
 const PART_TIPOS = [{ id: "feriante", label: "Feriante", sub: "Productos, artesanías, diseño" }, { id: "gastronomico", label: "Gastronómico", sub: "Carro o puesto de comida/bebida" }];
 const PART_DOCS = {
   feriante: [["doc_arca", "Inscripción en ARCA"], ["doc_dni_frente", "DNI · frente"], ["doc_dni_dorso", "DNI · dorso"]],
-  gastronomico: [["doc_hab_municipal", "Habilitación municipal"], ["doc_bromatologia", "Habilitación bromatológica"], ["doc_manipulacion", "Carnet de manipulación de alimentos", true, "Uno por cada persona que atienda el carro. Podés subir varios archivos."], ["doc_dni_frente", "DNI · frente"], ["doc_dni_dorso", "DNI · dorso"]],
+  gastronomico: [["doc_hab_municipal", "Habilitación municipal"], ["doc_bromatologia", "Habilitación bromatológica"], ["doc_manipulacion", "Carnet de manipulación de alimentos", true, "Uno por cada persona que atienda el carro. Podés subir varios archivos."], ["doc_dni_frente", "DNI · frente"], ["doc_dni_dorso", "DNI · dorso"], ["doc_seguro_accidentes", "Póliza de seguro de accidentes personales (mínimo $40.000.000, con cláusula de no repetición a favor de JJCS SAS)."]],
 };
 
 function PageParticipa({ setPage, initialRole }) {
@@ -60,6 +113,7 @@ function PageParticipa({ setPage, initialRole }) {
   const [role, setRole] = useStatePart(initialRole || "expositor");
   const [status, setStatus] = useStatePart("idle");
   const [tipo, setTipo] = useStatePart("feriante");
+  const [tipoStand, setTipoStand] = useStatePart("");
   const [docsWa, setDocsWa] = useStatePart(null);
   const waDocsLink = (nombre) => BZ_WHATSAPP_LINK + "?text=" + encodeURIComponent("Hola BIORAIZ, soy " + (nombre || "") + " (" + (tipo === "gastronomico" ? "Gastronómico" : "Feriante") + "). Les envío la documentación para la Edición Navideña: " + PART_DOCS[tipo].map(d => d[1]).join(", ") + ".");
   useEffectPart(() => { if (initialRole) setRole(initialRole); }, [initialRole]);
@@ -86,7 +140,7 @@ function PageParticipa({ setPage, initialRole }) {
 
   return (
     <div className="page-enter">
-      <SubPageHeader eyebrow={`Edición Navideña · ${BZ_DATE} · día a confirmar`} title={<>Participá.</>} sub="Abrimos la convocatoria para la Edición Navideña. Elegí cómo querés sumarte y te contactamos." />
+      <SubPageHeader eyebrow={`Edición Navideña · ${BZ_DATE} · ${BZ_LOCATION}`} title={<>Participá.</>} sub="Abrimos la convocatoria para la Edición Navideña. Elegí cómo querés sumarte y te contactamos." />
 
       <section style={{ padding: "72px 0 120px", background: "var(--bz-fondo-base)" }} className="trama">
         <div className="container-narrow">
@@ -140,16 +194,48 @@ function PageParticipa({ setPage, initialRole }) {
                   </div>
                 </div>
               )}
-              {r.fields.map(([n, l, req, textarea]) => <PartField key={n} name={n} label={role === "expositor" && n === "rubro" && tipo === "gastronomico" ? "Qué comidas o bebidas ofrecés" : l} required={req} textarea={textarea} />)}
+              {r.fields.map(([n, l, req, textarea]) => (
+                <React.Fragment key={n}>
+                  {role === "expositor" && tipo === "gastronomico" && n === "rubro" && (
+                    <PartSelect name="tipo_puesto_gastronomico" label="Tipo de puesto gastronómico" required options={["Comida", "Bebidas", "Comida y bebidas"]} />
+                  )}
+                  <PartField
+                    name={n}
+                    label={role === "expositor" && n === "rubro" && tipo === "gastronomico" ? "Tu menú" : l}
+                    required={req}
+                    textarea={textarea}
+                    hint={role === "expositor" && n === "rubro" && tipo === "gastronomico" ? "Hasta 3 productos de comida. La organización aprueba el menú para que el patio tenga variedad." : undefined}
+                  />
+                  {role === "expositor" && tipo === "feriante" && n === "rubro" && (
+                    <>
+                      <PartCards
+                        name="tipo_stand"
+                        label="Tipo de stand"
+                        value={tipoStand}
+                        onChange={setTipoStand}
+                        options={[
+                          { title: "Stand 3x3", price: "$800.000", value: "Stand 3x3 · $800.000" },
+                          { title: "Stand 3x3 destacado", price: "$950.000", value: "Stand 3x3 destacado · $950.000" },
+                          { title: "Stand 1,5x3", price: "$450.000", value: "Stand 1,5x3 · $450.000" },
+                          { title: "Stand 1,5x3 destacado", price: "$600.000", value: "Stand 1,5x3 destacado · $600.000" },
+                        ]}
+                        hint="Valores por ambos días. La ubicación final se elige según el mapa del predio, segun disponibilidad."
+                      />
+                      <PartField name="personas_stand" label="¿Cuántas personas atienden el stand?" type="number" min="1" step="1" required />
+                    </>
+                  )}
+                </React.Fragment>
+              ))}
               {role === "expositor" && (<>
                 {tipo === "gastronomico" && <>
                   <PartField name="carro_medidas" label="Medidas del carro (largo × ancho × alto, en metros)" required />
-                  <PartField name="vasos" label="Vasos que usás (tamaños, en cc o ml)" required />
-                  <PartField name="platos" label="Platos y utensilios que usás (material y tipo)" required />
+                  <PartInfo title="Vasos del evento">El evento es sin descartables. Las bebidas se sirven únicamente en los vasos oficiales de 500 y 750 cc, que la organización vende a $2.000 cada uno. Para bebidas calientes hay un vaso especial con precio a confirmar. Latas y botellas se sirven siempre en vaso: el envase no sale del puesto.</PartInfo>
+                  <PartSelect name="cafe_bebidas_calientes" label="¿Vendés café o bebidas calientes?" required options={["Sí", "No"]} />
+                  <PartInfo title="Vajilla">La organización vende la vajilla biodegradable oficial. No se permiten descartables propios (solo servilletas de papel).</PartInfo>
                 </>}
                 <div>
                   <PartField name="electricidad" label="¿Qué elementos usan electricidad?" required textarea />
-                  <p style={{ fontSize: 12, color: "var(--bz-texto-terciario)", marginTop: 6 }}>Ej.: luces, heladera, plancha, cafetera. Si sabés la potencia (W), sumala. Si no usás, escribí &quot;Ninguno&quot;.</p>
+                  <p style={{ fontSize: 12, color: "var(--bz-texto-terciario)", marginTop: 6 }}>Ej.: luces, heladera, plancha, cafetera. Si sabés la potencia (W), sumala. Si no usás, escribí &quot;Ninguno&quot;.{tipo === "feriante" && " Incluye hasta 500 W por stand. No se permiten pavas eléctricas."}{tipo === "gastronomico" && " No se permiten pavas eléctricas. Los equipos de cocción eléctricos requieren autorización previa."}</p>
                 </div>
                 <div style={{ borderTop: "0.5px solid var(--bz-borde-ligero)", paddingTop: 22, display: "flex", flexDirection: "column", gap: 18 }}>
                   <div>
@@ -162,6 +248,14 @@ function PageParticipa({ setPage, initialRole }) {
                 </div>
               </>)}
               <PartField name="mensaje" label={role === "publico" ? "¿Algo que quieras contarnos?" : "Contanos un poco más"} textarea />
+              {role === "expositor" && tipo === "gastronomico" && (
+                <PartCheckbox name="aceptacion_condiciones" label="Leí y acepto las condiciones de vasos, vajilla y menú del evento." required />
+              )}
+              {role === "expositor" && tipo === "feriante" && (
+                <p style={{ background: "var(--bz-fondo-base)", border: "1px solid var(--bz-borde-suave)", borderRadius: "var(--bz-radius-md)", padding: "14px 16px", fontSize: 14, color: "var(--bz-texto-secundario)" }}>
+                  Si tu inscripción queda confirmada, te enviamos el reglamento y los datos para pagar la seña del 50%.
+                </p>
+              )}
               <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", marginTop: 6 }}>
                 <button type="submit" className="btn btn-primary" disabled={status === "sending"}>{status === "sending" ? "Enviando…" : role === "publico" ? "Avisame" : "Enviar inscripción"}</button>
                 {status === "error" && <span style={{ fontSize: 13, color: "var(--bz-navidad-rojo)" }}>No se pudo enviar. Probá de nuevo o escribinos a {BZ_EMAIL}.</span>}
@@ -170,7 +264,7 @@ function PageParticipa({ setPage, initialRole }) {
           )}
         </div>
       </section>
-      <style>{`.part-input:focus{border-color:var(--bz-verde-profundo)!important}.part-file:hover{border-color:var(--bz-verde-profundo)!important}`}</style>
+      <style>{`.part-input:focus{border-color:var(--bz-verde-profundo)!important}.part-file:hover{border-color:var(--bz-verde-profundo)!important}.part-card:focus-within{outline:2px solid var(--bz-verde-profundo);outline-offset:2px}`}</style>
     </div>
   );
 }
