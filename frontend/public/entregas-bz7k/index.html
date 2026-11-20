@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1f3b2d">
+<title>BIORAIZ · Entregas a gastronómicos</title>
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzphbrkBisuqZaa-Cmaest7dt8INB2SGg8CGUzCjb28Jvcna_VCaJgl2qRRfYsRXug4/exec";
+</script>
+<style>
+  :root{--verde:#1f3b2d;--verde2:#2f5a43;--crema:#f6f1e7;--dorado:#c9a24a;--rojo:#a8322d;--gris:#6f6a60;--borde:#d9d1c1}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--crema);color:#1d1d1b;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:480px;margin:0 auto;padding:16px 16px 40px}
+  header{text-align:center;margin-bottom:10px}
+  .logo{font-weight:800;letter-spacing:.18em;font-size:24px;color:var(--verde)}
+  .sub{color:var(--gris);font-size:13px}
+  .bar{display:flex;justify-content:space-between;align-items:center;background:var(--verde);color:#fff;border-radius:12px;padding:9px 12px;font-size:13.5px;margin-bottom:6px}
+  .bar button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:8px;padding:5px 9px;font-size:12.5px}
+  label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+  input[type=text],input[type=search],input[type=tel]{width:100%;font-size:18px;padding:13px;border:2px solid var(--borde);border-radius:12px;background:#fff;outline:none}
+  input:focus{border-color:var(--verde2)}
+  .lista{max-height:220px;overflow:auto;border:2px solid var(--borde);border-radius:12px;background:#fff;margin-top:8px}
+  .item{padding:12px 14px;border-bottom:1px solid #eee;font-size:16px}
+  .item small{display:block;color:var(--gris);font-size:12.5px}
+  .item.on{background:var(--verde);color:#fff}.item.on small{color:#dfe9e2}
+  .elegido{display:none;background:var(--verde);color:#fff;border-radius:12px;padding:12px 14px;font-weight:700;font-size:17px;justify-content:space-between;align-items:center}
+  .elegido button{background:#fff;color:var(--verde);border:0;border-radius:8px;padding:6px 10px;font-weight:700}
+  .prod{background:#fff;border:2px solid var(--borde);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+  .prod .top{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+  .prod .top span{font-weight:400;color:var(--gris);font-size:13px}
+  .ctl{display:grid;grid-template-columns:48px 1fr 48px;gap:6px;margin-top:8px}
+  .ctl button,.quick button{font-size:20px;font-weight:800;border:2px solid var(--borde);background:var(--crema);border-radius:10px;padding:8px 0}
+  .ctl input{text-align:center;font-size:22px;font-weight:800;padding:8px}
+  .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
+  .quick button{font-size:14px;padding:7px 0}
+  .total{text-align:right;font-weight:800;font-size:18px;margin-top:6px;color:var(--verde)}
+  canvas{width:100%;height:190px;background:#fff;border:2px dashed var(--verde2);border-radius:12px;touch-action:none;display:block}
+  .firmarow{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:13px;color:var(--gris)}
+  .firmarow button{background:transparent;border:1px solid var(--borde);border-radius:8px;padding:6px 10px}
+  .err{color:var(--rojo);font-size:13.5px;margin-top:8px;min-height:1em;text-align:center}
+  .btn{margin-top:14px;width:100%;font-size:20px;font-weight:800;padding:17px;border:0;border-radius:14px;background:var(--rojo);color:#fff}
+  .pend{font-size:12.5px;color:var(--gris);text-align:center;margin-top:10px}
+  #gate,#ok{position:fixed;inset:0;background:var(--verde);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;z-index:30}
+  #gate input{max-width:240px;text-align:center;font-size:20px}
+  #gate .btn{max-width:240px}
+  #ok{display:none;z-index:25}
+  #ok .check{width:100px;height:100px;border-radius:50%;background:#fff;color:var(--verde);display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:900}
+  #ok h1{margin:18px 0 6px}
+  #okDet{font-size:16px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="logo">BIORAIZ</div><div class="sub">Entregas a gastronómicos</div></header>
+
+  <div class="bar">
+    <span>Entregas hoy (este equipo): <b id="cuenta">0</b></span>
+    <button id="recargar" type="button">↻ Puestos</button>
+  </div>
+
+  <label for="repartidor">¿Quién entrega?</label>
+  <input id="repartidor" type="text" autocapitalize="words" placeholder="Tu nombre">
+
+  <label for="buscar">Puesto</label>
+  <div class="elegido" id="elegido"><span id="elegidoTxt"></span><button type="button" id="cambiar">Cambiar</button></div>
+  <div id="selector">
+    <input id="buscar" type="search" placeholder="Buscá el puesto…">
+    <div class="lista" id="lista"></div>
+  </div>
+
+  <label>¿Qué le dejás?</label>
+  <div id="productos"></div>
+  <div class="total" id="total">Total: $0</div>
+
+  <label for="recibe">Recibe (nombre)</label>
+  <input id="recibe" type="text" autocapitalize="words" placeholder="Nombre de quien recibe">
+
+  <label>Firma de quien recibe</label>
+  <canvas id="firma"></canvas>
+  <div class="firmarow"><span>Firmá con el dedo</span><button type="button" id="borrar">Borrar firma</button></div>
+
+  <div class="err" id="err"></div>
+  <button class="btn" id="enviar" type="button">REGISTRAR ENTREGA</button>
+  <div class="pend" id="pend"></div>
+</div>
+
+<div id="ok">
+  <div class="check">✓</div>
+  <h1>ENTREGA REGISTRADA</h1>
+  <div id="okDet"></div>
+  <button class="btn" id="otra" type="button" style="max-width:260px;background:#fff;color:var(--verde)">NUEVA ENTREGA</button>
+</div>
+
+<div id="gate">
+  <div class="logo" style="color:#fff">BIORAIZ</div>
+  <p style="opacity:.85">Acceso solo para staff</p>
+  <input id="pinIn" type="password" autocapitalize="off" placeholder="Clave">
+  <div class="err" id="pinErr" style="color:#ffd7d4"></div>
+  <button class="btn" id="pinBtn" type="button">ENTRAR</button>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => "$" + Math.round(n).toLocaleString("es-AR");
+  const S = { get(k,d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch(e){ return d } },
+              set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} } };
+
+  // Productos por defecto (los precios reales vienen de la hoja "Precios")
+  let PRODUCTOS = S.get("ent_productos", [
+    { id:"vasos500", nombre:"Vasos 500 cc", precio:2000 },
+    { id:"vasos700", nombre:"Vasos 700 cc", precio:3500 },
+    { id:"platos",   nombre:"Platos",        precio:700 },
+    { id:"cubiertos",nombre:"Cubiertos",     precio:150 }
+  ]);
+  let PUESTOS = S.get("ent_puestos", []);
+  let CLAVE = S.get("ent_clave", "");
+  let puesto = null, cant = {};
+
+  // ---------- clave ----------
+  function abrir(){ $("gate").style.display = "none"; cargarPuestos(); }
+  if (CLAVE) abrir();
+  async function probarPin(){
+    const v = $("pinIn").value.trim(); if (!v) return;
+    $("pinErr").textContent = "Verificando…";
+    try{
+      const t = (await (await fetch(SCRIPT_URL + "?accion=clave&clave=" + encodeURIComponent(v))).text()).trim();
+      if (t === "ok"){ CLAVE = v; S.set("ent_clave", v); $("pinErr").textContent = ""; abrir(); }
+      else { $("pinErr").textContent = "Clave incorrecta"; $("pinIn").value = ""; }
+    }catch(e){ $("pinErr").textContent = "Sin conexión con Google. Revisá el link /exec."; }
+  }
+  $("pinBtn").onclick = probarPin;
+  $("pinIn").onkeydown = e => { if (e.key === "Enter") probarPin(); };
+
+  // ---------- puestos y precios ----------
+  async function cargarPuestos(){
+    pintarLista();
+    try{
+      const res = await fetch(SCRIPT_URL + "?accion=datos&clave=" + encodeURIComponent(CLAVE));
+      const d = await res.json();
+      if (d.ok){
+        PUESTOS = d.puestos; S.set("ent_puestos", PUESTOS);
+        if (d.productos && d.productos.length){ PRODUCTOS = d.productos; S.set("ent_productos", PRODUCTOS); }
+        pintarProductos(); pintarLista();
+      }
+    }catch(e){ /* sin señal: usa la última lista guardada */ }
+  }
+  $("recargar").onclick = cargarPuestos;
+
+  function pintarLista(){
+    const q = $("buscar").value.trim().toLowerCase();
+    const l = PUESTOS.filter(p => (p.nombre + " " + (p.responsable||"")).toLowerCase().includes(q));
+    $("lista").innerHTML = l.length ? "" : `<div class="item"><small>${PUESTOS.length ? "Sin resultados" : "Cargando puestos… (o tocá ↻ Puestos)"}</small></div>`;
+    l.forEach(p => {
+      const d = document.createElement("div"); d.className = "item";
+      d.innerHTML = `${esc(p.nombre)}<small>${esc(p.responsable||"")}${p.tipo ? " · " + esc(p.tipo) : ""}</small>`;
+      d.onclick = () => elegir(p);
+      $("lista").appendChild(d);
+    });
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])) }
+  $("buscar").oninput = pintarLista;
+  function elegir(p){
+    puesto = p; $("elegidoTxt").textContent = p.nombre;
+    $("elegido").style.display = "flex"; $("selector").style.display = "none";
+    if (!$("recibe").value && p.responsable) $("recibe").value = p.responsable;
+  }
+  $("cambiar").onclick = () => { puesto = null; $("elegido").style.display = "none"; $("selector").style.display = "block"; $("buscar").value = ""; pintarLista(); };
+
+  // ---------- cantidades ----------
+  function pintarProductos(){
+    const box = $("productos"); box.innerHTML = "";
+    PRODUCTOS.forEach(p => {
+      if (cant[p.id] == null) cant[p.id] = 0;
+      const d = document.createElement("div"); d.className = "prod";
+      d.innerHTML = `<div class="top">${esc(p.nombre)}<span>${fmt(p.precio)} c/u</span></div>
+        <div class="ctl"><button type="button" data-d="-1">−</button>
+        <input type="tel" inputmode="numeric" value="${cant[p.id]}"><button type="button" data-d="1">+</button></div>
+        <div class="quick"><button type="button" data-d="10">+10</button><button type="button" data-d="25">+25</button>
+        <button type="button" data-d="50">+50</button><button type="button" data-d="100">+100</button></div>`;
+      const inp = d.querySelector("input");
+      d.querySelectorAll("button[data-d]").forEach(b => b.onclick = () => {
+        cant[p.id] = Math.max(0, (cant[p.id]||0) + Number(b.dataset.d)); inp.value = cant[p.id]; total();
+      });
+      inp.oninput = () => { cant[p.id] = Math.max(0, parseInt(inp.value,10) || 0); total(); };
+      inp.onfocus = () => inp.select();
+      box.appendChild(d);
+    });
+    total();
+  }
+  function total(){
+    const t = PRODUCTOS.reduce((s,p) => s + (cant[p.id]||0) * p.precio, 0);
+    $("total").textContent = "Total: " + fmt(t); return t;
+  }
+
+  // ---------- firma ----------
+  const cv = $("firma"), cx = cv.getContext("2d"); let dib = false, firmado = false;
+  function ajustar(){
+    const r = cv.getBoundingClientRect(), k = window.devicePixelRatio || 1;
+    cv.width = r.width * k; cv.height = r.height * k; cx.setTransform(k,0,0,k,0,0);
+    cx.lineWidth = 2.6; cx.lineCap = "round"; cx.lineJoin = "round"; cx.strokeStyle = "#111";
+    cx.fillStyle = "#fff"; cx.fillRect(0,0,r.width,r.height); firmado = false;
+  }
+  const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener("pointerdown", e => { dib = true; cv.setPointerCapture(e.pointerId); const [x,y] = pos(e); cx.beginPath(); cx.moveTo(x,y); });
+  cv.addEventListener("pointermove", e => { if (!dib) return; const [x,y] = pos(e); cx.lineTo(x,y); cx.stroke(); firmado = true; });
+  ["pointerup","pointercancel","pointerleave"].forEach(ev => cv.addEventListener(ev, () => dib = false));
+  $("borrar").onclick = ajustar;
+
+  // ---------- envío con cola offline ----------
+  const cola = () => S.get("ent_cola", []);
+  function contadores(){
+    const hoy = new Date().toISOString().slice(0,10);
+    $("cuenta").textContent = S.get("ent_hechas", []).filter(f => f === hoy).length;
+    const n = cola().length; $("pend").textContent = n ? `${n} entrega(s) esperando señal para enviarse…` : "";
+  }
+  let enviando = false;
+  async function vaciar(){
+    if (enviando || !SCRIPT_URL) return; enviando = true;
+    let c = cola();
+    while (c.length){
+      try{ await fetch(SCRIPT_URL, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: JSON.stringify(c[0]) }); }
+      catch(e){ break; }
+      c.shift(); S.set("ent_cola", c);
+    }
+    enviando = false; contadores();
+  }
+  setInterval(vaciar, 15000); window.addEventListener("online", vaciar);
+
+  $("enviar").onclick = () => {
+    const rep = $("repartidor").value.trim(), rec = $("recibe").value.trim();
+    const algo = PRODUCTOS.some(p => cant[p.id] > 0);
+    let e = "";
+    if (!rep) e = "Poné tu nombre (quién entrega)";
+    else if (!puesto) e = "Elegí el puesto";
+    else if (!algo) e = "Cargá al menos una cantidad";
+    else if (!rec) e = "Poné el nombre de quien recibe";
+    else if (!firmado) e = "Falta la firma de quien recibe";
+    $("err").textContent = e; if (e) return;
+    S.set("ent_repartidor", rep);
+
+    const items = {}; PRODUCTOS.forEach(p => items[p.id] = cant[p.id] || 0);
+    const r = { id: "EN-" + Math.random().toString(36).slice(2,6).toUpperCase(), fecha: new Date().toISOString(),
+      puesto: puesto.nombre, items, total: total(), repartidor: rep, recibe: rec,
+      firma: cv.toDataURL("image/png"), clave: CLAVE };
+    const c = cola(); c.push(r); S.set("ent_cola", c);
+    const h = S.get("ent_hechas", []); h.push(new Date().toISOString().slice(0,10)); S.set("ent_hechas", h);
+    vaciar(); contadores();
+
+    $("okDet").innerHTML = `<b>${esc(puesto.nombre)}</b><br>` +
+      PRODUCTOS.filter(p => cant[p.id] > 0).map(p => `${cant[p.id]} × ${esc(p.nombre)}`).join("<br>") +
+      `<br><b>Total ${fmt(r.total)}</b><br><small>Recibió: ${esc(rec)} · ${r.id}</small>`;
+    $("ok").style.display = "flex";
+  };
+  $("otra").onclick = () => {
+    $("ok").style.display = "none"; cant = {}; pintarProductos(); ajustar();
+    $("recibe").value = ""; $("err").textContent = ""; $("cambiar").onclick(); window.scrollTo(0,0);
+  };
+
+  $("repartidor").value = S.get("ent_repartidor", "");
+  pintarProductos(); pintarLista(); ajustar(); contadores(); vaciar();
+  window.addEventListener("resize", () => { if (!firmado) ajustar(); });
+})();
+</script>
+</body>
+</html>
