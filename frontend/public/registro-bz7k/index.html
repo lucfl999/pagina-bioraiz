@@ -42,6 +42,9 @@
   .chip.on{background:var(--verde);border-color:var(--verde);color:#fff}
   .chip.wide{grid-column:1 / -1}
   #otraBox{display:none;margin-top:8px}
+  .cant{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .cant .chip{font-size:20px;padding:12px 0}
+  #masBox{display:none;margin-top:8px}
   .err{color:var(--rojo);font-size:13.5px;margin-top:6px;min-height:1em}
   .legal{font-size:11.5px;color:var(--gris);margin:16px 2px 0;line-height:1.4}
   .btn{margin-top:18px;width:100%;font-size:20px;font-weight:800;padding:17px;border:0;border-radius:14px;
@@ -75,7 +78,7 @@
   </header>
 
   <div class="staffbar">
-    <span>Registrados en este equipo: <b id="cuenta">0</b></span>
+    <span>Personas: <b id="cuenta">0</b> · grupos: <span id="grupos">0</span></span>
     <button id="exportar" type="button">Exportar CSV</button>
   </div>
 
@@ -112,6 +115,18 @@
       </select>
     </div>
     <div class="err" id="eLoc"></div>
+
+    <label>¿Cuántos entran? (con esta persona)</label>
+    <div class="cant" id="cant">
+      <button type="button" class="chip on" data-n="1">1</button>
+      <button type="button" class="chip" data-n="2">2</button>
+      <button type="button" class="chip" data-n="3">3</button>
+      <button type="button" class="chip" data-n="4">4</button>
+      <button type="button" class="chip" data-n="5">5</button>
+      <button type="button" class="chip" data-n="mas">6+</button>
+    </div>
+    <div id="masBox"><input id="mas" type="tel" inputmode="numeric" placeholder="¿Cuántos en total?"></div>
+    <div class="err" id="eCant"></div>
 
     <p class="legal">Tus datos los usa BIORAIZ (JJCS SAS) solo para el control de ingreso y para avisarte de próximos eventos. Podés pedir que los borremos cuando quieras (Ley 25.326).</p>
 
@@ -179,7 +194,9 @@
   function todos(){ return store.get(K_ALL, []) }
   function cola(){ return store.get(K_COLA, []) }
   function actualizarContadores(){
-    $("cuenta").textContent = todos().length;
+    const t = todos();
+    $("cuenta").textContent = t.reduce((s,r) => s + (Number(r.personas)||1), 0);
+    $("grupos").textContent = t.length;
     const n = cola().length;
     $("pend").textContent = (SCRIPT_URL && n) ? `${n} registro(s) esperando señal para enviarse…` : "";
   }
@@ -198,6 +215,18 @@
     $("eLoc").textContent = "";
   });
   $("provincia").addEventListener("change", e => { prov = e.target.value; loc = prov; $("eLoc").textContent = ""; });
+
+  // ---------- cantidad de personas ----------
+  let cant = 1;
+  $("cant").addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if(!b) return;
+    $("cant").querySelectorAll(".chip").forEach(c => c.classList.remove("on"));
+    b.classList.add("on");
+    if (b.dataset.n === "mas"){ cant = 0; $("masBox").style.display = "block"; $("mas").focus(); }
+    else { cant = Number(b.dataset.n); $("masBox").style.display = "none"; }
+    $("eCant").textContent = "";
+  });
+  $("mas").addEventListener("input", e => { cant = parseInt(e.target.value,10) || 0; });
 
   // ---------- validación de contacto ----------
   function analizarContacto(v){
@@ -244,13 +273,15 @@
     $("eNombre").textContent = nombre.length < 3 ? "Escribí tu nombre" : "";
     $("eContacto").textContent = c ? "" : "Poné un WhatsApp (con código de área) o un mail válido";
     $("eLoc").textContent = prov ? "" : "Tocá de dónde venís";
-    if (nombre.length < 3 || !c || !prov) bien = false;
+    const cantOk = cant >= 1 && cant <= 50;
+    $("eCant").textContent = cantOk ? "" : "Poné cuántos entran (6 o más)";
+    if (nombre.length < 3 || !c || !prov || !cantOk) bien = false;
     if (!bien) return;
 
     const r = {
       id: codigo(), fecha: new Date().toISOString(), evento: EVENTO,
       nombre, contacto: c.valor, tipo_contacto: c.tipo,
-      localidad: loc || prov, provincia: prov, puerta: PUERTA, clave: CLAVE_OK
+      localidad: loc || prov, provincia: prov, puerta: PUERTA, personas: cant, clave: CLAVE_OK
     };
     const all = todos(); all.push(r); store.set(K_ALL, all);
     const q = cola(); q.push(r); store.set(K_COLA, q);
@@ -258,7 +289,7 @@
     vaciarCola();
 
     if (STAFF){
-      limpiar(); toast(`✓ ${nombre.split(" ")[0]} registrado`); $("nombre").focus();
+      limpiar(); toast(`✓ ${nombre.split(" ")[0]}${r.personas > 1 ? " + " + (r.personas - 1) : ""} registrado${r.personas > 1 ? "s" : ""}`); $("nombre").focus();
     } else {
       mostrarOk(r);
     }
@@ -268,6 +299,8 @@
     $("f").reset(); loc = ""; prov = "";
     document.querySelectorAll(".chip").forEach(c => c.classList.remove("on"));
     $("otraBox").style.display = "none";
+    cant = 1; $("masBox").style.display = "none";
+    $("cant").querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c.dataset.n === "1"));
   }
   function toast(t){
     const el = $("toast"); el.textContent = t; el.classList.add("show");
@@ -275,7 +308,7 @@
   }
   // Pantalla con reloj en vivo: evita que alguien muestre una captura vieja.
   function mostrarOk(r){
-    $("okNombre").textContent = r.nombre;
+    $("okNombre").textContent = r.nombre + (r.personas > 1 ? ` · ${r.personas} personas` : "");
     $("okCodigo").textContent = r.id;
     $("ok").classList.add("show");
     const tick = () => {
@@ -298,7 +331,7 @@
   // ---------- exportar CSV (modo staff) ----------
   $("exportar").addEventListener("click", () => {
     const rows = todos();
-      const cols = ["id","fecha","nombre","contacto","tipo_contacto","localidad","provincia","puerta"];
+      const cols = ["id","fecha","nombre","contacto","tipo_contacto","localidad","provincia","puerta","personas"];
     const esc = v => `"${String(v ?? "").replace(/"/g,'""')}"`;
     const csv = "﻿" + [cols.join(",")].concat(rows.map(r => cols.map(c => esc(r[c])).join(","))).join("\n");
     const a = document.createElement("a");
