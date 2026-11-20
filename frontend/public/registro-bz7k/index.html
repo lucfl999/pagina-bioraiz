@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>BIORAIZ · Registro de ingreso</title>
+<meta name="theme-color" content="#1f3b2d">
+<meta name="robots" content="noindex, nofollow">
+<style>
+  /* ====== CONFIGURACIÓN ======
+     Pegá acá la URL de tu Apps Script (ver instrucciones). Si queda vacía,
+     los registros se guardan solo en el dispositivo y se exportan en CSV. */
+</style>
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwP3BgiDa9GElaNgjzfxBs9Ea16jX6Pm0t4XRKETSZHvb0XtQtaGupv3d-8J-7elGA3/exec";
+  const EVENTO = "BIORAIZ Navidad 2026";
+</script>
+<style>
+  :root{
+    --verde:#1f3b2d; --verde2:#2f5a43; --crema:#f6f1e7; --dorado:#c9a24a;
+    --rojo:#a8322d; --texto:#1d1d1b; --gris:#6f6a60; --borde:#d9d1c1;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--crema);color:var(--texto);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:480px;margin:0 auto;padding:20px 18px 40px;min-height:100vh;display:flex;flex-direction:column}
+  header{text-align:center;margin-bottom:18px}
+  .logo{font-weight:800;letter-spacing:.18em;font-size:26px;color:var(--verde)}
+  .sub{color:var(--gris);font-size:14px;margin-top:4px}
+  .staffbar{display:none;justify-content:space-between;align-items:center;background:var(--verde);color:#fff;
+    border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:14px}
+  .staffbar b{font-size:20px}
+  .staffbar button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:8px;padding:6px 10px;font-size:13px}
+  body.staff .staffbar{display:flex}
+  label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+  input[type=text],input[type=tel],input[type=email],select{
+    width:100%;font-size:19px;padding:14px;border:2px solid var(--borde);border-radius:12px;background:#fff;color:var(--texto);outline:none}
+  input:focus,select:focus{border-color:var(--verde2)}
+  .hint{font-size:12.5px;color:var(--gris);margin-top:5px}
+  .chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .chip{font-size:15px;padding:13px 8px;border:2px solid var(--borde);border-radius:12px;background:#fff;color:var(--texto);font-weight:600}
+  .chip.on{background:var(--verde);border-color:var(--verde);color:#fff}
+  .chip.wide{grid-column:1 / -1}
+  #otraBox{display:none;margin-top:8px}
+  .err{color:var(--rojo);font-size:13.5px;margin-top:6px;min-height:1em}
+  .legal{font-size:11.5px;color:var(--gris);margin:16px 2px 0;line-height:1.4}
+  .btn{margin-top:18px;width:100%;font-size:20px;font-weight:800;padding:17px;border:0;border-radius:14px;
+    background:var(--rojo);color:#fff;letter-spacing:.02em}
+  .btn:active{transform:scale(.99)}
+  .btn:disabled{opacity:.6}
+  /* Pantalla acreditado */
+  #ok{display:none;position:fixed;inset:0;background:var(--verde);color:#fff;
+    flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:10}
+  #ok.show{display:flex}
+  .check{width:120px;height:120px;border-radius:50%;background:#fff;color:var(--verde);display:flex;
+    align-items:center;justify-content:center;font-size:72px;font-weight:900;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(201,162,74,.8)}50%{box-shadow:0 0 0 22px rgba(201,162,74,0)}}
+  #ok h1{font-size:40px;margin:22px 0 4px;letter-spacing:.06em}
+  #okNombre{font-size:24px;font-weight:700}
+  #okCodigo{font-size:30px;font-weight:900;letter-spacing:.12em;color:var(--dorado);margin-top:10px}
+  #okReloj{font-size:18px;margin-top:6px;opacity:.9;font-variant-numeric:tabular-nums}
+  #ok p{opacity:.85;font-size:15px;max-width:320px}
+  .pend{font-size:12.5px;color:var(--gris);text-align:center;margin-top:14px}
+  /* toast staff */
+  #toast{position:fixed;left:50%;top:16px;transform:translateX(-50%) translateY(-120%);background:var(--verde2);color:#fff;
+    padding:12px 18px;border-radius:12px;font-weight:700;transition:transform .2s;z-index:20}
+  #toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">BIORAIZ</div>
+    <div class="sub" id="evento"></div>
+  </header>
+
+  <div class="staffbar">
+    <span>Registrados en este equipo: <b id="cuenta">0</b></span>
+    <button id="exportar" type="button">Exportar CSV</button>
+  </div>
+
+  <form id="f" autocomplete="off" novalidate>
+    <label for="nombre">Nombre y apellido</label>
+    <input id="nombre" type="text" autocapitalize="words" enterkeyhint="next" placeholder="Ej: Ana Pérez">
+    <div class="err" id="eNombre"></div>
+
+    <label for="contacto">WhatsApp o mail</label>
+    <input id="contacto" type="text" inputmode="email" enterkeyhint="next" placeholder="299 412 3456  ó  ana@mail.com">
+    <div class="err" id="eContacto"></div>
+
+    <label>¿De dónde venís?</label>
+    <div class="chips" id="chips">
+      <button type="button" class="chip" data-loc="Neuquén capital" data-prov="Neuquén">Neuquén capital</button>
+      <button type="button" class="chip" data-loc="Cipolletti" data-prov="Río Negro">Cipolletti</button>
+      <button type="button" class="chip" data-loc="Plottier" data-prov="Neuquén">Plottier</button>
+      <button type="button" class="chip" data-loc="Centenario" data-prov="Neuquén">Centenario</button>
+      <button type="button" class="chip" data-loc="Gral. Roca" data-prov="Río Negro">Gral. Roca</button>
+      <button type="button" class="chip" data-loc="Cinco Saltos" data-prov="Río Negro">Cinco Saltos</button>
+      <button type="button" class="chip" data-loc="Otra loc. de Neuquén" data-prov="Neuquén">Otra de Neuquén</button>
+      <button type="button" class="chip" data-loc="Otra loc. de Río Negro" data-prov="Río Negro">Otra de Río Negro</button>
+      <button type="button" class="chip wide" data-loc="" data-prov="otra">Otra provincia / país</button>
+    </div>
+    <div id="otraBox">
+      <select id="provincia">
+        <option value="">Elegí provincia…</option>
+        <option>Buenos Aires</option><option>CABA</option><option>Catamarca</option><option>Chaco</option>
+        <option>Chubut</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option>
+        <option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option>
+        <option>Mendoza</option><option>Misiones</option><option>Salta</option><option>San Juan</option>
+        <option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option>
+        <option>Tierra del Fuego</option><option>Tucumán</option><option>Otro país</option>
+      </select>
+    </div>
+    <div class="err" id="eLoc"></div>
+
+    <p class="legal">Tus datos los usa BIORAIZ (JJCS SAS) solo para el control de ingreso y para avisarte de próximos eventos. Podés pedir que los borremos cuando quieras (Ley 25.326).</p>
+
+    <button class="btn" id="enviar" type="submit">INGRESAR</button>
+    <div class="pend" id="pend"></div>
+  </form>
+</div>
+
+<div id="ok">
+  <div class="check">✓</div>
+  <h1>ACREDITADO</h1>
+  <div id="okNombre"></div>
+  <div id="okCodigo"></div>
+  <div id="okReloj"></div>
+  <p>Mostrá esta pantalla en el ingreso.</p>
+</div>
+
+<div id="toast">✓ Registrado</div>
+
+<div id="gate" style="position:fixed;inset:0;background:var(--verde);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;z-index:30;color:#fff;text-align:center">
+  <div class="logo" style="color:#fff">BIORAIZ</div>
+  <p style="opacity:.85">Acceso solo para staff</p>
+  <input id="pinIn" type="password" inputmode="text" autocapitalize="off" placeholder="Clave" style="max-width:220px;text-align:center;font-size:24px;letter-spacing:.3em">
+  <div id="pinErr" style="color:#ffd7d4;min-height:1.2em;margin-top:8px;font-size:14px"></div>
+  <button class="btn" id="pinBtn" type="button" style="max-width:220px">ENTRAR</button>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  const STAFF = params.get("modo") === "staff";
+  const PUERTA = params.get("puerta") || (STAFF ? "staff" : "qr");
+  if (STAFF) document.body.classList.add("staff");
+
+  // ---------- clave de staff (se verifica en Google, no está en esta página) ----------
+  let CLAVE_OK = "";
+  function abrir(){ $("gate").style.display = "none"; if (STAFF) $("nombre").focus(); }
+  try{ CLAVE_OK = localStorage.getItem("bioraiz_clave") || ""; }catch(e){}
+  if (CLAVE_OK) abrir();
+  async function probarPin(){
+    const v = $("pinIn").value.trim();
+    if (!v) return;
+    $("pinErr").textContent = "Verificando…";
+    try{
+      const res = await fetch(SCRIPT_URL + "?clave=" + encodeURIComponent(v));
+      const t = (await res.text()).trim();
+      if (t === "ok"){
+        CLAVE_OK = v;
+        try{ localStorage.setItem("bioraiz_clave", v) }catch(e){}
+        $("pinErr").textContent = ""; abrir();
+      } else { $("pinErr").textContent = "Clave incorrecta"; $("pinIn").value = ""; }
+    }catch(e){ $("pinErr").textContent = "Sin conexión. Probá de nuevo con señal."; }
+  }
+  $("pinBtn").addEventListener("click", probarPin);
+  $("pinIn").addEventListener("keydown", e => { if (e.key === "Enter") probarPin(); });
+  $("evento").textContent = EVENTO + (STAFF ? " · Puesto de registro" : "");
+
+  // ---------- almacenamiento local (respaldo + cola offline) ----------
+  const store = {
+    get(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch(e){ return d } },
+    set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(e){} }
+  };
+  const K_ALL = "bioraiz_registros", K_COLA = "bioraiz_cola";
+  function todos(){ return store.get(K_ALL, []) }
+  function cola(){ return store.get(K_COLA, []) }
+  function actualizarContadores(){
+    $("cuenta").textContent = todos().length;
+    const n = cola().length;
+    $("pend").textContent = (SCRIPT_URL && n) ? `${n} registro(s) esperando señal para enviarse…` : "";
+  }
+
+  // ---------- procedencia ----------
+  let loc = "", prov = "";
+  $("chips").addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if(!b) return;
+    document.querySelectorAll(".chip").forEach(c => c.classList.remove("on"));
+    b.classList.add("on");
+    if (b.dataset.prov === "otra"){
+      $("otraBox").style.display = "block"; loc = ""; prov = $("provincia").value;
+    } else {
+      $("otraBox").style.display = "none"; loc = b.dataset.loc; prov = b.dataset.prov;
+    }
+    $("eLoc").textContent = "";
+  });
+  $("provincia").addEventListener("change", e => { prov = e.target.value; loc = prov; $("eLoc").textContent = ""; });
+
+  // ---------- validación de contacto ----------
+  function analizarContacto(v){
+    v = v.trim();
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return { tipo:"mail", valor:v.toLowerCase() };
+    const dig = v.replace(/\D/g,"");
+    if (dig.length >= 8 && dig.length <= 15) return { tipo:"whatsapp", valor:dig };
+    return null;
+  }
+
+  // ---------- envío ----------
+  function codigo(){
+    const a = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s = "";
+    for (let i=0;i<4;i++) s += a[Math.floor(Math.random()*a.length)];
+    return "BR-" + s;
+  }
+  async function enviarUno(r){
+    if (!SCRIPT_URL) return true; // sin backend: queda solo local
+    try{
+      await fetch(SCRIPT_URL, { method:"POST", mode:"no-cors",
+        headers:{ "Content-Type":"text/plain;charset=utf-8" }, body: JSON.stringify(r) });
+      return true;
+    }catch(e){ return false }
+  }
+  let vaciando = false;
+  async function vaciarCola(){
+    if (vaciando || !SCRIPT_URL) return; vaciando = true;
+    let c = cola();
+    while (c.length){
+      const ok = await enviarUno(c[0]);
+      if (!ok) break;
+      c.shift(); store.set(K_COLA, c);
+    }
+    vaciando = false; actualizarContadores();
+  }
+  setInterval(vaciarCola, 15000);
+  window.addEventListener("online", vaciarCola);
+
+  $("f").addEventListener("submit", async e => {
+    e.preventDefault();
+    const nombre = $("nombre").value.trim().replace(/\s+/g," ");
+    const c = analizarContacto($("contacto").value);
+    let bien = true;
+    $("eNombre").textContent = nombre.length < 3 ? "Escribí tu nombre" : "";
+    $("eContacto").textContent = c ? "" : "Poné un WhatsApp (con código de área) o un mail válido";
+    $("eLoc").textContent = prov ? "" : "Tocá de dónde venís";
+    if (nombre.length < 3 || !c || !prov) bien = false;
+    if (!bien) return;
+
+    const r = {
+      id: codigo(), fecha: new Date().toISOString(), evento: EVENTO,
+      nombre, contacto: c.valor, tipo_contacto: c.tipo,
+      localidad: loc || prov, provincia: prov, puerta: PUERTA, clave: CLAVE_OK
+    };
+    const all = todos(); all.push(r); store.set(K_ALL, all);
+    const q = cola(); q.push(r); store.set(K_COLA, q);
+    actualizarContadores();
+    vaciarCola();
+
+    if (STAFF){
+      limpiar(); toast(`✓ ${nombre.split(" ")[0]} registrado`); $("nombre").focus();
+    } else {
+      mostrarOk(r);
+    }
+  });
+
+  function limpiar(){
+    $("f").reset(); loc = ""; prov = "";
+    document.querySelectorAll(".chip").forEach(c => c.classList.remove("on"));
+    $("otraBox").style.display = "none";
+  }
+  function toast(t){
+    const el = $("toast"); el.textContent = t; el.classList.add("show");
+    clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove("show"), 1400);
+  }
+  // Pantalla con reloj en vivo: evita que alguien muestre una captura vieja.
+  function mostrarOk(r){
+    $("okNombre").textContent = r.nombre;
+    $("okCodigo").textContent = r.id;
+    $("ok").classList.add("show");
+    const tick = () => {
+      const d = new Date();
+      $("okReloj").textContent = d.toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+    };
+    tick(); setInterval(tick, 1000);
+    store.set("bioraiz_mi_registro", r);
+  }
+  // Si ya se registró en este celular, vuelve a mostrar su pantalla.
+  if (!STAFF){
+    const yo = store.get("bioraiz_mi_registro", null);
+    if (yo && params.get("nuevo") !== "1") mostrarOk(yo);
+  }
+
+  // Enter pasa al siguiente campo
+  $("nombre").addEventListener("keydown", e => { if (e.key==="Enter"){ e.preventDefault(); $("contacto").focus(); }});
+  $("contacto").addEventListener("keydown", e => { if (e.key==="Enter"){ e.preventDefault(); $("contacto").blur(); }});
+
+  // ---------- exportar CSV (modo staff) ----------
+  $("exportar").addEventListener("click", () => {
+    const rows = todos();
+      const cols = ["id","fecha","nombre","contacto","tipo_contacto","localidad","provincia","puerta"];
+    const esc = v => `"${String(v ?? "").replace(/"/g,'""')}"`;
+    const csv = "﻿" + [cols.join(",")].concat(rows.map(r => cols.map(c => esc(r[c])).join(","))).join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8"}));
+    a.download = `bioraiz-registro-${PUERTA}-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  });
+
+  actualizarContadores();
+  vaciarCola();
+  if (STAFF) $("nombre").focus();
+})();
+</script>
+</body>
+</html>
