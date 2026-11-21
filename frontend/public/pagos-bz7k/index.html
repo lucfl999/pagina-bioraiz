@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1f3b2d">
+<title>BIORAIZ · Pagos de expositores</title>
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYpPfAzmP1yG2FeUsh3Nb3JJV1uNJEDCFdkdrsZ_wOZmHwqnXtjB82XorvKJFe5ts1/exec";
+</script>
+<style>
+  :root{--verde:#1f3b2d;--verde2:#2f5a43;--crema:#f6f1e7;--dorado:#c9a24a;--rojo:#a8322d;--gris:#6f6a60;--borde:#d9d1c1}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--crema);color:#1d1d1b;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:520px;margin:0 auto;padding:16px 16px 60px}
+  header{text-align:center;margin-bottom:12px}
+  .logo{font-weight:800;letter-spacing:.18em;font-size:24px;color:var(--verde)}
+  .sub{color:var(--gris);font-size:13px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .stat{background:var(--verde);color:#fff;border-radius:12px;padding:10px 12px}
+  .stat small{display:block;opacity:.8;font-size:12px}.stat b{font-size:19px}
+  .subir{display:block;width:100%;text-align:center;font-size:19px;font-weight:800;padding:18px;border:0;border-radius:14px;background:var(--rojo);color:#fff}
+  .hint{font-size:12.5px;color:var(--gris);text-align:center;margin:8px 0 14px}
+  .card{background:#fff;border:2px solid var(--borde);border-radius:14px;padding:12px;margin-bottom:12px}
+  .card.ok{border-color:var(--verde2);background:#eef5f0}
+  .row{display:flex;gap:10px;align-items:flex-start}
+  .thumb{width:76px;height:96px;object-fit:cover;border-radius:8px;border:1px solid var(--borde);background:var(--crema);flex:none;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gris)}
+  .estado{font-size:14px;color:var(--gris)}
+  label{display:block;font-weight:700;font-size:13px;margin:10px 0 4px}
+  input,select{width:100%;font-size:16px;padding:11px;border:2px solid var(--borde);border-radius:10px;background:#fff;outline:none}
+  input:focus,select:focus{border-color:var(--verde2)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .info{font-size:13px;color:var(--verde);margin-top:6px;font-weight:600}
+  .warn{background:#fff3cd;border-radius:8px;padding:8px 10px;font-size:13px;margin-top:8px}
+  .btn{margin-top:12px;width:100%;font-size:17px;font-weight:800;padding:14px;border:0;border-radius:12px;background:var(--verde);color:#fff}
+  .btn.sec{background:transparent;color:var(--gris);border:1px solid var(--borde);font-weight:600;font-size:14px;padding:10px}
+  .hecho{font-weight:700;color:var(--verde)}
+  a{color:var(--verde2)}
+  #gate{position:fixed;inset:0;background:var(--verde);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;z-index:30}
+  #gate input{max-width:240px;text-align:center;font-size:20px}
+  #gate .btn{max-width:240px;background:var(--rojo)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="logo">BIORAIZ</div><div class="sub">Pagos de expositores</div></header>
+
+  <div class="stats">
+    <div class="stat"><small>Cobrado</small><b id="sCobrado">—</b></div>
+    <div class="stat"><small>Falta cobrar</small><b id="sFalta">—</b></div>
+  </div>
+
+  <input id="archivos" type="file" accept="image/*,application/pdf" multiple hidden>
+  <button class="subir" id="btnSubir" type="button">📎 SUBIR COMPROBANTES</button>
+  <div class="hint">Podés elegir varios a la vez. También: <a href="#" id="manual">cargar un pago sin comprobante</a></div>
+
+  <div id="cards"></div>
+</div>
+
+<div id="gate">
+  <div class="logo" style="color:#fff">BIORAIZ</div>
+  <p style="opacity:.85">Pagos · acceso restringido</p>
+  <input id="pinIn" type="password" autocapitalize="off" placeholder="Clave">
+  <div id="pinErr" style="color:#ffd7d4;min-height:1.2em;margin-top:8px;font-size:14px"></div>
+  <button class="btn" id="pinBtn" type="button">ENTRAR</button>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => "$" + Math.round(Number(n)||0).toLocaleString("es-AR");
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  let CLAVE = ""; try{ CLAVE = localStorage.getItem("pag_clave") || "" }catch(e){}
+  let EXPO = [];
+
+  async function api(body){
+    const res = await fetch(SCRIPT_URL, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+      body: JSON.stringify(Object.assign({ clave: CLAVE }, body)) });
+    return res.json();
+  }
+  async function cargarDatos(){
+    try{
+      const d = await (await fetch(SCRIPT_URL + "?accion=datos&clave=" + encodeURIComponent(CLAVE))).json();
+      if (!d.ok) return false;
+      EXPO = d.expositores.sort((a,b) => a.nombre.localeCompare(b.nombre));
+      $("sCobrado").textContent = fmt(EXPO.reduce((s,x) => s + x.pagado, 0));
+      $("sFalta").textContent = fmt(EXPO.reduce((s,x) => s + Math.max(0, x.saldo), 0));
+      return true;
+    }catch(e){ return null; }
+  }
+
+  // ---------- clave ----------
+  async function entrar(v){
+    $("pinErr").textContent = "Verificando…";
+    CLAVE = v; const ok = await cargarDatos();
+    if (ok){ try{ localStorage.setItem("pag_clave", v) }catch(e){} $("gate").style.display = "none"; }
+    else { $("pinErr").textContent = ok === null ? "Sin conexión con Google. Revisá el link /exec." : "Clave incorrecta"; $("pinIn").value = ""; }
+  }
+  $("pinBtn").onclick = () => { const v = $("pinIn").value.trim(); if (v) entrar(v); };
+  $("pinIn").onkeydown = e => { if (e.key === "Enter") $("pinBtn").onclick(); };
+  if (CLAVE) entrar(CLAVE);
+
+  // ---------- subir ----------
+  $("btnSubir").onclick = () => $("archivos").click();
+  $("archivos").onchange = e => { [...e.target.files].forEach(procesar); e.target.value = ""; };
+  $("manual").onclick = e => { e.preventDefault(); const c = nuevaCard(null); formulario(c, {}, "", "", false); };
+
+  function nuevaCard(thumbUrl){
+    const c = document.createElement("div"); c.className = "card";
+    c.innerHTML = `<div class="row">${thumbUrl ? `<img class="thumb" src="${thumbUrl}">` : `<div class="thumb">${thumbUrl === null ? "Sin<br>comprobante" : "PDF"}</div>`}
+      <div style="flex:1"><div class="estado">Leyendo comprobante…</div></div></div><div class="cuerpo"></div>`;
+    $("cards").prepend(c); return c;
+  }
+
+  async function procesar(file){
+    const esPdf = file.type === "application/pdf";
+    const c = nuevaCard(esPdf ? "" : URL.createObjectURL(file));
+    try{
+      const { data, mime } = esPdf ? await leerArchivo(file) : await comprimir(file);
+      const r = await api({ accion:"leer", data, mime, nombre: file.name });
+      if (!r.ok) throw new Error(r.error);
+      formulario(c, r.datos || {}, r.sugerido, r.archivo, r.duplicado, r.aviso);
+    }catch(err){
+      c.querySelector(".estado").textContent = "No se pudo subir. Revisá la conexión.";
+    }
+  }
+  function leerArchivo(file){
+    return new Promise((ok, no) => { const fr = new FileReader();
+      fr.onload = () => ok({ data: fr.result.split(",")[1], mime: file.type }); fr.onerror = no; fr.readAsDataURL(file); });
+  }
+  function comprimir(file){
+    return new Promise((ok, no) => {
+      const img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+        const cv = document.createElement("canvas"); cv.width = img.width * k; cv.height = img.height * k;
+        cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+        ok({ data: cv.toDataURL("image/jpeg", 0.85).split(",")[1], mime: "image/jpeg" });
+      };
+      img.onerror = () => leerArchivo(file).then(ok, no);
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  // ---------- formulario de confirmación ----------
+  function formulario(c, d, sugerido, archivo, duplicado, aviso){
+    c.querySelector(".estado").innerHTML = (d.monto ? `<b style="font-size:20px;color:#1d1d1b">${fmt(d.monto)}</b><br>` : "") +
+      esc(d.pagador || "") + (archivo ? `<br><a href="${esc(archivo)}" target="_blank">Ver comprobante</a>` : "");
+    const opts = `<option value="">Elegí el expositor…</option>` +
+      EXPO.map(x => `<option value="${esc(x.nombre)}" ${x.nombre === sugerido ? "selected" : ""}>${esc(x.nombre)}</option>`).join("");
+    c.querySelector(".cuerpo").innerHTML = `
+      ${aviso ? `<div class="warn">${esc(aviso)}</div>` : ""}
+      ${duplicado ? `<div class="warn">⚠️ Este número de operación ya está cargado. Puede ser un comprobante repetido.</div>` : ""}
+      <label>Expositor ${sugerido ? "(sugerido por el nombre de quien pagó)" : ""}</label>
+      <select class="fExpo">${opts}</select>
+      <div class="info fInfo"></div>
+      <div class="grid2">
+        <div><label>Monto</label><input class="fMonto" type="number" inputmode="decimal" value="${esc(d.monto)}"></div>
+        <div><label>Fecha del pago</label><input class="fFecha" type="text" placeholder="dd/mm/aaaa" value="${esc(d.fecha)}"></div>
+      </div>
+      <label>Pagó (nombre en el comprobante)</label><input class="fPagador" type="text" value="${esc(d.pagador)}">
+      <div class="grid2">
+        <div><label>N° de operación</label><input class="fOp" type="text" value="${esc(d.operacion)}"></div>
+        <div><label>Banco / medio</label><input class="fMedio" type="text" value="${esc(d.medio)}"></div>
+      </div>
+      <button class="btn fGuardar" type="button">GUARDAR PAGO</button>
+      <button class="btn sec fDescartar" type="button">Descartar</button>`;
+    const q = s => c.querySelector(s);
+    const info = () => {
+      const x = EXPO.find(e => e.nombre === q(".fExpo").value);
+      q(".fInfo").textContent = x ? `${x.stand || "Sin stand asignado"} · ${fmt(x.precio)} · pagó ${fmt(x.pagado)} · debe ${fmt(Math.max(0,x.saldo))}` : "";
+    };
+    q(".fExpo").onchange = info; info();
+    q(".fDescartar").onclick = () => c.remove();
+    q(".fGuardar").onclick = () => guardar(c, archivo, false);
+  }
+
+  async function guardar(c, archivo, forzar){
+    const q = s => c.querySelector(s);
+    const expo = q(".fExpo").value, monto = Number(q(".fMonto").value);
+    if (!expo){ alertar(c, "Elegí el expositor"); return; }
+    if (!(monto > 0)){ alertar(c, "Poné el monto"); return; }
+    q(".fGuardar").disabled = true; q(".fGuardar").textContent = "Guardando…";
+    try{
+      const r = await api({ accion:"guardar", expositor: expo, monto, fecha: q(".fFecha").value.trim(),
+        pagador: q(".fPagador").value.trim(), operacion: q(".fOp").value.trim(), medio: q(".fMedio").value.trim(),
+        archivo, forzar });
+      if (!r.ok && r.error === "duplicado"){
+        q(".fGuardar").disabled = false; q(".fGuardar").textContent = "GUARDAR IGUAL (no es repetido)";
+        alertar(c, "Ese número de operación ya existe. Si estás seguro de que es otro pago, tocá de nuevo.");
+        q(".fGuardar").onclick = () => guardar(c, archivo, true); return;
+      }
+      if (!r.ok) throw new Error(r.error);
+      c.classList.add("ok");
+      c.querySelector(".cuerpo").innerHTML = `<div class="hecho">✓ ${fmt(monto)} cargado a ${esc(expo)}</div>
+        <div class="info">${r.saldo <= 0 ? "🎉 Stand PAGADO completo" : "Le queda pagar " + fmt(r.saldo)} · pagó ${fmt(r.pagado)} de ${fmt(r.precio)}</div>`;
+      cargarDatos();
+    }catch(e){
+      q(".fGuardar").disabled = false; q(".fGuardar").textContent = "GUARDAR PAGO";
+      alertar(c, "No se pudo guardar. Revisá la conexión y probá de nuevo.");
+    }
+  }
+  function alertar(c, t){
+    let w = c.querySelector(".fErr");
+    if (!w){ w = document.createElement("div"); w.className = "warn fErr"; c.querySelector(".fGuardar").before(w); }
+    w.textContent = t;
+  }
+})();
+</script>
+</body>
+</html>
