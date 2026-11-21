@@ -169,9 +169,15 @@ function PageParticipa({ setPage, initialRole }) {
     setStatus("sending");
     try {
       const fields = {};
-      for (const [name, value] of new FormData(form).entries()) {
+      const formData = new FormData(form);
+      for (const [name, value] of formData.entries()) {
         if (typeof value === "string" && value.trim()) {
-          fields[name] = fields[name] ? `${fields[name]}, ${value.trim()}` : value.trim();
+          if (name === "consentimiento_datos") continue;
+          if (name === "dias_disponibles" || name === "disponibilidad") {
+            fields[name] = [...(fields[name] || []), value.trim()];
+          } else {
+            fields[name] = fields[name] ? `${fields[name]}, ${value.trim()}` : value.trim();
+          }
         }
       }
       const data = { tipo_participacion: r.label, rol: role, ...fields };

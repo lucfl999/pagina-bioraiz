@@ -97,6 +97,122 @@ const getFields = (data, formulario) => {
   return fields;
 };
 
+const PARTICIPATION_FIELDS = {
+  feriante: [
+    ['nombre', 'Nombre y apellido'],
+    ['whatsapp', 'WhatsApp'],
+    ['email', 'Email'],
+    ['emprendimiento', 'Nombre del emprendimiento'],
+    ['rubro', 'Rubro · qué vendés'],
+    ['tipo_stand', 'Tipo de stand'],
+    ['personas_stand', '¿Cuántas personas atienden el stand?'],
+    ['instagram', 'Instagram o web'],
+    ['electricidad', '¿Qué elementos usan electricidad?'],
+    ['mensaje', 'Contanos un poco más'],
+  ],
+  gastronomico: [
+    ['nombre', 'Nombre y apellido'],
+    ['whatsapp', 'WhatsApp'],
+    ['email', 'Email'],
+    ['emprendimiento', 'Nombre del emprendimiento'],
+    ['tipo_puesto_gastronomico', 'Tipo de puesto gastronómico'],
+    ['rubro', 'Tu menú'],
+    ['instagram', 'Instagram o web'],
+    ['carro_medidas', 'Medidas del carro (largo × ancho × alto, en metros)'],
+    ['cafe_bebidas_calientes', '¿Vendés café o bebidas calientes?'],
+    ['electricidad', '¿Qué elementos usan electricidad?'],
+    ['mensaje', 'Contanos un poco más'],
+    ['aceptacion_condiciones', 'Acepta condiciones de vasos, vajilla y menú', 'boolean'],
+  ],
+  tallerista: [
+    ['nombre', 'Nombre y apellido'],
+    ['whatsapp', 'WhatsApp'],
+    ['email', 'Email'],
+    ['actividad', 'Taller, clase o terapia que proponés'],
+    ['duracion', 'Duración aproximada'],
+    ['requerimientos', 'Qué necesitás (espacio, sonido, materiales)'],
+    ['publico_objetivo', '¿Para quién es?'],
+    ['edad_minima', 'Edad mínima'],
+    ['cupo_maximo', 'Cupo máximo de personas'],
+    ['dias_disponibles', '¿Qué día podés?', 'array'],
+    ['franja_horaria', 'Franja horaria preferida'],
+    ['instagram', 'Instagram o web'],
+    ['mensaje', 'Contanos un poco más'],
+  ],
+  facilitador: [
+    ['nombre', 'Nombre y apellido'],
+    ['whatsapp', 'WhatsApp'],
+    ['email', 'Email'],
+    ['disciplina', 'Disciplina'],
+    ['disciplina_sesion', 'Tipo de sesión que proponés'],
+    ['descripcion', 'Descripción de la sesión'],
+    ['duracion_sesion', 'Duración de la sesión'],
+    ['nivel', 'Nivel de la práctica'],
+    ['formacion', 'Formación y certificaciones'],
+    ['experiencia', 'Experiencia facilitando grupos'],
+    ['dias_disponibles', '¿Qué día podés?', 'array'],
+    ['franja_horaria', 'Franja horaria preferida'],
+    ['cupo_maximo', 'Cupo máximo de personas'],
+    ['requerimientos_especiales', '¿Qué traés y qué necesitás de la organización?'],
+    ['instagram', 'Instagram o web'],
+    ['mensaje', 'Contanos un poco más'],
+  ],
+  sponsor: [
+    ['nombre', 'Nombre y apellido'],
+    ['whatsapp', 'WhatsApp'],
+    ['email', 'Email'],
+    ['empresa', 'Empresa o marca'],
+    ['cargo', 'Tu cargo'],
+    ['mensaje', 'Contanos un poco más'],
+  ],
+  voluntario: [
+    ['nombre', 'Nombre y apellido'],
+    ['whatsapp', 'WhatsApp'],
+    ['email', 'Email'],
+    ['disponibilidad', '¿Qué días podés?', 'array'],
+    ['area', 'Área que te interesa'],
+    ['talle_remera', 'Talle de remera'],
+    ['mayor_18', 'Mayor de 18', 'boolean'],
+    ['mensaje', 'Contanos un poco más'],
+  ],
+  publico: [
+    ['nombre', 'Nombre y apellido'],
+    ['whatsapp', 'WhatsApp'],
+    ['email', 'Email'],
+    ['canal', '¿Cómo te enteraste?'],
+    ['mensaje', '¿Algo que quieras contarnos?'],
+  ],
+};
+
+const toBoolean = (value) => {
+  if (typeof value === 'boolean') return value;
+  return ['true', 'sí', 'si', '1'].includes(String(value).trim().toLowerCase());
+};
+
+const getParticipationFields = (data, formulario) => {
+  const fields = {};
+
+  for (const [key, label, type] of PARTICIPATION_FIELDS[formulario]) {
+    if (type === 'boolean') {
+      fields[label] = toBoolean(data[key]);
+      continue;
+    }
+
+    if (type === 'array') {
+      const values = Array.isArray(data[key]) ? data[key] : data[key] ? String(data[key]).split(',') : [];
+      fields[label] = values.map(value => String(value).trim()).filter(Boolean);
+      continue;
+    }
+
+    const value = data[key];
+    if (value !== undefined && value !== null && String(value).trim()) {
+      fields[label] = value;
+    }
+  }
+
+  return fields;
+};
+
 export const buildParticipationSheetsPayload = (data) => {
   if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
 
@@ -120,7 +236,10 @@ export const buildParticipationSheetsPayload = (data) => {
   }
 
   if (!formulario) return null;
-  return { formulario, ...getFields(data, formulario) };
+  const fields = formulario === 'actividad'
+    ? getFields(data, formulario)
+    : getParticipationFields(data, formulario);
+  return { formulario, ...fields };
 };
 
 export const buildActivitySheetsPayload = (data) => {
