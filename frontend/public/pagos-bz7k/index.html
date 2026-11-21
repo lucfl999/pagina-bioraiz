@@ -144,21 +144,23 @@
   }
 
   // ---------- formulario de confirmación ----------
+  const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g," ").trim();
+  const opciones = sel => `<option value="">Elegí el expositor…</option>` +
+    EXPO.map(x => `<option value="${esc(x.nombre)}" ${x.nombre === sel ? "selected" : ""}>${esc(x.nombre)}</option>`).join("");
+
   function formulario(c, d, sugerido, archivo, duplicado, aviso){
     c.querySelector(".estado").innerHTML = (d.monto ? `<b style="font-size:20px;color:#1d1d1b">${fmt(d.monto)}</b><br>` : "") +
       esc(d.pagador || "") + (archivo ? `<br><a href="${esc(archivo)}" target="_blank">Ver comprobante</a>` : "");
-    const opts = `<option value="">Elegí el expositor…</option>` +
-      EXPO.map(x => `<option value="${esc(x.nombre)}" ${x.nombre === sugerido ? "selected" : ""}>${esc(x.nombre)}</option>`).join("");
     c.querySelector(".cuerpo").innerHTML = `
       ${aviso ? `<div class="warn">${esc(aviso)}</div>` : ""}
       ${duplicado ? `<div class="warn">⚠️ Este número de operación ya está cargado. Puede ser un comprobante repetido.</div>` : ""}
-      <label>Expositor ${sugerido ? "(sugerido por el nombre de quien pagó)" : ""}</label>
-      <select class="fExpo">${opts}</select>
-      <div class="info fInfo"></div>
       <div class="grid2">
-        <div><label>Monto</label><input class="fMonto" type="number" inputmode="decimal" value="${esc(d.monto)}"></div>
+        <div><label>Monto del comprobante</label><input class="fMonto" type="number" inputmode="decimal" value="${esc(d.monto)}"></div>
         <div><label>Fecha del pago</label><input class="fFecha" type="text" placeholder="dd/mm/aaaa" value="${esc(d.fecha)}"></div>
       </div>
+      <div class="partes"></div>
+      <div class="info fSuma"></div>
+      <button class="btn sec fDividir" type="button">➕ Dividir este pago con otro emprendimiento</button>
       <label>Pagó (nombre en el comprobante)</label><input class="fPagador" type="text" value="${esc(d.pagador)}">
       <div class="grid2">
         <div><label>N° de operación</label><input class="fOp" type="text" value="${esc(d.operacion)}"></div>
@@ -167,39 +169,95 @@
       <button class="btn fGuardar" type="button">GUARDAR PAGO</button>
       <button class="btn sec fDescartar" type="button">Descartar</button>`;
     const q = s => c.querySelector(s);
-    const info = () => {
-      const x = EXPO.find(e => e.nombre === q(".fExpo").value);
-      q(".fInfo").textContent = x ? `${x.stand || "Sin stand asignado"} · ${fmt(x.precio)} · pagó ${fmt(x.pagado)} · debe ${fmt(Math.max(0,x.saldo))}` : "";
+    c._archivo = archivo; c._forzar = false;
+    agregarParte(c, sugerido, "", !!sugerido);
+    q(".fMonto").oninput = () => refrescar(c);
+    q(".fDividir").onclick = () => {
+      const partes = c.querySelectorAll(".parte"), total = Number(q(".fMonto").value) || 0;
+      if (partes.length === 1 && !partes[0].querySelector(".pMonto").value) partes[0].querySelector(".pMonto").value = total || "";
+      const usado = [...partes].reduce((s,p) => s + (Number(p.querySelector(".pMonto").value) || 0), 0);
+      agregarParte(c, "", Math.max(0, total - usado) || "", false);
     };
-    q(".fExpo").onchange = info; info();
     q(".fDescartar").onclick = () => c.remove();
-    q(".fGuardar").onclick = () => guardar(c, archivo, false);
+    q(".fGuardar").onclick = () => guardar(c);
   }
 
-  async function guardar(c, archivo, forzar){
-    const q = s => c.querySelector(s);
-    const expo = q(".fExpo").value, monto = Number(q(".fMonto").value);
-    if (!expo){ alertar(c, "Elegí el expositor"); return; }
-    if (!(monto > 0)){ alertar(c, "Poné el monto"); return; }
-    q(".fGuardar").disabled = true; q(".fGuardar").textContent = "Guardando…";
-    try{
-      const r = await api({ accion:"guardar", expositor: expo, monto, fecha: q(".fFecha").value.trim(),
-        pagador: q(".fPagador").value.trim(), operacion: q(".fOp").value.trim(), medio: q(".fMedio").value.trim(),
-        archivo, forzar });
-      if (!r.ok && r.error === "duplicado"){
-        q(".fGuardar").disabled = false; q(".fGuardar").textContent = "GUARDAR IGUAL (no es repetido)";
-        alertar(c, "Ese número de operación ya existe. Si estás seguro de que es otro pago, tocá de nuevo.");
-        q(".fGuardar").onclick = () => guardar(c, archivo, true); return;
+  function agregarParte(c, sel, monto, esSugerido){
+    const d = document.createElement("div"); d.className = "parte";
+    d.style.cssText = "border-top:1px dashed var(--borde);margin-top:10px;padding-top:4px";
+    d.innerHTML = `<label class="pLab">Expositor${esSugerido ? " (sugerido por el nombre de quien pagó)" : ""}</label>
+      <div style="display:flex;gap:6px"><select class="pExpo" style="flex:1">${opciones(sel)}</select>
+      <button type="button" class="pQuitar" style="display:none;border:1px solid var(--borde);background:#fff;border-radius:10px;padding:0 12px">✕</button></div>
+      <div class="pMontoBox" style="display:none"><label>Monto para este emprendimiento</label>
+      <input class="pMonto" type="number" inputmode="decimal" value="${esc(monto)}"></div>
+      <div class="info pInfo"></div>`;
+    c.querySelector(".partes").appendChild(d);
+    d.querySelector(".pExpo").onchange = () => refrescar(c);
+    d.querySelector(".pMonto").oninput = () => refrescar(c);
+    d.querySelector(".pQuitar").onclick = () => { d.remove(); refrescar(c); };
+    refrescar(c);
+  }
+
+  function refrescar(c){
+    const partes = [...c.querySelectorAll(".parte")], varias = partes.length > 1;
+    partes.forEach((p,i) => {
+      p.querySelector(".pMontoBox").style.display = varias ? "block" : "none";
+      p.querySelector(".pQuitar").style.display = varias ? "block" : "none";
+      if (varias) p.querySelector(".pLab").textContent = "Emprendimiento " + (i+1);
+      const x = EXPO.find(e => e.nombre === p.querySelector(".pExpo").value);
+      let t = "";
+      if (x){
+        t = `${x.stand || "Sin stand asignado"} · ${fmt(x.precio)} · pagó ${fmt(x.pagado)} · debe ${fmt(Math.max(0,x.saldo))}`;
+        const otros = norm(x.titular) ? EXPO.filter(e => e.nombre !== x.nombre && norm(e.titular) === norm(x.titular)) : [];
+        if (otros.length) t += `<div class="warn" style="color:#1d1d1b;font-weight:400">⚠️ ${esc(x.titular)} también tiene: <b>${otros.map(o => esc(o.nombre)).join(", ")}</b>. Revisá cuál pagó, o tocá “Dividir” si pagó los dos.</div>`;
       }
-      if (!r.ok) throw new Error(r.error);
-      c.classList.add("ok");
-      c.querySelector(".cuerpo").innerHTML = `<div class="hecho">✓ ${fmt(monto)} cargado a ${esc(expo)}</div>
-        <div class="info">${r.saldo <= 0 ? "🎉 Stand PAGADO completo" : "Le queda pagar " + fmt(r.saldo)} · pagó ${fmt(r.pagado)} de ${fmt(r.precio)}</div>`;
-      cargarDatos();
-    }catch(e){
-      q(".fGuardar").disabled = false; q(".fGuardar").textContent = "GUARDAR PAGO";
-      alertar(c, "No se pudo guardar. Revisá la conexión y probá de nuevo.");
+      p.querySelector(".pInfo").innerHTML = t;
+    });
+    const total = Number(c.querySelector(".fMonto").value) || 0;
+    const suma = partes.reduce((s,p) => s + (Number(p.querySelector(".pMonto").value) || 0), 0);
+    c.querySelector(".fSuma").innerHTML = varias ? (Math.round(suma) === Math.round(total)
+      ? `✓ Repartido ${fmt(suma)} de ${fmt(total)}`
+      : `<span style="color:var(--rojo)">Repartiste ${fmt(suma)} de ${fmt(total)} (diferencia ${fmt(total - suma)})</span>`) : "";
+  }
+
+  async function guardar(c){
+    const q = s => c.querySelector(s);
+    const partes = [...c.querySelectorAll(".parte")];
+    const reintento = (c._hechos || []).length > 0, varias = partes.length > 1 || reintento;
+    const total = Number(q(".fMonto").value) || 0;
+    const items = partes.map(p => ({ el: p, expo: p.querySelector(".pExpo").value,
+      monto: varias ? Number(p.querySelector(".pMonto").value) : total }));
+    if (items.some(i => !i.expo)){ alertar(c, "Elegí el expositor" + (varias ? " en cada parte" : "")); return; }
+    if (items.some(i => !(i.monto > 0))){ alertar(c, "Poné el monto" + (varias ? " de cada parte" : "")); return; }
+    if (varias && !reintento && Math.round(items.reduce((s,i) => s + i.monto, 0)) !== Math.round(total)){
+      alertar(c, "La suma de las partes no coincide con el monto del comprobante."); return; }
+    if (new Set(items.map(i => i.expo)).size !== items.length){ alertar(c, "Elegiste el mismo emprendimiento dos veces."); return; }
+
+    const comunes = { fecha: q(".fFecha").value.trim(), pagador: q(".fPagador").value.trim(),
+      operacion: q(".fOp").value.trim(), medio: q(".fMedio").value.trim(), archivo: c._archivo };
+    q(".fGuardar").disabled = true; q(".fGuardar").textContent = "Guardando…";
+    const hechos = c._hechos || (c._hechos = []);
+    for (const it of items){
+      try{
+        const r = await api(Object.assign({ accion:"guardar", expositor: it.expo, monto: it.monto,
+          forzar: c._forzar || hechos.length > 0 }, comunes));
+        if (!r.ok && r.error === "duplicado"){
+          q(".fGuardar").disabled = false; q(".fGuardar").textContent = "GUARDAR IGUAL (no es repetido)";
+          alertar(c, "Ese número de operación ya existe. Si estás seguro de que es otro pago, tocá de nuevo.");
+          c._forzar = true; return;
+        }
+        if (!r.ok) throw new Error(r.error);
+        hechos.push(`<div class="hecho">✓ ${fmt(it.monto)} a ${esc(it.expo)}</div><div class="info">${r.saldo <= 0
+          ? "🎉 Stand PAGADO completo" : "Le queda pagar " + fmt(r.saldo)} · pagó ${fmt(r.pagado)} de ${fmt(r.precio)}</div>`);
+        it.el.remove();
+      }catch(e){
+        q(".fGuardar").disabled = false; q(".fGuardar").textContent = "GUARDAR LO QUE FALTA";
+        alertar(c, (hechos.length ? `Se guardaron ${hechos.length} parte(s). ` : "") + "No se pudo guardar. Revisá la conexión y tocá de nuevo.");
+        refrescar(c); return;
+      }
     }
+    c.classList.add("ok"); c.querySelector(".cuerpo").innerHTML = hechos.join("");
+    cargarDatos();
   }
   function alertar(c, t){
     let w = c.querySelector(".fErr");
